@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT導入補助金申請 分析レポート</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #dc2626;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: -4rem 0 2rem 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-metric {
+            text-align: center;
+        }
+
+        .card-metric .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-metric .label {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h3 {
+            font-size: 1.1rem;
+            color: var(--gray-800);
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        tr:hover {
+            background: var(--gray-50);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight-box.warning {
+            background: linear-gradient(135deg, #fefce8 0%, #fef08a 100%);
+            border-left-color: var(--warning);
+        }
+
+        .highlight-box.danger {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border-left-color: var(--danger);
+        }
+
+        .highlight-box.success {
+            background: linear-gradient(135deg, #f0fdf4 0%, #bbf7d0 100%);
+            border-left-color: var(--success);
+        }
+
+        .quote {
+            background: var(--gray-100);
+            border-left: 4px solid var(--gray-400);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: var(--gray-700);
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+
+        .comparison-box.good {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+        }
+
+        .comparison-box.bad {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+        }
+
+        .comparison-box h4 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-box.good h4 {
+            color: #166534;
+        }
+
+        .comparison-box.bad h4 {
+            color: #991b1b;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .template-box {
+            background: var(--gray-900);
+            color: #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .template-box .comment {
+            color: #9ca3af;
+        }
+
+        .template-box .highlight {
+            color: #fbbf24;
+        }
+
+        .progress-bar {
+            height: 24px;
+            background: var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar .fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--gray-600);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .star {
+            color: #fbbf24;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 100;
+            padding: 0.75rem 2rem;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+        }
+
+        .nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        @media print {
+            .nav, .header {
+                display: none;
+            }
+            .print-only {
+                display: block;
+            }
+            .section {
+                break-inside: avoid;
+            }
+        }
+
+        .new-badge {
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#summary">サマリー</a>
+            <a href="#factors">承認要因</a>
+            <a href="#writing">書き方パターン</a>
+            <a href="#template">テンプレート</a>
+            <a href="#checklist">チェックリスト</a>
+            <a href="#data">データ一覧</a>
+        </div>
+    </nav>
+
+    <header class="header">
+        <h1>IT導入補助金申請 分析レポート</h1>
+        <p>IT2025 7次公募 承認率向上のための分析結果</p>
+    </header>
+
+    <div class="container">
+        <div class="summary-cards">
+            <div class="card card-metric">
+                <div class="value">23.5%</div>
+                <div class="label">詳細分析対象の承認率（4/17件）</div>
+            </div>
+            <div class="card card-metric">
+                <div class="value">50%</div>
+                <div class="label">過去申請経験なしの承認率</div>
+            </div>
+            <div class="card card-metric">
+                <div class="value">0%</div>
+                <div class="label">申請3回以上の承認率</div>
+            </div>
+            <div class="card card-metric">
+                <div class="value">100%</div>
+                <div class="label">承認群の「記事」言及率</div>
+            </div>
+        </div>
+
+        <section id="summary" class="section">
+            <h2>エグゼクティブサマリー</h2>
+
+            <div class="highlight-box success">
+                <strong>最重要発見:</strong> クライアントの財務状況（売上・利益・従業員数）は承認に影響しない。<br>
+                承認可否を分けるのは<strong>「申請書の書き方」</strong>と<strong>「過去申請経験」</strong>である。
+            </div>
+
+            <h3>承認に影響しない要因</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>要因</th>
+                        <th>分析結果</th>
+                        <th>結論</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>売上高</td>
+                        <td>承認群平均 8,875万円 / 不承認群平均 3,908万円</td>
+                        <td><span class="badge badge-warning">影響なし</span></td>
+                    </tr>
+                    <tr>
+                        <td>経常利益（黒字/赤字）</td>
+                        <td>承認群黒字率50% / 不承認群黒字率40%</td>
+                        <td><span class="badge badge-warning">影響なし</span></td>
+                    </tr>
+                    <tr>
+                        <td>従業員数</td>
+                        <td>両群とも0人が多数、0人でも承認例あり</td>
+                        <td><span class="badge badge-warning">影響なし</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>承認に影響する要因</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>要因</th>
+                        <th>影響度</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>過去申請経験</strong></td>
+                        <td><span class="star">★★★</span></td>
+                        <td>なし=50%、1~2回=22%、3回以上=0%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>作文の書き方</strong></td>
+                        <td><span class="star">★★★</span></td>
+                        <td>AI・大量・記事の言及が重要</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ITツール活用の具体性</strong></td>
+                        <td><span class="star">★★</span></td>
+                        <td>承認群の75%がAIツール言及</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="factors" class="section">
+            <h2>承認要因の詳細分析</h2>
+
+            <h3>過去申請経験と承認率</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>過去申請経験</th>
+                        <th>申請数</th>
+                        <th>承認数</th>
+                        <th>承認率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>なし</td>
+                        <td>4件</td>
+                        <td>2件</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="fill" style="width: 50%; background: var(--success);">50.0%</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>あり（1〜2回）</td>
+                        <td>9件</td>
+                        <td>2件</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="fill" style="width: 22.2%; background: var(--warning);">22.2%</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>あり（3〜5回）</td>
+                        <td>3件</td>
+                        <td>0件</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="fill" style="width: 5%; background: var(--danger);">0%</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box danger">
+                <strong>重要:</strong> 過去申請経験が3回以上のクライアントは全件不承認。<br>
+                一方、過去申請経験なしは承認率50%と最も高い。初回申請のクライアントを優先すべき。
+            </div>
+
+            <h3>テキスト特徴量の比較</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>指標</th>
+                        <th>承認群平均</th>
+                        <th>不承認群平均</th>
+                        <th>差異</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>文字数</td>
+                        <td>242文字</td>
+                        <td>233文字</td>
+                        <td>+9文字</td>
+                    </tr>
+                    <tr>
+                        <td>AIツール言及</td>
+                        <td><strong>75%</strong></td>
+                        <td>54%</td>
+                        <td><span class="badge badge-success">+21%</span></td>
+                    </tr>
+                    <tr>
+                        <td>「大量」言及</td>
+                        <td><strong>75%</strong></td>
+                        <td>46%</td>
+                        <td><span class="badge badge-success">+29%</span></td>
+                    </tr>
+                    <tr>
+                        <td>「記事」言及</td>
+                        <td><strong>100%</strong></td>
+                        <td>85%</td>
+                        <td><span class="badge badge-success">+15%</span></td>
+                    </tr>
+                    <tr>
+                        <td>「インボイス未対応」明示</td>
+                        <td>50%</td>
+                        <td>38%</td>
+                        <td><span class="badge badge-success">+12%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="writing" class="section">
+            <h2>承認される書き方パターン</h2>
+
+            <h3>承認された申請の実例</h3>
+
+            <div class="quote">
+                <strong>【TODOKELL - 承認】</strong><br>
+                当社は大手運輸会社と連携し軽貨物配送を行っていますが、<strong>インボイス未対応のため</strong>法人荷主から<strong>「適格請求書が出せないなら発注できない」と言われることが増え、仕事を取り逃している状況</strong>です。また、配送実績や対応力を十分に発信できず、荷主から問い合わせが来ないことも日々の悩みになっています。そこでITツールを導入し、インボイス対応の請求書を自動作成する仕組みを整えるとともに、<strong>AIが配送事例や説明記事を作成しネット上に発信</strong>することで、荷物を任せたい企業に見つけてもらいやすくします。
+            </div>
+
+            <div class="quote">
+                <strong>【BE BEe NEXT - 承認】</strong><br>
+                レコード会社及び音楽プロダクション。音楽・映像制作、グッズ制作。自社制作の他、依頼楽曲制作や映像制作を提供。従業員は業務委託のみ。業界での競争力と新規ビジネスの展開を重視。収益の安定化、インボイス対応が課題。ITツール活用により課題解決を目指す。自社プロダクト掲載記事を<strong>AIにより瞬時に大量制作</strong>しsns等に大量散布することで主要ターゲット層に周知を図る。<strong>インボイス化ツールは未導入で制度理解もまだ浅い</strong>。
+            </div>
+
+            <div class="quote">
+                <strong>【篠崎峻 - 承認】</strong><br>
+                国内の家電量販店やオンラインストアから商品を仕入れ、AmazonなどのECサイトで販売しており、最新モデルだけでなく機能が十分な旧モデルも取り扱うことで多様なニーズに対応しています。営業支援ITツールを導入し、<strong>AIを活用してWEB記事を大量に作成</strong>しネット上に配布することで見込み顧客の発掘を積極的に進め、ひいては確実に売上の拡大につなげていきたいと考えています。このシステム導入によりインボイス制度に沿った請求書類管理が可能となり、事務作業の効率化と制度対応を両立させていく方針です。
+            </div>
+
+            <h3>承認群と不承認群の違い</h3>
+
+            <div class="comparison">
+                <div class="comparison-box good">
+                    <h4>✓ 承認される書き方</h4>
+                    <ul>
+                        <li>「<strong>AIを活用してWEB記事を大量に作成</strong>」と具体的に</li>
+                        <li>「仕事を<strong>取り逃している</strong>」と実害を記載</li>
+                        <li>「<strong>できていない</strong>」「<strong>困っている</strong>」と正直に</li>
+                        <li>「見込み顧客の発掘」など具体的な目的を記載</li>
+                        <li>事業特有の課題を記載</li>
+                    </ul>
+                </div>
+                <div class="comparison-box bad">
+                    <h4>✗ 不承認になりやすい書き方</h4>
+                    <ul>
+                        <li>「<strong>計画的に進めている</strong>」と抽象的</li>
+                        <li>「<strong>効率化を図る</strong>」と一般論</li>
+                        <li>「登録を<strong>済ませることで</strong>」と既対応の印象</li>
+                        <li>「<strong>方針です</strong>」「<strong>予定です</strong>」と曖昧</li>
+                        <li>どの業種にも当てはまる内容</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>使うべき表現・避けるべき表現</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="background: #dcfce7;">✓ 使うべき表現</th>
+                        <th style="background: #fee2e2;">✗ 避けるべき表現</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>「AIを活用して記事を大量に作成」</td>
+                        <td>「効率化を図る」</td>
+                    </tr>
+                    <tr>
+                        <td>「できていない」「未対応」</td>
+                        <td>「計画的に進めている」</td>
+                    </tr>
+                    <tr>
+                        <td>「困っている」「悩んでいる」</td>
+                        <td>「方針だ」「予定である」</td>
+                    </tr>
+                    <tr>
+                        <td>「取り逃している」「機会損失」</td>
+                        <td>「強化していく」</td>
+                    </tr>
+                    <tr>
+                        <td>「見込み顧客を発掘」「売上拡大」</td>
+                        <td>「生産性向上」</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="template" class="section">
+            <h2>作文テンプレート</h2>
+
+            <h3>250文字作文の構成</h3>
+
+            <div class="template-box">
+<span class="comment">【1. 事業概要（約50文字）】</span>
+当社は〇〇を営んでいます。
+
+<span class="comment">【2. 現状の具体的な困りごと（約80文字）】</span>
+しかし、<span class="highlight">インボイス未対応のため</span>、△△から
+「□□」と言われ、<span class="highlight">仕事を取り逃している状況</span>です。
+また、〇〇が<span class="highlight">できておらず</span>、△△も課題です。
+
+<span class="comment">【3. ITツール導入による解決策（約70文字）】</span>
+そこでITツールを導入し、<span class="highlight">AIを活用してWEB記事を大量に作成</span>し
+ネット上に配布することで見込み顧客の発掘を進めます。
+
+<span class="comment">【4. 期待効果（約50文字）】</span>
+これにより、〇〇を実現し、売上拡大につなげます。
+            </div>
+
+            <h3>承認された作文の共通キーワード</h3>
+            <div class="highlight-box">
+                <strong>必須キーワード（承認群100%使用）:</strong> 「記事」<br>
+                <strong>推奨キーワード（承認群75%使用）:</strong> 「AI」「大量」
+            </div>
+
+            <h3>業種別の課題例</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>業種</th>
+                        <th>具体的な課題の書き方例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>配送業</td>
+                        <td>「法人荷主から適格請求書が出せないなら発注できないと言われ、仕事を取り逃している」</td>
+                    </tr>
+                    <tr>
+                        <td>EC販売</td>
+                        <td>「AIを活用してWEB記事を大量に作成しネット上に配布することで見込み顧客の発掘を進める」</td>
+                    </tr>
+                    <tr>
+                        <td>飲食店</td>
+                        <td>「インボイス未対応のため卸先との取引条件が不利になりかねない」「店の情報がネット上に十分出ておらず新規来店につながらない」</td>
+                    </tr>
+                    <tr>
+                        <td>整体院</td>
+                        <td>「企業契約や書類を必要とするお客様への対応に時間がかかり事務作業が煩雑」「施術の強みを十分に発信できておらず新規来院につながりにくい」</td>
+                    </tr>
+                    <tr>
+                        <td>コンサル</td>
+                        <td>「セミナー中心の活動により新規顧客の獲得が進まない」「インボイス未対応で適格請求書を発行できない」</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="checklist" class="section">
+            <h2>申請前チェックリスト</h2>
+
+            <h3>作文内容チェック</h3>
+            <ul class="checklist">
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>「AI」「大量」「記事」のキーワードが含まれているか</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>「困っている」「できていない」などの現状課題が明記されているか</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>ITツールの具体的な活用方法（AI記事生成など）が書かれているか</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>250文字の枠を十分に使っているか（240文字以上推奨）</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>「計画的に」「方針」などの抽象表現を使っていないか</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>その事業特有の課題が記載されているか（一般論になっていないか）</div>
+                </li>
+            </ul>
+
+            <h3>クライアント選定チェック</h3>
+            <ul class="checklist">
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div><strong>過去申請経験なし</strong>のクライアントか（承認率50%）</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>過去申請経験1~2回の場合、以前と異なる内容・切り口になっているか</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>過去申請経験3回以上<strong>ではない</strong>か（承認率0%）</div>
+                </li>
+            </ul>
+
+            <div class="highlight-box warning">
+                <strong>クライアント選定の優先順位:</strong><br>
+                ◎ 過去申請経験なし（承認率50%）<br>
+                ○ 過去申請経験1~2回（承認率22%）<br>
+                × 過去申請経験3回以上（承認率0%）
+            </div>
+        </section>
+
+        <section id="data" class="section">
+            <h2>分析データ一覧</h2>
+
+            <h3>承認案件（4件）</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>クライアント</th>
+                        <th>売上高</th>
+                        <th>経常利益</th>
+                        <th>正規雇用</th>
+                        <th>過去申請</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>山﨑涼子</td>
+                        <td>3,019万円</td>
+                        <td style="color: var(--success);">212万円</td>
+                        <td>0人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>株式会社BE BEe NEXT</td>
+                        <td>2,397万円</td>
+                        <td style="color: var(--danger);">-193万円</td>
+                        <td>0人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>株式会社TODOKELL</td>
+                        <td>2億3,619万円</td>
+                        <td style="color: var(--danger);">-293万円</td>
+                        <td>3人</td>
+                        <td style="color: var(--success);"><strong>なし</strong></td>
+                    </tr>
+                    <tr>
+                        <td>篠崎峻</td>
+                        <td>6,465万円</td>
+                        <td style="color: var(--success);">101万円</td>
+                        <td>0人</td>
+                        <td style="color: var(--success);"><strong>なし</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>不承認案件（13件）</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>クライアント</th>
+                        <th>売上高</th>
+                        <th>経常利益</th>
+                        <th>正規雇用</th>
+                        <th>過去申請</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>榎原渚</td>
+                        <td>2,601万円</td>
+                        <td style="color: var(--danger);">-265万円</td>
+                        <td>1人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>Airera株式会社</td>
+                        <td>6,327万円</td>
+                        <td style="color: var(--danger);">-331万円</td>
+                        <td>0人</td>
+                        <td>なし</td>
+                    </tr>
+                    <tr>
+                        <td>則松智史</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>あり</td>
+                    </tr>
+                    <tr>
+                        <td>株式会社SHARE EATS</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>なし</td>
+                    </tr>
+                    <tr>
+                        <td>小林央宜</td>
+                        <td>1,355万円</td>
+                        <td style="color: var(--danger);">-95万円</td>
+                        <td>0人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>榎原圭太</td>
+                        <td>2,327万円</td>
+                        <td style="color: var(--danger);">-68万円</td>
+                        <td>0人</td>
+                        <td style="color: var(--danger);"><strong>あり(3~5回)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>株式会社アルイトコー</td>
+                        <td>4,174万円</td>
+                        <td style="color: var(--danger);">-1,219万円</td>
+                        <td>2人</td>
+                        <td style="color: var(--danger);"><strong>あり(3~5回)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>株式会社春クリーン</td>
+                        <td>9,606万円</td>
+                        <td style="color: var(--success);">154万円</td>
+                        <td>1人</td>
+                        <td style="color: var(--danger);"><strong>あり(3~5回)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>合同会社Excellent</td>
+                        <td>633万円</td>
+                        <td style="color: var(--success);">198万円</td>
+                        <td>0人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>合同会社en</td>
+                        <td>4,680万円</td>
+                        <td style="color: var(--danger);">-177万円</td>
+                        <td>1人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>株式会社やどり木</td>
+                        <td>4,992万円</td>
+                        <td style="color: var(--success);">84万円</td>
+                        <td>1人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>有限会社會ダイニング</td>
+                        <td>2,380万円</td>
+                        <td style="color: var(--success);">3万円</td>
+                        <td>0人</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                    <tr>
+                        <td>株式会社パワープラント</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>あり(1~2回)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>分析日: 2025年1月 | 分析ツール: Python (pandas, scipy)</p>
+        <p>IT2025 7次公募データに基づく分析結果</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav item on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '';
+                link.style.borderBottomColor = 'transparent';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.color = 'var(--primary)';
+                    link.style.borderBottomColor = 'var(--primary)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
