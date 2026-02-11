@@ -447,8 +447,8 @@
                 <div class="label">申請3回以上の承認率</div>
             </div>
             <div class="card card-metric">
-                <div class="value">100%</div>
-                <div class="label">加点②「対象外」の承認率</div>
+                <div class="value">30%</div>
+                <div class="label">加点②ファイルなしの承認率</div>
             </div>
         </div>
 
@@ -457,12 +457,12 @@
 
             <div class="highlight-box success">
                 <strong>最重要発見:</strong> クライアントの財務状況（売上・利益・従業員数）は承認に影響しない。<br>
-                承認可否を分けるのは<strong>「加点②の状況」</strong>、<strong>「過去申請経験」</strong>、<strong>「申請書の書き方」</strong>である。
+                承認可否を分けるのは<strong>「過去申請経験」</strong>と<strong>「申請書の書き方」</strong>である。
             </div>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #fdf4ff 0%, #f5d0fe 100%); border-left-color: #a855f7;">
-                <strong>注目:</strong> 加点②「対象外」（事業場内最低賃金+63円以上）の企業は<strong>承認率100%</strong>（3/3件）。<br>
-                最低賃金を大幅に上回る給与水準の企業を優先的に選定することで承認率向上が期待できる。
+            <div class="highlight-box warning">
+                <strong>注意:</strong> 加点②ファイル提出企業は承認率<strong>20%</strong>（2/10件）、未提出企業は<strong>30%</strong>（3/10件）。<br>
+                加点②の提出有無は承認率に大きな影響を与えていない。
             </div>
 
             <h3>承認に影響しない要因</h3>
@@ -504,11 +504,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>加点②「対象外」</strong></td>
-                        <td><span class="star">★★★</span></td>
-                        <td>対象外=100%、対象=22%、未設定=20%</td>
-                    </tr>
-                    <tr>
                         <td><strong>過去申請経験</strong></td>
                         <td><span class="star">★★★</span></td>
                         <td>なし=60%、1~2回=22%、3回以上=0%</td>
@@ -523,6 +518,11 @@
                         <td><span class="star">★★</span></td>
                         <td>承認群の75%がAIツール言及</td>
                     </tr>
+                    <tr>
+                        <td>加点②ファイル提出</td>
+                        <td><span class="star">★</span></td>
+                        <td>なし=30%、あり=20%（大差なし）</td>
+                    </tr>
                 </tbody>
             </table>
         </section>
@@ -530,11 +530,11 @@
         <section id="factors" class="section">
             <h2>承認要因の詳細分析（加点設問含む）</h2>
 
-            <h3>加点②（事業場内最低賃金）と承認率</h3>
+            <h3>加点②ファイル提出と承認率</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>加点②状況</th>
+                        <th>加点②ファイル</th>
                         <th>申請数</th>
                         <th>承認数</th>
                         <th>承認率</th>
@@ -542,41 +542,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="color: var(--success);"><strong>対象外</strong></td>
-                        <td>3件</td>
+                        <td>なし</td>
+                        <td>10件</td>
                         <td>3件</td>
                         <td>
                             <div class="progress-bar">
-                                <div class="fill" style="width: 100%; background: var(--success);">100%</div>
+                                <div class="fill" style="width: 30%; background: var(--warning);">30.0%</div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>対象</td>
-                        <td>9件</td>
+                        <td>あり</td>
+                        <td>10件</td>
                         <td>2件</td>
                         <td>
                             <div class="progress-bar">
-                                <div class="fill" style="width: 22.2%; background: var(--warning);">22.2%</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>未設定（-）</td>
-                        <td>8件</td>
-                        <td>0件</td>
-                        <td>
-                            <div class="progress-bar">
-                                <div class="fill" style="width: 5%; background: var(--danger);">0%</div>
+                                <div class="fill" style="width: 20%; background: var(--warning);">20.0%</div>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <div class="highlight-box success">
-                <strong>重要発見:</strong> 加点②「対象外」（事業場内最低賃金+63円以上）の企業は<strong>全件承認</strong>（100%）。<br>
-                最低賃金を大幅に上回る給与水準の企業は審査で有利になる可能性が高い。
+            <div class="highlight-box">
+                <strong>分析結果:</strong> 加点②ファイルの提出有無は承認率に大きな影響を与えていない。<br>
+                ファイルなし30%、ファイルあり20%と、むしろ提出しない方がわずかに高い結果となった。
             </div>
 
             <h3>過去申請経験と承認率</h3>
@@ -857,10 +847,6 @@
             <ul class="checklist">
                 <li>
                     <div class="checklist-icon"></div>
-                    <div><strong>加点②「対象外」</strong>のクライアントか（承認率100%）</div>
-                </li>
-                <li>
-                    <div class="checklist-icon"></div>
                     <div><strong>過去申請経験なし</strong>のクライアントか（承認率60%）</div>
                 </li>
                 <li>
@@ -875,19 +861,15 @@
 
             <div class="highlight-box warning">
                 <strong>クライアント選定の優先順位:</strong><br>
-                ◎◎ 加点②「対象外」（承認率100%）- 最低賃金+63円以上の給与水準<br>
                 ◎ 過去申請経験なし（承認率60%）<br>
                 ○ 過去申請経験1~2回（承認率22%）<br>
                 × 過去申請経験3回以上（承認率0%）
             </div>
 
             <div class="highlight-box">
-                <strong>加点設問について:</strong><br>
-                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
-                    <li><strong>加点⓪</strong>: 給与支給総額1.5％増＋最低賃金30円or50円引上げ</li>
-                    <li><strong>加点①</strong>: 最低賃金未満従業員30%以上</li>
-                    <li><strong>加点②</strong>: 事業場内最低賃金+63円以上 → <span style="color: var(--success);"><strong>「対象外」が有利</strong></span></li>
-                </ul>
+                <strong>加点②ファイルについて:</strong><br>
+                加点②ファイルの提出有無は承認率に大きな影響なし（なし30% / あり20%）。<br>
+                加点を狙うかどうかはクライアントの状況に応じて判断。
             </div>
         </section>
 
@@ -903,7 +885,7 @@
                         <th>経常利益</th>
                         <th>正規雇用</th>
                         <th>過去申請</th>
-                        <th>加点②</th>
+                        <th>加点②ファイル</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -913,7 +895,7 @@
                         <td style="color: var(--success);">212万円</td>
                         <td>0人</td>
                         <td>あり(1~2回)</td>
-                        <td style="color: var(--success);"><strong>対象外</strong></td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>株式会社BE BEe NEXT</td>
@@ -921,7 +903,7 @@
                         <td style="color: var(--danger);">-193万円</td>
                         <td>0人</td>
                         <td>あり(1~2回)</td>
-                        <td style="color: var(--success);"><strong>対象外</strong></td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>株式会社TODOKELL</td>
@@ -929,7 +911,7 @@
                         <td style="color: var(--danger);">-293万円</td>
                         <td>3人</td>
                         <td style="color: var(--success);"><strong>なし</strong></td>
-                        <td style="color: var(--success);"><strong>対象外</strong></td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>篠崎峻</td>
@@ -937,7 +919,7 @@
                         <td style="color: var(--success);">101万円</td>
                         <td>0人</td>
                         <td style="color: var(--success);"><strong>なし</strong></td>
-                        <td>対象</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>株式会社tokyoegg</td>
@@ -945,7 +927,7 @@
                         <td style="color: var(--danger);">-7万円</td>
                         <td>0人</td>
                         <td style="color: var(--success);"><strong>なし</strong></td>
-                        <td>対象</td>
+                        <td>なし</td>
                     </tr>
                 </tbody>
             </table>
@@ -959,7 +941,7 @@
                         <th>経常利益</th>
                         <th>正規雇用</th>
                         <th>過去申請</th>
-                        <th>加点②</th>
+                        <th>加点②ファイル</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -969,7 +951,7 @@
                         <td style="color: var(--danger);">-265万円</td>
                         <td>1人</td>
                         <td>あり(1~2回)</td>
-                        <td>対象</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>Airera株式会社</td>
@@ -977,7 +959,7 @@
                         <td style="color: var(--danger);">-331万円</td>
                         <td>0人</td>
                         <td>なし</td>
-                        <td>-</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>則松智史</td>
@@ -985,7 +967,7 @@
                         <td style="color: var(--success);">564万円</td>
                         <td>0人</td>
                         <td>あり</td>
-                        <td>-</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>株式会社SHARE EATS</td>
@@ -993,7 +975,7 @@
                         <td style="color: var(--danger);">-412万円</td>
                         <td>1人</td>
                         <td>なし</td>
-                        <td>-</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>小林央宜</td>
@@ -1001,7 +983,7 @@
                         <td style="color: var(--danger);">-95万円</td>
                         <td>0人</td>
                         <td>あり(1~2回)</td>
-                        <td>対象</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>榎原圭太</td>
@@ -1009,7 +991,7 @@
                         <td style="color: var(--danger);">-68万円</td>
                         <td>0人</td>
                         <td style="color: var(--danger);"><strong>あり(3~5回)</strong></td>
-                        <td>対象</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>株式会社アルイトコー</td>
@@ -1017,7 +999,7 @@
                         <td style="color: var(--danger);">-1,219万円</td>
                         <td>2人</td>
                         <td style="color: var(--danger);"><strong>あり(3~5回)</strong></td>
-                        <td>対象</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>株式会社春クリーン</td>
@@ -1025,7 +1007,7 @@
                         <td style="color: var(--success);">154万円</td>
                         <td>1人</td>
                         <td style="color: var(--danger);"><strong>あり(3~5回)</strong></td>
-                        <td>対象</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>合同会社Excellent</td>
@@ -1033,7 +1015,7 @@
                         <td style="color: var(--success);">198万円</td>
                         <td>0人</td>
                         <td>あり(1~2回)</td>
-                        <td>-</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>合同会社en</td>
@@ -1041,7 +1023,7 @@
                         <td style="color: var(--danger);">-177万円</td>
                         <td>1人</td>
                         <td>あり(1~2回)</td>
-                        <td>-</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>株式会社やどり木</td>
@@ -1049,7 +1031,7 @@
                         <td style="color: var(--success);">84万円</td>
                         <td>1人</td>
                         <td>あり(1~2回)</td>
-                        <td>-</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>有限会社會ダイニング</td>
@@ -1057,7 +1039,7 @@
                         <td style="color: var(--success);">3万円</td>
                         <td>0人</td>
                         <td>あり(1~2回)</td>
-                        <td>-</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>株式会社パワープラント</td>
@@ -1065,7 +1047,7 @@
                         <td style="color: var(--success);">92万円</td>
                         <td>0人</td>
                         <td>あり(1~2回)</td>
-                        <td>-</td>
+                        <td>あり</td>
                     </tr>
                     <tr>
                         <td>株式会社ThreeTree</td>
@@ -1073,7 +1055,7 @@
                         <td style="color: var(--success);">278万円</td>
                         <td>1人</td>
                         <td>あり</td>
-                        <td>-</td>
+                        <td>なし</td>
                     </tr>
                     <tr>
                         <td>株式会社ファインヴェルク</td>
@@ -1081,7 +1063,7 @@
                         <td style="color: var(--success);">1,856万円</td>
                         <td>2人</td>
                         <td>あり</td>
-                        <td>対象</td>
+                        <td>あり</td>
                     </tr>
                 </tbody>
             </table>
