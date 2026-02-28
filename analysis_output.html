@@ -519,6 +519,11 @@
                         <td>承認群の75%がAIツール言及</td>
                     </tr>
                     <tr>
+                        <td><strong>繰越欠損金（巨額）</strong></td>
+                        <td><span class="star">★★</span></td>
+                        <td>SHARE EATSは5,689万円の累積損失→不承認（初回申請グループ内）</td>
+                    </tr>
+                    <tr>
                         <td>加点②ファイル提出</td>
                         <td><span class="star">★</span></td>
                         <td>なし=30%、あり=20%（大差なし）</td>
@@ -706,8 +711,89 @@
 
             <div class="highlight-box">
                 <strong>示唆:</strong> 初回申請であっても営業赤字が大きい企業は不承認の傾向がある。<br>
-                営業利益の赤字幅が<strong>300万円以上</strong>の場合、承認のハードルが上がる可能性がある。<br>
-                ※ ただし繰越欠損金・広告宣伝費・役員報酬はマニュアルに記載がなく、決算書の直接確認が必要。
+                営業利益の赤字幅が<strong>300万円以上</strong>の場合、承認のハードルが上がる可能性がある。
+            </div>
+
+            <h3>初回申請5社：決算書による追加分析（繰越欠損金・広告宣伝費・役員報酬）</h3>
+            <p style="color: var(--gray-600); margin-bottom: 1rem;">決算書・確定申告書から追加の財務指標を抽出して比較</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>クライアント</th>
+                        <th>結果</th>
+                        <th>繰越欠損金</th>
+                        <th>役員報酬</th>
+                        <th>広告宣伝費</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f0fdf4;">
+                        <td>TODOKELL</td>
+                        <td><span class="badge badge-success">承認</span></td>
+                        <td>記載なし</td>
+                        <td>420万円</td>
+                        <td>65万円</td>
+                    </tr>
+                    <tr style="background: #f0fdf4;">
+                        <td>篠崎峻</td>
+                        <td><span class="badge badge-success">承認</span></td>
+                        <td>記載なし</td>
+                        <td>ー（個人事業主）</td>
+                        <td>記載なし</td>
+                    </tr>
+                    <tr style="background: #f0fdf4;">
+                        <td>tokyoegg</td>
+                        <td><span class="badge badge-success">承認</span></td>
+                        <td>記載なし</td>
+                        <td>記載なし</td>
+                        <td>記載なし</td>
+                    </tr>
+                    <tr style="background: #fef2f2;">
+                        <td>Airera</td>
+                        <td><span class="badge badge-danger">不承認</span></td>
+                        <td>記載なし</td>
+                        <td>240万円</td>
+                        <td>52万円</td>
+                    </tr>
+                    <tr style="background: #fef2f2;">
+                        <td>SHARE EATS</td>
+                        <td><span class="badge badge-danger">不承認</span></td>
+                        <td style="color: var(--danger);"><strong>5,689万円</strong></td>
+                        <td>24万円</td>
+                        <td>6万円</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box danger" style="margin-top: 1.5rem;">
+                <strong>注目:</strong> SHARE EATSは<strong>繰越欠損金5,689万円</strong>（過年度からの累積赤字）を抱えており、財務健全性の面で審査上大きなマイナス要因となった可能性が高い。<br>
+                第1期（H29）からの損失が7年間にわたり積み上がっており、事業継続性への懸念が審査に影響したと考えられる。
+            </div>
+
+            <div class="comparison" style="margin-top: 1.5rem;">
+                <div class="comparison-box good">
+                    <h4>承認群の共通点（追加分析）</h4>
+                    <ul>
+                        <li>繰越欠損金なし（財務健全性が高い）</li>
+                        <li>役員報酬が売上規模に見合っている</li>
+                        <li>広告宣伝費より営業利益の赤字幅が小さい</li>
+                    </ul>
+                </div>
+                <div class="comparison-box bad">
+                    <h4>不承認群の共通点（追加分析）</h4>
+                    <ul>
+                        <li>SHARE EATS：繰越欠損金<strong>5,689万円</strong>の累積損失</li>
+                        <li>Airera：営業利益-701万円の大幅赤字（本業の収益力に課題）</li>
+                        <li>両社とも営業赤字が300万円超</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box warning">
+                <strong>クライアント選定への示唆:</strong><br>
+                ① 営業利益の赤字幅が<strong>300万円以上</strong>は要注意<br>
+                ② <strong>繰越欠損金が大きい</strong>（特に数千万円規模）企業は審査で不利になる可能性がある<br>
+                ③ 役員報酬・広告宣伝費は今回のサンプルでは明確な傾向なし（要継続観察）
             </div>
 
             <h3>テキスト特徴量の比較</h3>
@@ -938,6 +1024,14 @@
                 <li>
                     <div class="checklist-icon"></div>
                     <div>過去申請経験3回以上<strong>ではない</strong>か（承認率0%）</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div><strong>繰越欠損金が数千万円規模でない</strong>か（過年度からの累積赤字は審査でマイナス要因）</div>
+                </li>
+                <li>
+                    <div class="checklist-icon"></div>
+                    <div>営業利益の赤字幅が<strong>300万円未満</strong>か（300万円超は不承認傾向）</div>
                 </li>
             </ul>
 
