@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECモール学習ツール 検証レポート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6fa;
+  --white: #ffffff;
+  --surface: #f0f2f8;
+  --border: #dde1ee;
+  --border-light: #eaecf4;
+  --text: #1a1d2e;
+  --text-sub: #6b7280;
+  --text-light: #9ca3af;
+  --accent: #3b6ef6;
+  --accent-light: #ebf0fe;
+  --high: #e03e3e;
+  --high-bg: #fff0f0;
+  --high-border: #ffd0d0;
+  --mid: #d97706;
+  --mid-bg: #fffbeb;
+  --mid-border: #fde68a;
+  --low: #059669;
+  --low-bg: #ecfdf5;
+  --low-border: #a7f3d0;
+  --manual: #7c3aed;
+  --manual-bg: #f5f3ff;
+  --manual-border: #ddd6fe;
+  --ok: #059669;
+  --ok-bg: #ecfdf5;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 48px 32px;
+}
+.header-inner { max-width: 1100px; margin: 0 auto; }
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin-bottom: 18px;
+  line-height: 1.3;
+}
+.meta-grid {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.meta-cell {
+  padding: 10px 20px;
+  border-right: 1px solid var(--border-light);
+  flex: 1;
+  min-width: 160px;
+}
+.meta-cell:last-child { border-right: none; }
+.meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-light);
+  margin-bottom: 2px;
+}
+.meta-val { font-size: 13px; font-weight: 500; color: var(--text); }
+
+/* ── NAV ── */
+.toc-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.toc-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+.toc-item {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-sub);
+  text-decoration: none;
+  padding: 12px 18px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.toc-item:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── MAIN ── */
+.page-body { max-width: 1100px; margin: 0 auto; padding: 32px 48px 80px; }
+
+section { margin-bottom: 56px; }
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--border-light);
+}
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-light);
+  letter-spacing: .1em;
+  flex-shrink: 0;
+}
+.section-head h2 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+/* ── SCORE CARD ── */
+.score-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.score-grade {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--mid-bg);
+  border: 2px solid var(--mid-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--mid);
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
+.score-body { flex: 1; min-width: 200px; }
+.score-body h2 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.score-body p { font-size: 13px; color: var(--text-sub); margin-bottom: 14px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.chip-dot { width: 6px; height: 6px; border-radius: 50%; }
+.chip-high   { background: var(--high-bg);   color: var(--high);   border: 1px solid var(--high-border); }
+.chip-mid    { background: var(--mid-bg);    color: var(--mid);    border: 1px solid var(--mid-border); }
+.chip-low    { background: var(--low-bg);    color: var(--low);    border: 1px solid var(--low-border); }
+.chip-manual { background: var(--manual-bg); color: var(--manual); border: 1px solid var(--manual-border); }
+
+/* ── PRIORITY CARDS ── */
+.priority-list { display: flex; flex-direction: column; gap: 10px; }
+.pcard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.pcard-high   { border-left-color: var(--high); }
+.pcard-mid    { border-left-color: var(--mid);  }
+.pcard-manual { border-left-color: var(--manual); }
+.pcard-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+  padding-top: 2px;
+}
+.pcard-high   .pcard-num { color: var(--high); }
+.pcard-mid    .pcard-num { color: var(--mid);  }
+.pcard-manual .pcard-num { color: var(--manual); }
+.pcard-body { flex: 1; }
+.pcard-tags { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.tag-high    { background: var(--high-bg);   color: var(--high);   }
+.tag-mid     { background: var(--mid-bg);    color: var(--mid);    }
+.tag-manual  { background: var(--manual-bg); color: var(--manual); }
+.tag-type    { background: var(--accent-light); color: var(--accent); }
+.pcard-body strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; }
+.pcard-body p { font-size: 13px; color: var(--text-sub); }
+
+/* ── TABLE ── */
+.legend-row { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; margin-bottom: 16px; color: var(--text-sub); }
+.legend-row span { display: flex; align-items: center; gap: 5px; }
+.ldot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--white);
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--surface);
+  padding: 11px 14px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr { border-bottom: 1px solid var(--border-light); transition: background .12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--surface); }
+tbody td { padding: 12px 14px; vertical-align: top; }
+.td-no {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-light);
+  text-align: center;
+  white-space: nowrap;
+}
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge-high   { background: var(--high-bg);   color: var(--high);   border: 1px solid var(--high-border); }
+.badge-mid    { background: var(--mid-bg);    color: var(--mid);    border: 1px solid var(--mid-border); }
+.badge-low    { background: var(--low-bg);    color: var(--low);    border: 1px solid var(--low-border); }
+.badge-ok     { background: var(--ok-bg);     color: var(--ok);     border: 1px solid var(--low-border); }
+.badge-manual { background: var(--manual-bg); color: var(--manual); border: 1px solid var(--manual-border); }
+.type-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: var(--accent-light);
+  color: var(--accent);
+  white-space: nowrap;
+  font-weight: 500;
+}
+.verified-mark {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--manual);
+  background: var(--manual-bg);
+  border: 1px solid var(--manual-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+.diff-old { font-size: 12px; color: var(--high); }
+.diff-new { font-size: 12px; color: var(--low); }
+
+/* ── CHAPTER ACCORDION ── */
+.chapter-list { display: flex; flex-direction: column; gap: 8px; }
+.chapter-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.chapter-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .12s;
+}
+.chapter-head:hover { background: var(--surface); }
+.ch-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-light);
+  letter-spacing: .08em;
+  flex-shrink: 0;
+  width: 52px;
+}
+.chapter-head h3 { font-size: 14px; font-weight: 700; flex: 1; }
+.ch-badges { display: flex; gap: 5px; flex-shrink: 0; }
+.ch-arrow {
+  font-size: 10px;
+  color: var(--text-light);
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.chapter-card.open .ch-arrow { transform: rotate(90deg); }
+.chapter-body {
+  display: none;
+  padding: 16px 20px 18px 84px;
+  border-top: 1px solid var(--border-light);
+}
+.chapter-card.open .chapter-body { display: block; }
+.finding { margin-bottom: 14px; }
+.finding:last-child { margin-bottom: 0; }
+.finding-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.fl-ok     { background: var(--low-bg);    color: var(--low);    }
+.fl-warn   { background: var(--mid-bg);    color: var(--mid);    }
+.fl-add    { background: var(--accent-light); color: var(--accent); }
+.fl-manual { background: var(--manual-bg); color: var(--manual); }
+.finding ul { padding-left: 16px; }
+.finding li { font-size: 13px; color: var(--text-sub); margin-bottom: 3px; }
+.finding li b { color: var(--text); }
+
+/* ── ADD LIST ── */
+.add-list { display: flex; flex-direction: column; gap: 8px; }
+.add-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.add-icon { font-size: 18px; flex-shrink: 0; }
+.add-body strong { font-weight: 700; font-size: 13px; display: block; margin-bottom: 3px; }
+.add-body p { font-size: 12px; color: var(--text-sub); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 20px 48px;
+  font-size: 12px;
+  color: var(--text-sub);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header, .page-body, footer { padding-left: 20px; padding-right: 20px; }
+  .chapter-body { padding-left: 20px; }
+  .score-card { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-eyebrow">Verification Report · 初回 2026.04.09 ／ 再確認 2026.04.11</div>
+    <h1>ECモール学習ツール 検証レポート <span style="font-size:16px;font-weight:400;color:var(--text-sub)">（修正後再確認版）</span></h1>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-label">学習ツール</div><div class="meta-val">learn-ecm-1.liveecdev.com</div></div>
+      <div class="meta-cell"><div class="meta-label">実ECモール</div><div class="meta-val">earlybird-mall.com</div></div>
+      <div class="meta-cell"><div class="meta-label">検証章数</div><div class="meta-val">全12章</div></div>
+      <div class="meta-cell"><div class="meta-label">検証方法</div><div class="meta-val">ブラウザ自動操作 + 目視確認（事実確認済）</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="toc-nav">
+  <div class="toc-inner">
+    <a class="toc-item" href="#sec-score">総評</a>
+    <a class="toc-item" href="#sec-priority">優先修正ポイント</a>
+    <a class="toc-item" href="#sec-table">指摘一覧</a>
+    <a class="toc-item" href="#sec-chapters">章ごとの所見</a>
+    <a class="toc-item" href="#sec-add">追記候補</a>
+  </div>
+</nav>
+
+<div class="page-body">
+
+<!-- ── 1. 総評 ── -->
+<section id="sec-score">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2>総評</h2>
+  </div>
+
+  <div class="score-card">
+    <div class="score-grade">○</div>
+    <div class="score-body">
+      <h2>再確認完了：修正済み15件・未修正1件</h2>
+      <p>指摘16件（仕様確認済みのNo.02を除く）について学習サイトの修正後の状態を全章確認しました。15件は修正済みが確認できました。No.04（第2章Q2-2のチェックボックス説明）のみ未修正が残っています。</p>
+      <div class="chips">
+        <span class="chip chip-low"><span class="chip-dot" style="background:var(--low)"></span>修正済み 15件</span>
+        <span class="chip chip-high"><span class="chip-dot" style="background:var(--high)"></span>未修正 1件</span>
+        <span class="chip chip-mid"><span class="chip-dot" style="background:var(--mid)"></span>仕様確認済（対応不要）1件</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. 優先修正 ── -->
+<section id="sec-priority">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2>再確認結果サマリー</h2>
+  </div>
+  <p style="font-size:13px;color:var(--text-sub);margin-bottom:20px;">修正後の学習サイト（全12章）を再確認した結果です。</p>
+
+  <div class="priority-list">
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.01 クイズ文字化け</span>
+        </div>
+        <strong>全章クイズの問題文・選択肢が正常に表示されるよう修正された</strong>
+        <p>全章のJSソース・ページテキストで日本語が正常に表示されていることを確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.03 デジタルコンテンツ矛盾</span>
+        </div>
+        <strong>第3章Q3-8が「物販のみ対象」として整合。ダウンロードタブの扱いも明記された</strong>
+        <p>第3章Q3-8：「本システムは物販商品のみ。マイページのダウンロードタブはあるが本システムでは使用しない」と修正確認。第4章②も同様に整合済み。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-high">
+      <div class="pcard-num">⚠️</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag tag-high">未修正</span>
+          <span class="tag tag-type">No.04 マイページ登録チェックボックス</span>
+        </div>
+        <strong>第2章Q2-2に「ショップになることを希望しますか？」チェックボックスへの言及がない</strong>
+        <p>Q2-2の本文に「会員登録はマイページからメールアドレスのみで行えます」という記述が残っており、チェックボックスへの説明は追加されていない。引き続き修正が必要。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.05 返金申請ハンバーガーメニュー</span>
+        </div>
+        <strong>第4章③Q4-17にハンバーガーメニュー（☰）からのアクセス方法が明記された</strong>
+        <p>「ベンダーダッシュボード右上のハンバーガーメニュー（☰）をクリックすると非表示のメニューが展開される」と修正確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.06 Q6-1チェックアウト画面の場所</span>
+        </div>
+        <strong>第6章Q6-1に「購入者側の画面・商品→カート→チェックアウト（/checkout/）の経路」が追記された</strong>
+        <p>「運営者・出店者アカウントでは通常この画面を操作しない」という注記も追加。修正確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.07 WC Vendors→ベンダー設定</span>
+        </div>
+        <strong>第7章①の「WC Vendors」表記が「ベンダー設定」に統一された</strong>
+        <p>Q7-1〜Q7-3・この章で学ぶこと、すべての箇所で「ベンダー設定→全てのベンダー」に修正されていることを確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.08 第7章②スクリーンショット</span>
+        </div>
+        <strong>第7章②の各Qに対応する画面の画像に差し替えられ、「※参考画面」注記が付いた</strong>
+        <p>Q7-6・Q7-7・Q7-8それぞれ異なる画像・キャプションに修正されていることを確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.09 商品ロック説明欠落</span>
+        </div>
+        <strong>第7章①Q7-5内に「商品ロック（2種類）」として詳細説明が追記された</strong>
+        <p>「新しい商品をロックする」「商品の編集をロックする」の2種類の違いと用途が説明されていることを確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.10 インサイト説明欠落</span>
+        </div>
+        <strong>第7章②にQ7-9「インサイト（MonsterInsights）とはどのような機能ですか？」が新設された</strong>
+        <p>アクセス方法・確認できる情報（訪問者数・PV・直帰率・流入元等）・活用方法が追記されていることを確認。</p>
+      </div>
+    </div>
+
+    <div class="pcard" style="border-left-color:var(--low)">
+      <div class="pcard-num" style="color:var(--low)">✅</div>
+      <div class="pcard-body">
+        <div class="pcard-tags">
+          <span class="tag" style="background:var(--low-bg);color:var(--low)">修正済み</span>
+          <span class="tag tag-type">No.11〜17 その他の指摘</span>
+        </div>
+        <strong>出店フロー表記・注文ステータス整理・アフィリエイトURL・コミッションタブ名・ライブ配信頻度・SCTA支払期限がすべて修正された</strong>
+        <p>No.12：STEP3に「Stripe（ストライプ）」補足追加。No.13：全ステータス一覧化。No.14：/wcaf_registration/ URL明記。No.15：コミッションタブ名修正。No.16：月2回頻度をQ5-1に追記。No.17：第8章まとめに「月末締め翌月末払い」追記。すべて確認済み。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 3. 指摘一覧 ── -->
+<section id="sec-table">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2>指摘一覧（再確認結果付き）</h2>
+  </div>
+
+  <div class="legend-row">
+    <span><span class="ldot" style="background:var(--low)"></span>✅ 修正済み</span>
+    <span><span class="ldot" style="background:var(--high)"></span>⚠️ 未修正</span>
+    <span><span class="ldot" style="background:var(--mid)"></span>— 対応不要（仕様）</span>
+    <span><span class="ldot" style="background:var(--manual)"></span>目視確認：担当者による直接確認・Claude事実確認済</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36px">No</th>
+          <th style="min-width:120px">箇所</th>
+          <th style="min-width:70px">確認者</th>
+          <th style="min-width:150px">学習ツールの記載</th>
+          <th style="min-width:150px">実サイトの内容</th>
+          <th style="min-width:90px">種別</th>
+          <th style="width:58px">重要度</th>
+          <th style="min-width:190px">修正提案</th>
+          <th style="width:80px">再確認</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="td-no">01</td>
+          <td>全章<br>クイズ問題文</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>問題文が正常表示されるはず（全5問・択一式）</td>
+          <td>問題文が文字化けして表示される</td>
+          <td><span class="type-pill">表示不具合</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>クイズ表示部分のHTMLエンコーディング・フォント設定を確認・修正</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">02</td>
+          <td>全章<br>クイズ仕様</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>（記載なし）</td>
+          <td>間違えた問題だけを再回答できず、全問やり直しになる</td>
+          <td><span class="type-pill">UX仕様</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>仕様であると確認済みのため対応不要</td>
+          <td><span class="badge" style="background:var(--mid-bg);color:var(--mid);border:1px solid var(--mid-border)">— 仕様</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">03</td>
+          <td>第3章 / 第4章②<br>デジタルコンテンツ</td>
+          <td>Claude</td>
+          <td>第4章②「デジタルコンテンツは販売対象外」<br>第3章Q3-8でダウンロードタブを説明</td>
+          <td>実サイトにダウンロードタブ機能が存在。マイページ登録フォームにも記載あり</td>
+          <td><span class="type-pill">説明矛盾</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>現状どちらが正確か確認の上、記述を統一。「現ベンダーは物販中心」等の限定表現も検討</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">04</td>
+          <td>第2章Q2-2<br>マイページ登録</td>
+          <td>Claude</td>
+          <td>「会員登録はメールアドレスのみで行える」</td>
+          <td><b>earlybird-mall.com/my-account/</b> の新規会員登録フォーム内、メールアドレス入力欄の直下に「ショップになる事を希望しますか？」チェックボックスが存在。ただし<b>CSSでデフォルト非表示</b>（display:none）に設定されており、通常は見えない状態。チェックすると「利用規約に同意」欄が出現する仕組み</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>チェックボックスがデフォルト非表示である旨、チェック時に利用規約同意欄が表示される挙動を第2章または第4章①に追記</td>
+          <td><span class="badge badge-high">⚠️ 未修正</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">05</td>
+          <td>第4章③Q4-17<br>返金申請メニュー</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>「返金申請メニューに表示されます」</td>
+          <td>常時表示ではなく、ハンバーガーメニューを開くと表示される</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>「ベンダーダッシュボードのハンバーガーメニューを開くと表示されます」等のアクセス方法を追記</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">06</td>
+          <td>第6章Q6-1<br>チェックアウト画面</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>「チェックアウト画面をご覧ください」と案内</td>
+          <td>運営者・ベンダー両アカウントでチェックアウト画面の場所がわからなかった</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>購入者（一般ユーザー）側の画面であることを明記。URLまたは「商品→カート→チェックアウト」の経路を補足</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">07</td>
+          <td>第7章①Q7-2,3<br>管理メニュー名</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td><span class="diff-old">「WC Vendors→全てのベンダー」</span></td>
+          <td><span class="diff-new">実際は「ベンダー設定→全てのベンダー」</span></td>
+          <td><span class="type-pill">文言不一致</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>学習ツール全体で「WC Vendors」→「ベンダー設定」に統一修正</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">08</td>
+          <td>第7章②<br>スクリーンショット</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>各Q（Q7-6〜Q7-8）に管理画面画像が貼付されている</td>
+          <td>第7章②のすべてのQで同一の画像が表示されており、各画面の内容が確認できない</td>
+          <td><span class="type-pill">画像不一致</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>各Q対応の正しいスクリーンショットに差し替え（アナリティクス・アフィリエイト・決済管理等の実画面を個別掲載）</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">09</td>
+          <td>第7章②<br>商品ロック説明</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>「この章で学ぶこと」に「商品ロックの意味」と記載。クイズに関連問題が存在</td>
+          <td>第7章②本文に商品ロックの説明Q（問）がない。第7章①には説明あり</td>
+          <td><span class="type-pill">説明欠落</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>第7章②に商品ロックの説明Qを追記するか、「この章で学ぶこと」から削除して第7章①に集約</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">10</td>
+          <td>第7章②<br>インサイト説明</td>
+          <td><span class="verified-mark">目視確認済</span></td>
+          <td>「この章で学ぶこと」にインサイト記載あり。クイズに問題が存在</td>
+          <td>第7章②本文にインサイト（MonsterInsights）の説明Qが存在しない</td>
+          <td><span class="type-pill">説明欠落</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>インサイト（MonsterInsights）のアクセス方法・確認できる内容を本文Qとして追記</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">11</td>
+          <td>第1章Q1-4<br>機能一覧</td>
+          <td>Claude</td>
+          <td>ライブコマース機能に「ゲスト配信・投げ銭・配信管理」を含む</td>
+          <td>実サイトトップ機能一覧には「ライブ配信」「ライブ配信管理機能」のみ。ゲスト配信・投げ銭の記載なし</td>
+          <td><span class="type-pill">実サイト変更未反映</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>学習ツール側の記載は詳細で正確。実サイト側が簡略化されていることを補足として注記</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">12</td>
+          <td>第2章Q2-4<br>出店フロー</td>
+          <td>Claude</td>
+          <td>STEP3を「Stripe登録」と記載</td>
+          <td>実サイトトップでは「③登録手続き（カード決済代行会社への登録）」と表現</td>
+          <td><span class="type-pill">文言不一致</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>「Stripe（カード決済代行会社）への登録」と括弧補足を追加</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">13</td>
+          <td>第3章Q3-3<br>注文ステータス</td>
+          <td>Claude</td>
+          <td>「処理中→出荷済み→完了」の流れ</td>
+          <td>実サイトFAQ（/qa/）には注文ステータスの記載なし。「出荷済み」は第4章③Q4-14に記載があるが、第3章内での全ステータス整理が不足している</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>全ステータス（処理中・出荷済み・完了・キャンセル）を一覧化して第3章または第4章③に掲載</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">14</td>
+          <td>第3章<br>アフィリエイト登録</td>
+          <td>Claude</td>
+          <td>「アフィリエイト登録フォームから登録」とのみ説明（URL記載なし）</td>
+          <td>実サイトトップに「アフィリエイト申し込み」ボタン（/wcaf_registration/）</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>登録フォームURL（/wcaf_registration/）またはアクセス経路を補足</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">15</td>
+          <td>第4章③<br>コミッションタブ名</td>
+          <td>Claude +<br><span class="verified-mark">目視確認済</span></td>
+          <td>本文Q4-7まとめに「ベンダーダッシュボード→<b>手数料</b>タブで確認」と記載</td>
+          <td>実際のベンダーダッシュボードのタブ名は「<b>コミッション</b>」。「手数料」タブは存在しない</td>
+          <td><span class="type-pill">文言不一致</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>学習ツール本文Q4-7およびまとめ欄の「手数料タブ」を「コミッションタブ」に修正</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">16</td>
+          <td>第5章<br>ライブ配信頻度</td>
+          <td>Claude</td>
+          <td>配信頻度についての記載なし</td>
+          <td>実サイトFAQ（earlybird-mall.com/qa/）「ライブ配信」カテゴリ内、Q「ライブ配信は何回行われるの？」に「月に2回を目途」と記載</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>第5章に「配信頻度の目安（月2回）」を補足情報として追記</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+        <tr>
+          <td class="td-no">17</td>
+          <td>第8章<br>支払期限</td>
+          <td>Claude</td>
+          <td>SCTAの「月末締め翌月末払い」について言及なし</td>
+          <td>実サイトSCTA（/scta/）に「支払時期：月末締め翌月末払い」と明記</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>第6章または第8章に出店者の支払タイミングとして追記</td>
+          <td><span class="badge badge-ok">✅ 修正済</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 4. 章ごとの所見 ── -->
+<section id="sec-chapters">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2>章ごとの所見</h2>
+  </div>
+  <p style="font-size:13px;color:var(--text-sub);margin-bottom:16px;">章タイトルをクリックすると詳細が展開されます。</p>
+
+  <div class="chapter-list">
+
+    <div class="chapter-card open">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.01</span>
+        <h3>ライブECモールとは</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>ライブコマースの定義・通常ECとの違いの説明</li>
+            <li>マルチベンダー型・出店審査制・多業種対応の説明</li>
+            <li>機能一覧の主要項目（EC・ライブコマース・イベント・メルマガ）</li>
+            <li>ユーザー向けガイドサイト・出店者向けマニュアルの存在</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li>実サイトのトップ機能一覧ではゲスト配信・投げ銭の記載が省略されており学習ツールより簡略</li>
+            <li>「デジタルコンテンツ対応」と触れているが第4章②で「物販のみ」と矛盾が生じる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.02</span>
+        <h3>ユーザー種別と役割</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>ユーザー3種類の定義・購入・ライブのログイン要件</li>
+            <li>出店フロー4ステップ・複数ショップ一括購入不可の説明</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高】</b>登録フォームの「ショップになることを希望しますか？」チェックボックスへの言及なし</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>チェックボックスの意味・用途・チェック時の挙動を追記</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.03</span>
+        <h3>一般ユーザー向け機能</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>マイページメニュー全構成・レビュー即時公開・アフィリエイトダッシュボードURL</li>
+            <li>郵便番号自動補完・決済方法タブでのカード管理</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li>注文ステータス「出荷済み」が実サイトFAQに明示されていない（FAQ記載は「処理中・完了・キャンセル」）</li>
+            <li>「ダウンロード」タブの説明が第4章②の「デジタルコンテンツ対象外」記述と矛盾</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>アフィリエイト登録フォームURL（/wcaf_registration/）を明記</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04①</span>
+        <h3>出店者向け機能：申請・承認・初期設定</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>ベンダーダッシュボードURL・メニュー構成・設定タブ構成</li>
+            <li>承認メール件名・支払い方法3種類</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高】</b>マイページ登録フォームの「ショップになることを希望しますか？」チェックボックスへの言及なし</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04②</span>
+        <h3>出店者向け機能：商品登録・管理</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>ギャラリー画像最大10点・YouTube動画リンク・バリエーション商品・在庫管理・セール価格スケジュール</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高・最重要】</b>「デジタルコンテンツは販売対象外」という記述が第3章のダウンロードタブ説明と矛盾</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>商品登録後の「公開ステータス」（即時公開か審査後かの違い）の説明が不足</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04③</span>
+        <h3>出店者向け機能：注文管理・売上・クーポン</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×2</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>注文一覧の構成・出荷処理→発送完了メール自動送信・CSVエクスポート</li>
+            <li>コミッションのdue/paidステータス・テナント料Stripe決済フロー・返金申請フロー</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-manual">🔍 目視確認済</div>
+          <ul>
+            <li><b>【中】</b>「返金申請」メニューは常時表示ではなく、ハンバーガーメニュー内に格納されている</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中・目視確認済】</b>「返金申請」メニューは常時表示ではなく、ハンバーガーメニュー内に格納されている</li>
+            <li><b>【中・事実確認済】</b>本文Q4-7まとめ欄「ベンダーダッシュボード→手数料タブで確認」と記載しているが、実際のタブ名は「コミッション」（「手数料」タブは存在しない）</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>返金申請メニューへのアクセス方法（ハンバーガーメニューの開き方）を明記</li>
+            <li>追跡番号・配送業者入力フィールドへの言及を追加</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.05</span>
+        <h3>ライブコマース機能</h3>
+        <div class="ch-badges"><span class="badge badge-low">低×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>ライブ配信は運営者のみ予約・配信可（出店者はゲスト参加のみ）</li>
+            <li>商品紐づけは1つのみ・同一時間帯（前後2時間）は予約不可</li>
+            <li>投げ銭5段階（100/500/1000/2000/5000円）・自動アーカイブ化</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>ライブ配信の月間頻度の目安（月2回：実サイトFAQに記載あり）</li>
+            <li>配信開始の具体的な操作手順（管理画面側ボタン操作）をより詳細に記述</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.06</span>
+        <h3>決済・コミッション・手数料精算</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>Stripe決済のみ・Stripe手数料3.6%・モール手数料2.0%・出店料0円（SCTAでも確認）</li>
+            <li>月次自動送金（毎月1日）・due/paidステータス・返金カード反映最大7日</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-manual">🔍 目視確認済</div>
+          <ul>
+            <li><b>【高】</b>Q6-1でチェックアウト画面を参照させているが、運営者・ベンダー両アカウントで場所が不明</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>チェックアウト画面は購入者側の画面であることと、アクセス経路（商品→カート→チェックアウト）を明記</li>
+            <li>「月末締め翌月末払い」（SCTA記載）を出店者の支払タイミングとして追記</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.07①</span>
+        <h3>運営者管理機能：ベンダー管理</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>ベンダーステータス3種類・承認フロー・ベンダー編集タブ構成（6タブ）</li>
+            <li>検証済み・信頼できる/できない設定・商品ロックの説明（第7章①内は正確）</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-manual">🔍 目視確認済</div>
+          <ul>
+            <li><b>【中】</b>「WC Vendors→全てのベンダー」は実際の管理画面では「ベンダー管理→全てのベンダー」と表示される（本文複数箇所に影響）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.07②</span>
+        <h3>運営者管理機能：販売・アナリティクス管理</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×3</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>販売管理→注文（全ベンダー横断）・アナリティクス確認項目・返金処理最大7日</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-manual">🔍 目視確認済</div>
+          <ul>
+            <li><b>【中】</b>第7章②の全Q（Q7-6〜Q7-8）に同一の管理画面画像が貼付されており、各画面の内容が確認できない</li>
+            <li><b>【中】</b>「この章で学ぶこと」に「商品ロックの意味」があるが、本文に説明Qなし。クイズには問題が存在（ソース確認済）</li>
+            <li><b>【中】</b>クイズにインサイト（MonsterInsights）の問題があるが、本文での説明Qが存在しない（ソース確認済）</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>各Qの正しいスクリーンショットに差し替え</li>
+            <li>商品ロックの説明を第7章②内に追記するか第7章①に集約して「この章で学ぶこと」から削除</li>
+            <li>インサイト（MonsterInsights）の確認手順を本文Qとして追記</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.07③</span>
+        <h3>運営者管理機能：コンテンツ・その他管理</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>お知らせURL（/category/news/）・Event Organiserプラグイン・Flamingo・MailPoet</li>
+            <li>ユーザーロール（ベンダー/購読者）の説明</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li>実サイトフッターに「出店者マニュアル（vendor.earlybird-mall.com）」のリンクが未掲載</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.08</span>
+        <h3>法令対応・各種規約</h3>
+        <div class="ch-badges"><span class="badge badge-low">低×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>法定表示4ページURL・各出店者ポリシー4種類</li>
+            <li>未成年者の法定代理人同意要件（FAQでも確認）</li>
+            <li>無償退会期間（180〜150日前の30日間）・違約金（年会費50%）</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>SCTAの「月末締め翌月末払い」は出店者向けの重要事項。第8章または第6章への追記を推奨</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 5. 追記候補 ── -->
+<section id="sec-add">
+  <div class="section-head">
+    <span class="section-num">05</span>
+    <h2>追記候補一覧</h2>
+  </div>
+
+  <div class="add-list">
+    <div class="add-item">
+      <div class="add-icon">🐛</div>
+      <div class="add-body">
+        <strong>クイズ文字化けの修正（至急）</strong>
+        <p>全章共通。エンコーディング・フォント設定を見直す。JSソース上の問題文は正常な日本語。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📝</div>
+      <div class="add-body">
+        <strong>マイページ登録フォームの「ショップになることを希望しますか？」チェックボックス</strong>
+        <p>第2章または第4章①に追記。チェックした場合の挙動（ベンダー申請扱いになる等）を明記。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">⚠️</div>
+      <div class="add-body">
+        <strong>デジタルコンテンツ販売の取り扱い整理（第3章・第4章②の矛盾解消）</strong>
+        <p>現状どちらが正確かを確認の上、統一した記述に修正。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🛒</div>
+      <div class="add-body">
+        <strong>Q6-1チェックアウト画面へのアクセス経路を明記</strong>
+        <p>購入者側の画面であることと「商品→カート→チェックアウト」の経路を第6章に追記。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🏷️</div>
+      <div class="add-body">
+        <strong>第4章③Q4-7まとめ「手数料タブ」→「コミッションタブ」に修正</strong>
+        <p>「ベンダーダッシュボード→手数料タブで確認」という記述を「コミッションタブ」に修正。実際には「手数料」というタブは存在しない。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🔖</div>
+      <div class="add-body">
+        <strong>「WC Vendors」→「ベンダー管理」への全文統一</strong>
+        <p>第7章①（Q7-2・Q7-3・この章で学ぶこと）の「WC Vendors」表記を、実際の管理画面名称「ベンダー管理」に統一修正。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">☰</div>
+      <div class="add-body">
+        <strong>「返金申請」メニューへのアクセス方法（ハンバーガーメニュー）</strong>
+        <p>常時表示でないことと、ハンバーガーメニューから開く手順を第4章③に追記。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🖼️</div>
+      <div class="add-body">
+        <strong>第7章②の全Qスクリーンショットを各画面に合わせて差し替え</strong>
+        <p>アナリティクス・アフィリエイト管理・決済管理等の実画面を個別に掲載。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🔒</div>
+      <div class="add-body">
+        <strong>商品ロック機能の説明を第7章②に追記、またはこの章で学ぶことから削除</strong>
+        <p>第7章②本文にQ（説明）がない。クイズ問題と内容の整合を取る。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📊</div>
+      <div class="add-body">
+        <strong>インサイト（MonsterInsights）の説明Qを第7章②に追記</strong>
+        <p>アクセス方法・確認できる内容（訪問者数・行動等）を本文Qとして追加。クイズとの整合を取る。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📋</div>
+      <div class="add-body">
+        <strong>注文ステータスの正式名称を一覧化</strong>
+        <p>「処理中・出荷済み・完了・キャンセル」を体系的に整理し、第3章または第4章③に掲載。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📺</div>
+      <div class="add-body">
+        <strong>ライブ配信の月間実施頻度（月2回目途）</strong>
+        <p>実サイトFAQ（earlybird-mall.com/qa/）「ライブ配信」カテゴリ内、Q「ライブ配信は何回行われるの？」に「月に2回を目途」と記載あり。第5章に補足情報として追記。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">💴</div>
+      <div class="add-body">
+        <strong>SCTAの「月末締め翌月末払い」</strong>
+        <p>出店者の支払タイミングに関する重要事項として第6章または第8章に追記。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page-body -->
+
+<footer>
+  <span>本レポートはブラウザ自動操作（get_page_text / read_page / web_fetch）による全ページテキスト収集・照合、および担当者による目視確認を統合して作成。目視確認分はClaudeがソース・ページテキストで事実確認済。</span>
+  <span>生成日：2026年4月9日</span>
+</footer>
+
+<script>
+document.querySelectorAll('.chapter-card').forEach((card, i) => {
+  if (i !== 0) card.classList.remove('open');
+});
+</script>
+
+</body>
+</html>
