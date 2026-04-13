@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECモール（銀行振込版）学習ツール 検証レポート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f6fb;
+  --white: #ffffff;
+  --surface: #eef1f8;
+  --border: #dde2f0;
+  --border-light: #e8ecf6;
+  --text: #1c1f30;
+  --text-sub: #64748b;
+  --text-light: #94a3b8;
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
+  --high: #dc2626;
+  --high-bg: #fef2f2;
+  --high-border: #fecaca;
+  --mid: #d97706;
+  --mid-bg: #fffbeb;
+  --mid-border: #fde68a;
+  --low: #16a34a;
+  --low-bg: #f0fdf4;
+  --low-border: #bbf7d0;
+  --manual: #7c3aed;
+  --manual-bg: #f5f3ff;
+  --manual-border: #ddd6fe;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--white);
+  border-bottom: 2px solid var(--border);
+  padding: 36px 48px 28px;
+}
+.header-inner { max-width: 1140px; margin: 0 auto; }
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+  line-height: 1.35;
+}
+header h1 span { color: var(--accent); }
+.meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.meta-cell {
+  padding: 10px 18px;
+  border-right: 1px solid var(--border-light);
+  flex: 1;
+  min-width: 140px;
+}
+.meta-cell:last-child { border-right: none; }
+.meta-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-light); margin-bottom: 2px; }
+.meta-val { font-size: 13px; font-weight: 500; }
+
+/* ── NAV ── */
+.toc-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.toc-inner { max-width: 1140px; margin: 0 auto; display: flex; overflow-x: auto; }
+.toc-item {
+  font-size: 12px; font-weight: 500; color: var(--text-sub);
+  text-decoration: none; padding: 12px 16px;
+  border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.toc-item:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── MAIN ── */
+.page-body { max-width: 1140px; margin: 0 auto; padding: 32px 48px 80px; }
+section { margin-bottom: 52px; }
+.section-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 22px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-light);
+}
+.section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-light); letter-spacing: .1em; }
+.section-head h2 { font-size: 17px; font-weight: 700; }
+
+/* ── SCORE ── */
+.score-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 26px 30px;
+  display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.score-grade {
+  width: 70px; height: 70px; border-radius: 50%;
+  background: var(--mid-bg); border: 2px solid var(--mid-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; font-weight: 700; color: var(--mid);
+  font-family: 'DM Mono', monospace; flex-shrink: 0;
+}
+.score-body { flex: 1; min-width: 200px; }
+.score-body h2 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.score-body p { font-size: 13px; color: var(--text-sub); margin-bottom: 14px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font-size: 12px; font-weight: 700; padding: 4px 12px;
+  border-radius: 999px; display: inline-flex; align-items: center; gap: 5px;
+}
+.chip-dot { width: 6px; height: 6px; border-radius: 50%; }
+.chip-high   { background: var(--high-bg);   color: var(--high);   border: 1px solid var(--high-border); }
+.chip-mid    { background: var(--mid-bg);    color: var(--mid);    border: 1px solid var(--mid-border); }
+.chip-low    { background: var(--low-bg);    color: var(--low);    border: 1px solid var(--low-border); }
+.chip-manual { background: var(--manual-bg); color: var(--manual); border: 1px solid var(--manual-border); }
+
+/* ── PRIORITY ── */
+.priority-list { display: flex; flex-direction: column; gap: 10px; }
+.pcard {
+  background: var(--white); border: 1px solid var(--border); border-left: 4px solid;
+  border-radius: 10px; padding: 15px 18px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.pcard-high   { border-left-color: var(--high); }
+.pcard-mid    { border-left-color: var(--mid);  }
+.pcard-low    { border-left-color: var(--low);  }
+.pcard-manual { border-left-color: var(--manual); }
+.pcard-num { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; flex-shrink: 0; width: 26px; padding-top: 2px; }
+.pcard-high   .pcard-num { color: var(--high); }
+.pcard-mid    .pcard-num { color: var(--mid);  }
+.pcard-low    .pcard-num { color: var(--low);  }
+.pcard-manual .pcard-num { color: var(--manual); }
+.pcard-body { flex: 1; }
+.pcard-tags { display: flex; gap: 6px; margin-bottom: 5px; flex-wrap: wrap; }
+.tag {
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 4px; letter-spacing: .05em; text-transform: uppercase;
+}
+.tag-high    { background: var(--high-bg);   color: var(--high);   }
+.tag-mid     { background: var(--mid-bg);    color: var(--mid);    }
+.tag-low     { background: var(--low-bg);    color: var(--low);    }
+.tag-manual  { background: var(--manual-bg); color: var(--manual); }
+.tag-type    { background: var(--accent-light); color: var(--accent); }
+.pcard-body strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; }
+.pcard-body p { font-size: 13px; color: var(--text-sub); }
+
+/* ── TABLE ── */
+.legend-row { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; margin-bottom: 14px; color: var(--text-sub); }
+.legend-row span { display: flex; align-items: center; gap: 5px; }
+.ldot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); background: var(--white); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--surface); padding: 11px 14px; text-align: left;
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-sub); font-weight: 500;
+  white-space: nowrap; border-bottom: 1px solid var(--border);
+}
+tbody tr { border-bottom: 1px solid var(--border-light); transition: background .12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--surface); }
+tbody td { padding: 12px 14px; vertical-align: top; }
+.td-no { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-light); text-align: center; white-space: nowrap; }
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 5px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.badge-high   { background: var(--high-bg);   color: var(--high);   border: 1px solid var(--high-border); }
+.badge-mid    { background: var(--mid-bg);    color: var(--mid);    border: 1px solid var(--mid-border); }
+.badge-low    { background: var(--low-bg);    color: var(--low);    border: 1px solid var(--low-border); }
+.badge-manual { background: var(--manual-bg); color: var(--manual); border: 1px solid var(--manual-border); }
+.type-pill {
+  display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 11px;
+  background: var(--accent-light); color: var(--accent); white-space: nowrap; font-weight: 500;
+}
+.diff-old { font-size: 12px; color: var(--high); font-family: 'DM Mono', monospace; }
+.diff-new { font-size: 12px; color: var(--low);  font-family: 'DM Mono', monospace; }
+.verified-mark {
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--manual);
+  background: var(--manual-bg); border: 1px solid var(--manual-border);
+  border-radius: 3px; padding: 1px 5px; white-space: nowrap;
+}
+
+/* ── CHAPTER ── */
+.chapter-list { display: flex; flex-direction: column; gap: 8px; }
+.chapter-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.chapter-head {
+  display: flex; align-items: center; gap: 12px; padding: 13px 18px;
+  cursor: pointer; user-select: none; transition: background .12s;
+}
+.chapter-head:hover { background: var(--surface); }
+.ch-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-light); letter-spacing: .08em; flex-shrink: 0; width: 56px; }
+.chapter-head h3 { font-size: 14px; font-weight: 700; flex: 1; }
+.ch-badges { display: flex; gap: 5px; flex-shrink: 0; }
+.ch-arrow { font-size: 10px; color: var(--text-light); flex-shrink: 0; transition: transform .2s; }
+.chapter-card.open .ch-arrow { transform: rotate(90deg); }
+.chapter-body { display: none; padding: 14px 18px 16px 86px; border-top: 1px solid var(--border-light); }
+.chapter-card.open .chapter-body { display: block; }
+.finding { margin-bottom: 12px; }
+.finding:last-child { margin-bottom: 0; }
+.finding-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 6px; padding: 3px 10px; border-radius: 4px; display: inline-block;
+}
+.fl-ok     { background: var(--low-bg);    color: var(--low);    }
+.fl-warn   { background: var(--mid-bg);    color: var(--mid);    }
+.fl-add    { background: var(--accent-light); color: var(--accent); }
+.fl-manual { background: var(--manual-bg); color: var(--manual); }
+.finding ul { padding-left: 16px; }
+.finding li { font-size: 13px; color: var(--text-sub); margin-bottom: 3px; }
+.finding li b { color: var(--text); }
+
+/* ── ADD LIST ── */
+.add-list { display: flex; flex-direction: column; gap: 8px; }
+.add-item {
+  background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+  padding: 13px 16px; display: flex; gap: 13px; align-items: flex-start;
+}
+.add-icon { font-size: 17px; flex-shrink: 0; }
+.add-body strong { font-weight: 700; font-size: 13px; display: block; margin-bottom: 2px; }
+.add-body p { font-size: 12px; color: var(--text-sub); }
+
+/* ── SPECIAL BOX ── */
+.bank-highlight {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 1px solid #bfdbfe; border-radius: 12px; padding: 18px 22px; margin-bottom: 24px;
+}
+.bank-highlight h3 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+.bank-highlight p { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+.bank-highlight .ok   { color: var(--low); font-weight: 700; }
+.bank-highlight .warn { color: var(--mid); font-weight: 700; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 18px 48px; font-size: 12px; color: var(--text-sub);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+@media (max-width: 768px) {
+  header, .page-body, footer { padding-left: 16px; padding-right: 16px; }
+  .chapter-body { padding-left: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-eyebrow">Verification Report · 2026.04.11 · 銀行振込版</div>
+    <h1>ECモール学習ツール（銀行振込版）<br><span>検証レポート</span></h1>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-label">学習ツール</div><div class="meta-val">learn-ecm-3.liveecdev.com</div></div>
+      <div class="meta-cell"><div class="meta-label">実ECモール</div><div class="meta-val">24h-beauty-mall.com</div></div>
+      <div class="meta-cell"><div class="meta-label">確認アカウント</div><div class="meta-val">運営者 / ベンダー / 顧客</div></div>
+      <div class="meta-cell"><div class="meta-label">検証章数</div><div class="meta-val">全11章（第1〜8章）</div></div>
+      <div class="meta-cell"><div class="meta-label">検証方法</div><div class="meta-val">ブラウザ自動操作 + URL確認</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc-nav">
+  <div class="toc-inner">
+    <a class="toc-item" href="#sec-score">総評</a>
+    <a class="toc-item" href="#sec-bank">銀行振込フロー評価</a>
+    <a class="toc-item" href="#sec-priority">優先修正ポイント</a>
+    <a class="toc-item" href="#sec-table">指摘一覧</a>
+    <a class="toc-item" href="#sec-chapters">章ごとの所見</a>
+    <a class="toc-item" href="#sec-add">追記候補</a>
+  </div>
+</nav>
+
+<div class="page-body">
+
+<!-- ── 1. 総評 ── -->
+<section id="sec-score">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2>総評</h2>
+  </div>
+
+  <div class="score-card">
+    <div class="score-grade">△</div>
+    <div class="score-body">
+      <h2>部分的に不一致・要修正箇所あり</h2>
+      <p>モール全体の仕組み・法令対応・アフィリエイト・ライブコマースの基本説明は概ね正確です。ただし<b>出店申請フォームURL・ショップ数・顧客アカウント登録場所・ナビゲーション名称</b>に実サイトとの不一致が複数確認されました。特に補助金実地検査で「ショップ数を答える」場面では学習ツールの数値（7店）と実サイト（2店）が大きく乖離しており要注意です。銀行振込フローの説明自体は構造的に正確です。</p>
+      <div class="chips">
+        <span class="chip chip-high"><span class="chip-dot" style="background:var(--high)"></span>高 6件</span>
+        <span class="chip chip-mid"><span class="chip-dot" style="background:var(--mid)"></span>中 8件</span>
+        <span class="chip chip-low"><span class="chip-dot" style="background:var(--low)"></span>低 4件</span>
+        <span class="chip chip-manual"><span class="chip-dot" style="background:var(--manual)"></span>要確認 3件</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. 銀行振込フロー評価 ── -->
+<section id="sec-bank">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2>銀行振込フロー評価</h2>
+  </div>
+
+  <div class="bank-highlight">
+    <h3>🏦 銀行振込フロー（第6章）の妥当性評価</h3>
+    <p>
+      <span class="ok">✅ 精算方法の説明は正確</span>：「自動引き落としではなく手動精算（売上レポート確認→請求書メール送信→出店者が銀行振込）」という流れは実サイトの仕組みと一致しています。<br><br>
+      <span class="ok">✅ 設定場所の説明は正確</span>：「自店舗管理→支払い→銀行振込（日本国内向け）」で請求用口座を設定し、「売上レポート→テナントリスト」で手数料率を設定するという説明は実サイトの操作画面と一致しています。<br><br>
+      <span class="ok">✅ 手数料率（15%）の明記あり</span>：「実運用では15%」と明記されており、テスト値と本番値の区別も説明されています。<br><br>
+      <span class="warn">⚠️ 顧客側の銀行振込支払いフローの説明が不足</span>：第6章は運営者目線の「テナント料請求」フローのみで、一般購入者が「銀行振込」を決済方法として選んだ場合の入金確認・注文ステータス更新フローについての説明がありません。出店者の設定（第4章③）で銀行振込決済を有効化できると説明されているため、購入者側の銀行振込フローも補足が必要です。<br><br>
+      <span class="warn">⚠️ 「自店舗管理→支払い」の注意書きの位置</span>：この設定が「運営者のショップ用ではなくテナント料請求専用」という注意書きは学習ツールにありますが、実地検査では混乱しやすい箇所のため、より目立つ形での強調が推奨されます。
+    </p>
+  </div>
+</section>
+
+<!-- ── 3. 優先修正ポイント ── -->
+<section id="sec-priority">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2>優先修正ポイント</h2>
+  </div>
+
+  <div class="priority-list">
+
+    <div class="pcard pcard-high">
+      <div class="pcard-num">1</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-high">高</span><span class="tag tag-type">URL不一致</span></div>
+        <strong>第4章①：出店申請フォームURLが実ナビゲーションと異なる</strong>
+        <p>学習ツールでは出店申請フォームURL を <code>/shop_opening_form/</code> と説明しているが、実サイトのナビゲーション「出店申し込み」は <code>/shop_opening_app/</code> にリンクしており、<code>/shop_opening_app/</code> が出店案内ページ（フォームへの入口）です。調査員に「出店申し込みはどこから？」と聞かれた場合、ナビの実表記と一致しないため誤案内につながります。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-high">
+      <div class="pcard-num">2</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-high">高</span><span class="tag tag-type">数値不一致</span></div>
+        <strong>第1章Q1-4：ショップ数「7つ」と実サイト表示「2店」が大きく乖離</strong>
+        <p>学習ツールでは現在のショップ数を「7つ（livingtoolbox / sampleshop / miuratakuya / evahdining / evahyamamoto / bikatsudo0621 / mshukuin）」と記載。しかし実サイトのショップリスト（/shops/）には「サンプルショップ・惠葉乃葵（エヴァノキ）」の2店のみ表示されています。補助金実地検査でショップ数・ショップ名を聞かれた際に誤答となります。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-high">
+      <div class="pcard-num">3</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-high">高</span><span class="tag tag-type">説明不足</span></div>
+        <strong>第2章Q2-2：顧客のアカウント登録場所の説明が実サイトと不一致</strong>
+        <p>学習ツールでは「一般ユーザーは各ショップのマイアカウントページ（例：24h-beauty-mall.com/sampleshop/my-account/）で登録」と説明しているが、実サイトではトップページにも <code>/my-account/</code> が存在し、ナビゲーションの「ログイン」もトップの <code>/my-account/</code> を指しています。顧客が実際にどこで登録すべきかの案内が不明確です。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-high">
+      <div class="pcard-num">4</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-high">高</span><span class="tag tag-type">名称不一致</span></div>
+        <strong>第7章：アフィリエイトナビリンク名称「アフィリエイト」が実サイトと不一致</strong>
+        <p>学習ツール第7章Q7-2では「モールのトップページのナビゲーション『アフィリエイト』→アフィリエイト登録（/wcaf_registration/）から登録できます」と説明しているが、実サイトのナビ「アフィリエイト」は <code>/affiliate-dashboard/</code>（ダッシュボード）にリンクしており、登録フォーム（/wcaf_registration/）へは直接ではなくダッシュボード経由でのアクセスとなります。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-mid">
+      <div class="pcard-num">5</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-mid">中</span><span class="tag tag-type">URL不一致</span></div>
+        <strong>第3章Q3-1：ショップリストのURL説明なし・実サイトは /shops/</strong>
+        <p>学習ツールでは「モールのトップページの『ショップリスト』からアクセス」と説明するのみでURLを明示していない。実サイトでは <code>/shops/</code> が実際のショップリストページ。第1章のショップURL説明（/sampleshop/など）との整合も確認が必要です。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-mid">
+      <div class="pcard-num">6</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-mid">中</span><span class="tag tag-type">説明不足</span></div>
+        <strong>第6章：購入者側の銀行振込決済フロー（入金確認・ステータス更新）の説明なし</strong>
+        <p>第6章はテナント料の銀行振込精算（運営者→出店者間）のみを説明。購入者が銀行振込を決済方法として選択した場合の振込先案内・入金確認・注文ステータス更新フローの説明が不足しています。</p>
+      </div>
+    </div>
+
+    <div class="pcard pcard-high">
+      <div class="pcard-num">7</div>
+      <div class="pcard-body">
+        <div class="pcard-tags"><span class="tag tag-high">高</span><span class="tag tag-type">説明欠落</span></div>
+        <strong>第1章：まとめ・クイズに「銀行振込精算」の記載があるのに本文に説明Qが存在しない</strong>
+        <p>第1章のまとめに「テナント料（手数料）は運営者が売上レポートで確認し、出店者へ銀行振込で請求します」と記載があり、クイズQ3にも「テナント料の精算方法は？」という問題があります。しかし本文（Q1-1〜Q1-5）のどこにも銀行振込精算フローの説明が存在しません。学習者がまとめとクイズを見ても根拠となる本文がなく理解できない構造であり、補助金実地検査の重要な確認ポイントとして本文へのQ新設が必要です。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 4. 指摘一覧 ── -->
+<section id="sec-table">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2>指摘一覧</h2>
+  </div>
+
+  <div class="legend-row">
+    <span><span class="ldot" style="background:var(--high)"></span>高：誤操作・誤認につながる恐れ</span>
+    <span><span class="ldot" style="background:var(--mid)"></span>中：混乱・迷いが生じる可能性</span>
+    <span><span class="ldot" style="background:var(--low)"></span>低：軽微な差異・補足レベル</span>
+    <span><span class="ldot" style="background:var(--manual)"></span>要確認：ログイン後画面のため未確認</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36px">No</th>
+          <th style="min-width:110px">箇所</th>
+          <th style="min-width:60px">確認者</th>
+          <th style="min-width:150px">学習ツールの記載</th>
+          <th style="min-width:150px">実サイトの内容</th>
+          <th style="min-width:90px">種別</th>
+          <th style="width:58px">重要度</th>
+          <th style="min-width:170px">修正提案</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="td-no">01</td>
+          <td>第4章①<br>Q4-1-1<br>出店申請URL</td>
+          <td>Claude</td>
+          <td>「出店申請フォームページ（<span class="diff-old">/shop_opening_form/</span>）」と説明</td>
+          <td>実ナビゲーション「出店申し込み」は <span class="diff-new">/shop_opening_app/</span>（出店案内ページ）を指す。<code>/shop_opening_form/</code> はフォーム本体として存在するが、ナビから直接辿れない</td>
+          <td><span class="type-pill">URL不一致</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>「ナビゲーション『出店申し込み』（/shop_opening_app/）→ページ内リンクから申請フォーム（/shop_opening_form/）へ進む」という2ステップの流れに修正</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">02</td>
+          <td>第1章<br>Q1-4<br>ショップ数・一覧</td>
+          <td>Claude</td>
+          <td>「現在7つのショップがある（livingtoolbox / sampleshop / miuratakuya / evahdining / evahyamamoto / bikatsudo0621 / mshukuin）」</td>
+          <td>実サイト /shops/ には「サンプルショップ・惠葉乃葵（エヴァノキ）」の2店のみ表示</td>
+          <td><span class="type-pill">数値不一致</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>実サイトの現在のショップ数・ショップ名に合わせて更新。または「現在X店が出店中（随時変動）」として動的な表現に変更</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">03</td>
+          <td>第2章<br>Q2-2<br>顧客登録場所</td>
+          <td>Claude</td>
+          <td>「各ショップのマイアカウントページで登録（例：/sampleshop/my-account/）」</td>
+          <td>実サイトのトップページナビ「ログイン」は <code>/my-account/</code>（トップページ直下）を指す。顧客がトップから登録できる</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>「トップページの /my-account/ でも登録可能（購入は各ショップのマイアカウントが必要）」という併記説明に修正</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">04</td>
+          <td>第7章<br>Q7-2<br>アフィリエイト登録</td>
+          <td>Claude</td>
+          <td>「ナビゲーション『アフィリエイト』→アフィリエイト登録（/wcaf_registration/）から登録」</td>
+          <td>実ナビ「アフィリエイト」は <code>/affiliate-dashboard/</code> にリンク。登録フォーム（/wcaf_registration/）は別URL</td>
+          <td><span class="type-pill">URL・導線不一致</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>「ナビ『アフィリエイト』はダッシュボード（/affiliate-dashboard/）へのリンク。未登録者は /wcaf_registration/ から登録」と2段階で説明</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">05</td>
+          <td>第3章<br>Q3-1<br>ショップリストURL</td>
+          <td>Claude</td>
+          <td>「ショップリスト」からアクセスと説明するのみ（URL明記なし）</td>
+          <td>実サイトのショップリストは <code>/shops/</code>。ナビリンクも /shops/ を指す</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>「モールのトップページナビゲーション『ショップリスト』（/shops/）から各ショップへ移動」とURLを明記</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">06</td>
+          <td>第6章<br>購入者側<br>銀行振込フロー</td>
+          <td>Claude</td>
+          <td>第6章全体が運営者→出店者間のテナント料精算（銀行振込）のみ説明</td>
+          <td>第4章③で出店者が銀行振込決済を設定できることが説明されているが、購入者が銀行振込を選択した際のフロー（振込先表示・入金確認・ステータス変更）の説明がない</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>第4章④または第6章に「購入者が銀行振込を選択した場合の注文後フロー」を追記</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">07</td>
+          <td>第4章③<br>Q4-3-3<br>決済方法説明</td>
+          <td>Claude</td>
+          <td>「Stripe・PayPal・銀行振込などから選択できます」と説明</td>
+          <td>実サイトはサブディレクトリ型マルチサイトのため、決済設定は各ショップ単位。ショップごとに有効な決済方法が異なる可能性あり。銀行振込が実際に全ショップで利用可能かは未確認</td>
+          <td><span class="type-pill">要確認</span></td>
+          <td><span class="badge badge-manual">要確認</span></td>
+          <td>各ショップで銀行振込が実際に設定可能か、ベンダーアカウントで設定画面を確認の上修正</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">08</td>
+          <td>第5章<br>Q5-6・クイズQ6<br>ライブ視聴URL</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>Q5-6「/alv_watch_user/ または /live_schedule/ から視聴」と説明。クイズQ6「配信スケジュールURLは？→正解は /live_schedule/」</td>
+          <td>/alv_watch_user/（ライブ視聴）と /live_schedule/（配信スケジュール確認）は別用途だが、Q5-6で「視聴場所」として両方を同列に説明しているため、クイズQ6の選択肢に両URLが含まれ<b>正解が2つ存在するように見える</b>。実際の正解は /live_schedule/ のみ</td>
+          <td><span class="type-pill">説明不足・クイズ不整合</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>Q5-6の説明を「ライブを視聴するには /alv_watch_user/、配信スケジュールを確認するには /live_schedule/」と役割別に明確に分けて記述する</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">09</td>
+          <td>第8章<br>Q8-2<br>特定商取引法URL</td>
+          <td>Claude</td>
+          <td>「/tokushoho/ にある」</td>
+          <td>実サイトで /tokushoho/ を確認。フッターリンク「特定商取引法に基づく表記」も /tokushoho/ を指す</td>
+          <td>—</td>
+          <td><span class="badge" style="background:var(--low-bg);color:var(--low);border:1px solid var(--low-border)">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">10</td>
+          <td>第8章<br>Q8-4<br>返金ポリシーURL</td>
+          <td>Claude</td>
+          <td>「/refund_returns/ にある」</td>
+          <td>実サイトで /refund_returns/（ページタイトル：返金およびキャンセル）の存在を確認</td>
+          <td>—</td>
+          <td><span class="badge" style="background:var(--low-bg);color:var(--low);border:1px solid var(--low-border)">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">11</td>
+          <td>第8章<br>Q8-3<br>出店規約URL</td>
+          <td>Claude</td>
+          <td>「出店規約（/term-v/）と利用規約（/term/）の2つを確認」</td>
+          <td>実サイトで /term-v/（出店規約）の存在を確認。フッターに /term/ も存在</td>
+          <td>—</td>
+          <td><span class="badge" style="background:var(--low-bg);color:var(--low);border:1px solid var(--low-border)">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">12</td>
+          <td>第4章①<br>Q4-1-2<br>申請フォーム項目</td>
+          <td>Claude</td>
+          <td>「氏名・メールアドレス・ショップ名・商品説明・住所の5項目」</td>
+          <td>実サイト /shop_opening_form/ のフォームには「申請者氏名・メールアドレス・（予定している）店舗名・出店する店舗、取扱商品の概要・ご住所」の5項目。内容は一致するが「ショップ名」→「（予定している）店舗名」と表現が異なる</td>
+          <td><span class="type-pill">文言不一致</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>フォームの実際のラベル名「（予定している）店舗名」「出店する店舗、取扱商品の概要」に合わせて修正</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">13</td>
+          <td>第3章<br>Q3-7<br>トップナビ構成</td>
+          <td>Claude</td>
+          <td>「モールのトップページのナビゲーション：ショップリスト・出店申し込み・アフィリエイト登録など」と説明</td>
+          <td>実サイトのナビ：ログイン・ショップリスト・お知らせ・出店申し込み・お問い合わせ・アフィリエイト（の6項目）。「アフィリエイト登録」ではなく「アフィリエイト」という名称で、登録ページではなくダッシュボードへのリンク</td>
+          <td><span class="type-pill">文言不一致</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>実際のナビ項目名（ログイン・ショップリスト・お知らせ・出店申し込み・お問い合わせ・アフィリエイト）に合わせて説明を更新</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">14</td>
+          <td>第4章②<br>Q4-2<br>管理画面アクセス</td>
+          <td><span class="verified-mark">要確認</span></td>
+          <td>「参加サイト→サイトネットワーク管理→サイト→サイトを追加」の手順でショップ新規作成</td>
+          <td>運営者アカウントでのログイン後画面未確認のため、実際のメニュー名称・手順の一致を確認できず</td>
+          <td><span class="type-pill">要確認</span></td>
+          <td><span class="badge badge-manual">要確認</span></td>
+          <td>運営者アカウントでログイン後、管理画面ツールバーの「参加サイト」メニューの実表記を確認して照合</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">15</td>
+          <td>第6章<br>Q6-3<br>テナントリスト</td>
+          <td><span class="verified-mark">要確認</span></td>
+          <td>「売上レポート→テナントリストタブ→コミッション%欄に入力→送信」</td>
+          <td>運営者アカウントでのログイン後画面未確認のため、テナントリストの実際の画面・操作の一致を確認できず</td>
+          <td><span class="type-pill">要確認</span></td>
+          <td><span class="badge badge-manual">要確認</span></td>
+          <td>運営者アカウントでログイン後、売上レポートのテナントリストタブの実画面を確認して照合</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">16</td>
+          <td>第1章<br>Q1-1<br>URLドメイン表記</td>
+          <td>Claude</td>
+          <td>「モールのトップページ（24h-beauty-mall.com）が全体を管理し…」と説明</td>
+          <td>実サイトのページタイトルは「株式会社ミキスペース」となっており、サイト名として「24h-beauty-mall」の名称が前面に出ていない場面もある</td>
+          <td><span class="type-pill">説明不足</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>「サイト名：24h-beauty-mall（運営：株式会社ミキスペース）」として正式名称との関係を補足</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">17</td>
+          <td>第5章・第6章<br>全体<br>スクリーンショット</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>各Q・各説明に対応するスクリーンショットが貼付されている</td>
+          <td><b>第5章・第6章ともに貼付されているすべての画像が説明文と異なる内容の画面になっている</b></td>
+          <td><span class="type-pill">画像不一致</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>各Q・各説明に対応する正しい管理画面・操作画面のスクリーンショットに差し替える</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">18</td>
+          <td>第1章<br>まとめ・Q3<br>銀行振込精算説明</td>
+          <td>Claude</td>
+          <td>まとめに「テナント料は運営者が売上レポートで確認し、出店者へ銀行振込で請求」と記載。クイズQ3にも「テナント料の精算方法は？」という問題が存在</td>
+          <td>本文（Q1-1〜Q1-5）には銀行振込精算フローを説明するQが<b>一切存在しない</b>。まとめとクイズに記載があるのに本文に根拠となる説明がなく、学習者が答えを覚えられない構造になっている</td>
+          <td><span class="type-pill">説明欠落</span></td>
+          <td><span class="badge badge-high">高</span></td>
+          <td>本文に「Q1-X テナント料の精算はどのように行われますか？」を新設。「運営者が売上レポートで確認→請求書メール送信→出店者が銀行振込で支払う」という概要フローを記載し、詳細は第6章で説明する旨を案内する</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">19</td>
+          <td>第3章<br>クイズQ6<br>ショップURLパターン</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>クイズQ6「各ショップのURLパターンは？→{ドメイン}/{ショップスラッグ}/」という問題が存在</td>
+          <td>第3章本文（Q3-1〜Q3-7）にショップURLパターンを説明するQが存在しない。URLパターンの説明は第1章Q1-3にある</td>
+          <td><span class="type-pill">説明欠落</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>第3章本文にショップURLパターンの説明Qを追加するか、「URLパターンについては第1章Q1-3参照」と参照先を明記する</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">20</td>
+          <td>第4章①<br>Q4-1-4<br>申請詳細画面の画像</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>「▲ 申請詳細画面」のキャプションで画像が貼付されている</td>
+          <td>貼付されている画像が申請詳細画面とは異なる内容になっている</td>
+          <td><span class="type-pill">画像不一致</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>申請詳細画面（氏名・メール・ショップ名・商品説明・住所が表示された画面）の正しいスクリーンショットに差し替える</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">21</td>
+          <td>第4章②<br>Q4-2-6<br>新規ショップ作成ショートカット</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>「左メニューの『新規ショップ作成』ボタンは何のショートカットですか？→サイトネットワーク管理の新規サイト追加と同じ画面」と説明</td>
+          <td>説明に対応する管理画面のスクリーンショットがなく、どのボタン・どの画面かが視覚的に確認できない</td>
+          <td><span class="type-pill">説明不足（画像なし）</span></td>
+          <td><span class="badge badge-low">低</span></td>
+          <td>左メニューの「新規ショップ作成」ボタンが表示された管理画面のスクリーンショットを追加する</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">22</td>
+          <td>第4章④<br>クイズQ4<br>「処理中」ステータス説明</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>クイズQ4「注文ステータスが『処理中』になっているとは？→支払い完了・出荷前の状態」という問題が存在</td>
+          <td>第4章④本文（Q4-4-1〜Q4-4-7）に「処理中」ステータスが何を意味するかの説明が存在しない</td>
+          <td><span class="type-pill">説明欠落</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>本文Q4-4-5またはその前後に「各ステータスの意味（処理中：支払い完了・出荷前、完了：出荷・取引完了）」を追記する</td>
+        </tr>
+
+        <tr>
+          <td class="td-no">23</td>
+          <td>第8章<br>クイズQ4<br>運営者情報URLの説明</td>
+          <td><span class="verified-mark">目視確認</span></td>
+          <td>クイズQ4「運営者情報ページのURLは？→/company/」という問題が存在</td>
+          <td>第8章本文（Q8-1〜Q8-5）に「/company/」または「運営者情報」ページへの言及が一切存在しない。実サイトフッターには /company/ リンクが存在することを確認済み</td>
+          <td><span class="type-pill">説明欠落</span></td>
+          <td><span class="badge badge-mid">中</span></td>
+          <td>第8章Q8-1の法令表示ページ一覧に「運営者情報（/company/）」を追加する</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 5. 章ごとの所見 ── -->
+<section id="sec-chapters">
+  <div class="section-head">
+    <span class="section-num">05</span>
+    <h2>章ごとの所見</h2>
+  </div>
+  <p style="font-size:13px;color:var(--text-sub);margin-bottom:16px;">章タイトルをクリックすると詳細が展開されます。</p>
+
+  <div class="chapter-list">
+
+    <div class="chapter-card open">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.01</span>
+        <h3>このECモールの仕組みと全体像</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×2</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>サブディレクトリ型マルチサイト構成の説明（24h-beauty-mall.com/{ショップ名}/）</li>
+            <li>「参加サイト→サイトネットワーク管理」での切り替え方法</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高】</b>現在のショップ数が「7つ」と記載されているが、実サイトのショップリストは2店のみ</li>
+            <li><b>【高・説明欠落】</b>まとめに「テナント料（手数料）は運営者が売上レポートで確認し、出店者へ銀行振込で請求します」と記載があり、クイズQ3にも「テナント料の精算方法は？」という問題が存在する。しかし<b>本文（Q1-1〜Q1-5）のどこにも銀行振込精算フローの説明がない</b>。学習者がまとめ・クイズを見ても根拠となる本文がなく、答えを覚えられない構造になっている</li>
+            <li><b>【低】</b>「株式会社ミキスペース」が運営企業名であることの言及なし</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>ショップ数は「随時変動する」旨を注記し、最新情報は実サイトで確認するよう案内</li>
+            <li>本文に「Q1-X テナント料（手数料）の精算はどのように行われますか？」として銀行振込精算フローを説明するQを新設する。内容：「運営者が売上レポートで各ショップの売上を確認し、出店者に請求書をメールで送信、出店者が運営者の口座に銀行振込で支払う」という流れを第1章レベルの概要として記載。詳細は第6章で説明する旨を案内する</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.02</span>
+        <h3>モールを使う3つの立場</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>3種類の立場（一般ユーザー・出店者・運営者）の役割説明</li>
+            <li>出店者アカウントがショップ作成時にメール自動送信される仕組み</li>
+            <li>各ショップのアカウントがモール全体と独立している仕組み</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高】</b>一般ユーザーの登録場所を「各ショップのマイアカウントページ」のみとしているが、実サイトトップにも /my-account/ が存在してナビの「ログイン」リンクがそこを指している</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>「トップページの /my-account/ でも登録可能だが、各ショップで購入するには各ショップのマイアカウントが必要」という整合した説明を追記</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.03</span>
+        <h3>一般ユーザー向け機能</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×2</span><span class="badge badge-low">低×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>商品購入の基本フロー（商品選択→カート→お会計→注文完了）</li>
+            <li>マイアカウントでの注文履歴・住所・パスワード管理</li>
+            <li>お気に入り・レビュー機能の説明</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中】</b>ショップリストURL（/shops/）の明記なし</li>
+            <li><b>【中・目視確認】</b>クイズQ6「各ショップのURLパターンは？」の問題があるが、第3章本文にショップURLパターンの説明が存在しない（説明は第1章Q1-3にある）</li>
+            <li><b>【低】</b>ナビゲーション項目名（「アフィリエイト登録」ではなく「アフィリエイト」）の表記差</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>ショップリストURL（/shops/）を明記</li>
+            <li>第3章本文にショップURLパターンの説明Qを追加するか、「詳しくは第1章Q1-3参照」と案内する</li>
+            <li>各ショップページのナビとトップページのナビの違いを図示すると学習効果が高い</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04①</span>
+        <h3>出店申請と審査</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span><span class="badge badge-low">低×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>フォームの5項目（氏名・メール・ショップ名・商品説明・住所）は内容として一致</li>
+            <li>「出店申請一覧」で申請確認の流れ</li>
+            <li>システム上の承認ボタンがなく、直接メールで断る仕組み</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高】</b>フォームURL「/shop_opening_form/」と実ナビ「/shop_opening_app/」の乖離</li>
+            <li><b>【中・目視確認】</b>Q4-1-4「申請詳細画面」のキャプションで貼付されている画像が、実際の申請詳細画面とは異なる内容になっている</li>
+            <li><b>【低】</b>フォームラベルの表現差（「ショップ名」→「（予定している）店舗名」など）</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>「ナビ『出店申し込み』（/shop_opening_app/）ページ内のリンクから申請フォーム（/shop_opening_form/）へ進む」という2段階の導線を説明に追加</li>
+            <li>Q4-1-4の画像を申請詳細画面の正しいスクリーンショットに差し替える</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04②</span>
+        <h3>出店者のショップを新規開設する</h3>
+        <div class="ch-badges"><span class="badge badge-manual">要確認</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致（構造的に）</div>
+          <ul>
+            <li>サブディレクトリ型マルチサイトでの新規サイト追加の仕組みは構造的に正確</li>
+            <li>サイトアドレスが半角英数字のみである説明</li>
+            <li>管理者メールアドレス入力でアカウント自動送信の仕組み</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【低・目視確認】</b>Q4-2-6「左メニューの『新規ショップ作成』ボタンは何のショートカットですか？」の説明に対応する管理画面のスクリーンショットがなく、視覚的に場所が確認できない</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-manual">🔍 要確認</div>
+          <ul>
+            <li>運営者アカウントログイン後の「参加サイト」メニューの実際の表記・操作パスを確認できていない</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>Q4-2-6に左メニューの「新規ショップ作成」ボタンが表示された管理画面のスクリーンショットを追加する</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04③</span>
+        <h3>ショップのオープン準備をする</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>出店者がログインする場所（自ショップの /my-account/）</li>
+            <li>初期設定ウィザードの5ステップ（住所→配送→税→決済→ストア公開）</li>
+            <li>サイトアイコンの設定場所と表示場所</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中】</b>「決済方法はStripe・PayPal・銀行振込などから選択」とあるが、実際に銀行振込が全ショップで利用可能かは未確認</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.04④</span>
+        <h3>商品登録・注文管理</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>商品登録メニュー（商品→新商品を追加）の説明</li>
+            <li>最低限必要な項目（商品名・価格・画像・公開ステータス）</li>
+            <li>注文確認（自店舗管理→注文）・ステータス変更（処理中→完了）の流れ</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中・目視確認】</b>クイズQ4「注文ステータスが『処理中』になっているとは？→支払い完了・出荷前の状態」という問題があるが、本文に「処理中」ステータスが何を意味するかの説明が存在しない</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>本文Q4-4-5またはその前後に「各注文ステータスの意味（処理中：支払い完了・出荷前の状態、完了：出荷・取引完了の状態）」を追記する</li>
+            <li>銀行振込を決済方法として選んだ購入者の注文が届いた場合のステータス確認・入金確認・完了処理の手順を追記すると実務に直結する</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.05</span>
+        <h3>ライブコマース機能</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×2</span><span class="badge badge-manual">要確認</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致（URL確認済）</div>
+          <ul>
+            <li>ライブ視聴ページ（/alv_watch_user/）の存在・ページ名称</li>
+            <li>配信スケジュールページ（/live_schedule/）の存在・ページ名称</li>
+            <li>ゲスト参加URL（/alv_watch_guest/）の仕組みの説明</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中・目視確認】</b>第5章に貼付されているすべての画像が説明文と異なる内容の画面になっている</li>
+            <li><b>【中・目視確認】</b>Q5-6でライブ視聴（/alv_watch_user/）と配信スケジュール（/live_schedule/）を「視聴場所」として同列に説明しているため、クイズQ6「配信スケジュールを確認するページのURLは？」の選択肢に両URLが含まれ正解が2つ存在するように見える。実際の正解は /live_schedule/ のみ</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-manual">🔍 要確認</div>
+          <ul>
+            <li>管理画面「ライブコマース」メニューの実表記・新規作成画面の項目名</li>
+            <li>ゲスト参加URL（/alv_watch_guest/）の実在確認</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>全画像を説明文に対応する正しいスクリーンショットに差し替える</li>
+            <li>Q5-6の説明を「ライブを視聴するには /alv_watch_user/、配信スケジュールを確認するには /live_schedule/」と役割を明確に分けて説明する</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.06</span>
+        <h3>テナント料の計算と請求（銀行振込）</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>テナント料が手動精算（売上レポート確認→請求書メール→銀行振込）の流れ</li>
+            <li>請求用口座設定場所（自店舗管理→支払い→銀行振込）</li>
+            <li>「この設定は運営者のショップ用ではない」という重要な注意書き</li>
+            <li>実運用手数料率15%の明記とテスト値との区別</li>
+            <li>「売上レポート→テナントリスト→コミッション%設定」の手順</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中・目視確認】</b>第6章に貼付されているすべての画像が説明文と異なる内容の画面になっている</li>
+            <li><b>【中】</b>購入者が銀行振込を選択した場合のフロー説明なし（出店者が入金確認後にステータスを更新する手順等）</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>全画像を説明文に対応する正しいスクリーンショットに差し替える</li>
+            <li>購入者向け銀行振込フロー（振込先表示→入金→出店者が確認→ステータス更新）の説明を追加</li>
+            <li>「自店舗管理→支払い」の注意書きをより目立つ警告ボックスで表示すると誤設定を防げる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.07</span>
+        <h3>アフィリエイト管理</h3>
+        <div class="ch-badges"><span class="badge badge-high">高×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致</div>
+          <ul>
+            <li>アフィリエイト登録URL（/wcaf_registration/）の存在確認</li>
+            <li>アフィリエイトダッシュボード（/affiliate-dashboard/）の存在確認</li>
+            <li>アフィリエイター管理の管理画面からの操作フロー</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【高】</b>学習ツールでは「ナビ『アフィリエイト』→/wcaf_registration/（登録フォーム）」と説明しているが、実ナビの「アフィリエイト」は /affiliate-dashboard/（ダッシュボード）へのリンクであり、登録フォームへの直接導線ではない</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>「ナビ『アフィリエイト』はダッシュボード（/affiliate-dashboard/）へのリンク。未登録者は /wcaf_registration/ から登録する」と段階的に説明</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-head" onclick="this.parentElement.classList.toggle('open')">
+        <span class="ch-num">CH.08</span>
+        <h3>法令対応・各種規約</h3>
+        <div class="ch-badges"><span class="badge badge-mid">中×1</span></div>
+        <span class="ch-arrow">▶</span>
+      </div>
+      <div class="chapter-body">
+        <div class="finding">
+          <div class="finding-label fl-ok">✅ 一致（全URL確認済）</div>
+          <ul>
+            <li>特定商取引法（/tokushoho/）・返金ポリシー（/refund_returns/）・出店規約（/term-v/）・利用規約（/term/）すべて存在確認</li>
+            <li>フッターに特定商取引法・利用規約・個人情報保護方針などのリンクあり</li>
+            <li>各ショップも自身の法令表示が必要という説明</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-warn">⚠️ 気になる点</div>
+          <ul>
+            <li><b>【中・目視確認】</b>クイズQ4「運営者情報ページのURLは？→/company/」という問題があるが、本文（Q8-1〜Q8-5）に「/company/」または「運営者情報」ページへの言及が一切存在しない。実サイトフッターには /company/ リンクが存在することを確認済み</li>
+          </ul>
+        </div>
+        <div class="finding">
+          <div class="finding-label fl-add">💡 追記候補</div>
+          <ul>
+            <li>第8章Q8-1の法令表示ページ一覧に「運営者情報（/company/）」を追加する</li>
+            <li>実サイトフッターには「よくあるご質問（/qa/）」と「お問い合わせ（/contact/）」も含まれているが、学習ツールでの言及なし。補足情報として追記を推奨</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 6. 追記候補 ── -->
+<section id="sec-add">
+  <div class="section-head">
+    <span class="section-num">06</span>
+    <h2>追記候補一覧</h2>
+  </div>
+
+  <div class="add-list">
+    <div class="add-item">
+      <div class="add-icon">🏦</div>
+      <div class="add-body">
+        <strong>第1章：銀行振込精算フローの説明Qを本文に新設（最重要）</strong>
+        <p>まとめ・クイズに記載があるのに本文の説明Qが存在しない。「Q1-X テナント料（手数料）の精算はどのように行われますか？」として「①運営者が売上レポートで売上確認 → ②出店者に請求書メール送信 → ③出店者が運営者の口座に銀行振込」という概要フローを第1章レベルで説明する。詳細手順は第6章参照と案内する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🔗</div>
+      <div class="add-body">
+        <strong>出店申請の2段階導線（第4章①）</strong>
+        <p>ナビ「出店申し込み」（/shop_opening_app/）→ページ内リンクから申請フォーム（/shop_opening_form/）へ進む流れを説明に追加。現状はフォームURLのみ説明されており、ナビから辿った際に混乱する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🏪</div>
+      <div class="add-body">
+        <strong>ショップ数・ショップ名の最新情報（第1章）</strong>
+        <p>現在の実サイトは2店表示（サンプルショップ・惠葉乃葵）。「ショップ数は随時変動するため、実サイトのショップリスト（/shops/）で最新状況を確認すること」として動的な説明に変更する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">👤</div>
+      <div class="add-body">
+        <strong>顧客アカウント登録場所の整理（第2章・第3章）</strong>
+        <p>トップページ /my-account/ での登録と各ショップ /ショップ名/my-account/ での登録の違い・使い分けを整理して説明。どちらで登録したアカウントがどのショップで使えるかを明示する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🏦</div>
+      <div class="add-body">
+        <strong>購入者が銀行振込を選んだ場合のフロー（第4章④・第6章）</strong>
+        <p>購入者が注文時に銀行振込を選択した場合の：①振込先口座の確認方法 ②振込期限 ③出店者側での入金確認方法 ④注文ステータスの更新方法 を第4章④または第6章に追記する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📋</div>
+      <div class="add-body">
+        <strong>ナビゲーション全項目一覧の明記（第3章）</strong>
+        <p>実サイトのトップナビ（ログイン・ショップリスト・お知らせ・出店申し込み・お問い合わせ・アフィリエイトの6項目）を正確に一覧化して説明に追加する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📣</div>
+      <div class="add-body">
+        <strong>アフィリエイト登録フォームへのアクセス経路（第7章）</strong>
+        <p>ナビ「アフィリエイト」はダッシュボード（/affiliate-dashboard/）へのリンクであり、未登録者は /wcaf_registration/ から登録する必要があることを明記。2つのURLの役割の違いを説明する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">⚠️</div>
+      <div class="add-body">
+        <strong>「自店舗管理→支払い」の注意書きの強調（第6章）</strong>
+        <p>この設定が運営者のショップ用ではなくテナント料請求口座専用であることは既に記載されているが、誤操作を防ぐためより目立つ警告表示（赤枠ボックスなど）での強調が推奨される。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">❓</div>
+      <div class="add-body">
+        <strong>よくあるご質問・お問い合わせへの言及（第8章）</strong>
+        <p>実サイトフッターに「よくあるご質問（/qa/）」「お問い合わせ（/contact/）」が存在するが、学習ツールに言及なし。補足情報として追記を推奨。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🔖</div>
+      <div class="add-body">
+        <strong>第3章：ショップURLパターンの説明Qを追加または第1章への参照を明記</strong>
+        <p>クイズQ6「各ショップのURLパターンは？」の根拠となる説明が第3章本文に存在しない。本文にQ追加（「各ショップのURLは 24h-beauty-mall.com/{ショップ名}/ の形」）するか、「詳しくは第1章Q1-3参照」と案内する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🖼️</div>
+      <div class="add-body">
+        <strong>第4章①Q4-1-4：申請詳細画面の正しいスクリーンショットに差し替え</strong>
+        <p>貼付されている画像が申請詳細画面とは異なる内容になっている。氏名・メール・ショップ名・商品説明・住所が表示された実際の申請詳細画面に差し替える。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🖼️</div>
+      <div class="add-body">
+        <strong>第4章②Q4-2-6：左メニュー「新規ショップ作成」ボタンの管理画面スクリーンショットを追加</strong>
+        <p>説明文のみでどのボタン・どの画面かが視覚的に確認できない。管理画面左メニューの「新規ショップ作成」ボタンが表示されたスクリーンショットを追加する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📊</div>
+      <div class="add-body">
+        <strong>第4章④：注文ステータス「処理中」の意味を本文に追記</strong>
+        <p>クイズQ4「注文ステータスが『処理中』になっているとは？→支払い完了・出荷前の状態」の根拠説明が本文にない。Q4-4-5またはその前後に各ステータス（処理中：支払い完了・出荷前、完了：出荷・取引完了）の意味を一覧で追記する。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🖼️</div>
+      <div class="add-body">
+        <strong>第5章・第6章：全スクリーンショットを正しい画面に差し替え</strong>
+        <p>第5章・第6章のすべての画像が説明文と異なる内容になっている。各Q・各説明に対応する正しい管理画面・操作画面のスクリーンショットに差し替える。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">📜</div>
+      <div class="add-body">
+        <strong>第8章：運営者情報（/company/）を法令表示ページ一覧に追加</strong>
+        <p>クイズQ4「運営者情報ページのURLは？→/company/」の根拠説明が本文にない。Q8-1の法令表示ページ一覧（特定商取引法・利用規約・個人情報保護方針・返金ポリシー・出店規約）に「運営者情報（/company/）」を追加する。実サイトフッターでの存在確認済み。</p>
+      </div>
+    </div>
+    <div class="add-item">
+      <div class="add-icon">🎥</div>
+      <div class="add-body">
+        <strong>第5章Q5-6とクイズQ6の整合性修正</strong>
+        <p>Q5-6でライブ視聴（/alv_watch_user/）と配信スケジュール（/live_schedule/）を同列に「視聴場所」として説明しているため、クイズQ6「配信スケジュールを確認するページのURLは？」の選択肢に両URLが含まれ正解が2つに見える。Q5-6の説明を「ライブを視聴するには /alv_watch_user/、配信スケジュールを確認するには /live_schedule/」と役割別に分けて記述する。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <span>本レポートはブラウザ自動操作（get_page_text / read_page / javascript_tool）による全章テキスト収集・実サイトURL照合・ナビゲーション構造確認に基づいて作成。管理画面（運営者・ベンダーログイン後）の確認は一部実施できていない項目があります。</span>
+  <span>生成日：2026年4月11日</span>
+</footer>
+
+<script>
+document.querySelectorAll('.chapter-card').forEach((card, i) => {
+  if (i !== 0) card.classList.remove('open');
+});
+</script>
+</body>
+</html>
