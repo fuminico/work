@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マッチングシステム学習ツール 検証レポート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fb;--white:#fff;--surface:#eef1f8;--border:#dde2f0;--bl:#e8ecf6;--text:#1c1f30;--sub:#64748b;--light:#94a3b8;--acc:#2563eb;--acc-l:#eff6ff;--high:#dc2626;--hbg:#fef2f2;--hbr:#fecaca;--mid:#d97706;--mbg:#fffbeb;--mbr:#fde68a;--low:#16a34a;--lbg:#f0fdf4;--lbr:#bbf7d0;--req:#7c3aed;--rbg:#f5f3ff;--rbr:#ddd6fe;--bug:#b45309;--bugbg:#fef3c7;--bugbr:#fcd34d;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.75;}
+header{background:var(--white);border-bottom:2px solid var(--border);padding:28px 48px 20px;}
+.hi{max-width:1160px;margin:0 auto;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:6px;}
+header h1{font-size:20px;font-weight:700;margin-bottom:12px;}
+header h1 span{color:var(--acc);}
+.mg{display:flex;flex-wrap:wrap;border:1px solid var(--bl);border-radius:10px;overflow:hidden;background:var(--surface);}
+.mc{padding:8px 14px;border-right:1px solid var(--bl);flex:1;min-width:120px;}
+.mc:last-child{border-right:none;}
+.ml{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--light);margin-bottom:2px;}
+.mv{font-size:12px;font-weight:500;}
+.toc{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.ti{max-width:1160px;margin:0 auto;display:flex;overflow-x:auto;}
+.ta{font-size:12px;font-weight:500;color:var(--sub);text-decoration:none;padding:10px 13px;border-bottom:2px solid transparent;white-space:nowrap;}
+.ta:hover{color:var(--acc);border-bottom-color:var(--acc);}
+.pb{max-width:1160px;margin:0 auto;padding:24px 48px 80px;}
+section{margin-bottom:44px;}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--bl);}
+.sn{font-family:'DM Mono',monospace;font-size:11px;color:var(--light);letter-spacing:.1em;}
+.sh h2{font-size:16px;font-weight:700;}
+/* SCORE */
+.sc{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 26px;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-bottom:20px;}
+.sg{width:60px;height:60px;border-radius:50%;background:var(--mbg);border:2px solid var(--mbr);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--mid);font-family:'DM Mono',monospace;flex-shrink:0;}
+.sb{flex:1;min-width:200px;}
+.sb h2{font-size:14px;font-weight:700;margin-bottom:4px;}
+.sb p{font-size:12px;color:var(--sub);margin-bottom:10px;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;}
+.cd{width:6px;height:6px;border-radius:50%;}
+.ch{background:var(--hbg);color:var(--high);border:1px solid var(--hbr);}
+.cm{background:var(--mbg);color:var(--mid);border:1px solid var(--mbr);}
+.cl{background:var(--lbg);color:var(--low);border:1px solid var(--lbr);}
+.cr{background:var(--rbg);color:var(--req);border:1px solid var(--rbr);}
+.cbug{background:var(--bugbg);color:var(--bug);border:1px solid var(--bugbr);}
+/* BUG ALERT */
+.bug-alert{background:var(--bugbg);border:2px solid var(--bugbr);border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+.bug-alert h3{font-size:13px;font-weight:700;color:var(--bug);margin-bottom:6px;}
+.bug-alert p{font-size:12px;color:#78350f;line-height:1.7;}
+/* DIFF TABLE */
+.tw{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--white);margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{background:var(--surface);padding:9px 11px;text-align:left;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--sub);border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--bl);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--surface);}
+tbody td{padding:9px 11px;vertical-align:top;}
+.tno{font-family:'DM Mono',monospace;font-size:11px;color:var(--light);text-align:center;}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap;}
+.bh{background:var(--hbg);color:var(--high);border:1px solid var(--hbr);}
+.bm{background:var(--mbg);color:var(--mid);border:1px solid var(--mbr);}
+.bl2{background:var(--lbg);color:var(--low);border:1px solid var(--lbr);}
+.bo{background:var(--lbg);color:var(--low);border:1px solid var(--lbr);}
+.br{background:var(--rbg);color:var(--req);border:1px solid var(--rbr);}
+.bbug{background:var(--bugbg);color:var(--bug);border:1px solid var(--bugbr);}
+.pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;background:var(--acc-l);color:var(--acc);white-space:nowrap;font-weight:500;}
+/* PRIORITY */
+.pl{display:flex;flex-direction:column;gap:8px;}
+.pc{background:var(--white);border:1px solid var(--border);border-left:4px solid;border-radius:10px;padding:12px 15px;display:flex;gap:12px;}
+.ph{border-left-color:var(--high);}
+.pm{border-left-color:var(--mid);}
+.pbug{border-left-color:var(--bug);}
+.pn{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;flex-shrink:0;width:20px;padding-top:1px;}
+.ph .pn{color:var(--high);}
+.pm .pn{color:var(--mid);}
+.pbug .pn{color:var(--bug);}
+.pb2{flex:1;}
+.pt{display:flex;gap:4px;margin-bottom:3px;flex-wrap:wrap;}
+.tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.04em;}
+.tgh{background:var(--hbg);color:var(--high);}
+.tgm{background:var(--mbg);color:var(--mid);}
+.tgt{background:var(--acc-l);color:var(--acc);}
+.tgbug{background:var(--bugbg);color:var(--bug);}
+.pb2 strong{font-size:13px;font-weight:700;display:block;margin-bottom:2px;}
+.pb2 p{font-size:12px;color:var(--sub);}
+/* CHAPTERS */
+.cl2{display:flex;flex-direction:column;gap:6px;}
+.cc{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.cch{display:flex;align-items:center;gap:9px;padding:11px 15px;cursor:pointer;user-select:none;}
+.cch:hover{background:var(--surface);}
+.cn{font-family:'DM Mono',monospace;font-size:10px;color:var(--light);letter-spacing:.07em;flex-shrink:0;width:70px;}
+.cch h3{font-size:13px;font-weight:700;flex:1;}
+.cbg{display:flex;gap:4px;flex-shrink:0;}
+.ca{font-size:10px;color:var(--light);flex-shrink:0;transition:transform .2s;}
+.cc.open .ca{transform:rotate(90deg);}
+.ccb{display:none;padding:11px 15px 13px 85px;border-top:1px solid var(--bl);}
+.cc.open .ccb{display:block;}
+.fi{margin-bottom:9px;}
+.fi:last-child{margin-bottom:0;}
+.fl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px;padding:2px 7px;border-radius:3px;display:inline-block;}
+.flo{background:var(--lbg);color:var(--low);}
+.flw{background:var(--mbg);color:var(--mid);}
+.fla{background:var(--acc-l);color:var(--acc);}
+.flr{background:var(--rbg);color:var(--req);}
+.flbug{background:var(--bugbg);color:var(--bug);}
+.fi ul{padding-left:13px;}
+.fi li{font-size:12px;color:var(--sub);margin-bottom:2px;}
+.fi li b{color:var(--text);}
+/* ACTION LIST */
+.al{display:flex;flex-direction:column;gap:8px;}
+.ai{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;gap:11px;align-items:flex-start;}
+.ai.ai-bug{border-left:4px solid var(--bug);}
+.ai.ai-tool{border-left:4px solid var(--acc);}
+.aico{font-size:15px;flex-shrink:0;margin-top:1px;}
+.aib strong{font-weight:700;font-size:12px;display:block;margin-bottom:2px;}
+.aib p{font-size:11px;color:var(--sub);}
+footer{background:var(--white);border-top:1px solid var(--border);padding:14px 48px;font-size:11px;color:var(--sub);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
+@media(max-width:768px){header,.pb,footer{padding-left:14px;padding-right:14px;}.ccb{padding-left:14px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="eyebrow">Verification Report · 2026.04.14 · admin vs ユーザー 機能差分チェック含む</div>
+    <h1>マッチングシステム学習ツール<br><span>検証レポート</span></h1>
+    <div class="mg">
+      <div class="mc"><div class="ml">学習ツール</div><div class="mv">learn-ms.webmatchingsystem.com</div></div>
+      <div class="mc"><div class="ml">実サイトA</div><div class="mv">demo（paidA・admin 確認）</div></div>
+      <div class="mc"><div class="ml">実サイトB</div><div class="mv">sharespacematch.com（sharespace_pro）</div></div>
+      <div class="mc"><div class="ml">特記</div><div class="mv">admin vs ユーザー 機能差分チェック実施</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="ti">
+  <a class="ta" href="#s1">総評</a>
+  <a class="ta" href="#s2">機能差分チェック</a>
+  <a class="ta" href="#s3">実サイトバグ詳細</a>
+  <a class="ta" href="#s4">指摘一覧</a>
+  <a class="ta" href="#s5">章ごとの所見</a>
+  <a class="ta" href="#s6">必要な対応一覧</a>
+</div></nav>
+
+<div class="pb">
+
+<!-- 総評 -->
+<section id="s1">
+  <div class="sh"><span class="sn">01</span><h2>総評</h2></div>
+  <div class="sc">
+    <div class="sg">△</div>
+    <div class="sb">
+      <h2>学習ツールの記載誤り＋実サイトのバグあり</h2>
+      <p>学習ツールの内容は概ね正確ですが、<b>adminアカウントと一般ユーザーのマイページ表示に差異がある実サイトバグ</b>が確認されました。写真タブとフォーラムタブがユーザーに表示されない実装不備です。学習ツール側にも記載誤りが複数あります。</p>
+      <div class="chips">
+        <span class="chip cbug"><span class="cd" style="background:var(--bug)"></span>実サイトバグ 1件</span>
+        <span class="chip ch"><span class="cd" style="background:var(--high)"></span>学習ツール高 4件</span>
+        <span class="chip cm"><span class="cd" style="background:var(--mid)"></span>中 6件</span>
+        <span class="chip cl"><span class="cd" style="background:var(--low)"></span>低 2件</span>
+        <span class="chip cr"><span class="cd" style="background:var(--req)"></span>要確認 2件</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 機能差分チェック -->
+<section id="s2">
+  <div class="sh"><span class="sn">02</span><h2>admin vs ユーザー（paidA）機能差分チェック</h2></div>
+
+  <div class="bug-alert">
+    <h3>🔍 確認の前提</h3>
+    <p>
+      <b>adminのマイページタブ（画像確認）：</b> プロフィール・案件・契約・会員レビュー・<b style="color:var(--bug)">写真</b>・ノート・グループ・<b style="color:var(--bug)">フォーラム</b>・決済情報・ビデオ通話・メッセージ（<b>11タブ</b>）<br>
+      <b>有料会員（paidA）のマイページタブ（実確認）：</b> プロフィール・案件・契約・会員レビュー・ノート・グループ・決済情報・ビデオ通話・メッセージ（<b>9タブ</b>）<br>
+      <b style="color:var(--bug)">差分：「写真」「フォーラム」の2タブがユーザー側に表示されていない</b>
+    </p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr>
+        <th style="min-width:100px">機能</th>
+        <th style="min-width:80px">adminタブ</th>
+        <th style="min-width:100px">ユーザー（paidA）タブ</th>
+        <th style="min-width:120px">URLでの直接アクセス</th>
+        <th style="min-width:70px">判定</th>
+        <th style="min-width:120px">対応</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:var(--hbg)">
+          <td><b>写真</b></td>
+          <td>✅ タブあり</td>
+          <td>❌ タブなし</td>
+          <td>❌ /photos/ → 404<br>❌ /user/195/photos/ → 404</td>
+          <td><span class="badge bbug">🔴 実サイトバグ</span></td>
+          <td>実サイト側の権限設定修正が必要</td>
+        </tr>
+        <tr>
+          <td><b>フォーラム</b></td>
+          <td>✅ タブあり</td>
+          <td>❌ タブなし</td>
+          <td>✅ /forums/ でアクセス・投稿可能。<b>サイドメニューにもリンクあり</b>（有料・無料会員ともに）</td>
+          <td><span class="badge bo">✅ 仕様通り</span></td>
+          <td>サイドメニューからのアクセスが仕様。マイページタブにないことはバグではない</td>
+        </tr>
+        <tr>
+          <td>ノート</td>
+          <td>✅ あり</td>
+          <td>✅ あり</td>
+          <td>—</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>グループ</td>
+          <td>✅ あり</td>
+          <td>✅ あり</td>
+          <td>✅ /groups/ でアクセス可</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>決済情報</td>
+          <td>✅ あり</td>
+          <td>✅ あり</td>
+          <td>—</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>ビデオ通話</td>
+          <td>✅ あり</td>
+          <td>✅ あり</td>
+          <td>—</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>メッセージ</td>
+          <td>✅ あり</td>
+          <td>✅ あり</td>
+          <td>—</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>ウェブ会議/<br>ライブ配信</td>
+          <td>—</td>
+          <td>サイドメニューあり</td>
+          <td>✅ /online_meeting/<br>作成・参加フォームあり</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>会員検索（有料）<br>/member-basic/</td>
+          <td>—</td>
+          <td>サイドメニューあり</td>
+          <td>✅ 業種絞込・PMボタンあり</td>
+          <td><span class="badge bo">✅ 正常</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>会員検索（無料）<br>/members-gold/</td>
+          <td>—</td>
+          <td>—</td>
+          <td>ログイン会員種別によりサイドメニューから自動表示。異なるURLへのアクセスは想定外のため検証対象外</td>
+          <td><span class="badge bo">✅ 仕様通り</span></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 実サイトバグ詳細 -->
+<section id="s3">
+  <div class="sh"><span class="sn">03</span><h2>実サイトバグ詳細（サイト側の修正が必要）</h2></div>
+  <div class="pl">
+
+    <div class="pc pbug">
+      <div class="pn">🐛</div>
+      <div class="pb2">
+        <div class="pt"><span class="tag tgbug">実サイトバグ・重大</span></div>
+        <strong>バグ①：写真機能が一般ユーザーに完全非表示（404エラー）</strong>
+        <p>adminのマイページには「写真」タブが表示されアルバム作成・写真アップロードが可能。しかし有料会員（paidA）のマイページには写真タブが表示されず、/photos/・/user/195/photos/ ともに404エラー。写真ページへの直接URLアクセスも不可。<br><b>学習ツール第14章の説明（アルバム作成→写真アップロード）は正しい仕様だが、実サイトで一般ユーザーが操作できない状態。</b><br>→ 必要な修正：一般ユーザーへの写真タブ表示権限設定の修正 + 写真ページURLの正常化</p>
+      </div>
+    </div>
+
+    <div class="pc" style="border-left-color:var(--low)">
+      <div class="pn" style="color:var(--low)">✅</div>
+      <div class="pb2">
+        <div class="pt"><span class="tag" style="background:var(--lbg);color:var(--low)">仕様確認済み・バグではない</span></div>
+        <strong>フォーラムへのアクセス：サイドメニューから利用可能（仕様通り）</strong>
+        <p>マイページのタブ一覧にフォーラムタブは表示されないが、<b>サイドメニュー（マイアカウント）に「フォーラム」リンクが存在</b>し、有料・無料会員ともにアクセス・投稿が可能（実画像で確認）。サイドメニューからのアクセスが仕様であり、マイページタブにないことはバグではない。<br>
+        <b>実確認済みのサイドメニュー構成：</b> マイページ・案件トップ・案件登録・案件一覧・契約一覧・お気に入り一覧・会員検索・ウェブ会議/ライブ配信・フォーラム・グループ（新しいグループを作成・自分のグループ）・ヘルプ（ご利用ガイド・よくあるご質問）<br>
+        <b>追加確認：</b>サイドメニューの「ヘルプ」セクション内に「よくあるご質問」「ご利用ガイド」が存在。管理画面側のメニュー名称の確認は引き続き必要。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 指摘一覧 -->
+<section id="s4">
+  <div class="sh"><span class="sn">04</span><h2>学習ツールの指摘一覧</h2></div>
+  <div class="tw">
+    <table>
+      <thead><tr>
+        <th style="width:32px">No</th><th style="min-width:110px">箇所</th>
+        <th style="min-width:130px">学習ツールの記載</th><th style="min-width:130px">実サイトの状態</th>
+        <th style="min-width:80px">種別</th><th style="width:54px">重要度</th><th style="min-width:150px">修正提案</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:var(--bugbg)">
+          <td class="tno">01</td>
+          <td>第3章Q3-2<br>マイページタブ構成</td>
+          <td>タブ9種類（写真・フォーラムなし）</td>
+          <td>adminでは11タブ（写真・フォーラム含む）。ユーザーでは実サイトバグにより9タブ表示</td>
+          <td><span class="pill">学習ツール誤り<br>+実サイトバグ</span></td>
+          <td><span class="badge bh">高</span></td>
+          <td>タブ一覧に「写真」「フォーラム」を追加して11タブとして記載（実サイトバグ修正と連動）</td>
+        </tr>
+        <tr>
+          <td class="tno">02</td>
+          <td>第14章<br>写真機能</td>
+          <td>「マイページの写真タブからアルバム作成・写真アップロード」（説明は正しい仕様）</td>
+          <td>実サイトで一般ユーザーには写真タブが完全非表示・URLでも404エラー（実サイトバグ）</td>
+          <td><span class="pill">実サイトバグ起因</span></td>
+          <td><span class="badge bbug">バグ</span></td>
+          <td>実サイト側で一般ユーザーへの写真タブ表示設定を修正する。修正前は「現在実装中」と注記</td>
+        </tr>
+        <tr>
+          <td class="tno">03</td>
+          <td>第10章<br>フォーラム機能</td>
+          <td>フォーラム機能の説明（学習ツールの内容は正しい）</td>
+          <td>/forums/ でのアクセス・投稿はユーザーでも可能。ただしマイページタブに表示されない（実サイトバグ）</td>
+          <td><span class="pill">実サイトバグ起因</span></td>
+          <td><span class="badge bbug">バグ</span></td>
+          <td>実サイトバグ修正後に、マイページのフォーラムタブからのアクセス方法を追記</td>
+        </tr>
+        <tr>
+          <td class="tno">04</td>
+          <td>第1章・全体<br>サービス名</td>
+          <td>「FreeeWorks」として統一説明</td>
+          <td>sharespacematch.com のサービス名は「シェアスペースマッチ」</td>
+          <td><span class="pill">説明不足</span></td>
+          <td><span class="badge bh">高</span></td>
+          <td>第1章または第2章に2サービスの名称と対応サイトを明記</td>
+        </tr>
+        <tr>
+          <td class="tno">05</td>
+          <td>第2章Q2-3<br>第8章①②<br>決済タイプ</td>
+          <td>「Stripeまたは銀行振込から選択します」</td>
+          <td>demo＝Stripeタイプ、sharespace＝銀行振込タイプ。対応関係が未明示</td>
+          <td><span class="pill">説明不足</span></td>
+          <td><span class="badge bh">高</span></td>
+          <td>第2章冒頭に「demo＝Stripeタイプ（FreeeWorks）、sharespace＝銀行振込タイプ（シェアスペースマッチ）」の対応表を追記</td>
+        </tr>
+        <tr>
+          <td class="tno">06</td>
+          <td>第1章Q1-5<br>法定ページURL</td>
+          <td>フッターから確認できると説明。URLの記載なし</td>
+          <td>demo実サイトで各URLを確認（/tokushoho/・/term/・/privacypolicy/・/company/・/faq/・/contact/）</td>
+          <td><span class="pill">説明不足</span></td>
+          <td><span class="badge bh">高</span></td>
+          <td>各法定ページのURLを一覧として追記</td>
+        </tr>
+        <tr>
+          <td class="tno">07</td>
+          <td>第3章Q3-3<br>有料会員追加項目</td>
+          <td>「店舗・屋号名・住所・領収書宛名・紹介文・業種など」</td>
+          <td>sharespace：法人番号・部署名・役職名・携帯番号が追加（demoと異なる）</td>
+          <td><span class="pill">説明不足</span></td>
+          <td><span class="badge bm">中</span></td>
+          <td>銀行振込タイプ（sharespace）では法人番号・部署名・役職名・携帯番号の追加入力が可能と補足</td>
+        </tr>
+        <tr>
+          <td class="tno">08</td>
+          <td>第5章Q5-5・Q5-6<br>会員検索URL</td>
+          <td>「有料：/member-basic/、無料：/members-gold/」</td>
+          <td>両URLともログイン後のみアクセス可能。有料会員が /members-gold/ にアクセスすると有料版と同等表示になる可能性</td>
+          <td><span class="pill">説明不足</span></td>
+          <td><span class="badge bm">中</span></td>
+          <td>「ログイン後のみアクセス可能」と補足。/members-gold/ の実際の動作を無料会員で再確認</td>
+        </tr>
+        <tr>
+          <td class="tno">09</td>
+          <td>第7章Q7-3<br>ウェブ会議ページ</td>
+          <td>「サイドメニューの『ウェブ会議/ライブ配信』ページ」</td>
+          <td>URL：/online_meeting/・新規作成フォーム・会議番号入力・ウェブ会議/ライブモード選択あり</td>
+          <td>—</td>
+          <td><span class="badge bo">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="tno">10</td>
+          <td>第3章Q3-5<br>第7章Q7-1<br>案件トップ通知</td>
+          <td>「案件トップの通知エリア」</td>
+          <td>/work_top/ にページ名「案件トップ」・通知エリアあり（実確認）</td>
+          <td>—</td>
+          <td><span class="badge bo">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="tno">11</td>
+          <td>第8章①Q8s-2<br>決済情報タブ名</td>
+          <td>「決済情報タブ」</td>
+          <td>demo・sharespace ともにタブ名「決済情報」を確認</td>
+          <td>—</td>
+          <td><span class="badge bo">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="tno">12</td>
+          <td>第1章Q1-3<br>有料会員月額</td>
+          <td>「月額10,000円（税別）」</td>
+          <td>demo実サイトの登録ページ・特定商取引法と一致</td>
+          <td>—</td>
+          <td><span class="badge bo">✓ 一致</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="tno">13</td>
+          <td>第9章クイズQ2<br>応募ステータス</td>
+          <td>「支払待ち」は存在しないステータス</td>
+          <td>管理画面の応募一覧は運営者アカウントで確認が必要</td>
+          <td><span class="pill">要確認</span></td>
+          <td><span class="badge br">要確認</span></td>
+          <td>運営者アカウントで応募一覧のステータス種類を確認する</td>
+        </tr>
+        <tr>
+          <td class="tno">14</td>
+          <td>第9章Q9-8<br>決済管理（Stripe）</td>
+          <td>「管理画面の『決済管理』から確認」</td>
+          <td>Stripe決済管理画面は運営者アカウントで確認が必要</td>
+          <td><span class="pill">要確認</span></td>
+          <td><span class="badge br">要確認</span></td>
+          <td>運営者アカウントで決済管理画面の構成を確認する</td>
+        </tr>
+        <tr style="background:var(--hbg)">
+          <td class="tno">15</td>
+          <td>第9章Q9-10<br>お知らせ・よくあるご質問の管理</td>
+          <td>「管理画面の『お知らせ』から新規投稿・編集・削除が可能」「管理画面の『よくあるご質問』から質問・回答の追加・編集が可能」</td>
+          <td>目視確認の結果、管理画面のメニューに<b>「お知らせ」「よくあるご質問」の項目が存在しない</b></td>
+          <td><span class="pill">記載誤り（メニュー不存在）</span></td>
+          <td><span class="badge bh">高</span></td>
+          <td>実際の管理画面でお知らせ・よくあるご質問を管理するメニュー名称を確認し、正確な表記に修正する</td>
+        </tr>
+        <tr style="background:var(--mbg)">
+          <td class="tno">16</td>
+          <td>第16章Q16-2<br>クイズQ2<br>会員検索の並び順</td>
+          <td>Q16-2「並び順：高評価順・高フォロワー数順で並び替え」。クイズQ2「設定できないものは？→案件登録数順（正解）」選択肢に「キーワード検索」も含む</td>
+          <td>並び順は高評価順・高フォロワー数順の2種類のみで説明は正確。ただしクイズQ2の選択肢「キーワード検索」は「並び順」ではなく「検索方法」であり、「設定できない並び順」という設問に対して不適切な選択肢（正解が案件登録数順とキーワード検索の2つになってしまう）</td>
+          <td><span class="pill">クイズ設問設計の誤り</span></td>
+          <td><span class="badge bm">中</span></td>
+          <td>クイズQ2の選択肢「キーワード検索」を「登録日時順」など実際に存在しない並び順オプションに差し替える</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 章ごとの所見 -->
+<section id="s5">
+  <div class="sh"><span class="sn">05</span><h2>章ごとの所見</h2></div>
+  <div class="cl2">
+
+    <div class="cc open"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.01</span><h3>システム概要・会員種別</h3>
+      <div class="cbg"><span class="badge bh">高×2</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 一致</div><ul>
+        <li>「FreeeWorks」サービス名・月額10,000円（税別）・フッター法定ページ構成</li>
+      </ul></div>
+      <div class="fi"><div class="fl flw">⚠️ 気になる点</div><ul>
+        <li><b>【高】</b>sharespaceのサービス名「シェアスペースマッチ」の説明なし</li>
+        <li><b>【高】</b>各法定ページのURL（/tokushoho/ 等）が具体的に記載されていない</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.02</span><h3>会員登録・ログイン・初期設定</h3>
+      <div class="cbg"><span class="badge bh">高×1</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 一致</div><ul>
+        <li>「無料登録」「有料登録」の選択肢・ログイン方法・パスワードリセット（/password-reset/）</li>
+      </ul></div>
+      <div class="fi"><div class="fl flw">⚠️ 気になる点</div><ul>
+        <li><b>【高】</b>「Stripeまたは銀行振込」と説明しているが、どちらのサイトがどちらのタイプかの明示なし</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.03</span><h3>マイページ・プロフィール管理</h3>
+      <div class="cbg"><span class="badge bh">高×1</span><span class="badge bm">中×1</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 一致（demo実確認）</div><ul>
+        <li>案件トップ（/work_top/）の通知エリア・サイドメニュー構成</li>
+        <li>有料会員の追加プロフィール項目（店舗名・住所・領収書宛名等）</li>
+      </ul></div>
+      <div class="fi"><div class="fl flbug">🐛 実サイトバグ起因</div><ul>
+        <li><b>【高】</b>Q3-2のタブ一覧（9タブ）に「写真」タブが含まれていない。adminでは写真タブが表示されるが、一般ユーザーには非表示（実サイトバグ）</li>
+        <li>フォーラムはマイページタブではなくサイドメニューからアクセスする仕様のため、タブ一覧に含めない設計は正しい</li>
+      </ul></div>
+      <div class="fi"><div class="fl flw">⚠️ 気になる点</div><ul>
+        <li><b>【中】</b>sharespaceの有料会員追加項目（法人番号・部署名・役職名・携帯番号）の説明なし</li>
+      </ul></div>
+      <div class="fi"><div class="fl fla">💡 修正方針</div><ul>
+        <li>実サイトバグ修正後：Q3-2のタブ一覧に「写真」を追加して10タブに更新する</li>
+        <li>正しいタブ構成：プロフィール / 案件 / 契約 / 会員レビュー / <b>写真</b> / ノート / グループ / 決済情報 / ビデオ通話 / メッセージ</li>
+        <li>フォーラムはサイドメニューからアクセスする仕様のためタブ一覧には含めない</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.07</span><h3>通知・ウェブ会議・ライブ配信</h3>
+      <div class="cbg"><span class="badge bo">✅ 一致</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 一致（実確認）</div><ul>
+        <li>ウェブ会議ページURL：/online_meeting/（実確認）</li>
+        <li>「新しく会議を作成する」「会議番号を指定して参加する」の2エリアあり（実確認）</li>
+        <li>モード選択：「ウェブ会議モード」「ライブモード」の2種類あり（実確認）</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.10</span><h3>フォーラム機能</h3>
+      <div class="cbg"><span class="badge bo">✅ 仕様通り</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 仕様通り（実確認）</div><ul>
+        <li>/forums/ でユーザーがアクセス・投稿可能（実確認）</li>
+        <li>カテゴリー「情報交換 – 教えてください」「情報交換 – 気になる話題」が存在→学習ツールと一致</li>
+        <li><b>サイドメニューに「フォーラム」リンクあり</b>（有料・無料会員ともに表示）→実画像で確認</li>
+        <li>マイページのタブ一覧にフォーラムタブがないのは<b>仕様通り</b>（サイドメニューからのアクセスが設計）</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.12</span><h3>グループ機能</h3>
+      <div class="cbg"><span class="badge bo">✅ 正常動作</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 正常（実確認）</div><ul>
+        <li>/groups/ にユーザーでアクセス可能（実確認）</li>
+        <li>7グループが存在・参加/脱退ボタンあり・「新規グループ作成」タブあり</li>
+        <li>カテゴリー絞り込み（サポートコミュニティ・ビジネス情報等）あり</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.09</span><h3>運営者管理機能</h3>
+      <div class="cbg"><span class="badge bh">高×1</span><span class="badge br">要確認×2</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 一致</div><ul>
+        <li>管理画面は /wp-admin/ でアクセスという説明（WordPressのため正確）</li>
+        <li>案件・応募・契約・通知・取引分析・ユーザー管理・お問い合わせの各管理機能の概要説明</li>
+      </ul></div>
+      <div class="fi"><div class="fl flw">⚠️ 気になる点（目視確認）</div><ul>
+        <li><b>【高】</b>Q9-10「管理画面の『お知らせ』から新規投稿・編集・削除が可能」「管理画面の『よくあるご質問』から質問・回答の追加・編集が可能」と説明しているが、実際の管理画面メニューに<b>「お知らせ」「よくあるご質問」の項目が存在しない</b></li>
+      </ul></div>
+      <div class="fi"><div class="fl flr">🔍 要確認</div><ul>
+        <li>応募一覧のステータス種類（「支払待ち」の存否）は運営者アカウントで別途確認が必要</li>
+        <li>Stripe決済管理画面の実際の構成は運営者アカウントで別途確認が必要</li>
+      </ul></div>
+      <div class="fi"><div class="fl fla">💡 修正方針</div><ul>
+        <li>実際の管理画面でお知らせ・よくあるご質問を管理するためのメニュー名称（投稿タイプ名等）を確認し、正確な表記に修正する</li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.14</span><h3>写真機能</h3>
+      <div class="cbg"><span class="badge bbug">実サイトバグ</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl fla">📋 学習ツールの説明は正しい</div><ul>
+        <li>「アルバムを作成→写真をアップロード」「プライバシー設定3種類」の説明は正しい仕様</li>
+      </ul></div>
+      <div class="fi"><div class="fl flbug">🐛 実サイトバグ（修正が必要）</div><ul>
+        <li>一般ユーザーのマイページに写真タブが表示されない</li>
+        <li>/photos/ → 404エラー、/user/195/photos/ → 404エラー</li>
+        <li><b>優先的に実サイト側の設定修正が必要</b></li>
+      </ul></div>
+    </div></div>
+
+    <div class="cc"><div class="cch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="cn">CH.15〜16</span><h3>フォロー・会員検索機能</h3>
+      <div class="cbg"><span class="badge bm">中×1</span><span class="badge br">要確認×1</span></div><span class="ca">▶</span>
+    </div><div class="ccb">
+      <div class="fi"><div class="fl flo">✅ 一致（実確認）</div><ul>
+        <li>会員検索カードに「フォロー」ボタンあり（demo確認）</li>
+        <li>有料会員 /member-basic/ でアクセス可能（demo・sharespace 両方で確認）</li>
+        <li>並び順「高評価順」「高フォロワー数順」の2種類→実サイトと一致</li>
+      </ul></div>
+      <div class="fi"><div class="fl flw">⚠️ 気になる点（目視確認）</div><ul>
+        <li><b>【中】</b>クイズQ2「会員検索の並び順として設定できないものはどれですか？」の選択肢に「キーワード検索」が含まれているが、これは「並び順」ではなく「検索方法」であり設問に不適切。正解が「案件登録数順」と「キーワード検索」の2つになってしまう</li>
+      </ul></div>
+      <div class="fi"><div class="fl flr">🔍 要確認</div><ul>
+        <li>会員検索URLはログイン会員種別によりサイドメニューから /member-basic/（有料）または /members-gold/（無料）が自動表示される仕様。異なるURLへのアクセスは想定外のため検証対象外</li>
+      </ul></div>
+      <div class="fi"><div class="fl fla">💡 修正方針</div><ul>
+        <li>クイズQ2の選択肢「キーワード検索」を「登録日時順」など実際に存在しない並び順オプションに差し替える</li>
+      </ul></div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- 必要な対応一覧 -->
+<section id="s6">
+  <div class="sh"><span class="sn">06</span><h2>必要な対応一覧（優先度順）</h2></div>
+  <div class="al">
+    <div class="ai ai-bug"><div class="aico">🔴</div><div class="aib">
+      <strong>【最優先・実サイト修正】写真タブの権限設定修正</strong>
+      <p>一般ユーザー（有料・無料会員）のマイページに写真タブが表示されるよう設定を修正する。合わせて /photos/ または /user/{id}/photos/ のURLが正常にアクセスできるよう修正する。</p>
+    </div></div>
+    <div class="ai ai-tool"><div class="aico">📝</div><div class="aib">
+      <strong>【学習ツール修正】第9章Q9-10：管理画面の「お知らせ」「よくあるご質問」メニュー名称を修正</strong>
+      <p>実際の管理画面に「お知らせ」「よくあるご質問」の項目が存在しない。実際のメニュー名称を確認し正確な表記に修正する。</p>
+    </div></div>
+    <div class="ai ai-tool"><div class="aico">📝</div><div class="aib">
+      <strong>【学習ツール修正】第16章クイズQ2：選択肢「キーワード検索」を適切な並び順オプションに差し替え</strong>
+      <p>「キーワード検索」は「並び順」ではなく「検索方法」であり、「設定できない並び順」という設問に不適切。「登録日時順」など実際に存在しない並び順オプションに差し替える。</p>
+    </div></div>
+    <div class="ai ai-tool"><div class="aico">📝</div><div class="aib">
+      <strong>【学習ツール修正】第3章Q3-2：マイページのタブ一覧を11タブに更新（実サイトバグ修正後）</strong>
+      <p>「写真」「フォーラム」を追加した正しいタブ一覧：プロフィール / 案件 / 契約 / 会員レビュー / 写真 / ノート / グループ / フォーラム / 決済情報 / ビデオ通話 / メッセージ</p>
+    </div></div>
+    <div class="ai ai-tool"><div class="aico">📝</div><div class="aib">
+      <strong>【学習ツール修正】第1章・第2章：2サービスの名称と使い分けを明記</strong>
+      <p>「FreeeWorks（demo）とシェアスペースマッチ（sharespace）の2サービスを扱います。demo＝Stripeタイプ、sharespace＝銀行振込タイプ」と明記する。</p>
+    </div></div>
+    <div class="ai ai-tool"><div class="aico">📝</div><div class="aib">
+      <strong>【学習ツール修正】第1章：各法定ページのURL一覧を追記</strong>
+      <p>/tokushoho/・/term/・/privacypolicy/・/company/・/faq/・/contact/ のURL一覧を追記する。</p>
+    </div></div>
+    <div class="ai ai-tool"><div class="aico">📝</div><div class="aib">
+      <strong>【学習ツール修正】第3章Q3-3：sharespaceの有料会員追加プロフィール項目を補足</strong>
+      <p>銀行振込タイプ（sharespace）では法人番号・部署名・役職名・携帯番号の追加入力が可能であることを説明に追記する。</p>
+    </div></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <span>本レポートは全17章テキスト収集 + demo（paidA・admin）・sharespacematch.com（sharespace_pro）でのログイン後実画面確認に基づいて作成。管理画面（adminアカウント）の詳細確認は別途必要。</span>
+  <span>生成日：2026年4月14日</span>
+</footer>
+
+<script>
+document.querySelectorAll('.cc').forEach((c,i)=>{ if(i!==0) c.classList.remove('open'); });
+</script>
+</body>
+</html>
