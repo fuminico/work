@@ -6,272 +6,118 @@
 <title>バーチャルオフィス比較レポート｜名古屋中税務署管轄</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f8f6f2;
-  --card: #ffffff;
-  --text: #1a1a1a;
-  --text-sub: #5c5c5c;
-  --accent: #c2410c;
-  --accent-light: #fff7ed;
-  --border: #e5e2dc;
-  --tag-ok: #059669;
-  --tag-ok-bg: #ecfdf5;
-  --tag-warn: #d97706;
-  --tag-warn-bg: #fffbeb;
-  --tag-info: #2563eb;
-  --tag-info-bg: #eff6ff;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
-  --radius: 10px;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Noto Sans JP', 'IBM Plex Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-}
-.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-.header {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
-  color: #fff;
-  padding: 56px 0 48px;
-  position: relative;
-  overflow: hidden;
-}
-.header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(194,65,12,0.15) 0%, transparent 70%);
-}
-.header h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 8px; }
-.header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 300; }
-.header .meta { margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,0.6); }
-.header .meta span { display: flex; align-items: center; gap: 5px; }
-.tax-section { padding: 40px 0; }
-.tax-section h2 {
-  font-size: 22px; font-weight: 900; margin-bottom: 6px;
-  display: flex; align-items: center; gap: 10px;
-}
-.tax-section h2 .badge {
-  background: var(--accent); color: #fff; font-size: 11px;
-  font-weight: 600; padding: 3px 10px; border-radius: 20px;
-}
-.jurisdiction {
-  font-size: 13px; color: var(--text-sub); margin-bottom: 24px;
-  padding: 10px 14px; background: #f1f0ec; border-radius: 6px; line-height: 1.8;
-}
-.table-wrap { overflow-x: auto; margin-bottom: 32px; border-radius: var(--radius); box-shadow: var(--shadow); }
-table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 13px; min-width: 900px; }
-thead th { background: #1e293b; color: #fff; padding: 12px 14px; font-weight: 600; text-align: left; font-size: 12px; white-space: nowrap; }
-tbody td { padding: 12px 14px; border-bottom: 1px solid #f0eee8; vertical-align: top; }
-tbody tr:hover { background: #faf9f6; }
-.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; }
-.tag-ok { background: var(--tag-ok-bg); color: var(--tag-ok); }
-.tag-info { background: var(--tag-info-bg); color: var(--tag-info); }
-td a { color: var(--tag-info); text-decoration: none; font-size: 12px; word-break: break-all; }
-td a:hover { text-decoration: underline; }
-.price { font-weight: 700; color: var(--accent); white-space: nowrap; }
-.recommend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; margin-bottom: 32px; }
-.rec-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; transition: transform 0.2s; }
-.rec-card:hover { transform: translateY(-3px); }
-.rec-card .rec-head { background: linear-gradient(135deg, #1e293b, #334155); color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
-.rec-card .rec-head .rank { font-size: 28px; font-weight: 900; opacity: 0.3; line-height: 1; }
-.rec-card .rec-head .name { font-size: 16px; font-weight: 700; }
-.rec-card .rec-body { padding: 20px; }
-.rec-card .rec-body dl { display: grid; grid-template-columns: 90px 1fr; gap: 6px 12px; font-size: 13px; }
-.rec-card .rec-body dt { font-weight: 600; color: var(--text-sub); }
-.rec-card .rec-body .reason { margin-top: 14px; padding: 12px; background: var(--accent-light); border-radius: 6px; font-size: 12px; line-height: 1.8; color: #92400e; }
-.rec-card .rec-body .reason strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-.notes-section { padding: 40px 0; border-top: 1px solid var(--border); }
-.notes-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
-.note-block { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 16px; }
-.note-block h3 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
-.note-block p, .note-block li { font-size: 13px; color: var(--text-sub); line-height: 1.9; }
-.note-block ul { padding-left: 18px; }
-.note-block li { margin-bottom: 4px; }
-.url-section { padding: 40px 0; border-top: 1px solid var(--border); }
-.url-section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-.url-list { list-style: none; }
-.url-list li { padding: 8px 0; border-bottom: 1px solid #f0eee8; font-size: 13px; }
-.url-list li a { color: var(--tag-info); text-decoration: none; }
-.url-list li a:hover { text-decoration: underline; }
-.url-list li .url-label { font-weight: 600; display: inline-block; min-width: 240px; }
-.footer { padding: 32px 0; text-align: center; font-size: 12px; color: var(--text-sub); border-top: 1px solid var(--border); }
-@media (max-width: 768px) {
-  .header h1 { font-size: 22px; }
-  .recommend-grid { grid-template-columns: 1fr; }
-}
+:root{--bg:#f8f6f2;--card:#fff;--text:#1a1a1a;--text-sub:#5c5c5c;--accent:#c2410c;--accent-light:#fff7ed;--border:#e5e2dc;--tag-ok:#059669;--tag-ok-bg:#ecfdf5;--tag-info:#2563eb;--tag-info-bg:#eff6ff;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--shadow-lg:0 4px 16px rgba(0,0,0,.08);--radius:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP','IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(194,65,12,.15) 0%,transparent 70%)}
+.header h1{font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
+.header .subtitle{font-size:14px;color:rgba(255,255,255,.7);font-weight:300}
+.header .meta{margin-top:20px;display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.6)}
+.header .meta span{display:flex;align-items:center;gap:5px}
+.tax-section{padding:40px 0}
+.tax-section h2{font-size:22px;font-weight:900;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.tax-section h2 .badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.jurisdiction{font-size:13px;color:var(--text-sub);margin-bottom:24px;padding:10px 14px;background:#f1f0ec;border-radius:6px;line-height:1.8}
+.table-wrap{overflow-x:auto;margin-bottom:32px;border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;background:var(--card);font-size:12.5px;min-width:1050px}
+thead th{background:#1e293b;color:#fff;padding:10px 12px;font-weight:600;text-align:left;font-size:11px;white-space:nowrap}
+tbody td{padding:10px 12px;border-bottom:1px solid #f0eee8;vertical-align:top}
+tbody tr:hover{background:#faf9f6}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap}
+.tag-ok{background:var(--tag-ok-bg);color:var(--tag-ok)}
+.tag-info{background:var(--tag-info-bg);color:var(--tag-info)}
+.tag-warn{background:#fffbeb;color:#d97706}
+td a{color:var(--tag-info);text-decoration:none;font-size:12px;word-break:break-all}
+td a:hover{text-decoration:underline}
+.price{font-weight:700;color:var(--accent);white-space:nowrap}
+.recommend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;margin-bottom:32px}
+.rec-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden;transition:transform .2s}
+.rec-card:hover{transform:translateY(-3px)}
+.rec-card .rec-head{background:linear-gradient(135deg,#1e293b,#334155);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.rec-card .rec-head .rank{font-size:28px;font-weight:900;opacity:.3;line-height:1}
+.rec-card .rec-head .name{font-size:16px;font-weight:700}
+.rec-card .rec-body{padding:20px}
+.rec-card .rec-body dl{display:grid;grid-template-columns:90px 1fr;gap:6px 12px;font-size:13px}
+.rec-card .rec-body dt{font-weight:600;color:var(--text-sub)}
+.rec-card .rec-body .reason{margin-top:14px;padding:12px;background:var(--accent-light);border-radius:6px;font-size:12px;line-height:1.8;color:#92400e}
+.rec-card .rec-body .reason strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.notes-section{padding:40px 0;border-top:1px solid var(--border)}
+.notes-section h2{font-size:20px;font-weight:700;margin-bottom:20px}
+.note-block{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
+.note-block h3{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:10px}
+.note-block p,.note-block li{font-size:13px;color:var(--text-sub);line-height:1.9}
+.note-block ul{padding-left:18px}
+.note-block li{margin-bottom:4px}
+.url-section{padding:40px 0;border-top:1px solid var(--border)}
+.url-section h2{font-size:20px;font-weight:700;margin-bottom:16px}
+.url-list{list-style:none}
+.url-list li{padding:8px 0;border-bottom:1px solid #f0eee8;font-size:13px}
+.url-list li a{color:var(--tag-info);text-decoration:none}
+.url-list li a:hover{text-decoration:underline}
+.url-list li .url-label{font-weight:600;display:inline-block;min-width:260px}
+.footer{padding:32px 0;text-align:center;font-size:12px;color:var(--text-sub);border-top:1px solid var(--border)}
+@media(max-width:768px){.header h1{font-size:22px}.recommend-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div class="container">
-    <h1>バーチャルオフィス比較レポート｜名古屋市中区</h1>
-    <div class="subtitle">名古屋中税務署管轄 ― 本店登記可能・机不要プランに特化した調査（抜粋版）</div>
-    <div class="meta">
-      <span>📅 調査日：2026年4月4日</span>
-      <span>📋 対象：名古屋中税務署管轄（名古屋市中区）</span>
-      <span>🔍 調査方法：Web検索（公式サイト優先）</span>
-    </div>
-  </div>
-</div>
-
+<div class="header"><div class="container">
+<h1>バーチャルオフィス比較レポート｜名古屋市中区</h1>
+<div class="subtitle">名古屋中税務署管轄 ― 本店登記可能・机不要プランに特化（網羅版）</div>
+<div class="meta"><span>📅 調査日：2026年4月22日</span><span>📋 対象：名古屋市中区（名古屋中税務署管轄）</span><span>📊 掲載：10事業者</span></div>
+</div></div>
 <div class="container">
-
-  <section class="tax-section">
-    <h2>名古屋中税務署管轄 <span class="badge">名古屋市中区</span></h2>
-    <div class="jurisdiction">
-      <strong>管轄地域：</strong>名古屋市中区全域（栄、丸の内、錦、大須、新栄、金山 等）<br>
-      <small>※名古屋国税局管内。所在地：名古屋市中区三の丸3-3-2 名古屋国税総合庁舎</small>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>事業者名</th>
-            <th>所在地住所</th>
-            <th>管轄内</th>
-            <th>登記可</th>
-            <th>机不要</th>
-            <th>初期費用</th>
-            <th>月額費用</th>
-            <th>支払方法</th>
-            <th>URL</th>
-            <th>補足</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>ワンストップビジネスセンター 名古屋栄</strong></td>
-            <td>名古屋市中区栄2丁目2-1 広小路伏見中駒ビル</td>
-            <td><span class="tag tag-ok">✓ 管轄内</span></td>
-            <td><span class="tag tag-ok">可</span></td>
-            <td><span class="tag tag-ok">はい</span></td>
-            <td class="price">10,780円<br><small>（税込）</small></td>
-            <td class="price">5,280円〜<br><small>（税込・エコノミー）</small></td>
-            <td><span class="tag tag-info">クレジット</span><br><span class="tag tag-info">銀行振込</span></td>
-            <td><a href="https://www.1sbc.com/" target="_blank">公式サイト</a></td>
-            <td>伏見駅徒歩1分。週1無料転送込み。スタッフ常駐。全国40拠点超の大手。銀行振込対応。名古屋駅前店の会議室も利用可。</td>
-          </tr>
-          <tr>
-            <td><strong>ビジネスリンクス名古屋</strong></td>
-            <td>名古屋市中区栄（矢場町駅徒歩3分）</td>
-            <td><span class="tag tag-ok">✓ 管轄内</span></td>
-            <td><span class="tag tag-ok">可</span></td>
-            <td><span class="tag tag-ok">はい</span></td>
-            <td class="price">0円<br><small>（入会金無料）</small></td>
-            <td class="price">3,080円〜<br><small>（税込・Aプラン）</small></td>
-            <td><span class="tag tag-info">クレジット</span><br><span class="tag tag-info">口座振替</span></td>
-            <td><a href="https://www.b-links.jp/virtual-office/" target="_blank">公式サイト</a></td>
-            <td>入会金0円。Aプラン：登記＋郵便受取＋会議室割引。Bプラン：+コワーキング利用。口座振替対応。</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">おすすめ2件</h3>
-    <div class="recommend-grid">
-      <div class="rec-card">
-        <div class="rec-head">
-          <div><div class="name">ワンストップビジネスセンター 名古屋栄</div></div>
-          <div class="rank">01</div>
-        </div>
-        <div class="rec-body">
-          <dl>
-            <dt>住所</dt><dd>名古屋市中区栄2丁目2-1 広小路伏見中駒ビル</dd>
-            <dt>初期費用</dt><dd>10,780円（税込）</dd>
-            <dt>月額</dt><dd>5,280円（エコノミー）税込 ※週1無料転送込み</dd>
-            <dt>支払方法</dt><dd>クレジットカード、銀行振込</dd>
-            <dt>本店登記</dt><dd><span class="tag tag-ok">可</span></dd>
-            <dt>机不要</dt><dd><span class="tag tag-ok">はい</span></dd>
-            <dt>URL</dt><dd><a href="https://www.1sbc.com/" target="_blank">公式サイト</a></dd>
-          </dl>
-          <div class="reason">
-            <strong>おすすめ理由</strong>
-            「名古屋市中区栄」という一等地アドレスで登記可能。伏見駅徒歩1分の好立地。月額に週1無料転送が含まれ追加費用なし。スタッフ常駐で来客対応も安心。銀行振込にも対応しており法人名義の支払いもしやすい。全国40拠点超の大手で信頼性が高い。
-          </div>
-        </div>
-      </div>
-
-      <div class="rec-card">
-        <div class="rec-head">
-          <div><div class="name">ビジネスリンクス名古屋</div></div>
-          <div class="rank">02</div>
-        </div>
-        <div class="rec-body">
-          <dl>
-            <dt>住所</dt><dd>名古屋市中区栄（矢場町駅徒歩3分）</dd>
-            <dt>初期費用</dt><dd>0円（入会金無料）</dd>
-            <dt>月額</dt><dd>3,080円〜（Aプラン・税込）</dd>
-            <dt>支払方法</dt><dd>クレジットカード、口座振替</dd>
-            <dt>本店登記</dt><dd><span class="tag tag-ok">可</span></dd>
-            <dt>机不要</dt><dd><span class="tag tag-ok">はい</span></dd>
-            <dt>URL</dt><dd><a href="https://www.b-links.jp/virtual-office/" target="_blank">公式サイト</a></dd>
-          </dl>
-          <div class="reason">
-            <strong>おすすめ理由</strong>
-            入会金0円・月額3,080円〜と名古屋中区内で最もコストを抑えやすいバーチャルオフィス。口座振替にも対応しており支払方法が柔軟。Bプランではコワーキングスペースも利用可能なため、必要に応じて作業場所も確保できる。矢場町駅徒歩3分・栄エリアのビジネス街に所在。
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="notes-section">
-    <h2>注意点</h2>
-
-    <div class="note-block">
-      <h3>名古屋中税務署管轄での登記に関する注意</h3>
-      <ul>
-        <li>名古屋中税務署の管轄は<strong>名古屋市中区のみ</strong>です。中村区（名古屋駅周辺）は名古屋中村税務署の管轄となるため、GMOオフィスサポート名古屋（中村区名駅）やDMMバーチャルオフィス名古屋（中村区名駅）は名古屋中税務署の管轄外です。</li>
-        <li>中区内でも住所の丁目・番地によっては管轄が異なる場合がまれにあるため、国税庁の公式サイトで最終確認してください。</li>
-        <li>名古屋は東京と比較してバーチャルオフィスの月額相場が3,000〜5,000円台とやや高めですが、入会金0円の事業者もあるため初期費用は抑えやすい傾向です。</li>
-      </ul>
-    </div>
-
-    <div class="note-block">
-      <h3>支払方法に関する注意</h3>
-      <ul>
-        <li><strong>ワンストップビジネスセンター：</strong>クレジットカード＋銀行振込に対応。法人名義での振込がしやすい。</li>
-        <li><strong>ビジネスリンクス名古屋：</strong>クレジットカード＋口座振替に対応。引落手数料は利用者負担。</li>
-        <li>法人設立前（個人名義）で契約し、法人化後に名義変更が必要になる場合の手続き・費用も確認しておくと安心です。</li>
-      </ul>
-    </div>
-
-    <div class="note-block">
-      <h3>税務署管轄の最終確認方法</h3>
-      <ul>
-        <li><strong>名古屋国税局公式サイト</strong>の「税務署所在地・管轄」ページで確認するのが最も確実です。</li>
-        <li>URL：<a href="https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm" target="_blank">https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm</a></li>
-        <li>不明な場合は名古屋中税務署（052-962-3131）に直接電話確認するのが確実です。</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="url-section">
-    <h2>参照URL一覧</h2>
-    <ul class="url-list">
-      <li><span class="url-label">ワンストップビジネスセンター公式</span><a href="https://www.1sbc.com/" target="_blank">https://www.1sbc.com/</a></li>
-      <li><span class="url-label">ビジネスリンクス名古屋 バーチャルオフィス</span><a href="https://www.b-links.jp/virtual-office/" target="_blank">https://www.b-links.jp/virtual-office/</a></li>
-      <li><span class="url-label">名古屋中税務署（国税庁）</span><a href="https://www.nta.go.jp/about/organization/nagoya/location/aichi/nagoyanaka/index.htm" target="_blank">国税庁ページ</a></li>
-      <li><span class="url-label">名古屋国税局 税務署一覧</span><a href="https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm" target="_blank">国税庁ページ</a></li>
-    </ul>
-  </section>
-
-  <div class="footer">
-    <p>本レポートはWeb検索による調査に基づくものであり、最新の料金・条件は各事業者の公式サイトでご確認ください。</p>
-    <p style="margin-top:4px;">調査日：2026年4月4日 ｜ 名古屋中税務署管轄（名古屋市中区）抜粋版</p>
-  </div>
+<section class="tax-section">
+<h2>名古屋中税務署管轄 <span class="badge">名古屋市中区</span></h2>
+<div class="jurisdiction"><strong>管轄地域：</strong>名古屋市中区全域（栄、丸の内、錦、大須、新栄、金山 等）<br><small>※名古屋国税局管内。所在地：名古屋市中区三の丸3-3-2 名古屋国税総合庁舎</small></div>
+<div class="table-wrap"><table><thead><tr><th>No.</th><th>事業者名</th><th>所在地住所</th><th>登記可</th><th>机不要</th><th>初期費用</th><th>月額（税込）</th><th>支払方法</th><th>URL</th><th>特徴・補足</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>ワンストップビジネスセンター 名古屋栄</strong></td><td>中区栄2丁目2-1 広小路伏見中駒ビル</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">10,780円</td><td class="price">5,280円〜<br><small>（エコノミー）</small></td><td><span class="tag tag-info">クレジット</span><br><span class="tag tag-info">銀行振込</span></td><td><a href="https://www.1sbc.com/branch/nagoya-sakae/" target="_blank">公式</a></td><td>伏見駅徒歩1分。週1無料転送込み。スタッフ常駐。全国40拠点超。名古屋駅前店の会議室利用可。</td></tr>
+<tr><td>2</td><td><strong>ビジネスリンクス名古屋</strong></td><td>中区栄5丁目26-39 GS栄ビル3F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">0円</td><td class="price">3,080円〜<br><small>（Aプラン）</small></td><td><span class="tag tag-info">クレジット</span><br><span class="tag tag-info">口座振替</span></td><td><a href="https://www.b-links.jp/virtual-office/" target="_blank">公式</a></td><td>入会金0円。矢場町駅徒歩3分。A=登記+郵便+会議室割引。B=+コワーキング。</td></tr>
+<tr><td>3</td><td><strong>名古屋ソリューション</strong><br><small>（中区内5拠点）</small></td><td>中区大須1丁目／大須3丁目／栄1丁目／栄5丁目／錦1丁目</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">0円<br><small>（入会金・保証金不要）</small></td><td class="price">3,278円〜</td><td>要確認</td><td><a href="http://www.office-nagoya.com" target="_blank">公式</a></td><td>中区内最多5拠点。年間契約で最大35%OFF。レンタルオフィスへのステップアップ可。名古屋市内最安水準。</td></tr>
+<tr><td>4</td><td><strong>SOHOプラザ 丸の内</strong></td><td>中区丸の内</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td>要確認</td><td>要確認</td><td><a href="http://www.soho-plaza.jp" target="_blank">公式</a></td><td>丸の内ビジネス街。レンタルオフィス・貸会議室・電話代行・私書箱。栄・名駅にも別拠点。</td></tr>
+<tr><td>5</td><td><strong>リージャス 名古屋栄ガスビル</strong></td><td>中区栄3-15-33 栄ガスビル13F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td class="price">10,900円〜<br><small>（メールボックスプラス）</small></td><td>要確認</td><td><a href="https://www.regus.com/" target="_blank">公式</a></td><td>三菱地所G。栄駅徒歩5分・矢場町駅徒歩3分。松坂屋隣接。ラウンジ/個室利用可プラン有。</td></tr>
+<tr><td>6</td><td><strong>サーブコープ 名古屋日興證券ビル</strong></td><td>中区栄3-2-3 名古屋日興證券ビル4F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認<br><small>（初月無料有）</small></td><td class="price">高価格帯<br><small>（要問合せ）</small></td><td>要確認</td><td><a href="https://www.servcorp.co.jp/" target="_blank">公式</a></td><td>栄駅徒歩3分。バイリンガル受付。世界150拠点超。コワーキング1日1h無料。海外取引企業向け。</td></tr>
+<tr><td>7</td><td><strong>THE HUB 名古屋丸の内</strong></td><td>中区丸の内</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td class="price">2,310円〜<br><small>（年間契約・登記プラン）</small></td><td>要確認</td><td><a href="https://thehub.nex.works/" target="_blank">公式</a></td><td>全国700拠点以上利用可。ラウンジ+サイレントラウンジ。IT・士業・コンサルに人気。</td></tr>
+<tr><td>8</td><td><strong>オフィスプラス栄</strong></td><td>中区栄</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td>要確認</td><td>要確認</td><td>要確認</td><td>応接室無料利用可。コンシェルジュ電話代行。同ビル内トランクルーム。6ヶ月以上で1ヶ月無料。</td></tr>
+<tr><td>9</td><td><strong>ビジネスセンター錦</strong></td><td>中区錦（伏見駅徒歩3分）</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td>要確認</td><td>要確認</td><td>要確認</td><td>伏見駅徒歩3分・丸の内駅徒歩4分。会議室最大90名。契約書・許認可の無料相談対応。</td></tr>
+<tr><td>10</td><td><strong>パルミエ名古屋</strong><br><small>（女性専用）</small></td><td>中区新栄（栄駅徒歩約5分）</td><td><span class="tag tag-warn">プランによる</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td class="price">290円〜<small>（住所のみ・登記不可）</small><br>770円〜<small>（エントリー）</small><br>6,600円〜<small>（スタンダード・登記可）</small></td><td>要確認</td><td>要確認</td><td><strong>女性専用</strong>。住所のみ290円は業界最安。登記はスタンダード（6,600円〜）から。提携貸会議室割引有。</td></tr>
+</tbody></table></div>
+<h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">おすすめ2件</h3>
+<div class="recommend-grid">
+<div class="rec-card"><div class="rec-head"><div><div class="name">ワンストップビジネスセンター 名古屋栄</div></div><div class="rank">01</div></div><div class="rec-body"><dl><dt>住所</dt><dd>中区栄2丁目2-1 広小路伏見中駒ビル</dd><dt>初期費用</dt><dd>10,780円（税込）</dd><dt>月額</dt><dd>5,280円〜（エコノミー）※週1無料転送込み</dd><dt>支払方法</dt><dd>クレジットカード、銀行振込</dd><dt>本店登記</dt><dd><span class="tag tag-ok">可</span></dd></dl><div class="reason"><strong>おすすめ理由</strong>「中区栄」一等地。伏見駅徒歩1分。週1無料転送込み。スタッフ常駐。銀行振込対応。全国40拠点超の大手で信頼性が高い。</div></div></div>
+<div class="rec-card"><div class="rec-head"><div><div class="name">ビジネスリンクス名古屋</div></div><div class="rank">02</div></div><div class="rec-body"><dl><dt>住所</dt><dd>中区栄5丁目26-39 GS栄ビル3F</dd><dt>初期費用</dt><dd>0円（入会金無料）</dd><dt>月額</dt><dd>3,080円〜（Aプラン・税込）</dd><dt>支払方法</dt><dd>クレジットカード、口座振替</dd><dt>本店登記</dt><dd><span class="tag tag-ok">可</span></dd></dl><div class="reason"><strong>おすすめ理由</strong>入会金0円・月額3,080円〜で中区内最安水準。口座振替対応。Bプランはコワーキング付。矢場町駅徒歩3分。</div></div></div>
 </div>
-
-</body>
-</html>
+</section>
+<section class="notes-section"><h2>注意点</h2>
+<div class="note-block"><h3>名古屋中税務署管轄での登記に関する注意</h3><ul>
+<li>名古屋中税務署の管轄は<strong>名古屋市中区のみ</strong>。中村区（名駅）は名古屋中村税務署管轄のため、GMOオフィスサポート名古屋やDMMバーチャルオフィス名古屋は管轄外。</li>
+<li>名古屋ソリューションは中区内に5拠点あり、登記住所を選択可能。</li>
+<li>パルミエ名古屋は<strong>女性専用</strong>。住所利用のみ（290円〜）では法人登記不可。登記にはスタンダードプラン（6,600円〜）以上が必要。</li>
+<li>SOHOプラザ・オフィスプラス栄・ビジネスセンター錦は料金の公式情報が限定的。各社に直接お問い合わせください。</li>
+</ul></div>
+<div class="note-block"><h3>支払方法に関する注意</h3><ul>
+<li><strong>ワンストップビジネスセンター：</strong>クレジットカード＋銀行振込。法人名義振込可能。</li>
+<li><strong>ビジネスリンクス名古屋：</strong>クレジットカード＋口座振替。引落手数料は利用者負担。</li>
+<li><strong>名古屋ソリューション：</strong>入会金・保証金不要。支払方法は公式サイトで要確認。</li>
+</ul></div>
+<div class="note-block"><h3>税務署管轄の最終確認方法</h3><ul>
+<li>名古屋国税局公式サイト：<a href="https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm" target="_blank">https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm</a></li>
+<li>名古屋中税務署：052-962-3131</li>
+</ul></div>
+</section>
+<section class="url-section"><h2>参照URL一覧</h2><ul class="url-list">
+<li><span class="url-label">ワンストップビジネスセンター 名古屋栄</span><a href="https://www.1sbc.com/branch/nagoya-sakae/" target="_blank">公式</a></li>
+<li><span class="url-label">ビジネスリンクス名古屋</span><a href="https://www.b-links.jp/virtual-office/" target="_blank">公式</a></li>
+<li><span class="url-label">名古屋ソリューション</span><a href="http://www.office-nagoya.com" target="_blank">公式</a></li>
+<li><span class="url-label">SOHOプラザ</span><a href="http://www.soho-plaza.jp" target="_blank">公式</a></li>
+<li><span class="url-label">リージャス</span><a href="https://www.regus.com/" target="_blank">公式</a></li>
+<li><span class="url-label">サーブコープ</span><a href="https://www.servcorp.co.jp/" target="_blank">公式</a></li>
+<li><span class="url-label">THE HUB 名古屋丸の内</span><a href="https://thehub.nex.works/" target="_blank">公式</a></li>
+<li><span class="url-label">名古屋中税務署（国税庁）</span><a href="https://www.nta.go.jp/about/organization/nagoya/location/aichi/nagoyanaka/index.htm" target="_blank">国税庁</a></li>
+</ul></section>
+<div class="footer">
+<p>本レポートはWeb検索による調査に基づくものであり、最新の料金・条件は各事業者の公式サイトでご確認ください。</p>
+<p style="margin-top:4px;">調査日：2026年4月22日 ｜ 名古屋中税務署管轄（名古屋市中区）網羅版 ｜ 10事業者掲載</p>
+</div></div>
+</body></html>
