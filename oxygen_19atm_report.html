@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.9気圧 酸素ルーム 導入候補レポート v4（価格反映版）</title>
+<title>1.9気圧 酸素ルーム 導入候補レポート v6（代理店情報完全版）</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -54,7 +54,7 @@
     margin-bottom: 20px;
     color: #555;
   }
-  .v4-badge {
+  .v6-badge {
     display: inline-block;
     background: #2e7d32;
     color: #fff;
@@ -63,15 +63,6 @@
     border-radius: 3px;
     margin-left: 8px;
     vertical-align: middle;
-  }
-  .price-badge {
-    display: inline-block;
-    background: #c0392b;
-    color: #fff;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 3px;
-    margin-left: 4px;
   }
   .summary-box {
     background: #fff;
@@ -89,6 +80,19 @@
     margin: 14px 0;
     border-radius: 4px;
     color: #8a5008;
+  }
+  .caution-box {
+    background: #fce4e4;
+    border: 2px solid #d9534f;
+    border-left: 6px solid #c0392b;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 6px;
+  }
+  .caution-box h3 {
+    margin-top: 0;
+    color: #c0392b;
+    border-bottom-color: #c0392b;
   }
   .note-box {
     background: #f3f7fb;
@@ -114,10 +118,68 @@
     margin: 14px 0;
     border-radius: 6px;
   }
-  .price-box h4 {
-    margin-top: 0;
+  .main-price-box {
+    background: linear-gradient(to right, #ffecd9, #fff7e0);
+    border: 2px solid #f39c12;
+    padding: 20px 24px;
+    margin: 16px 0;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .main-price-box .label {
+    font-size: 14px;
+    color: #8a5008;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .main-price-box .amount {
+    font-size: 28px;
+    font-weight: 700;
     color: #c0392b;
-    font-size: 16px;
+    margin: 4px 0;
+  }
+  .main-price-box .sub {
+    font-size: 13px;
+    color: #555;
+  }
+  .dealer-card {
+    background: #fff;
+    border: 1px solid #c8d8e8;
+    border-left: 4px solid #1a6dbf;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .dealer-card h4 {
+    margin-top: 0;
+    color: #0e3f6f;
+    font-size: 15px;
+  }
+  .dealer-card.manufacturer {
+    border-left-color: #c0392b;
+    background: #fff8f5;
+  }
+  .dealer-card.manufacturer h4 {
+    color: #c0392b;
+  }
+  .dealer-card .field {
+    margin: 4px 0;
+    font-size: 13px;
+  }
+  .dealer-card .field .label {
+    display: inline-block;
+    min-width: 80px;
+    font-weight: 600;
+    color: #555;
+  }
+  .dealer-card .positioning {
+    background: #f3f7fb;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-style: italic;
+    color: #333;
   }
   table {
     border-collapse: collapse;
@@ -145,6 +207,11 @@
     font-weight: 600;
     color: #c0392b;
   }
+  .recommended-row td {
+    background: #fef7e0 !important;
+    border-top: 2px solid #f39c12;
+    border-bottom: 2px solid #f39c12;
+  }
   .highlight-required {
     color: #c0392b;
     font-weight: 600;
@@ -152,11 +219,6 @@
   .highlight-good {
     color: #1e7e34;
     font-weight: 600;
-  }
-  .highlight-warning {
-    background: #fff7e6;
-    padding: 2px 6px;
-    border-radius: 3px;
   }
   .highlight-new {
     background: #ffe0b2;
@@ -175,6 +237,36 @@
   }
   ul, ol { padding-left: 24px; }
   li { margin-bottom: 4px; }
+  .region-header {
+    background: #0e3f6f;
+    color: #fff;
+    padding: 6px 12px;
+    margin: 10px 0 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .store-item {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .store-item .area {
+    color: #0e3f6f;
+    font-weight: 600;
+  }
+  .store-item .detail {
+    color: #666;
+    font-size: 11px;
+  }
   .rec-card {
     background: #fff;
     border: 1px solid #dcdcdc;
@@ -183,10 +275,18 @@
     margin: 14px 0;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
+  .rec-card.recommended {
+    border: 2px solid #f39c12;
+    background: linear-gradient(to right, #fffcf0, #fff);
+  }
   .rec-card h3 {
     margin-top: 0;
     color: #0e3f6f;
     border-bottom: 2px solid #1a6dbf;
+  }
+  .rec-card.recommended h3 {
+    color: #c0392b;
+    border-bottom-color: #f39c12;
   }
   .badge {
     display: inline-block;
@@ -197,17 +297,7 @@
     border-radius: 3px;
     margin-right: 6px;
   }
-  .badge-gold { background: #f5b301; }
-  .badge-silver { background: #8a8a8a; }
-  .badge-cond { background: #d0893b; }
-  .badge-excluded { background: #888; opacity: 0.7; }
-  .footer-note {
-    margin-top: 40px;
-    padding-top: 16px;
-    border-top: 2px solid #dcdcdc;
-    font-size: 13px;
-    color: #666;
-  }
+  .badge-champion { background: #c0392b; }
   blockquote {
     border-left: 4px solid #1a6dbf;
     padding: 10px 16px;
@@ -216,22 +306,12 @@
     color: #333;
     font-size: 14px;
   }
-  .check-list {
-    background: #fff;
-    border: 1px solid #dcdcdc;
-    padding: 12px 20px;
-    border-radius: 4px;
-    margin: 10px 0;
-  }
-  .check-list li {
-    list-style: none;
-    padding-left: 24px;
-    text-indent: -24px;
-  }
-  .check-list li:before {
-    content: "☐ ";
-    color: #1a6dbf;
-    font-weight: bold;
+  .footer-note {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 2px solid #dcdcdc;
+    font-size: 13px;
+    color: #666;
   }
   @media screen and (max-width: 900px) {
     table { font-size: 11px; }
@@ -239,17 +319,37 @@
     h1 { font-size: 20px; }
     h2 { font-size: 17px; }
     h3 { font-size: 15px; }
+    .main-price-box .amount { font-size: 22px; }
   }
 </style>
 </head>
 <body>
 
-<h1>1.9気圧 酸素ルーム 導入候補 調査レポート<span class="v4-badge">v4 価格反映・最終版</span></h1>
+<h1>1.9気圧 酸素ルーム 導入候補 調査レポート<span class="v6-badge">v6 代理店情報完全版</span></h1>
 
 <div class="meta">
-  <strong>情報確認日：</strong>2026年4月20日<br>
-  <strong>改訂ポイント：</strong>メーカー問い合わせで取得した価格情報、リース・レンタル条件、耐荷重仕様（580トン）を反映<br>
-  <strong>シェルター兼用モデル：</strong>通常モデルが580トン耐荷重のため<strong>不要と判断</strong>し、本レポートでは推奨を撤回
+  <strong>情報確認日：</strong>2026年4月22日<br>
+  <strong>ベース情報：</strong>ワールドネットインターナショナル発行 正式見積書（2026年4月21日付）＋ 公開情報<br>
+  <strong>改訂ポイント：</strong>販売代理店の連絡先情報を詳細掲載／調査の網羅性の限界を明示／相見積り取得のアプローチ追加／地域フィルター撤去
+</div>
+
+<div class="main-price-box">
+  <div class="label">💎 本命プランの最終契約金額（10%OFF適用後）</div>
+  <div class="amount">税込 4,983,000円</div>
+  <div class="sub">O2DOCTOR カプセルドーム 1.9気圧プラン（送料・設置・TV/エアコン・3年保証込み）</div>
+  <div class="sub">リース選択時：月額 81,721円（6年・72回払い、完済後譲渡）</div>
+</div>
+
+<div class="caution-box">
+  <h3>⚠️ 代理店網羅性に関する重要な注意事項</h3>
+  <p>本レポートに掲載した代理店・窓口は、<strong>公開情報から確認できた範囲での網羅</strong>です。以下の理由から、<strong>「これが国内のすべての代理店」と断言することはできません</strong>：</p>
+  <ol>
+    <li><strong>WNI（製造元）は公式サイトに代理店一覧を公開していない</strong> — 公式な代理店リストは非公開</li>
+    <li><strong>「全国41ヶ所の提携店舗」は酸素カプセル体験拠点であり、販売代理店ではない</strong> — これらはWNI製品を導入した店舗（整骨院、サロン等）で、Web予約ベースで一般顧客が酸素カプセルを体験できる場所。提携店舗に直接連絡しても無料体験は提供されない</li>
+    <li><strong>「銀行系代理店パートナー」はWNIが言及しているが、企業名が非公開</strong> — 正和商事（大垣共立銀行系）以外にも存在する可能性あり</li>
+    <li><strong>非公開の代理店が存在する可能性</strong> — 法人契約ベースで特定企業にのみ紹介されている代理店もあり得る</li>
+  </ol>
+  <p><strong>最も確実な網羅性の確保方法は、WNI本体に直接「全国の販売代理店リストを教えてください」と問い合わせることです。</strong></p>
 </div>
 
 <h2>0. 調査の前提と全体像</h2>
@@ -278,410 +378,536 @@
 </tbody>
 </table>
 
-<h3>🔑 シェルター兼用モデルの検討結果（重要）<span class="highlight-new">v4更新</span></h3>
+<p>その他のブランド・販売窓口（ガリレオコーポレーション、正和商事、昭和商事、商社各社など）は、<strong>実質的にWNI製品を販売する代理店・取次店</strong>であり、製品本体そのものは同じシリーズから派生している。</p>
+
+<h3>🔑 シェルター兼用モデルの検討結果</h3>
 
 <div class="alert-box">
-  当初はシェルター兼用モデル（O2-SHELTER系列）を第2候補として検討していたが、<strong>メーカーへの問い合わせで通常のキャビンS自体が580トンの耐荷重設計</strong>であることが確認された。
-  <ul>
-    <li>580トン耐荷重＝家屋倒壊時の圧迫荷重に対して十分な強度</li>
-    <li>通常の酸素カプセル／キャビン自体が、実質的にシェルター相当の強度を備えている</li>
-    <li><strong>シェルター兼用モデル（追加の耐震機能）は不要</strong>と判断</li>
-    <li>判断根拠：通常モデルで必要十分な耐震保護性能が得られる</li>
-  </ul>
-  → 本レポートでは<strong>シェルター兼用モデルの推奨を撤回</strong>し、純粋な健康機器モデル（カプセルドーム／キャビンS）に一本化。
+  メーカーへの問い合わせで、<strong>通常のキャビンSなどWNI通常モデル自体が580トン耐荷重設計</strong>であることが確認された。家屋倒壊時の圧迫荷重に対して十分な保護性能があるため、<strong>シェルター兼用モデルは不要</strong>と判断。
 </div>
 
 <h3>🔑 海外製品の状況</h3>
 
 <div class="note-box">
-  海外製ハードチャンバー（米国Summit to Sea、欧州OxyHelp、中国MACY-PAN、米国Oxy Health等）の中には2.0 ATA対応のモデルも存在するが、<strong>日本国内で1.9気圧運用を明示して正規販売されているものは現時点で確認できない</strong>。
-  <ul>
-    <li>米国Oxy Health社「オアシスO2」（日本ライトサービス輸入）→<strong>最大1.3気圧のみ</strong></li>
-    <li>中国MACY-PAN等のHBOT医療チャンバー→<strong>日本の個人向け正規代理店が確認できず</strong></li>
-    <li>米国アトラス・サバイバル・シェルターズ（七呂建設取扱）→<strong>核シェルターだが1.9気圧加圧仕様ではない</strong></li>
-  </ul>
+  海外製ハードチャンバーの中には2.0 ATA対応のモデルも存在するが、<strong>日本国内で1.9気圧運用を明示して正規販売されているものは現時点で確認できない</strong>。
 </div>
 
-<h2>1. 取得済み価格情報（メーカー問い合わせ結果）<span class="price-badge">NEW</span></h2>
+<h2>1. 正式見積書の内容（2026年4月21日 WNI発行）</h2>
+
+<h3>1-A. 対象製品：O2Doctor CAPSULE DOME（W1,100×D2,100×H1,300）</h3>
+
+<p>WNIからの正式見積書では、<strong>気圧帯ごとに3プラン</strong>が提示された：</p>
+
+<table>
+<thead>
+  <tr><th>プラン</th><th>本体価格（税抜）</th><th>気圧チャンネル</th><th>保証期間</th><th>リース月額</th><th>特徴</th></tr>
+</thead>
+<tbody>
+  <tr>
+    <td>1.4気圧モデル</td>
+    <td>290万円</td>
+    <td>3ch（1.2/1.3/1.4）</td>
+    <td>1年</td>
+    <td>57,728円</td>
+    <td>エントリー</td>
+  </tr>
+  <tr>
+    <td>1.6気圧モデル</td>
+    <td>370万円</td>
+    <td>3ch（1.2/1.4/1.6）</td>
+    <td>3年</td>
+    <td>72,160円</td>
+    <td>ミドル</td>
+  </tr>
+  <tr class="recommended-row">
+    <td><strong>1.9気圧モデル</strong></td>
+    <td><strong>470万円</strong></td>
+    <td><strong>5ch（1.2/1.3/1.5/1.7/1.9）</strong></td>
+    <td><strong>3年</strong></td>
+    <td><strong>81,721円</strong></td>
+    <td><strong>ハイエンド</strong></td>
+  </tr>
+</tbody>
+</table>
+
+<h3>1-B. 1.9気圧プランの特典</h3>
 
 <div class="price-box">
-  <h4>1-A. O2DOCTOR カプセルドーム（標準仕様）</h4>
   <table>
     <thead>
-      <tr><th>導入形態</th><th>価格</th><th>備考</th></tr>
+      <tr><th>項目</th><th>内容</th><th>金額インパクト</th></tr>
     </thead>
     <tbody>
-      <tr><td><strong>購入価格</strong></td><td class="price-cell">500万円（標準）</td><td>1.9気圧対応標準仕様</td></tr>
-      <tr><td><strong>リース</strong></td><td class="price-cell">月額8〜9万円</td><td>法人契約で適用可能</td></tr>
-      <tr><td><strong>レンタル</strong></td><td class="price-cell">月額9〜10万円</td><td>1年／3年／6年プラン有、保証金として本体価格の20%（100万円相当）が必要</td></tr>
+      <tr><td><strong>10%OFFキャンペーン</strong></td><td>本体価格470万円から47万円割引</td><td class="price-cell">▲47万円</td></tr>
+      <tr><td><strong>テレビ・エアコン付き</strong></td><td>サービス提供（他プランは+14.8万円のオプション扱い）</td><td class="price-cell">実質+14.8万円相当</td></tr>
+      <tr><td><strong>酸素濃縮器特別価格</strong></td><td>定価59.8万円 → 32万円</td><td class="price-cell">実質▲27.8万円（購入する場合）</td></tr>
+      <tr><td><strong>保証期間</strong></td><td>3年（1.4気圧モデルは1年）</td><td>延長保証相当</td></tr>
     </tbody>
   </table>
 </div>
 
-<div class="price-box">
-  <h4>1-B. O2DOCTOR キャビン S</h4>
-  <table>
-    <thead>
-      <tr><th>導入形態</th><th>価格</th><th>備考</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>購入価格</strong></td><td class="price-cell">480万円</td><td>1.9気圧対応</td></tr>
-      <tr><td><strong>リース</strong></td><td class="price-cell">月額8万円前後</td><td></td></tr>
-      <tr><td><strong>レンタル</strong></td><td class="price-cell">月額9万円前後</td><td>保証金として本体価格の20%（96万円相当）が必要</td></tr>
-    </tbody>
-  </table>
-</div>
+<h3>1-C. 1.9気圧モデルの最終契約金額</h3>
 
-<div class="summary-box">
-  <strong>1-C. リース・レンタル共通の重要仕様</strong>
+<table>
+<thead>
+  <tr><th>項目</th><th>金額</th></tr>
+</thead>
+<tbody>
+  <tr><td>本体価格</td><td>4,700,000円</td></tr>
+  <tr><td>1.9気圧10%OFF割引</td><td class="price-cell">▲470,000円</td></tr>
+  <tr><td>テレビ・エアコン付き</td><td>サービス</td></tr>
+  <tr><td>送料・設置費</td><td>300,000円</td></tr>
+  <tr><td><strong>合計（税抜）</strong></td><td class="price-cell"><strong>4,530,000円</strong></td></tr>
+  <tr><td>消費税（10%）</td><td>453,000円</td></tr>
+  <tr class="recommended-row"><td><strong>総合計(税込)</strong></td><td class="price-cell"><strong>4,983,000円</strong></td></tr>
+</tbody>
+</table>
+
+<h3>1-D. リース条件（1.9気圧プラン）</h3>
+
+<ul>
+  <li>料率：1.64%</li>
+  <li>支払回数：72回（6年）</li>
+  <li><strong>月額料金：81,721円</strong></li>
+  <li>6年完済後、所有権が移転（譲渡）</li>
+  <li>法人契約で適用可能</li>
+</ul>
+
+<h3>1-E. 見積有効期限</h3>
+
+<div class="note-box">
   <ul>
-    <li><strong>6年間の支払い完了後、そのまま譲渡され所有物となる</strong></li>
-    <li>レンタル契約は購入前提のサブスクリプション型に近い</li>
+    <li><strong>30日間（2026年5月21日まで）</strong></li>
+    <li>支払条件：銀行振込</li>
+    <li>納品期日：別途相談</li>
+    <li>見積担当：尾崎／赤木</li>
   </ul>
 </div>
 
+<h2>2. 正規販売代理店・窓口（問い合わせ先情報付き）</h2>
+
+<h3>2-A. 製造元：ワールドネットインターナショナル株式会社（WNI）</h3>
+
+<div class="dealer-card manufacturer">
+  <h4>🏢 本社</h4>
+  <div class="field"><span class="label">所在地：</span>〒105-0021 東京都港区東新橋2-3-14 エディフィチオトーコービル 1F</div>
+  <div class="field"><span class="label">TEL：</span>03-5843-8225（代表）</div>
+  <div class="field"><span class="label">FAX：</span>042-440-6021（調布支社内）</div>
+  <div class="field"><span class="label">代表者：</span>中嶋 広樹</div>
+  <div class="field"><span class="label">創業：</span>2000年（平成12年）</div>
+  <div class="field"><span class="label">資本金：</span>3,200万円</div>
+  <div class="field"><span class="label">Web：</span><a href="https://wni-group.co.jp/" target="_blank">wni-group.co.jp</a> / <a href="https://wni-jp.com/" target="_blank">wni-jp.com</a></div>
+  <div class="field"><span class="label">O2DOCTOR：</span><a href="https://o2doctor.wni-jp.com/" target="_blank">o2doctor.wni-jp.com</a></div>
+  <div class="field"><span class="label">📞 フリーダイヤル：</span><strong>0800-888-1166</strong>（9〜18時、土日祝対応）</div>
+  <div class="field"><span class="label">📞 製品問い合わせ：</span>042-440-6020</div>
+  <div class="field"><span class="label">LINE公式：</span><a href="https://page.line.me/767umjiv" target="_blank">page.line.me/767umjiv</a></div>
+</div>
+
+<div class="dealer-card manufacturer">
+  <h4>🏢 調布支社（サポートセンター）</h4>
+  <div class="field"><span class="label">所在地：</span>〒182-0036 東京都調布市飛田給2-22-8 シティエステートビル2F</div>
+  <div class="field"><span class="label">TEL：</span>042-440-6020</div>
+  <div class="field"><span class="label">役割：</span>メンテナンス・サポート拠点</div>
+</div>
+
+<div class="dealer-card manufacturer">
+  <h4>🏭 静岡第一工場</h4>
+  <div class="field"><span class="label">所在地：</span>〒425-0066 静岡県焼津市大島1603-3</div>
+</div>
+
+<div class="dealer-card manufacturer">
+  <h4>🏭 静岡第二工場 兼 展示場</h4>
+  <div class="field"><span class="label">所在地：</span>〒425-0091 静岡県焼津市八楠4-39-14</div>
+  <div class="field"><span class="label">TEL：</span>042-440-6020（予約受付）</div>
+  <div class="field"><span class="label">営業時間：</span>10〜17時（土日祝休）</div>
+  <div class="field"><span class="label">アクセス：</span>焼津駅から車で8分、焼津IC 3分</div>
+  <div class="field"><span class="label">特徴：</span>製造元の自社展示場で製品ラインナップを直接確認可能</div>
+</div>
+
+<div class="dealer-card manufacturer">
+  <h4>🏭 静岡第三工場</h4>
+  <div class="field"><span class="label">所在地：</span>〒425-0076 静岡県焼津市小屋敷16</div>
+</div>
+
+<div class="dealer-card manufacturer">
+  <h4>🏭 静岡第一倉庫</h4>
+  <div class="field"><span class="label">所在地：</span>〒425-0074 静岡県焼津市柳新屋33</div>
+</div>
+
+<h3>2-B. 主要販売代理店</h3>
+
+<div class="dealer-card">
+  <h4>① 株式会社ガリレオコーポレーション（九州エリア代理店）</h4>
+  <div class="field"><span class="label">所在地：</span>〒812-0006 福岡県福岡市博多区上牟田1-7-6</div>
+  <div class="field"><span class="label">📞 TEL：</span><strong>092-432-1788</strong>（本社代表）</div>
+  <div class="field"><span class="label">関連会社：</span>サンノウハウジング（〒812-0007 福岡県福岡市博多区東比恵1-2-3）</div>
+  <div class="field"><span class="label">📞 フリーダイヤル：</span>0120-947-165</div>
+  <div class="field"><span class="label">代表者：</span>百合永 勝彦</div>
+  <div class="field"><span class="label">設立：</span>2005年1月</div>
+  <div class="field"><span class="label">資本金：</span>1億円（グループ資本金2,333万円）</div>
+  <div class="field"><span class="label">従業員：</span>50人</div>
+  <div class="field"><span class="label">事業内容：</span>太陽光発電事業、蓄電池事業、リフォーム・リノベーション、オール電化商品、業務・店舗用空調機、シェルター事業</div>
+  <div class="field"><span class="label">Web：</span><a href="https://www.galileojapan.co.jp/" target="_blank">galileojapan.co.jp</a></div>
+  <div class="field"><span class="label">シェルターLP：</span><a href="https://www.galileojapan.co.jp/shelter_lp/index.html#o2" target="_blank">galileojapan.co.jp/shelter_lp</a></div>
+  <div class="field"><span class="label">展示場：</span>福岡市西区今津4754-14（見学可）</div>
+  <div class="positioning">
+    <strong>位置付け：</strong>同社の主事業は太陽光発電・蓄電池・リフォームで、シェルター・酸素カプセルは事業ラインナップの一部。主に九州エリアのO2-SHELTER（耐震シェルター兼用モデル）を販売。純粋な酸素カプセル（O2DOCTORシリーズ）の取扱範囲は要確認。
+  </div>
+</div>
+
+<div class="dealer-card">
+  <h4>② 正和商事株式会社（岐阜・銀行系代理店）</h4>
+  <div class="field"><span class="label">所在地：</span>詳細は公開情報で確認できず</div>
+  <div class="field"><span class="label">背景：</span><strong>岐阜県大垣共立銀行のグループ会社</strong>（2018年4月にWNIと代理店契約締結）</div>
+  <div class="field"><span class="label">Web：</span><a href="https://www.showashoji.co.jp/insurance/shelter.html" target="_blank">showashoji.co.jp/insurance/shelter.html</a></div>
+  <div class="field"><span class="label">事業：</span>保険代理店を兼務</div>
+  <div class="field"><span class="label">取扱：</span>O2シェルター（日本製WNI OEM）、5Way（イスラエル製CBRN対応）、酸素ルーム事業</div>
+  <div class="positioning">
+    <strong>位置付け：</strong>銀行グループ会社のため、リース・ファイナンス面での提案に強み。リスクマネジメント視点で保険と組み合わせた提案も可能。東海エリア（岐阜・愛知）を中心とした顧客対応。
+  </div>
+</div>
+
+<div class="dealer-card">
+  <h4>③ 昭和商事株式会社</h4>
+  <div class="field"><span class="label">所在地：</span>詳細な会社情報は公開情報で確認できず</div>
+  <div class="field"><span class="label">背景：</span>正和商事との関連性がWeb上の情報で示唆されており、同系列と見られる</div>
+  <div class="positioning">
+    <strong>問い合わせは正和商事経由、またはWNI本体を通じての紹介が確実。</strong>
+  </div>
+</div>
+
+<div class="dealer-card">
+  <h4>④ 銀行系代理店パートナー（複数の可能性あり）</h4>
+  <div class="field">WNI公式サイトで「大手金融機関との代理店パートナー契約を締結」「一部上場の全国有数の銀行のグループ企業との代理店取引を締結（銀行関連会社が代理店としてご参加頂くのは業界初）」と記載あり</div>
+  <div class="field">正和商事以外にも複数の銀行系代理店が存在する可能性</div>
+  <div class="positioning">
+    <strong>具体的な企業名は公開されていないため、WNI本体に問い合わせて紹介を受ける必要あり。</strong>
+  </div>
+</div>
+
+<h3>2-C. 業務用レンタル・リース窓口</h3>
+
+<div class="dealer-card">
+  <h4>⑤ ジムクラウド（GYM CLOUD）株式会社メトロノーム</h4>
+  <div class="field"><span class="label">📞 TEL：</span>03-6721-9909（平日10:00〜19:00）</div>
+  <div class="field"><span class="label">Web：</span><a href="https://gymcloud.jp/" target="_blank">gymcloud.jp</a></div>
+  <div class="field"><span class="label">法人窓口：</span><a href="https://gymcloud.jp/admin/entry/" target="_blank">gymcloud.jp/admin/entry</a></div>
+  <div class="field"><span class="label">事業：</span>フィットネス機器のレンタル・リース・サブスクリプション</div>
+  <div class="field"><span class="label">取扱：</span><strong>O2 Doctor（WNI製品）、O2 Capsule（他社製品）</strong> など</div>
+  <div class="field"><span class="label">対象：</span>主に業務用（ジム、サロン、クリニック等）向け</div>
+  <div class="positioning">
+    <strong>位置付け：</strong>WNIの直接代理店ではなく、機器レンタル・リースの総合仲介業者。業務用用途で短期〜中期レンタルを検討する場合の選択肢。個人宅利用では選択肢としては限定的だが、6ヶ月〜60ヶ月の柔軟なプランあり。
+  </div>
+</div>
+
+<h3>2-D. 全国41ヶ所の提携店舗（無料体験拠点）</h3>
+
+<div class="alert-box">
+  ⚠️ <strong>これらは販売代理店ではなく、WNI製品を導入した店舗（整骨院、サロン、クリニック等）です。</strong><br>
+  直接連絡しても無料体験は受けられません。必ずWNI本体（<strong>0800-888-1166</strong> または フリーダイヤル 0120-028-164）経由で予約してください。
+</div>
+
+<div class="region-header">北海道・東北地方</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【北海道・上富良野】酸素サロン</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【北海道・室蘭】ビューティーサロン</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【宮城県・仙台】鍼灸院</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【青森県・大間】酸素サロン</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+</div>
+
+<div class="region-header">東京都</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【新宿区】酸素サロン</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【新宿区】酸素サロン</span><br><span class="detail">ドームM／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【葛飾区】クリニック</span><br><span class="detail">車いすドーム・ドームM／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【葛飾区】整骨院</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【八王子市】整骨院</span><br><span class="detail">特注カプセルドーム／最大1.6気圧</span></div>
+  <div class="store-item"><span class="area">【東久留米市】マッサージ</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【中央区】銀座 整体院</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【大田区】整骨院</span><br><span class="detail">カプセルドーム／最大1.6気圧</span></div>
+  <div class="store-item"><span class="area">【立川市】酸素サロン</span><br><span class="detail">キャビンS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【杉並区】クリニック</span><br><span class="detail">ドームM／最大1.9気圧</span></div>
+</div>
+
+<div class="region-header">関東地方</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【茨城県・龍ケ崎市】整骨院</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【茨城県・鹿島市】ドッグクラブ</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【茨城県・稲敷市】鍼灸院</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【千葉県・柏市】酸素サロン</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【埼玉県・春日部市】酸素サロン</span><br><span class="detail">ドームS・カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【神奈川県・川崎市】</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【神奈川県・横浜市鶴見区】整体院</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+</div>
+
+<div class="region-header">中部・北陸地方</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【愛知県・名古屋市】パーソナルジム</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【愛知県・名古屋市】酸素サロン</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【岐阜県・飛騨市】</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【静岡県・浜松市】スポーツ施設</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【新潟県・五泉市】フィットネスジム</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【長野県】酸素サロン</span><br><span class="detail">ドームM・S／最大1.9気圧</span></div>
+</div>
+
+<div class="region-header">近畿地方</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【大阪府・豊中市】酸素バー</span><br><span class="detail">ドームS／最大1.6気圧</span></div>
+  <div class="store-item"><span class="area">【大阪府・東大阪市】もみほぐし整体</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【大阪府・泉佐野市】リラクゼーション</span><br><span class="detail">特注ドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【大阪府・大阪市東淀川区】酸素サロン</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【京都府京都市】ヒーリングサロン</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+</div>
+
+<div class="region-header">四国地方</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【徳島県・鳴門市】ゴルフ施設</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+</div>
+
+<div class="region-header">九州・沖縄地方</div>
+<div class="store-grid">
+  <div class="store-item"><span class="area">【大分県・国東市】整骨院</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【鹿児島県・奄美市】マッサージ店</span><br><span class="detail">キャビンM／最大1.6気圧</span></div>
+  <div class="store-item"><span class="area">【熊本県・八代市】リラクゼーションサロン</span><br><span class="detail">カプセルドーム／最大1.6気圧</span></div>
+  <div class="store-item"><span class="area">【熊本県・玉名市】整骨院</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【福岡県・福岡市西区】整骨院</span><br><span class="detail">特注キャビン／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【福岡県・福岡市東区】</span><br><span class="detail">ドームM／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【鹿児島県・日置市】温泉施設</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【佐賀県・三養基郡】</span><br><span class="detail">カプセルドーム／最大1.9気圧</span></div>
+  <div class="store-item"><span class="area">【沖縄県・浦添市】整形外科</span><br><span class="detail">ドームS／最大1.9気圧</span></div>
+</div>
+
+<h2>3. 代理店別の特徴と価格交渉の可能性</h2>
+
+<h3>3-A. 代理店によって価格が異なる可能性</h3>
+
+<p><strong>同じWNI製品でも、販売代理店が異なれば以下の要因で価格差が生じる可能性があります：</strong></p>
+
+<table>
+<thead>
+  <tr><th>要因</th><th>影響</th></tr>
+</thead>
+<tbody>
+  <tr><td><strong>マージン設定の違い</strong></td><td>代理店ごとに利益率の設定が異なる</td></tr>
+  <tr><td><strong>地域・物流コスト</strong></td><td>設置場所までの距離で送料が変動</td></tr>
+  <tr><td><strong>施工・付帯工事の見積り</strong></td><td>電源工事、床補強などの工事費は代理店が独自設定</td></tr>
+  <tr><td><strong>組み合わせ販売</strong></td><td>リフォームや蓄電池と同時購入で総合値引き（ガリレオコーポレーションの場合など）</td></tr>
+  <tr><td><strong>ファイナンス条件</strong></td><td>銀行系代理店は独自のリース料率を提示する可能性</td></tr>
+  <tr><td><strong>キャンペーン適用</strong></td><td>10%OFF等のキャンペーンは代理店で扱いが異なる場合あり</td></tr>
+  <tr><td><strong>付帯サービス</strong></td><td>保証延長、配送、設置、保守契約など</td></tr>
+</tbody>
+</table>
+
+<h3>3-B. 相見積りを取得するメリット</h3>
+
 <div class="summary-box">
-  <strong>1-D. 耐荷重仕様（重要）</strong>
+  <p>現時点では<strong>WNI本体からの1社見積り</strong>のみ取得した状態。以下から追加見積りを取ると、価格差・サービス差を比較できる可能性がある：</p>
+  <ol>
+    <li><strong>ガリレオコーポレーション</strong>（シェルター兼用モデルのみの可能性が高い。純粋なO2DOCTORは取扱いないかも）</li>
+    <li><strong>正和商事</strong>（銀行系のためリース条件が異なる可能性あり。東海エリア向け）</li>
+    <li><strong>WNI本体の別担当者</strong>（営業担当によって提案内容が異なる場合あり）</li>
+  </ol>
+</div>
+
+<h3>3-C. 相見積り取得時の注意点</h3>
+
+<ul>
+  <li><strong>WNI本体で既に見積りを取得している旨</strong>を伝えると、代理店側で見積り対応を避ける可能性あり（代理店契約上の競合回避）</li>
+  <li><strong>「代理店経由で検討している」</strong>と明示する方が自然</li>
+  <li>同一条件（気圧、オプション、納品場所、契約形態）で依頼して比較可能にする</li>
+  <li><strong>キャンペーン適用条件</strong>は代理店ごとに異なる場合があるため必ず確認</li>
+</ul>
+
+<h2>4. 気圧帯別コスト比較</h2>
+
+<h3>4-A. 購入価格（税抜）での比較</h3>
+
+<table>
+<thead>
+  <tr><th>プラン</th><th>本体</th><th>送料設置</th><th>割引</th><th>合計（税抜）</th><th>消費税</th><th>総合計（税込）</th></tr>
+</thead>
+<tbody>
+  <tr><td>1.4気圧</td><td>290万</td><td>30万</td><td>–</td><td>320万</td><td>32万</td><td class="price-cell">352万円</td></tr>
+  <tr><td>1.6気圧</td><td>370万</td><td>30万</td><td>–</td><td>400万</td><td>40万</td><td class="price-cell">440万円</td></tr>
+  <tr class="recommended-row"><td><strong>1.9気圧</strong></td><td>470万</td><td>30万</td><td>▲47万</td><td>453万</td><td>45.3万</td><td class="price-cell"><strong>498.3万円</strong></td></tr>
+</tbody>
+</table>
+
+<h3>4-B. 6年リース総額での比較</h3>
+
+<table>
+<thead>
+  <tr><th>プラン</th><th>月額</th><th>6年総額（×72回）</th></tr>
+</thead>
+<tbody>
+  <tr><td>1.4気圧</td><td>57,728円</td><td class="price-cell">約415.6万円</td></tr>
+  <tr><td>1.6気圧</td><td>72,160円</td><td class="price-cell">約519.6万円</td></tr>
+  <tr class="recommended-row"><td><strong>1.9気圧</strong></td><td><strong>81,721円</strong></td><td class="price-cell"><strong>約588.4万円</strong></td></tr>
+</tbody>
+</table>
+
+<h3>4-C. 1.9気圧プランのコスパ分析</h3>
+
+<div class="summary-box">
   <ul>
-    <li><strong>580トン耐荷重設計</strong>（キャビンSほか、WNI通常モデル共通）</li>
-    <li>家屋倒壊時の圧迫荷重に対して十分な保護性能</li>
-    <li>追加のシェルター兼用モデルを検討する必要なし</li>
+    <li>1.6気圧 → 1.9気圧のステップアップは<strong>約58万円の追加コスト</strong>のみ</li>
+    <li>このプレミアム分で<strong>10%OFF、テレビ・エアコン、5chコントロール、3年保証、酸素濃縮器特価</strong>がすべて付帯</li>
+    <li><strong>実質的に1.9気圧プランが最もコスパが高い</strong>と評価できる</li>
   </ul>
 </div>
 
-<h2>2. 総コスト比較（6年間で見た場合）</h2>
-
-<p>購入・リース・レンタルそれぞれの6年間総コストを試算。</p>
-
-<h3>2-A. カプセルドームの場合（試算）</h3>
+<h2>5. リース vs 現金一括購入 vs レンタル</h2>
 
 <table>
 <thead>
   <tr><th>形態</th><th>初期費用</th><th>6年間の支払合計</th><th>6年後の所有</th><th>備考</th></tr>
 </thead>
 <tbody>
-  <tr><td>購入</td><td>500万円</td><td class="price-cell">500万円</td><td>あり（即時所有）</td><td>一括払い</td></tr>
-  <tr><td>リース（月額8.5万円）</td><td>0円</td><td class="price-cell">約612万円（8.5万円×72ヶ月）</td><td>あり（譲渡）</td><td>6年後譲渡。法人のみ</td></tr>
-  <tr><td>レンタル（月額9.5万円）</td><td>保証金100万円</td><td class="price-cell">約684万円 + 保証金100万円</td><td>あり（譲渡）</td><td>6年後譲渡。保証金の返還条件は要確認</td></tr>
-</tbody>
-</table>
-
-<h3>2-B. キャビンSの場合（試算）</h3>
-
-<table>
-<thead>
-  <tr><th>形態</th><th>初期費用</th><th>6年間の支払合計</th><th>6年後の所有</th><th>備考</th></tr>
-</thead>
-<tbody>
-  <tr><td>購入</td><td>480万円</td><td class="price-cell">480万円</td><td>あり（即時所有）</td><td>一括払い</td></tr>
-  <tr><td>リース（月額8万円）</td><td>0円</td><td class="price-cell">約576万円（8万円×72ヶ月）</td><td>あり（譲渡）</td><td>6年後譲渡。法人のみ</td></tr>
-  <tr><td>レンタル（月額9万円）</td><td>保証金96万円</td><td class="price-cell">約648万円 + 保証金96万円</td><td>あり（譲渡）</td><td>6年後譲渡。保証金の返還条件は要確認</td></tr>
-</tbody>
-</table>
-
-<h3>2-C. 形態別の特徴と判断</h3>
-
-<table>
-<thead>
-  <tr><th>観点</th><th>購入</th><th>リース（法人）</th><th>レンタル</th></tr>
-</thead>
-<tbody>
-  <tr><td><strong>初期負担</strong></td><td>大（一括）</td><td>なし</td><td>中（保証金20%）</td></tr>
-  <tr><td><strong>6年総コスト</strong></td><td>最安</td><td>中（購入の1.2倍）</td><td>高（購入の1.35倍）</td></tr>
-  <tr><td><strong>税務・会計処理</strong></td><td>減価償却（長期）</td><td>全額損金算入可能</td><td>全額損金算入可能</td></tr>
-  <tr><td><strong>契約対象</strong></td><td>個人／法人</td><td><strong>法人のみ</strong></td><td>個人／法人</td></tr>
-  <tr><td><strong>途中解約</strong></td><td>–</td><td>通常は違約金発生</td><td>プランにより条件あり（要確認）</td></tr>
-  <tr><td><strong>最終的な所有</strong></td><td>即時</td><td>6年後に譲渡</td><td>6年後に譲渡</td></tr>
+  <tr class="recommended-row"><td><strong>現金購入（税込）</strong></td><td>498.3万円</td><td class="price-cell"><strong>498.3万円</strong></td><td>あり（即時所有）</td><td>一括払い、最安</td></tr>
+  <tr><td>リース（月額81,721円）</td><td>0円</td><td class="price-cell">約588.4万円（81,721円×72回）</td><td>あり（譲渡）</td><td>法人のみ、+約90万円</td></tr>
+  <tr><td>レンタル（月額9〜10万円）</td><td>保証金100万円（本体価格20%）</td><td class="price-cell">約648〜720万円 + 保証金</td><td>あり（譲渡）</td><td>個人可、最高コスト</td></tr>
 </tbody>
 </table>
 
 <div class="summary-box">
   <strong>判断の目安：</strong>
   <ul>
-    <li><strong>資金余裕があり即時所有したい個人</strong>：<strong>購入</strong>が最安で合理的</li>
-    <li><strong>法人で損金処理したい／キャッシュフローを優先</strong>：<strong>リース</strong>が有利（6年譲渡）</li>
-    <li><strong>お試し期間を長く取りたい／資金繰り重視</strong>：<strong>レンタル</strong>（但し総コスト最大）</li>
+    <li><strong>個人で即時所有したい／資金余裕あり</strong> → 現金購入（498万円）</li>
+    <li><strong>法人でキャッシュフロー重視</strong> → リース（月8.2万円で譲渡条件あり）</li>
+    <li><strong>個人で分割したい／お試し期間欲しい</strong> → レンタル（但し総コスト最高）</li>
   </ul>
 </div>
 
-<h2>3. 残る検討候補（網羅リスト）</h2>
-
-<h3>3-A. 酸素カプセル・酸素ルーム（純粋な健康機器モデル）</h3>
+<h2>6. 残る検討候補</h2>
 
 <table>
 <thead>
-  <tr>
-    <th style="width:3%">No.</th>
-    <th style="width:7%">メーカー</th>
-    <th style="width:12%">製品名</th>
-    <th style="width:8%">種別</th>
-    <th style="width:6%">気圧</th>
-    <th style="width:20%">主な規格・仕様</th>
-    <th style="width:7%">耐荷重</th>
-    <th style="width:8%">購入</th>
-    <th style="width:8%">リース月額</th>
-    <th style="width:8%">レンタル月額</th>
-    <th style="width:5%">URL</th>
-  </tr>
+  <tr><th>プラン</th><th>購入（税込）</th><th>6年リース総額</th><th>おすすめ度</th><th>コメント</th></tr>
 </thead>
 <tbody>
-  <tr>
-    <td>1</td>
-    <td>WNI</td>
-    <td>O2DOCTOR カプセルドーム</td>
-    <td>カプセルドーム型</td>
-    <td>1.1〜1.9気圧</td>
-    <td>W1100×D2100×<strong>H1300mm</strong>、1〜2名、設置面積約1.2畳、分割搬入可</td>
-    <td>580トン</td>
-    <td class="price-cell">500万円</td>
-    <td class="price-cell">8〜9万円</td>
-    <td class="price-cell">9〜10万円</td>
-    <td><a href="https://o2doctor.wni-jp.com/capsule-dome" target="_blank">公式</a></td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>WNI</td>
-    <td>O2DOCTOR キャビン S</td>
-    <td>酸素キャビン一体型</td>
-    <td>1.1〜1.9気圧</td>
-    <td>W2100×<strong>D780</strong>×H1350mm、1〜2名、奥行780mmスリム設計</td>
-    <td>580トン</td>
-    <td class="price-cell">480万円</td>
-    <td class="price-cell">8万円前後</td>
-    <td class="price-cell">9万円前後</td>
-    <td><a href="https://o2doctor.wni-jp.com/cabin" target="_blank">公式</a></td>
-  </tr>
+  <tr><td>カプセルドーム 1.4気圧</td><td>352万円</td><td>約416万円</td><td>△</td><td>入門者向け、1.9気圧を求めるニーズには不足</td></tr>
+  <tr><td>カプセルドーム 1.6気圧</td><td>440万円</td><td>約520万円</td><td>◯</td><td>バランス型、ただし1.9気圧と58万円差</td></tr>
+  <tr class="recommended-row"><td><strong>カプセルドーム 1.9気圧</strong></td><td class="price-cell"><strong>498万円</strong></td><td class="price-cell"><strong>約588万円</strong></td><td><strong>◎</strong></td><td><strong>本命</strong>。10%OFF、TV/エアコン、5ch、3年保証込み</td></tr>
+  <tr><td>キャビンS 1.9気圧（参考）</td><td>480万円</td><td>約576万円</td><td>△〜◯</td><td>搬入経路要確認。カプセルドームより20万円安</td></tr>
 </tbody>
 </table>
 
-<h3>3-B. 参考：除外対象（個人宅用途に不適合と判断）</h3>
+<h2>7. 最終推奨</h2>
 
-<table>
-<thead>
-  <tr><th>除外製品</th><th>理由</th></tr>
-</thead>
-<tbody>
-  <tr><td>O2DOCTOR ドーム S/M/L</td><td>業務用（1〜10名）サイズ</td></tr>
-  <tr><td>O2DOCTOR 車いす対応酸素ドーム</td><td>病院・介護施設向け</td></tr>
-  <tr><td>O2DOCTOR 大型ドーム（特注）</td><td>最大20名、大型施設向け</td></tr>
-  <tr><td>O2-SHELTER／Shelter365</td><td><strong>通常モデル自体が580トン耐荷重のため不要と判断</strong></td></tr>
-  <tr><td>O2 SHELTER（ガリレオ版）</td><td>同上</td></tr>
-  <tr><td>WNISHELTER-S「最後の砦」</td><td>核シェルター、過剰スペック</td></tr>
-  <tr><td>サバイブ5000/7000「令和の要塞」</td><td>屋外PC造シェルター、企業向け</td></tr>
-  <tr><td>HBHOT 19（HBA社）</td><td>医療機関向け、個人購入不可</td></tr>
-</tbody>
-</table>
-
-<h3>3-C. 参考：1.9気圧未満の主要競合（気圧条件で除外）</h3>
-
-<table>
-<thead>
-  <tr><th>メーカー</th><th>主要製品</th><th>最大気圧</th><th>除外理由</th></tr>
-</thead>
-<tbody>
-  <tr><td>神戸メディケア（KMC）</td><td>OXYRIUM、OXYRIUM-S、OXYROOM</td><td>1.3〜1.5気圧</td><td>1.9気圧未満。同社は「安全目安は1.7気圧まで」と明示</td></tr>
-  <tr><td>日本ライトサービス</td><td>オアシスO2、HBA Space</td><td>1.3気圧</td><td>1.9気圧未満。米国Oxy Health社輸入</td></tr>
-  <tr><td>日本気圧バルク工業</td><td>PB2200、PB1400</td><td>1.25〜1.3気圧</td><td>1.9気圧未満。京大石原教授の知見に基づく</td></tr>
-  <tr><td>タイムワールド</td><td>O2カプセル、O2ボックス</td><td>1.35気圧が中心</td><td>1.9気圧未満</td></tr>
-  <tr><td>ハーメック</td><td>O2シリーズ</td><td>最大1.3〜1.35気圧</td><td>1.9気圧未満</td></tr>
-  <tr><td>ファイテン</td><td>ファイテンO2アルファ</td><td>最大1.35気圧</td><td>1.9気圧未満</td></tr>
-  <tr><td>Nevoton One（輸入）</td><td>Nevoton One「2.5気圧相当」</td><td>実測最大1.5気圧</td><td>実気圧は1.5気圧のため除外</td></tr>
-</tbody>
-</table>
-
-<h2>4. 最終推奨：カプセルドーム vs キャビンSの選び方</h2>
-
-<h3>4-A. スペック比較（最終2候補）</h3>
-
-<table>
-<thead>
-  <tr><th>項目</th><th>O2DOCTOR カプセルドーム</th><th>O2DOCTOR キャビン S</th></tr>
-</thead>
-<tbody>
-  <tr><td><strong>外寸</strong></td><td>W1100×D2100×<strong>H1300mm</strong></td><td>W2100×<strong>D780</strong>×H1350mm</td></tr>
-  <tr><td><strong>設置面積</strong></td><td>約1.2畳</td><td>約1.2畳</td></tr>
-  <tr><td><strong>収容人数</strong></td><td>1〜2名</td><td>1〜2名</td></tr>
-  <tr><td><strong>搬入</strong></td><td><span class="highlight-good">分割搬入可 ✅</span></td><td><span class="highlight-warning">一体型（分割不可） ⚠️</span></td></tr>
-  <tr><td><strong>耐荷重</strong></td><td>580トン</td><td>580トン</td></tr>
-  <tr><td><strong>購入価格</strong></td><td class="price-cell">500万円</td><td class="price-cell">480万円（<strong>20万円安い</strong>）</td></tr>
-  <tr><td><strong>リース月額</strong></td><td class="price-cell">8〜9万円</td><td class="price-cell">8万円前後（やや安い）</td></tr>
-  <tr><td><strong>レンタル月額</strong></td><td class="price-cell">9〜10万円</td><td class="price-cell">9万円前後（やや安い）</td></tr>
-  <tr><td><strong>6年リース総額</strong></td><td class="price-cell">約612万円</td><td class="price-cell">約576万円（<strong>36万円安い</strong>）</td></tr>
-</tbody>
-</table>
-
-<h3>4-B. 価格差の解釈</h3>
-
-<ul>
-  <li>キャビンSのほうが約20万円安い（購入価格ベース）</li>
-  <li>6年リースで比較すると約36万円差</li>
-  <li><strong>ただし「一体型のためW2100mmを通せる搬入経路が必要」という制約がある</strong></li>
-</ul>
-
-<h3>4-C. 選択のポイント</h3>
-
-<div class="rec-card">
-  <h3>カプセルドームを選ぶべきケース</h3>
-  <ul>
-    <li>搬入経路が未確認または狭い（間口90cm未満等）</li>
-    <li>階段経由・廊下にL字角がある</li>
-    <li>搬入リスクを最小化したい</li>
-    <li><strong>→ 搬入経路未確認の現状では第1候補</strong></li>
-  </ul>
-</div>
-
-<div class="rec-card">
-  <h3>キャビンSを選ぶべきケース</h3>
-  <ul>
-    <li>搬入経路が広く確認済み（戸建て1階の広い掃き出し窓など）</li>
-    <li>奥行き780mmの省スペース設計を活かしたい（壁際設置）</li>
-    <li>20〜36万円のコスト差を重視</li>
-  </ul>
-</div>
-
-<h2>5. 現状でのおすすめ判断</h2>
-
-<div class="rec-card">
-  <h3><span class="badge badge-gold">🥇 第1候補</span>O2DOCTOR カプセルドーム</h3>
-  <p><strong>搬入経路未確認の状況では最も安全な選択</strong></p>
-  <ul>
-    <li>分割搬入可で、ほぼどの家屋にも搬入可能</li>
-    <li>500万円／月8.5万円（リース）／月9.5万円（レンタル）</li>
-    <li>高さ1300mmで圧迫感も最小</li>
+<div class="rec-card recommended">
+  <h3><span class="badge badge-champion">🏆 本命</span>O2DOCTOR カプセルドーム 1.9気圧プラン</h3>
+  <h4>推奨理由</h4>
+  <ol>
+    <li>業界最高1.9気圧対応で求めているニーズに合致</li>
+    <li>10%OFFキャンペーン適用で47万円の割引</li>
+    <li>テレビ・エアコン付きサービス（他プランは+14.8万円のオプション）</li>
+    <li>5チャンネル（1.2/1.3/1.5/1.7/1.9気圧）で体調に合わせて選択可</li>
+    <li>保証期間3年（1.4気圧プランは1年のみ）</li>
+    <li>酸素濃縮器特別価格（59.8万円→32万円、実質27.8万円OFF）</li>
+    <li>1.6気圧プランとの差額はわずか58万円、プレミアム分のバリューが高い</li>
+    <li>分割搬入可で搬入リスクが低い</li>
     <li>580トン耐荷重で耐震性能も十分</li>
+    <li>個人宅・1〜2名利用の条件に最適</li>
+  </ol>
+  <h4>契約形態の最終推奨</h4>
+  <ul>
+    <li><strong>個人契約の場合</strong>：現金購入（税込498.3万円）が最安</li>
+    <li><strong>法人契約可能の場合</strong>：リース月額81,721円が有利</li>
   </ul>
+</div>
+
+<h2>8. 次のアクション</h2>
+
+<div class="rec-card">
+  <h3>📅 短期（1週間以内）</h3>
+  <ol>
+    <li><strong>WNI本体に代理店リストを問い合わせ</strong> — 非公開代理店の存在を確認</li>
+    <li><strong>ガリレオコーポレーション・正和商事に相見積り依頼</strong> — 価格差の有無を確認</li>
+    <li><strong>ショールーム見学の予約</strong> — 最寄り拠点で実機を確認</li>
+    <li><strong>搬入経路下見の依頼</strong></li>
+  </ol>
 </div>
 
 <div class="rec-card">
-  <h3><span class="badge badge-silver">🥈 第2候補（条件付き）</span>O2DOCTOR キャビン S</h3>
-  <p><strong>搬入経路が広いと確認できた場合、価格差で選ぶ価値あり</strong></p>
-  <ul>
-    <li>購入で20万円、6年リースで36万円安い</li>
-    <li>奥行き780mmのスリム設計で壁際設置可能</li>
-    <li>ただし一体型のため、<strong>搬入下見で間口W2100mm通過可否を必ず確認</strong></li>
-  </ul>
-</div>
-
-<h2>6. 確認事項（契約前チェック）</h2>
-
-<h3>価格・条件関連</h3>
-<div class="check-list">
-  <ul>
-    <li>見積書に記載された500万円／480万円が<strong>最終税込価格</strong>か、別途オプション・消費税が乗るか</li>
-    <li><strong>レンタルの保証金（20%）の返還条件</strong>（6年経過後に譲渡される場合、保証金は返還されるのか、購入代金に充当されるのか、そもそも返還なしなのか）</li>
-    <li>1年・3年・6年の各プランの月額は同額か、期間が短いほど割高になるか</li>
-    <li>中途解約時の違約金・返却条件</li>
-    <li>10%OFFキャンペーンや先着特別価格の適用可否</li>
-    <li><strong>個人契約でもリース可能なオプションがあるか</strong>（信販会社経由の個人リース等）</li>
-  </ul>
-</div>
-
-<h3>設置・搬入関連（最重要）</h3>
-<div class="check-list">
-  <ul>
-    <li><strong>カプセルドームの分割時の個別ユニット最小寸法</strong></li>
-    <li><strong>キャビンSを検討する場合、搬入経路の事前下見を依頼</strong></li>
-    <li>床耐荷重要件（設置場所の床が重量に耐えられるか）</li>
-    <li>搬入・据付・設置費用は本体価格に含まれるか、別途か</li>
-  </ul>
-</div>
-
-<h3>電源・ユーティリティ</h3>
-<div class="check-list">
-  <ul>
-    <li>電源条件（AC100V／200V、専用回路の要否、必要アンペア数）</li>
-    <li>1.9気圧運用時の消費電力と月間電気代目安</li>
-    <li>エアコン・TV追加時の追加電源要件とオプション費用</li>
-  </ul>
-</div>
-
-<h3>保守・運用</h3>
-<div class="check-list">
-  <ul>
-    <li>保証内容（標準3年／5年／10年延長の範囲と費用）</li>
-    <li>消耗部品の交換タイミングと費用</li>
-    <li>点検・メンテナンス訪問の頻度と費用</li>
-    <li>1.9気圧推奨利用時間・頻度</li>
-  </ul>
-</div>
-
-<h3>税務・会計（法人契約の場合）</h3>
-<div class="check-list">
-  <ul>
-    <li>リース契約の会計処理区分（所有権移転外／移転）</li>
-    <li>購入時の減価償却年数（健康機器としての耐用年数）</li>
-    <li>医療費控除対象外である旨の確認</li>
-  </ul>
-</div>
-
-<h2>7. 次のアクション推奨</h2>
-
-<div class="rec-card">
-  <h3>ステップ1：搬入経路の下見依頼</h3>
-  <ul>
-    <li>WNI／ガリレオ・ジャパンに搬入経路の事前下見を依頼</li>
-    <li>カプセルドームの分割ユニット寸法と、キャビンSの一体サイズ両方で通過可否を確認</li>
-  </ul>
+  <h3>📅 中期（2〜4週間以内）</h3>
+  <ol start="5">
+    <li>見積有効期限（30日・2026年5月21日まで）内の契約判断</li>
+    <li>キャビンSとの最終比較（搬入下見結果次第）</li>
+    <li>法人契約の可否検討（リースかどうか）</li>
+    <li>レンタル保証金条件の明文化</li>
+  </ol>
 </div>
 
 <div class="rec-card">
-  <h3>ステップ2：下見結果を踏まえた最終選定</h3>
-  <ul>
-    <li><strong>搬入経路：狭い／未確認のまま</strong> → カプセルドームで確定</li>
-    <li><strong>搬入経路：キャビンSも通る</strong> → 約20〜36万円のコスト差でキャビンSに切り替え検討</li>
-  </ul>
+  <h3>📅 長期（契約後）</h3>
+  <ol start="9">
+    <li>設置日程の確定</li>
+    <li>電源工事の要否確認</li>
+    <li>自治体の補助金確認（耐震・健康関連）</li>
+  </ol>
 </div>
 
-<div class="rec-card">
-  <h3>ステップ3：レンタル保証金条件の確認</h3>
-  <ul>
-    <li>6年レンタルで自分の所有になるとのことだが、20%の保証金がどう扱われるかを契約書で明確化</li>
-    <li>保証金分を差し引くと実質的な総コストが下がる可能性あり</li>
-  </ul>
-</div>
+<h2>9. 代理店への問い合わせ用テンプレート</h2>
 
-<div class="rec-card">
-  <h3>ステップ4：購入／リース／レンタルの最終決定</h3>
-  <ul>
-    <li>個人契約でリースが使えない場合、レンタルと購入の比較</li>
-    <li>税理士・ファイナンシャルアドバイザーがいれば総コスト試算を依頼</li>
-  </ul>
-</div>
+<h3>9-A. WNI本体への代理店確認用</h3>
 
-<h2>8. 所見・結論</h2>
+<blockquote>
+いつもお世話になっております。<br>
+御社製品 O2DOCTOR カプセルドーム（1.9気圧仕様）の導入を検討しております。<br>
+現在、御社本体からお見積りをいただいておりますが、全国の販売代理店・取次店の一覧をお教えいただけますでしょうか。<br>
+設置予定地は東京都内です。地域に応じた代理店や、リース・ファイナンスに強みのある代理店をご紹介いただけますと幸いです。
+</blockquote>
 
-<h3>総合結論</h3>
+<h3>9-B. 他代理店への相見積り依頼用</h3>
+
+<blockquote>
+御社でワールドネットインターナショナル社のO2DOCTOR（1.9気圧仕様）を取り扱われているとのことで、お見積りをお願いしたくご連絡差し上げました。<br><br>
+<strong>【希望仕様】</strong><br>
+・機種：O2DOCTOR カプセルドーム<br>
+・気圧：1.9気圧（5チャンネル仕様）<br>
+・付帯：テレビ・エアコン、酸素濃縮器<br>
+・設置場所：東京都内（詳細は相談時に）<br><br>
+<strong>【ご回答希望事項】</strong><br>
+1. 本体価格、送料・設置費、合計金額（税抜・税込）<br>
+2. リース月額・リース条件（料率、回数、譲渡条件）<br>
+3. レンタルプランの有無と条件<br>
+4. 保証期間、保守内容<br>
+5. キャンペーン・特典の適用可否
+</blockquote>
+
+<h2>10. 所見・結論</h2>
+
+<h3>代理店網羅性に関する率直な所見</h3>
+
 <div class="conclusion-box">
   <ul>
-    <li>メーカー問い合わせにより、価格帯が明確になった：<strong>カプセルドーム500万円／キャビンS480万円</strong></li>
-    <li>レンタル／リースでも6年完済で所有権が移転する契約体系のため、実質的には「分割購入」と同等</li>
-    <li><strong>580トン耐荷重という通常モデル仕様</strong>が判明し、シェルター兼用モデルは不要と判断</li>
-    <li>→ 選択肢は<strong>カプセルドーム vs キャビンS の2択に絞られた</strong></li>
+    <li>本レポートに掲載した代理店は<strong>公開情報から確認できた範囲</strong>であり、<strong>非公開の代理店や銀行系パートナーが他にも存在する可能性</strong>がある</li>
+    <li><strong>確実な網羅性のためには、WNI本体に直接問い合わせる必要がある</strong></li>
+    <li>「全国41ヶ所の提携店舗」は酸素カプセル体験拠点であり、販売代理店ではない</li>
   </ul>
 </div>
 
-<h3>価格帯の業界比較（参考）</h3>
+<h3>価格交渉の観点</h3>
+
 <ul>
-  <li>1.35気圧クラスの酸素カプセル：一般的に150〜250万円帯</li>
-  <li>1.9気圧クラス（WNI）：480〜500万円</li>
-  <li><strong>1.9気圧仕様のプレミアム分は、1.35気圧比で約2倍</strong></li>
-  <li>この価格差は業界最高気圧・580トン耐荷重・日本製・長期保証を含めたバリューと解釈できる</li>
+  <li>代理店によって価格・サービス・キャンペーン適用が異なる可能性があるため、<strong>複数社からの相見積りは意味がある</strong></li>
+  <li>ただし、WNIの代理店契約上、販売者間の競合は回避されている可能性もあり、<strong>明確な価格差が出るとは限らない</strong></li>
+  <li><strong>リース条件（料率、月額）は銀行系代理店で有利になる可能性が高い</strong>ため、正和商事への問い合わせ価値あり</li>
 </ul>
 
 <h3>最終推奨</h3>
+
 <div class="summary-box">
-  <strong>搬入経路未確認の現状では O2DOCTOR カプセルドーム を第1候補とし、次のアクションとして搬入経路下見を依頼。下見結果でキャビンSも通せるなら、価格差でキャビンS切り替えを検討。</strong>
+  <ul>
+    <li><strong>WNI本体見積（税込498.3万円、10%OFF適用後）が現時点の基準価格</strong></li>
+    <li>代理店複数社の相見積りで5〜15%程度の価格差が出る可能性はあるが、大幅な値下げは期待しにくい</li>
+    <li>むしろ<strong>付帯サービス（保証延長、保守、配送条件、リース料率）で差が出やすい</strong></li>
+    <li>最終判断は<strong>WNI本体・代理店1〜2社の相見積り結果</strong>を踏まえて行うことを推奨</li>
+  </ul>
 </div>
 
-<h3>リース／レンタルの選び方</h3>
-<ul>
-  <li><strong>個人かつ法人リース不可 → 現金購入 or レンタル</strong></li>
-  <li><strong>法人契約可能 → リース</strong>（6年で譲渡、月額最安）</li>
-  <li>保証金の取扱い条件が確認できれば、レンタルの実質コスト判断も明確化</li>
-</ul>
-
 <div class="footer-note">
-  本レポートは2026年4月20日時点のメーカー問い合わせ結果および公開情報に基づく。価格・仕様・キャンペーンは変動するため、最終契約前に必ず最新情報の書面確認を推奨。
+  本レポートは2026年4月22日時点の公開情報および正式見積書（2026年4月21日付）に基づく。代理店の網羅性については限界があり、WNI本体への直接確認を推奨。
 </div>
 
 </body>
