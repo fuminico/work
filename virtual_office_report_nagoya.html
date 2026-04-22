@@ -9,7 +9,7 @@
 :root{--bg:#f8f6f2;--card:#fff;--text:#1a1a1a;--text-sub:#5c5c5c;--accent:#c2410c;--accent-light:#fff7ed;--border:#e5e2dc;--tag-ok:#059669;--tag-ok-bg:#ecfdf5;--tag-info:#2563eb;--tag-info-bg:#eff6ff;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--shadow-lg:0 4px 16px rgba(0,0,0,.08);--radius:10px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans JP','IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
-.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
 .header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
 .header::before{content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(194,65,12,.15) 0%,transparent 70%)}
 .header h1{font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
@@ -21,10 +21,15 @@ body{font-family:'Noto Sans JP','IBM Plex Sans',sans-serif;background:var(--bg);
 .tax-section h2 .badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
 .jurisdiction{font-size:13px;color:var(--text-sub);margin-bottom:24px;padding:10px 14px;background:#f1f0ec;border-radius:6px;line-height:1.8}
 .table-wrap{overflow-x:auto;margin-bottom:32px;border-radius:var(--radius);box-shadow:var(--shadow)}
-table{width:100%;border-collapse:collapse;background:var(--card);font-size:12.5px;min-width:1050px}
-thead th{background:#1e293b;color:#fff;padding:10px 12px;font-weight:600;text-align:left;font-size:11px;white-space:nowrap}
-tbody td{padding:10px 12px;border-bottom:1px solid #f0eee8;vertical-align:top}
+table{width:100%;border-collapse:collapse;background:var(--card);font-size:12px;min-width:1300px}
+thead th{background:#1e293b;color:#fff;padding:10px 10px;font-weight:600;text-align:left;font-size:11px;white-space:nowrap}
+tbody td{padding:10px 10px;border-bottom:1px solid #f0eee8;vertical-align:top}
 tbody tr:hover{background:#faf9f6}
+/* Column widths */
+col.c-no{width:30px} col.c-name{width:150px} col.c-addr{width:140px}
+col.c-reg{width:42px} col.c-desk{width:42px} col.c-init{width:110px}
+col.c-monthly{width:140px} col.c-pay{width:130px} col.c-url{width:36px}
+col.c-note{width:auto}
 .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap}
 .tag-ok{background:var(--tag-ok-bg);color:var(--tag-ok)}
 .tag-info{background:var(--tag-info-bg);color:var(--tag-info)}
@@ -71,13 +76,15 @@ td a:hover{text-decoration:underline}
 <section class="tax-section">
 <h2>名古屋中税務署管轄 <span class="badge">名古屋市中区</span></h2>
 <div class="jurisdiction"><strong>管轄地域：</strong>名古屋市中区全域（栄、丸の内、錦、大須、新栄、金山 等）<br><small>※名古屋国税局管内。所在地：名古屋市中区三の丸3-3-2 名古屋国税総合庁舎</small></div>
-<div class="table-wrap"><table><thead><tr><th>No.</th><th>事業者名</th><th>所在地住所</th><th>登記可</th><th>机不要</th><th>初期費用</th><th>月額（税込）</th><th>支払方法</th><th>URL</th><th>特徴・補足</th></tr></thead><tbody>
+<div class="table-wrap"><table>
+<colgroup><col class="c-no"><col class="c-name"><col class="c-addr"><col class="c-reg"><col class="c-desk"><col class="c-init"><col class="c-monthly"><col class="c-pay"><col class="c-url"><col class="c-note"></colgroup>
+<thead><tr><th>No.</th><th>事業者名</th><th>所在地住所</th><th>登記可</th><th>机不要</th><th>初期費用</th><th>月額（税込）</th><th>支払方法</th><th>URL</th><th>特徴・補足</th></tr></thead><tbody>
 <tr><td>1</td><td><strong>ワンストップビジネスセンター 名古屋栄</strong></td><td>中区栄2丁目2-1 広小路伏見中駒ビル</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">10,780円</td><td class="price">5,280円〜<br><small>（エコノミー）</small></td><td><span class="tag tag-info">クレジット</span><br><span class="tag tag-info">銀行振込</span></td><td><a href="https://www.1sbc.com/branch/nagoya-sakae/" target="_blank">公式</a></td><td>伏見駅徒歩1分。週1無料転送込み。スタッフ常駐。全国40拠点超。名古屋駅前店の会議室利用可。</td></tr>
 <tr><td>2</td><td><strong>ビジネスリンクス名古屋</strong></td><td>中区栄5丁目26-39 GS栄ビル3F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">0円</td><td class="price">3,080円〜<br><small>（Aプラン）</small></td><td><span class="tag tag-info">クレジット</span><br><span class="tag tag-info">口座振替</span></td><td><a href="https://www.b-links.jp/virtual-office/" target="_blank">公式</a></td><td>入会金0円。矢場町駅徒歩3分。A=登記+郵便+会議室割引。B=+コワーキング。</td></tr>
-<tr><td>3</td><td><strong>名古屋ソリューション</strong><br><small>（中区内5拠点）</small></td><td>中区大須1丁目／大須3丁目／栄1丁目／栄5丁目／錦1丁目</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">0円<br><small>（入会金・保証金不要）</small></td><td class="price">3,278円〜</td><td>要確認</td><td><a href="http://www.office-nagoya.com" target="_blank">公式</a></td><td>中区内最多5拠点。年間契約で最大35%OFF。レンタルオフィスへのステップアップ可。名古屋市内最安水準。</td></tr>
+<tr><td>3</td><td><strong>名古屋ソリューション</strong><br><small>（中区内5拠点）</small></td><td>中区大須1丁目／大須3丁目／栄1丁目／栄5丁目／錦1丁目</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">0円<br><small>（入会金・保証金不要）</small></td><td class="price">2,622円〜<br><small>（税込・ベーシック・大須店基準）</small><br><small>※拠点により+550〜2,200円</small></td><td><span class="tag tag-info">銀行振込</span><br><span class="tag tag-info">口座振替</span><br><span class="tag tag-info">クレジット（PayPal）</span></td><td><a href="http://www.office-nagoya.com" target="_blank">公式</a></td><td>中区内最多5拠点。年間契約で最大35%OFF（5年割あり）。引越割500円OFF。郵便転送は手数料無料（送料のみ実費）。レンタルオフィスへのステップアップ可。Visa/Master/JCB/Diners/Amex/Discover対応。</td></tr>
 <tr><td>4</td><td><strong>SOHOプラザ 丸の内</strong></td><td>中区丸の内</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">30,000円<br><small>（保証金）</small></td><td class="price">8,000円</td><td><span class="tag tag-info">銀行振込</span><br><span class="tag tag-info">口座引落</span><br><small>※初回は振込</small></td><td><a href="http://www.soho-plaza.jp" target="_blank">公式</a></td><td>丸の内ビジネス街。レンタルオフィス・貸会議室・電話代行・私書箱。栄・名駅にも別拠点。初回は銀行振込、以降口座引落。<br><small>※電話問合せにて確認（2026年4月）</small></td></tr>
 <tr><td>5</td><td><strong>リージャス 名古屋栄ガスビル</strong></td><td>中区栄3-15-33 栄ガスビル13F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">10,000円</td><td class="price">11,900円</td><td><span class="tag tag-info">クレジットのみ</span></td><td><a href="https://www.regus.com/" target="_blank">公式</a></td><td>三菱地所G。栄駅徒歩5分・矢場町駅徒歩3分。松坂屋隣接。ラウンジ/個室利用可プラン有。支払いはクレジットカードのみ。<br><small>※電話問合せにて確認（2026年4月）</small></td></tr>
-<tr><td>6</td><td><strong>サーブコープ 名古屋日興證券ビル</strong></td><td>中区栄3-2-3 名古屋日興證券ビル4F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">100円<br><small>（初回設定費用）</small></td><td class="price">12,000円</td><td>要確認</td><td><a href="https://www.servcorp.co.jp/ja/virtual-offices/locations/nagoya/nagoya-nikko-shoken-building/" target="_blank">公式</a></td><td>栄駅徒歩3分。バイリンガル受付。世界150拠点超。コワーキング1日1h無料。海外取引企業向け。初月無料キャンペーン有。<br><small>※電話問合せにて確認（2026年4月）</small></td></tr>
+<tr><td>6</td><td><strong>サーブコープ 名古屋日興證券ビル</strong></td><td>中区栄3-2-3 名古屋日興證券ビル4F</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">100円<br><small>（4月中キャンペーン）</small><br><small>通常：8,000円</small></td><td class="price">12,000円</td><td><span class="tag tag-info">クレジットのみ</span><br><small>※振込希望の場合は<br>保証金100,000円が必要</small></td><td><a href="https://www.servcorp.co.jp/ja/virtual-offices/locations/nagoya/nagoya-nikko-shoken-building/" target="_blank">公式</a></td><td>栄駅徒歩3分。バイリンガル受付。世界150拠点超。コワーキング1日1h無料。初期設定費用100円は2026年4月末までのキャンペーン（通常8,000円）。<br><small>※電話問合せにて確認（2026年4月）</small></td></tr>
 <tr><td>7</td><td><strong>THE HUB 名古屋丸の内</strong></td><td>中区丸の内</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">22,000円<br><small>（年会費）</small><br><small>＋初月分月額</small></td><td class="price">2,310円〜<br><small>（年間契約・税込）</small><br>3,300円〜<small>（月極）</small></td><td><span class="tag tag-info">クレジット</span><br><small>※初回のみ振込</small></td><td><a href="https://thehub.nex.works/office/virtual" target="_blank">公式</a></td><td>丸の内駅徒歩1分。全国1000拠点以上利用可。ラウンジ+サイレントラウンジ。年間契約で30%OFF。IT・士業・コンサルに人気。<br><small>※電話問合せにて確認（2026年4月）</small></td></tr>
 <tr><td>8</td><td><strong>オフィスプラス栄</strong></td><td>中区栄</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td class="price">10,000円</td><td class="price">10,000円</td><td><span class="tag tag-info">銀行振込</span></td><td><a href="https://www.officeplus.jp/" target="_blank">公式</a></td><td>応接室無料利用可。コンシェルジュ電話代行。同ビル内トランクルーム。6ヶ月以上で1ヶ月無料。<br><small>※電話問合せにて確認（2026年4月）</small></td></tr>
 <tr><td>9</td><td><strong>ビジネスセンター錦</strong></td><td>中区錦（伏見駅徒歩3分）</td><td><span class="tag tag-ok">可</span></td><td><span class="tag tag-ok">はい</span></td><td>要確認</td><td>要確認</td><td>要確認</td><td>要確認</td><td>伏見駅徒歩3分・丸の内駅徒歩4分。会議室最大90名。契約書・許認可の無料相談対応。</td></tr>
@@ -100,7 +107,7 @@ td a:hover{text-decoration:underline}
 <div class="note-block"><h3>支払方法に関する注意</h3><ul>
 <li><strong>ワンストップビジネスセンター：</strong>クレジットカード＋銀行振込。法人名義振込可能。</li>
 <li><strong>ビジネスリンクス名古屋：</strong>クレジットカード＋口座振替。引落手数料は利用者負担。</li>
-<li><strong>名古屋ソリューション：</strong>入会金・保証金不要。支払方法は公式サイトで要確認。</li>
+<li><strong>名古屋ソリューション：</strong>入会金・保証金不要。銀行振込・口座振替・クレジットカード（PayPal経由・Visa/Master/JCB/Diners/Amex/Discover対応）の3種。拠点により月額が異なる（大須店が最安・中区内は+550〜2,200円）。年割（2年割・5年割）で最大35%OFF。</li>
 </ul></div>
 <div class="note-block"><h3>税務署管轄の最終確認方法</h3><ul>
 <li>名古屋国税局公式サイト：<a href="https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm" target="_blank">https://www.nta.go.jp/about/organization/nagoya/location/aichi.htm</a></li>
