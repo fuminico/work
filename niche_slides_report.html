@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ニッチお題・スライド検証レポート</title>
+  <title>ニッチお題・スライド検証レポート v2</title>
   <style>
     :root {
       --blue-dark:  #1e3a5f;
@@ -32,7 +32,7 @@
     .page-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
     .page-header .subtitle { font-size: 14px; opacity: 0.85; }
     .meta-row { display: flex; gap: 24px; margin-top: 20px; font-size: 13px; opacity: 0.8; flex-wrap: wrap; }
-    .container { max-width: 1020px; margin: 0 auto; padding: 40px 20px; }
+    .container { max-width: 1060px; margin: 0 auto; padding: 40px 20px; }
     h2.section-title {
       font-size: 20px; font-weight: 700; color: var(--blue-dark);
       border-left: 5px solid var(--blue-mid); padding-left: 14px; margin: 44px 0 20px;
@@ -48,21 +48,25 @@
     .badge-ok   { background: var(--green-bg); color: var(--green); }
     .badge-warn { background: var(--amber-bg); color: var(--amber); }
     .badge-ng   { background: var(--red-bg); color: var(--red); }
-    .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 28px; }
+    .badge-info { background: var(--blue-pale); color: var(--blue-mid); }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+    .summary-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 28px; }
     .summary-card {
-      background: white; border-radius: 10px; padding: 22px;
+      background: white; border-radius: 10px; padding: 18px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 5px solid var(--blue-mid);
     }
     .summary-card.ok   { border-top-color: var(--green); }
     .summary-card.warn { border-top-color: var(--amber); }
-    .summary-card .cat { font-size: 11px; font-weight: 700; color: var(--blue-mid); margin-bottom: 4px; letter-spacing: 0.04em; }
-    .summary-card .sheet-tag { font-size: 11px; color: var(--gray); margin-bottom: 10px; }
-    .summary-card .deck-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
-    .summary-card .deck-topic { font-size: 12px; color: var(--gray); margin-bottom: 12px; line-height: 1.5; }
-    .summary-card .deck-verdict { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .summary-card.ok .deck-verdict   { color: var(--green); }
-    .summary-card.warn .deck-verdict { color: var(--amber); }
-    .summary-card .deck-issue { font-size: 13px; color: #374151; line-height: 1.5; }
+    .summary-card.ng   { border-top-color: var(--red); }
+    .summary-card .cat { font-size: 11px; font-weight: 700; color: var(--blue-mid); margin-bottom: 3px; letter-spacing: 0.04em; }
+    .summary-card .ver  { font-size: 11px; color: var(--gray); margin-bottom: 6px; }
+    .summary-card .deck-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    .summary-card .scores { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+    .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 12px; }
+    .score-a { background: #dcfce7; color: #15803d; }
+    .score-b { background: #fef3c7; color: #92400e; }
+    .score-c { background: #fee2e2; color: #dc2626; }
+    .summary-card .deck-issue { font-size: 12px; color: #374151; line-height: 1.5; }
     .issue-block {
       border-left: 4px solid var(--red); background: var(--red-bg);
       padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px;
@@ -83,11 +87,36 @@
     .section-header-card .label { font-size: 12px; color: var(--blue-mid); font-weight: 700; margin-bottom: 4px; }
     .section-header-card .title { font-size: 17px; font-weight: 700; color: var(--blue-dark); margin-bottom: 4px; }
     .section-header-card .topic { font-size: 13px; color: #374151; }
-    .cause-tag {
-      display: inline-block; background: #fee2e2; color: var(--red);
-      font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 4px;
+    .ver-badge {
+      display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px;
+      border-radius: 4px; margin-right: 4px;
     }
-    .cause-tag.amber { background: var(--amber-bg); color: var(--amber); }
+    .ver-old { background: #f3f4f6; color: #374151; }
+    .ver-41  { background: #dbeafe; color: #1e40af; }
+    .ver-42  { background: #fef3c7; color: #92400e; }
+    .ver-43  { background: #dcfce7; color: #15803d; }
+    .matrix-table th { font-size: 13px; text-align: center; }
+    .matrix-table td { text-align: center; font-size: 13px; }
+    .matrix-table td:first-child { text-align: left; font-weight: 600; }
+    .star { color: #f59e0b; }
+    .phase-bar {
+      display: flex; align-items: center; gap: 10px; margin: 16px 0 10px;
+    }
+    .phase-label {
+      font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; white-space: nowrap;
+    }
+    .phase-v41  { background: #dbeafe; color: #1e40af; }
+    .phase-v42  { background: #fef3c7; color: #92400e; }
+    .phase-v43  { background: #dcfce7; color: #15803d; }
+    .phase-old  { background: #f3f4f6; color: #374151; }
+    .version-compare { border-left: 4px solid var(--blue-mid); padding: 14px 18px; background: var(--blue-pale); border-radius: 0 8px 8px 0; margin: 10px 0; }
+    .version-compare .vc-title { font-weight: 700; color: var(--blue-dark); margin-bottom: 8px; }
+    .genre-tag {
+      display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700; margin-left: 4px;
+    }
+    .genre-lc { background: #ede9fe; color: #5b21b6; }
+    .genre-lcemc { background: #fce7f3; color: #9d174d; }
+    .genre-match { background: #ecfdf5; color: #065f46; }
     .page-footer {
       text-align: center; padding: 32px; font-size: 12px;
       color: var(--gray); border-top: 1px solid var(--border); margin-top: 60px;
@@ -96,580 +125,1189 @@
     ul { margin: 8px 0 8px 20px; }
     li { margin-bottom: 4px; }
     code { background: #f3f4f6; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+    .dim-header { font-size: 12px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .dim-score { font-size: 20px; font-weight: 700; }
+    .dim-a { color: var(--green); }
+    .dim-b { color: var(--amber); }
+    .dim-c { color: var(--red); }
+    .three-dim { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .dim-card { background: white; border-radius: 8px; padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .dim-label { font-size: 11px; color: var(--gray); margin-bottom: 6px; }
+    .anchor-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .anchor-nav a {
+      display: inline-block; padding: 5px 14px; background: var(--blue-pale); color: var(--blue-mid);
+      border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none;
+    }
+    .anchor-nav a:hover { background: var(--blue-light); }
   </style>
 </head>
 <body>
 
 <div class="page-header">
   <h1>ニッチお題・スライド検証レポート</h1>
-  <p class="subtitle">85ページスライド 4本 — スコープ逸脱・本筋乖離・デザイン品質の評価</p>
+  <p class="subtitle">85ページスライド 11本（旧版1 + v4.1×4 + v4.2×3 + v4.3×3）— <strong style="color:#fbbf24;">最重要：スコープ評価</strong> を軸に再整理（2026年4月25日 更新版）</p>
   <div class="meta-row">
-    <span>📅 初回検証: 2026年4月23日（v3.2使用、3本）</span>
-    <span>📅 追加検証: 2026年4月23日（v4.0使用、1本追加）</span>
-    <span>📋 使用プロンプト: v3.2 / v4.0</span>
-    <span>🔍 評価観点: スコープ逸脱・ページ数妥当性・デザイン品質</span>
+    <span>📅 初回検証: 2026年4月23日（v3.2/v4.0使用）</span>
+    <span>📅 v4.1検証: 2026年4月22〜23日（旧版含む）</span>
+    <span>📅 v4.2検証: 2026年4月24〜25日</span>
+    <span>📅 v4.3検証: 2026年4月25日</span>
+    <span>🔍 評価観点: スコープ外の話・物語構成・くどさ + デザイン品質</span>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- エグゼクティブサマリー -->
-  <h2 class="section-title">エグゼクティブサマリー</h2>
-
-  <p style="margin-bottom:20px;color:#374151;">本検証は <strong>「問題発見 → プロンプト改善 → 改善効果の確認」</strong> という3段階で設計されている。</p>
-
-  <!-- Phase 1 -->
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-    <div style="background:#1e3a5f;color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;">PHASE 1</div>
-    <span style="font-weight:700;color:#1e3a5f;">問題発見 — v3.2 プロンプトで3テーマを検証し、品質課題を洗い出す</span>
+  <!-- ナビ -->
+  <div class="anchor-nav" style="margin-top:28px;">
+    <a href="#scope">【最重要】スコープ評価</a>
+    <a href="#matrix">3観点マトリクス</a>
+    <a href="#lc">ライブコマース（4本）</a>
+    <a href="#lcemc">ライブコマースECモール（3本）</a>
+    <a href="#match">マッチング（2本）</a>
+    <a href="#version">バージョン比較</a>
+    <a href="#history">旧評価（Phase 1/2）</a>
   </div>
-  <div class="summary-grid" style="margin-bottom:8px;">
+
+
+  <!-- ======================================================
+       エグゼクティブサマリー
+  ====================================================== -->
+  <h2 class="section-title">エグゼクティブサマリー（全11ファイル）</h2>
+
+  <!-- ====== 検証の実態と最新プロンプト判定ブロック ====== -->
+  <div style="background:#1e3a5f;border-radius:12px;padding:24px 28px;margin-bottom:28px;color:white;">
+
+    <!-- 累積検証量 -->
+    <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;opacity:0.65;margin-bottom:10px;">検証の実態（累積）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:22px;">
+      <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:16px;text-align:center;">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:4px;">検証ファイル数</div>
+        <div style="font-size:36px;font-weight:800;color:#4ade80;line-height:1.1;">11<span style="font-size:16px;font-weight:400;">本</span></div>
+        <div style="font-size:12px;opacity:0.8;margin-top:4px;">旧版1 + v4.1×4 + v4.2×3 + v4.3×3</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:16px;text-align:center;">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:4px;">総スライド数</div>
+        <div style="font-size:36px;font-weight:800;color:#4ade80;line-height:1.1;">85<span style="font-size:16px;font-weight:400;">枚</span></div>
+        <div style="font-size:12px;opacity:0.8;margin-top:4px;">全ファイル共通（1ファイル85枚固定）</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:16px;text-align:center;">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:4px;">評価済みスライド</div>
+        <div style="font-size:36px;font-weight:800;color:#4ade80;line-height:1.1;">935<span style="font-size:16px;font-weight:400;">枚</span></div>
+        <div style="font-size:12px;opacity:0.8;margin-top:4px;">11本 × 85枚 を全数スコープ評価</div>
+      </div>
+    </div>
+
+    <!-- バージョン改訂の軌跡 -->
+    <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;opacity:0.65;margin-bottom:10px;">プロンプト改訂の軌跡（8本の学習 → v4.3へ反映）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:22px;">
+      <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:12px;">
+        <div style="font-size:11px;font-weight:700;color:#d1d5db;margin-bottom:6px;">旧版 × 1本</div>
+        <div style="font-size:12px;line-height:1.6;opacity:0.85;">
+          構成・密度は高水準。<br>
+          ❌ スコープ宣言なし<br>
+          ❌ 汎用ケースが混入<br>
+          ❌ 末尾まとめボックス多用
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:12px;">
+        <div style="font-size:11px;font-weight:700;color:#93c5fd;margin-bottom:6px;">v4.1 × 4本</div>
+        <div style="font-size:12px;line-height:1.6;opacity:0.85;">
+          スコープ宣言を導入。<br>
+          ❌ お題が汎用だと宣言が無効<br>
+          ❌ 体系化フレームワークが過剰<br>
+          ❌ セクションまとめが冗長
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:12px;">
+        <div style="font-size:11px;font-weight:700;color:#fcd34d;margin-bottom:6px;">v4.2 × 3本</div>
+        <div style="font-size:12px;line-height:1.6;opacity:0.85;">
+          高さ目標を580pxに厳格化。<br>
+          ❌ オーバーフロー依然多数<br>
+          ❌ スコープ制御はv4.1と同水準<br>
+          ✅ 密度・構成の安定化
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.12);border-radius:8px;padding:12px;border:1px solid rgba(74,222,128,0.4);">
+        <div style="font-size:11px;font-weight:700;color:#4ade80;margin-bottom:6px;">v4.3 × 3本（最新）</div>
+        <div style="font-size:12px;line-height:1.6;opacity:0.85;">
+          8本の知見を集約。<br>
+          ✅ LC: スコープ★5・構成★5<br>
+          ✅ LCEMC: スコープ★4・構成★4<br>
+          ✅ Matching: スコープ★5・構成★4
+        </div>
+      </div>
+    </div>
+
+    <!-- 判定 -->
+    <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="background:rgba(74,222,128,0.12);border-radius:8px;padding:12px;border-left:3px solid #4ade80;">
+          <div style="font-size:11px;font-weight:700;color:#86efac;margin-bottom:6px;">v4.3で確認できたこと（全3ジャンル）</div>
+          <div style="font-size:12px;line-height:1.7;">✅ LC / LCEMC / Matching 全ジャンルでスコープ制御が機能<br>✅ お題に固有文脈があればスコープ★5を安定して達成<br>✅ ページ番号埋め込みは全3本で完全解消</div>
+        </div>
+        <div style="background:rgba(251,191,36,0.1);border-radius:8px;padding:12px;border-left:3px solid #fbbf24;">
+          <div style="font-size:11px;font-weight:700;color:#fcd34d;margin-bottom:6px;">次に確認が必要なこと</div>
+          <div style="font-size:12px;line-height:1.7;">❌ 全3本のオーバーフロー（レイアウト崩れ）が未実測<br>❌ くどさ（セクションまとめ定型文）が★3で依然残存<br>❌ お題の固有文脈の強さがスコープ評価に影響（LCEMCが★4にとどまった原因）</div>
+        </div>
+      </div>
+      <div style="background:rgba(251,191,36,0.15);border-radius:8px;padding:12px;border-left:3px solid #fbbf24;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:700;color:#fcd34d;margin-bottom:6px;">今回新たにわかったこと：お題設計がスコープの質を左右する</div>
+        <div style="font-size:13px;line-height:1.75;">
+          プロンプトの改善と同等以上に、<strong style="color:#fbbf24;">お題タイトル自体にジャンル固有の語彙が含まれるかどうか</strong>がスコープ評価の上限を決定することが判明。<br>
+          ✅ 固有語彙あり（「募集者」「応募メッセージ」／「盛り上がっているから買う」等）→ スコープ <strong>★5</strong><br>
+          ⚠️ 固有語彙なし（「コメントが少ない配信でも〜」等の汎用表現）→ スコープ <strong>★4 どまり</strong><br>
+          お題を作る段階でジャンル固有の文脈を意識することが、追加のプロンプト修正なしにスコープを向上させる最も確実な手段。
+        </div>
+      </div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:#fbbf24;">▶ 総合判定</div>
+      <div style="font-size:14px;line-height:1.75;">
+        8本の反復検証の知見をv4.3に集約し、全3ジャンル（LC/LCEMC/Matching）での追加検証が完了。
+        <strong style="color:#4ade80;">「v4.3はジャンル横断でおおむね機能する」ことを11本・935スライドの検証で確認した。</strong><br>
+        残る課題は、①オーバーフロー実測（レイアウト崩れ）②くどさ対策（セクションまとめ定型文）の2点。スコープの★4どまりはプロンプトではなくお題設計の問題であり、次回のお題作成時に対応可能。
+      </div>
+    </div>
+
+  </div>
+  <!-- ====== /判定ブロック ====== -->
+
+  <p style="margin-bottom:18px;color:#374151;">本レポートは <strong>「スコープ外の話が出てこないか」「物語の構成はスムーズか」「くどい説明になっていないか」</strong> の3観点でスライドを評価する。各★は5点満点。</p>
+
+  <!-- ライブコマース -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    <span style="font-size:14px;font-weight:700;color:#1e3a5f;">ライブコマース</span>
+    <span class="genre-tag genre-lc">LC</span>
+  </div>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="cat">最初の30秒</div>
+      <div class="ver"><span class="ver-badge ver-old">旧版</span> 85_live_streaming_opening_30sec</div>
+      <div class="deck-title">最初の30秒で視聴者の心をつかむオープニングの作り方</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★☆☆</span>
+        <span class="score-pill score-a">構成 ★★★★★</span>
+        <span class="score-pill score-a">くどさ ★★★★☆</span>
+      </div>
+      <div class="deck-issue">構成・密度は9本中トップクラス。教育・雑談配信のケースなど一部スコープが広め。スライド43に「次のページ:」移行表現あり（禁止⑦相当）。ページ番号なし。</div>
+    </div>
     <div class="summary-card warn">
-      <div class="cat">音声周り</div>
-      <div class="sheet-tag">ライブコマースECモール シート｜v3.2</div>
-      <div class="deck-title">「声が聞き取りにくい」を解消する音声まわりの基本</div>
-      <div class="deck-verdict">△ 軽微な課題</div>
-      <div class="deck-issue"><strong>発見:</strong> 「基本」を超えたマイク機材選定の深掘り（12スライド・14%）。お題のレベル感を制御するルールが必要。</div>
+      <div class="cat">BGM・演出</div>
+      <div class="ver"><span class="ver-badge ver-41">v4.1</span> new85_live_commerce_bgm</div>
+      <div class="deck-title">ライブ配信のBGMや演出にも意味がある</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★★☆</span>
+        <span class="score-pill score-b">構成 ★★★★☆</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">ライブコマース視聴者視点に終始。4領域フレームワークの過剰体系化・市場データ混入（1枚）あり。セクションまとめ5箇所で同文句が繰り返され冗長感。ページ番号なし。</div>
     </div>
     <div class="summary-card ok">
-      <div class="cat">途中で条件が変更になったもの</div>
-      <div class="sheet-tag">マッチング シート｜v3.2</div>
-      <div class="deck-title">途中で条件が変わったときの対応の考え方</div>
-      <div class="deck-verdict">○ 概ね適切</div>
-      <div class="deck-issue"><strong>発見:</strong> Slide 84/85 の重複のみ。ページ埋め時の補填ルールがあれば防げた。</div>
+      <div class="cat">盛り上がりを冷静に</div>
+      <div class="ver"><span class="ver-badge ver-43">v4.3</span> live_commerce_calm_judgment</div>
+      <div class="deck-title">「盛り上がっているから買う」を冷静に考える</div>
+      <div class="scores">
+        <span class="score-pill score-a">スコープ ★★★★★</span>
+        <span class="score-pill score-a">構成 ★★★★★</span>
+        <span class="score-pill score-a">くどさ ★★★★☆</span>
+      </div>
+      <div class="deck-issue">9本中スコープ管理が最良。購買心理→判断フレーム→注意点→ケース→手順と流れが非常に自然。「通常EC置き換え質問」が3箇所に分散するが役割が異なるため許容範囲。ページ番号なし・オーバーフロー未確認。</div>
+    </div>
+    <div class="summary-card warn" style="grid-column: 1 / -1;">
+      <div class="cat">配信で得意なことを伝える</div>
+      <div class="ver"><span class="ver-badge ver-42">v4.2</span> live_streaming_guide</div>
+      <div class="deck-title">ライブ配信で自分の得意なことを伝えてみる</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★★☆</span>
+        <span class="score-pill score-b">構成 ★★★★☆</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">全般的に良好。職種別ケース7本（デザイナー〜個人事業主）は配信者向けとして適切。「1テーマ1メッセージ」の論点がスライド50・53で重複。ページ番号なし。ただし43/85スライド（50%超）がオーバーフロー（v4.3で対策済み）。</div>
+    </div>
+  </div>
+
+  <!-- ライブコマースECモール -->
+  <div style="display:flex;align-items:center;gap:8px;margin:8px 0 10px;">
+    <span style="font-size:14px;font-weight:700;color:#1e3a5f;">ライブコマースECモール</span>
+    <span class="genre-tag genre-lcemc">LCEMC</span>
+  </div>
+  <div class="summary-grid">
+    <div class="summary-card warn">
+      <div class="cat">音声まわりの基本</div>
+      <div class="ver"><span class="ver-badge ver-41">v4.1</span> new85_audio_clarity_basics</div>
+      <div class="deck-title">「声が聞き取りにくい」を解消する音声まわりの基本</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★☆☆</span>
+        <span class="score-pill score-b">構成 ★★★★☆</span>
+        <span class="score-pill score-c">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">マイク機材の深掘り12スライドが「基本」を超えた深さ過多。「ページ | N/85」「セクション | N/10」形式のページ番号がコンテンツ内に埋め込まれ（v4.2で対策→memo_balanceでも残存→v4.3で解消）。</div>
+    </div>
+    <div class="summary-card ng">
+      <div class="cat">台本とメモのバランス</div>
+      <div class="ver"><span class="ver-badge ver-42">v4.2</span> live_streaming_memo_balance</div>
+      <div class="deck-title">台本はどこまで作る？メモと台本のちょうどいいバランス</div>
+      <div class="scores">
+        <span class="score-pill score-a">スコープ ★★★★☆</span>
+        <span class="score-pill score-a">構成 ★★★★☆</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue"><strong>全85スライドに「Page N of 85」が埋め込まれ（重大問題）。</strong>テーマ集中度・構成品質は高い。3層メモフレームの進行が非常に明快。ページ番号問題以外は良好。</div>
     </div>
     <div class="summary-card warn">
-      <div class="cat">ライブ配信やBGM・演出</div>
-      <div class="sheet-tag">ライブコマース シート｜v3.2</div>
-      <div class="deck-title">ライブ配信のBGMや演出にも意味がある</div>
-      <div class="deck-verdict">△ 一部逸脱</div>
-      <div class="deck-issue"><strong>発見:</strong> 市場データ混入・チェックリスト7枚で「啓発記事」から「行動変容プログラム」へ性質転換。お題の性質の宣言が必要。</div>
+      <div class="cat">見逃し配信を比較ツールに</div>
+      <div class="ver"><span class="ver-badge ver-42">v4.2</span> missed_streaming_comparison_tool</div>
+      <div class="deck-title">見逃し配信を比較検討ツールとして活用する</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★★☆</span>
+        <span class="score-pill score-b">構成 ★★★★☆</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">スライド1〜41がテキスト抽出時に文字化け（ファイル自体は問題なし）。スライド42〜85は良好。見逃し配信の往復視聴・コメント活用・ケース別実践と構成が整理されている。</div>
+    </div>
+    <div class="summary-card ok" style="grid-column: 1 / -1;">
+      <div class="cat">コメントが少ない配信でも盛り上げる</div>
+      <div class="ver"><span class="ver-badge ver-43">v4.3</span> live_streaming_engagement_guide</div>
+      <div class="deck-title">コメントが少ない配信でも盛り上がりを作る方法</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★★☆</span>
+        <span class="score-pill score-b">構成 ★★★★☆</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">v4.3でのLCEMC初検証。OP台本→自問自答→入室即反応→低負荷参加導線の4軸と7ケース構成は整理されている。商品紹介・価格・CTAのEC要素が要所に組み込まれているがお題自体にLCEMC固有文脈がなく汎用ライブ配信技術が占める割合が高い（スコープ★4にとどまった主因）。セクションまとめ5箇所で定型化。ページ番号なし。</div>
     </div>
   </div>
-  <div class="issue-block warn" style="margin-bottom:4px;">
-    <div class="issue-title">3本で特定された課題の共通原因</div>
-    <p>ページ数を埋めようとした際に、①深さのコントロール ②コンテンツタイプ（お題の性質）の制御 ③補填ルール の3点が機能していなかった。</p>
-  </div>
 
-  <!-- Arrow -->
-  <div style="text-align:center;font-size:22px;color:#2563eb;margin:12px 0;">↓ プロンプトを v3.2 → v4.0 に改訂（STEP1強化・STEP2追加・禁止ルール⑪⑫追加）</div>
-
-  <!-- Phase 2 -->
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-    <div style="background:#16a34a;color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;">PHASE 2</div>
-    <span style="font-weight:700;color:#16a34a;">改善効果の確認 — v4.0 プロンプトで別テーマを検証し、課題が解消されているかを確認する</span>
+  <!-- マッチング -->
+  <div style="display:flex;align-items:center;gap:8px;margin:8px 0 10px;">
+    <span style="font-size:14px;font-weight:700;color:#1e3a5f;">マッチング</span>
+    <span class="genre-tag genre-match">Matching</span>
   </div>
-  <div class="summary-grid" style="grid-template-columns:1fr;margin-bottom:8px;">
-    <div class="summary-card warn" style="border-top-color:#16a34a;">
-      <div class="cat" style="color:#16a34a;">不適切投稿の見極め</div>
-      <div class="sheet-tag">マッチング シート｜<strong>v4.0</strong>（改訂版プロンプト）</div>
+  <div class="summary-grid-2">
+    <div class="summary-card ok">
+      <div class="cat">不適切投稿の見極め</div>
+      <div class="ver"><span class="ver-badge ver-41">v4.1</span> new85_fraud_broker_detection</div>
       <div class="deck-title">不適切投稿の見極め：詐欺案件・ブローカーの排除</div>
-      <div class="deck-verdict" style="color:#16a34a;">△ ヘッダーUI問題のみ</div>
-      <div class="deck-issue"><strong>検証結果:</strong> スコープ逸脱・深さ逸脱・性質転換はすべて発生せず。<strong>コンテンツ品質面の3課題は完全に解消。</strong> 残課題はスライドのヘッダーUI表示（v4.1で対応済み）のみ。</div>
+      <div class="scores">
+        <span class="score-pill score-a">スコープ ★★★★★</span>
+        <span class="score-pill score-a">構成 ★★★★★</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">スコープ・構成ともに最高水準。詐欺案件/ブローカー排除に一貫してフォーカス。「前セクションの3ポイント要約と次のセクションの予告を確認します」のセクションまとめ定型文が5箇所繰り返され機械的な印象。スライド3タイトルが「運営者研修資料」で内容が反映されていない。ページ番号なし。</div>
+    </div>
+    <div class="summary-card ok">
+      <div class="cat">応募メッセージの書き方</div>
+      <div class="ver"><span class="ver-badge ver-43">v4.3</span> application_message_writing</div>
+      <div class="deck-title">募集者の目に留まる応募メッセージの書き方</div>
+      <div class="scores">
+        <span class="score-pill score-a">スコープ ★★★★★</span>
+        <span class="score-pill score-b">構成 ★★★★☆</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">v4.3でのMatching初検証。全85枚が案件応募・募集者視点・5要素フレームに終始し逸脱ゼロ。お題「募集者の目に留まる応募メッセージ」がMatching固有語彙（案件・募集者・応募文）を含み、スコープ宣言と相乗効果。7ケース（短期/継続/未経験/経験豊富/返信速度/確認事項/募集文が短い）で幅広く網羅。セクションまとめ5箇所の定型化が残存。ページ番号なし。</div>
+    </div>
+    <div class="summary-card warn">
+      <div class="cat">途中で条件が変わったとき</div>
+      <div class="ver"><span class="ver-badge ver-41">v4.1</span> new85_handling_condition_changes</div>
+      <div class="deck-title">途中で条件が変わったときの対応の考え方</div>
+      <div class="scores">
+        <span class="score-pill score-b">スコープ ★★★☆☆</span>
+        <span class="score-pill score-a">構成 ★★★★★</span>
+        <span class="score-pill score-b">くどさ ★★★☆☆</span>
+      </div>
+      <div class="deck-issue">物語構成は9本中トップクラス（5ステップフレーム→要素別→ケース→テンプレが完璧）。一方、テーマが汎用ビジネスコミュニケーションスキルでありマッチング固有の文脈がほぼない（スコープ宣言にプラットフォーム運営文脈が入っていれば問題なし）。スライド84/85が同タイトル「全体まとめと次アクション」で重複。ページ番号なし。</div>
     </div>
   </div>
 
-  <!-- Summary table -->
-  <h3 class="sub-title">対象スライド一覧</h3>
+
+  <!-- ======================================================
+       スコープ特化分析（再評価）
+  ====================================================== -->
+  <h2 class="section-title" id="scope">【最重要観点】スコープ評価 詳細分析（全9ファイル）</h2>
+
+  <div class="issue-block info" style="margin-bottom:20px;">
+    <div class="issue-title">評価方針</div>
+    <p>「スコープ外の話が出てこないか」を最重要基準として全85スライドのタイトル・小見出し・本文を走査した。判定は3段階：<br>
+    ✅ <strong>スコープ内</strong> — お題に直接関連 ／ ⚠️ <strong>境界線</strong> — 文脈的に関連するが広すぎる or 深すぎる ／ ❌ <strong>スコープ外</strong> — お題と無関係、または明示されたジャンル文脈から外れている</p>
+  </div>
+
+  <!-- スコープ評価テーブル -->
   <div class="card">
     <table>
-      <tr><th>#</th><th>フェーズ</th><th>カテゴリー｜シート</th><th>元お題</th><th>評価</th><th>主な結果</th></tr>
       <tr>
-        <td>1</td>
-        <td><span style="font-size:12px;background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-weight:700;">問題発見</span></td>
-        <td><strong>音声周り</strong><br><span style="font-size:12px;color:#6b7280">ライブコマースECモール／v3.2</span></td>
-        <td>「声が聞き取りにくい」を解消する音声まわりの基本</td>
-        <td><span class="badge badge-warn">△</span></td>
-        <td>マイク機材選定（12スライド）が「基本」を超えた深さ過多</td>
+        <th style="width:28%;">ファイル</th>
+        <th style="width:7%;">Ver</th>
+        <th style="width:9%;">ジャンル</th>
+        <th style="width:10%;">スコープ評価</th>
+        <th style="width:46%;">逸脱内容・根拠（スライド番号付き）</th>
       </tr>
       <tr>
-        <td>2</td>
-        <td><span style="font-size:12px;background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-weight:700;">問題発見</span></td>
-        <td><strong>途中で条件が変更になったもの</strong><br><span style="font-size:12px;color:#6b7280">マッチング／v3.2</span></td>
-        <td>途中で条件が変わったときの対応の考え方</td>
-        <td><span class="badge badge-ok">○</span></td>
-        <td>Slide 84/85 重複のみ。3本中で最も良好</td>
+        <td><strong>盛り上がっているから買うを冷静に考える</strong></td>
+        <td><span class="ver-badge ver-43">v4.3</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td><span class="badge badge-ok">★★★★★</span></td>
+        <td style="font-size:13px;">集団心理・フレームワーク・ケース・購入手順が一貫してお題に直結。Slide 9「市場規模データ」1枚のみ（文脈設定として許容範囲）。逸脱実質ゼロ。</td>
       </tr>
       <tr>
-        <td>3</td>
-        <td><span style="font-size:12px;background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-weight:700;">問題発見</span></td>
-        <td><strong>ライブ配信やBGM・演出</strong><br><span style="font-size:12px;color:#6b7280">ライブコマース／v3.2</span></td>
-        <td>ライブ配信のBGMや演出にも意味がある</td>
-        <td><span class="badge badge-warn">△</span></td>
-        <td>市場データ混入・チェックリスト7枚で啓発記事から行動変容プログラムへ性質転換</td>
+        <td><strong>台本はどこまで作る？メモと台本のちょうどいいバランス</strong></td>
+        <td><span class="ver-badge ver-42">v4.2</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td><span class="badge badge-ok">★★★★★</span></td>
+        <td style="font-size:13px;">全85枚が「台本 vs 3層メモ」の比較に終始。モール出演・単品・セット等ケースもすべてLCEMC文脈内。逸脱ゼロ。（※Page N/85表記は書式問題であり内容スコープは無関係）</td>
+      </tr>
+      <tr>
+        <td><strong>不適切投稿の見極め：詐欺案件・ブローカーの排除</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-match">Matching</span></td>
+        <td><span class="badge badge-ok">★★★★★</span></td>
+        <td style="font-size:13px;">判定フレーム・ケース7件・実行手順まで全スライドがプラットフォーム運営者の不適切投稿排除に集中。Slide 15「騙される心理」も判定精度に直結し適切。逸脱ゼロ。</td>
+      </tr>
+      <tr>
+        <td><strong>ライブ配信で自分の得意なことを伝えてみる</strong></td>
+        <td><span class="ver-badge ver-42">v4.2</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td><span class="badge badge-warn">★★★★☆</span></td>
+        <td style="font-size:13px;">テーマ・構成・伝え方・対話・振り返りの5要素はお題直結。ただし7職種ケース中、Slide 73「エンジニア（コードレビュー）」・Slide 75「育成担当（OJT）」は配信との接点が薄い。また、お題自体がライブコマース固有に縛られておらず汎用ライブ配信スキルになっている（ジャンル文脈の明示が薄い）。</td>
+      </tr>
+      <tr>
+        <td><strong>見逃し配信を比較検討ツールとして活用する</strong></td>
+        <td><span class="ver-badge ver-42">v4.2</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td><span class="badge badge-warn">★★★★☆</span></td>
+        <td style="font-size:13px;">行き来視聴・比較軸設定・コメント活用・7ケースがすべてLCEMC文脈内。Slide 62「SNSでの声の大きさが正しさを示すわけではない」が一般批判リテラシーに近い（1枚のみ）。Slides 1〜41は文字化けにより評価不完全（42〜85は問題なし）。</td>
+      </tr>
+      <tr>
+        <td><strong>BGMや演出にも意味がある</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td><span class="badge badge-warn">★★★★☆</span></td>
+        <td style="font-size:13px;">BGM・画面演出・視聴者心理・判断の守り方が一貫。❌ Slide 9「ライブコマース市場規模・利用者数・購買率データ（2026年4月最新）」1枚が明確なスコープ外。Phase 1で指摘の「市場データ混入」が1枚残存。</td>
+      </tr>
+      <tr>
+        <td><strong>声が聞き取りにくいを解消する音声まわりの基本</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td><span class="badge badge-warn">★★★☆☆</span></td>
+        <td style="font-size:13px;">音声の重要性・マイク・位置・環境の4軸は「基本」として適切。⚠️ Slides 38〜47（10枚）でピンマイク/ヘッドセットの種類・価格帯・推奨度・実製品比較（比較日2026年4月）・接続方式・FAQを詳述 → これは「基本ガイド」のスコープを超えた機材選定コンテンツ。Phase 1で指摘された問題（12枚→10枚）が未解消。</td>
+      </tr>
+      <tr>
+        <td><strong>最初の30秒で視聴者の心をつかむオープニングの作り方</strong></td>
+        <td><span class="ver-badge ver-old">旧版</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td><span class="badge badge-warn">★★★☆☆</span></td>
+        <td style="font-size:13px;">30秒オープニングの3要素（このあと・第一声・笑顔）に集中している点は良い。❌ Slide 68「ケース3: 教育・解説配信の冒頭例（10分で基礎3点、演習リンク配布）」と Slide 71「ケース6: 雑談寄り配信」はライブコマース文脈外。スコープ宣言（STEP1相当）がなく対象ジャンルが明示されていない。</td>
+      </tr>
+      <tr>
+        <td><strong>途中で条件が変わったときの対応の考え方</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-match">Matching</span></td>
+        <td><span class="badge badge-ng">★★★☆☆</span></td>
+        <td style="font-size:13px;">Slide 3「対象者：業種・職種を問わず、すべての方が対象」と明示 → マッチングプラットフォーム文脈がゼロ。発注者/受注者の関係・プラットフォーム上での条件交渉・案件変更管理など、Matchingジャンル固有の具体例が全85枚に存在しない。お題の内容自体は一貫しているが、ジャンルスコープへの適合性が根本的に欠如。</td>
       </tr>
       <tr style="background:#f0fdf4;">
-        <td>4</td>
-        <td><span style="font-size:12px;background:#dcfce7;color:#166534;padding:2px 6px;border-radius:4px;font-weight:700;">改善確認</span></td>
-        <td><strong>不適切投稿の見極め</strong><br><span style="font-size:12px;color:#6b7280">マッチング／<strong>v4.0</strong></span></td>
-        <td>不適切投稿の見極め：詐欺案件・ブローカーの排除</td>
-        <td><span class="badge badge-warn">△</span></td>
-        <td>コンテンツ品質の3課題はすべて解消。残課題はヘッダーUI表示のみ（v4.1対応済み）</td>
+        <td><strong>コメントが少ない配信でも盛り上がりを作る方法</strong></td>
+        <td><span class="ver-badge ver-43">v4.3</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td><span class="badge badge-warn">★★★★☆</span></td>
+        <td style="font-size:13px;">お題自体に「ECモール」「セラー」等のLCEMC固有語彙が含まれないため、汎用ライブ配信技術が全体を占める構造になっている。ただしSlides 37〜43（疑問リスト・価格・機能・商品紹介台本）、Slide 46（CTAへのつなぎ）、Slide 70（ケース3「商品紹介中」）でEC要素が組み込まれており、スコープ宣言の部分的効果は確認できる。明確なスコープ外コンテンツはなし。</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>募集者の目に留まる応募メッセージの書き方</strong></td>
+        <td><span class="ver-badge ver-43">v4.3</span></td>
+        <td><span class="genre-tag genre-match">Matching</span></td>
+        <td><span class="badge badge-ok">★★★★★</span></td>
+        <td style="font-size:13px;">お題自体が「募集者」「応募メッセージ」というMatching固有語彙を含み、v4.3スコープ宣言と相乗効果で完全なスコープ制御を達成。全85枚が案件応募・5要素フレーム・7ケース（短期/継続/未経験/経験豊富/返信速度/確認事項/募集文が短い）に終始。スコープ外コンテンツはゼロ。handling_condition_changes（v4.1・★3）との比較でお題固有文脈の設計がいかに重要かを示す好例。</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- スコープ評価サマリー -->
+  <h3 class="sub-title">スコープ評価の結論</h3>
+
+  <div class="issue-block ok" style="margin-bottom:14px;">
+    <div class="issue-title">✅ 問題なし（★★★★★）— 4ファイル</div>
+    <p><strong>v4.3 calm_judgment</strong>（LC）・<strong>v4.3 application_message_writing</strong>（Matching）・<strong>v4.2 memo_balance</strong>（LCEMC）・<strong>v4.1 fraud_broker</strong>（Matching）の4本は全スライドがお題に直結。特にcalm_judmentとapplication_message_writingはお題自体にジャンル固有語彙が含まれており、v4.3スコープ宣言との相乗効果で完璧なスコープ制御を達成した。</p>
+  </div>
+
+  <div class="issue-block warn" style="margin-bottom:14px;">
+    <div class="issue-title">⚠️ 軽微な逸脱（★★★★☆）— 4ファイル</div>
+    <p><strong>v4.3 engagement_guide</strong>（お題にLCEMC固有語彙なし→汎用ライブ配信技術が多い）・<strong>v4.2 live_streaming_guide</strong>（エンジニア・育成担当ケースがLC文脈から遠い）・<strong>v4.2 missed_streaming</strong>（Slide 62の一般的批判リテラシー）・<strong>v4.1 BGM</strong>（Slide 9の市場データ1枚）。いずれも1〜数スライドの境界線事例であり、デッキ全体への影響は限定的。</p>
+  </div>
+
+  <div class="issue-block" style="margin-bottom:14px;">
+    <div class="issue-title">❌ 構造的スコープ問題（★★★☆☆）— 3ファイル</div>
+    <p><strong>v4.1 audio_clarity_basics</strong>：「基本」を超えた機材選定10枚（具体的製品比較・推奨度・価格帯）が残存。Phase 1指摘未解消。<br>
+    <strong>旧版 30秒</strong>：ケース3（教育型）・ケース6（雑談型）がLC文脈外。スコープ宣言なし。<br>
+    <strong>v4.1 handling_condition_changes</strong>：Matchingジャンル固有文脈がゼロ。「業種・職種を問わず」と明示された汎用研修コンテンツ。</p>
+  </div>
+
+  <div class="version-compare" style="border-color:#16a34a;background:#f0fdf4;">
+    <div class="vc-title" style="color:#16a34a;">プロンプト改訂によるスコープ改善効果</div>
+    <p>旧版（スコープ宣言なし）→ v4.1〜v4.3（STEP1スコープ宣言導入）により、市場データの大量混入・非対象ジャンルへの漂流は大幅に抑制された。v4.3では構造的上限（コンテンツ3セクション・末尾ボックス禁止）も加わり、calm_judgmentはほぼ完璧なスコープ制御を達成。<br>
+    <strong>ただし「handling_condition_changes」のようにお題そのものが汎用化すると、プロンプトのスコープ宣言だけでは救えない。お題設定時にジャンル固有の文脈を含めることが必要。</strong></p>
+  </div>
+
+  <div class="version-compare" style="border-color:#dc2626;background:#fef2f2;">
+    <div class="vc-title" style="color:#dc2626;">残課題：「深さの制御」は依然スコープに侵入するリスク</div>
+    <p>audio_clarity_basics のように「音声まわりの基本」という限定的お題でも、AIは機材選定・製品比較まで深掘りしてしまう傾向がある。v4.3で追加された「コンテンツセクション最大3つ」という上限が、今後同様の深掘りを抑制するかどうかは追加検証が必要。</p>
+  </div>
+
+
+  <!-- ======================================================
+       3観点マトリクス
+  ====================================================== -->
+  <h2 class="section-title" id="matrix">3観点評価マトリクス（全9ファイル）</h2>
+
+  <div class="card">
+    <table class="matrix-table">
+      <tr>
+        <th style="width:30%;">スライドタイトル</th>
+        <th style="width:8%;">Ver</th>
+        <th style="width:9%;">ジャンル</th>
+        <th style="width:16%;">①スコープ外の話</th>
+        <th style="width:16%;">②物語の構成</th>
+        <th style="width:16%;">③くどさ</th>
+        <th>主な問題</th>
+      </tr>
+      <tr>
+        <td><strong>最初の30秒で視聴者の心をつかむ</strong></td>
+        <td><span class="ver-badge ver-old">旧版</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td>★★★☆☆</td>
+        <td><strong>★★★★★</strong></td>
+        <td>★★★★☆</td>
+        <td style="font-size:12px;">一部ケースが教育・雑談配信でスコープ広め。スライド43に移行表現混入</td>
+      </tr>
+      <tr>
+        <td><strong>BGMや演出にも意味がある</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td>★★★★☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">市場データ1枚混入。4領域フレームの過剰体系化。まとめ定型文の繰り返し</td>
+      </tr>
+      <tr>
+        <td><strong>声が聞き取りにくいを解消する</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td>★★★☆☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">機材選定12枚が「基本」を超えた深さ過多。「ページ|N/85」コンテンツ埋め込み</td>
+      </tr>
+      <tr>
+        <td><strong>不適切投稿の見極め</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-match">Match</span></td>
+        <td><strong>★★★★★</strong></td>
+        <td><strong>★★★★★</strong></td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">まとめ定型文5箇所。スライド3タイトルが内容を反映していない</td>
+      </tr>
+      <tr>
+        <td><strong>途中で条件が変わったとき</strong></td>
+        <td><span class="ver-badge ver-41">v4.1</span></td>
+        <td><span class="genre-tag genre-match">Match</span></td>
+        <td>★★★☆☆</td>
+        <td><strong>★★★★★</strong></td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">汎用ビジネス話でマッチング固有文脈が薄い。スライド84/85が重複</td>
+      </tr>
+      <tr>
+        <td><strong>ライブ配信で得意なことを伝える</strong></td>
+        <td><span class="ver-badge ver-42">v4.2</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td>★★★★☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">「1テーマ1メッセージ」論点の重複。43/85スライドがオーバーフロー</td>
+      </tr>
+      <tr>
+        <td><strong>台本とメモのバランス</strong></td>
+        <td><span class="ver-badge ver-42">v4.2</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td>★★★★☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;"><strong>全85枚に「Page N of 85」埋め込み（重大）</strong></td>
+      </tr>
+      <tr>
+        <td><strong>見逃し配信を比較ツールに活用</strong></td>
+        <td><span class="ver-badge ver-42">v4.2</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td>★★★★☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">前半（1〜41枚）はテキスト抽出で文字化け（ファイル自体は問題なし）</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>盛り上がりを冷静に考える</strong></td>
+        <td><span class="ver-badge ver-43">v4.3</span></td>
+        <td><span class="genre-tag genre-lc">LC</span></td>
+        <td><strong>★★★★★</strong></td>
+        <td><strong>★★★★★</strong></td>
+        <td>★★★★☆</td>
+        <td style="font-size:12px;">3観点で全体最良。「通常EC置き換え」が3箇所に分散するが役割が異なる</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>コメントが少ない配信でも盛り上がりを作る</strong></td>
+        <td><span class="ver-badge ver-43">v4.3</span></td>
+        <td><span class="genre-tag genre-lcemc">LCEMC</span></td>
+        <td>★★★★☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">お題に固有文脈なし→汎用配信技術が多い。EC要素（価格・商品紹介台本）は要所に組込済。セクションまとめ5箇所</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>募集者の目に留まる応募メッセージの書き方</strong></td>
+        <td><span class="ver-badge ver-43">v4.3</span></td>
+        <td><span class="genre-tag genre-match">Match</span></td>
+        <td><strong>★★★★★</strong></td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td style="font-size:12px;">スコープ完璧。お題固有語彙（案件・募集者・応募文）がスコープ宣言と相乗。7ケース網羅。セクションまとめ5箇所</td>
       </tr>
     </table>
   </div>
 
   <div class="issue-block ok">
-    <div class="issue-title">総括</div>
+    <div class="issue-title">マトリクスから読み取れる傾向（11本集計）</div>
     <ul>
-      <li><strong>第1フェーズで発見した3つの課題（深さ過多・性質転換・スコープ外補填）は、v4.0で設計どおり解消された。</strong></li>
-      <li><strong>v4.0でコンテンツ品質の改善を確認。</strong> 全85タイトルでスコープ逸脱なし・重複スライドなし・ページ数の妥当性も確認。</li>
-      <li><strong>v4.0で残った唯一の課題はヘッダーUI（スライド上部のナビゲーションバー）。</strong> コンテンツ品質とは独立した表示の問題であり、v4.1で禁止ルールを拡張して対応済み。</li>
+      <li><strong>物語の構成</strong>は旧版・v4.1以降で全般的に高品質（★4〜5）。セクション構成の強制（STEP2）が安定的に機能している。</li>
+      <li><strong>くどさ</strong>は★3が最頻値。セクションまとめ定型文（「前セクションの3ポイント要約と次のセクションの予告」）が全バージョン共通で発生する根本課題として残存。v4.3でも解消されておらず次の改善課題。</li>
+      <li><strong>スコープ</strong>はv4.3でLC★5 / LCEMC★4 / Matching★5。LCEMCが★4にとどまった原因はお題自体の固有文脈の薄さ（プロンプト側の課題ではなくお題設計の課題）。</li>
+      <li><strong>スコープとお題設計の関係</strong>が明確になった：「募集者の目に留まる応募メッセージ」（固有語彙あり→★5）vs「コメントが少ない配信でも盛り上がりを作る方法」（固有語彙なし→★4）。お題設計がスコープの上限を決める。</li>
+      <li><strong>ページ番号問題</strong>はv4.3の全3本で完全解消。v4.1 audio_clarity（部分あり）、v4.2 memo_balance（全面あり）で残存しているが、v4.3では対策が機能している。</li>
     </ul>
   </div>
 
 
-  <!-- 1. 音声まわり -->
-  <h2 class="section-title">1. 音声周り｜ライブコマースECモール</h2>
+  <!-- ======================================================
+       ライブコマース 詳細
+  ====================================================== -->
+  <h2 class="section-title" id="lc">カテゴリ別詳細評価：ライブコマース（LC）</h2>
 
+  <!-- LC-1: 旧版 -->
+  <div class="phase-bar">
+    <span class="phase-label phase-old">旧版プロンプト</span>
+    <span style="font-weight:700;color:#374151;">85_live_streaming_opening_30sec</span>
+  </div>
   <div class="section-header-card">
-    <div class="label">ライブコマースECモール シート</div>
-    <div class="title">「声が聞き取りにくい」を解消する音声まわりの基本</div>
-    <div class="topic">趣旨: ライブコマース配信者向けの音声品質改善の基礎知識</div>
-  </div>
-  <div class="card">
-    <table>
-      <tr><th>項目</th><th>内容</th></tr>
-      <tr><td>ファイル</td><td><code>nwe85_audio_clarity_basics_20260423055916.pptx</code></td></tr>
-      <tr><td>評価</td><td><span class="badge badge-warn">△ 軽微な課題（テーマ集中度は高い）</span></td></tr>
-    </table>
+    <div class="label">ライブコマース・LCEMC共通 ｜ 旧版プロンプト（STEP1スコープ宣言なし）</div>
+    <div class="title">最初の30秒で視聴者の心をつかむオープニングの作り方</div>
+    <div class="topic">趣旨: 配信開始直後の30秒で視聴者をつかむためのオープニング設計の実践ガイド</div>
   </div>
 
-  <h3 class="sub-title">コンテンツスコープの評価</h3>
-  <div class="card">
-    <table>
-      <tr><th>セクション</th><th>スライド範囲</th><th>評価</th></tr>
-      <tr><td>導入（目的・対象者・構成）</td><td>1〜4</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>背景と課題（音声品質の重要性・問題提起）</td><td>5〜14</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>理解の基盤（聴き取りやすさの3軸・環境差）</td><td>15〜25</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>コアフレームワーク（改善の基本設計・優先順位）</td><td>26〜34</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>マイク機材選定（種類・価格・接続・Q&A）</td><td>35〜47</td><td><span class="badge badge-warn">△ 深さ過多</span></td></tr>
-      <tr><td>マイク位置調整（距離・角度・スタンド）</td><td>48〜57</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>環境音対策（エアコン・振動・反響）</td><td>58〜67</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>ケース別実践（7ケース）</td><td>68〜77</td><td><span class="badge badge-warn">△ ケース⑦要確認</span></td></tr>
-      <tr><td>チェックリスト・トラブルシューティング</td><td>78〜85</td><td><span class="badge badge-ok">○</span></td></tr>
-    </table>
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">教育・解説配信、雑談配信のケースが含まれており、LC文脈が薄い場面あり</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">0-10s/10-20s/20-30sの時間軸フレームが秀逸。7ケースの配置も自然</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-a">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">各スライドが独立した情報を持ち、繰り返しは最小限。密度が高く読み応えあり</div>
+    </div>
   </div>
 
-  <h3 class="sub-title">課題①：マイク機材選定の深さ過多（Slides 35〜47・12スライド）</h3>
+  <h3 class="sub-title">特記事項</h3>
   <div class="issue-block warn">
-    <div class="issue-title">問題: 「基本」を超えた機材選定ガイドになっている（全体の14%）</div>
-    <ul>
-      <li>内蔵マイクの種類・特徴・限界（Slides 36〜37）</li>
-      <li>外付けマイクの種類 / ピンマイク / ヘッドセット（Slides 38〜40）</li>
-      <li>価格帯別比較 ¥3,000台 vs ¥10,000台（Slide 41）</li>
-      <li>接続端子規格：3.5mm / USB-C / Lightning（Slide 44）</li>
-      <li>指向性の種類（単一/全指向）（Slide 43）</li>
-      <li>Q&A：バッテリー・複数人・屋外防風・他機器対応（Slide 46）</li>
-    </ul>
-    <p style="margin-top:8px">STEP3禁止ルール⑥「対象読者の70%以上が直面するケースのみ本文に含める」の観点でも、屋外防風対策や複数人対応は限定的なユーザー向けの情報。</p>
+    <div class="issue-title">スコープ問題: 教育・解説配信、雑談配信のケースが混入（Slides 68・71）</div>
+    <p>ケース3「教育・解説配信の冒頭例」（Slide 68）とケース6「雑談寄りでも離脱させない冒頭」（Slide 71）は、ライブコマース配信とは異なる文脈。旧版はSTEP1スコープ宣言がなく、AI側の自由裁量でケースが選ばれたため。</p>
   </div>
-  <div class="verdict-row"><span class="badge badge-warn">△</span> 深さ過多（スコープ逸脱とまでは言えないが「基本」を超えている）</div>
-
-  <h3 class="sub-title">課題②：ケース⑦ モール主催イベント（Slide 74）</h3>
   <div class="issue-block warn">
-    <div class="issue-title">問題: ¥35,000の機材構成は「基本」の域を超える</div>
-    <p>ワイヤレスマイク¥15,000・イヤーモニター¥8,000・スピーカー¥12,000の合計¥35,000の機材構成を提示。関連性はあるが、大規模イベント向けの高額機材は「音声まわりの基本」の対象から外れる可能性がある。</p>
+    <div class="issue-title">禁止⑦相当違反: スライド43のタイトルに移行表現が混入</div>
+    <p>スライド43タイトル: 「3つの型を使い分けることで、業種・目的に応じた最適な予告が可能」に続き、コンテンツ内に「次のページ: 予告のNG表現集 | 43 / 85」という移行表現とページ番号が存在。旧版の時点から「スライドタイトル移行表現禁止」ルールが必要だったことを示す。</p>
   </div>
-  <div class="verdict-row"><span class="badge badge-warn">△</span> 境界線上（関連性あり、ただし「基本」の対象外の規模感）</div>
-
   <div class="issue-block ok">
-    <div class="issue-title">総括: △（テーマ集中度は高いが、深さのコントロールに課題）</div>
-    <p>余計な話題の混入・本筋からの乖離はなく、音声品質改善に終始している。課題は「基本」と銘打たれたお題に対して機材選定の深掘りが過剰な点のみ。</p>
+    <div class="issue-title">総括: 旧版として見れば完成度が高い — 構成と密度は9本中トップクラス</div>
+    <p>STEP1スコープ宣言・STEP2密度補填ルールがない旧版だが、テーマに忠実で物語の流れが非常に自然。v4.1以降のプロンプト強化が逆に「まとめ定型文の繰り返し」を生んでいる点で、旧版の素直さが光る場面もある。</p>
   </div>
 
-
-  <!-- 2. 条件変更 -->
-  <h2 class="section-title">2. 途中で条件が変更になったもの｜マッチング</h2>
-
+  <!-- LC-2: v4.1 BGM -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v41">v4.1</span>
+    <span style="font-weight:700;color:#374151;">new85_live_commerce_bgm_presentation</span>
+  </div>
   <div class="section-header-card">
-    <div class="label">マッチング シート</div>
-    <div class="title">途中で条件が変わったときの対応の考え方</div>
-    <div class="topic">趣旨: 業務中の条件変更依頼を適切に扱うための実務スキル</div>
-  </div>
-
-  <div class="card">
-    <table>
-      <tr><th>セクション</th><th>スライド範囲</th><th>評価</th></tr>
-      <tr><td>導入・背景</td><td>1〜14</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>心理・メカニズム（依頼側・受け手側）</td><td>15〜23</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>5ステップフレームワーク</td><td>25〜34</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>曖昧表現の分解</td><td>35〜46</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>影響判断・伝え方（費用・納期）</td><td>47〜56</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>無理対応の回避・合意形成</td><td>57〜67</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>ケース別実践（7ケース）</td><td>68〜77</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>チェックリスト・返答テンプレート</td><td>78〜83</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>まとめ</td><td>84〜85</td><td><span class="badge badge-warn">△ 重複</span></td></tr>
-    </table>
-  </div>
-
-  <div class="issue-block warn">
-    <div class="issue-title">問題: Slide 84・85 が同一タイトル・同一主旨（禁止ルール④相当）</div>
-    <p><strong>Slide 84:</strong> 5ポイント要約（箇条書き中心）＋次アクション3点<br>
-    <strong>Slide 85:</strong> 同じ5ポイントを文章で再掲＋次アクション3点</p>
-    <p style="margin-top:8px">85ページ構成を維持するために1ページが追加された可能性が高い。</p>
-  </div>
-
-  <div class="issue-block ok">
-    <div class="issue-title">総括: ○（3本中スコープ管理が最も優れたケース）</div>
-    <p>「条件変更対応」というテーマに終始しており、スコープ外のコンテンツ混入・本筋からの乖離はほぼ見られない。最終2スライドの重複のみが構造上の課題。</p>
-  </div>
-
-
-  <!-- 3. BGM -->
-  <h2 class="section-title">3. ライブ配信やBGM・演出｜ライブコマース</h2>
-
-  <div class="section-header-card">
-    <div class="label">ライブコマース シート</div>
+    <div class="label">ライブコマース シート ｜ v4.1</div>
     <div class="title">ライブ配信のBGMや演出にも意味がある</div>
-    <div class="topic">趣旨: 視聴者として、BGM・画面演出が心理に働きかける仕組みを理解する</div>
+    <div class="topic">趣旨: 視聴者として、BGM・画面演出が心理に働きかける仕組みを理解し、冷静な判断を保つ</div>
   </div>
 
-  <h3 class="sub-title">逸脱①：市場規模データスライド（Slide 09）</h3>
-  <div class="issue-block">
-    <div class="issue-title">問題: テーマ外コンテンツの混入（禁止ルール①相当）</div>
-    <p>市場規模5000億円・月間利用者3000万人・購買率30%等の統計を1ページ丸ごと掲載。「BGMや演出にも意味がある」という視聴者向けの啓発テーマに対して、市場統計データは本筋と直接関係しない。</p>
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">市場データ1枚・過剰フレームワーク体系化あり。全体の2〜3%</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">心理→演出→フレーム→深掘り→ケース→手順の流れは自然。セクション間の橋渡しが丁寧</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">セクションまとめが5箇所あり、前章内容を再掲する定型文が繰り返される</div>
+    </div>
   </div>
-  <div class="verdict-row"><span class="badge badge-ng">× 逸脱</span> テーマ外コンテンツの混入</div>
 
-  <h3 class="sub-title">逸脱②：4領域フレームワークの過剰体系化（Slides 26〜33・8スライド）</h3>
+  <h3 class="sub-title">特記事項</h3>
   <div class="issue-block warn">
-    <div class="issue-title">問題: 視聴者向け啓発記事から学術的分析報告書へ性質転化</div>
-    <p>気分形成・注意誘導・緊急性演出・判断回復の4領域を定義し、関係性図・統合フレームワーク図・根拠不明な効果指標（購買率70%・満足度85%）まで掲載。「視聴者として演出を知る」という原題の範囲を超えた体系化。</p>
+    <div class="issue-title">スコープ: 市場規模データ（Slide 9）と過剰体系化（Slides 26〜33）</div>
+    <p>Slide 9にライブコマース市場規模データを掲載（2026年4月・最新データ）。テーマ外コンテンツの混入（以前の旧版評価でも指摘済み）。またSlides 26〜33の「4領域フレームワーク」（気分形成・注意誘導・緊急性演出・判断回復）が過剰に体系化されており、「視聴者として知る」という啓発記事の性質から逸脱している。</p>
   </div>
-  <div class="verdict-row"><span class="badge badge-warn">△</span> 境界線上（完全に無関係ではないが体系化が過剰）</div>
-
-  <h3 class="sub-title">逸脱③：視聴チェックリスト・改善サイクルの過剰展開（Slides 77〜83・7スライド）</h3>
-  <div class="card">
-    <table>
-      <tr><th>スライド</th><th>タイトル</th></tr>
-      <tr><td>Slide 78</td><td>配信を見る前のチェック（4項目）</td></tr>
-      <tr><td>Slide 79</td><td>見ている最中のチェック（4項目）</td></tr>
-      <tr><td>Slide 80</td><td>買う直前のチェック（4項目）</td></tr>
-      <tr><td>Slide 81</td><td>見終わった後の振り返り</td></tr>
-      <tr><td>Slide 82</td><td>マスターチェックリスト（全段階統合）</td></tr>
-      <tr><td>Slide 83</td><td>改善サイクルと継続</td></tr>
-    </table>
-  </div>
-  <div class="issue-block">
-    <div class="issue-title">問題: 啓発記事 → 行動変容プログラムへの性質転換（全体の8%・7スライド）</div>
-    <p>「演出には意味がある（= 演出の仕組みを知る）」という理解・啓発記事に対して、視聴前後の4段階チェックリストと「改善サイクルと継続」は行動変容プログラムであり、記事の性質を根本的に変えている。</p>
-  </div>
-  <div class="verdict-row"><span class="badge badge-ng">× 逸脱</span> 啓発記事から行動変容プログラムへの性質転換</div>
-
   <div class="issue-block warn">
-    <div class="issue-title">総括: △（改善余地あり）</div>
-    <p>ページ数を埋める過程で、本来不要なコンテンツが追加されたと考えられる。スコープの「幅」管理はある程度機能しているが、「お題の性質に合ったコンテンツタイプの制御」が不足している。</p>
+    <div class="issue-title">くどさ: セクションまとめの定型文繰り返し</div>
+    <p>Slides 14・25・46・66・76に「ここまでのポイント」「前セクションで学んだ3つのポイントを整理し次のセクションの予告を確認します」の定型文が反復。読者には「またこのパターンか」という印象を与える。</p>
   </div>
 
-
-  <!-- 4. 不適切投稿の見極め -->
-  <h2 class="section-title">4. 不適切投稿の見極め｜マッチング</h2>
-
+  <!-- LC-3: v4.2 guide -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v42">v4.2</span>
+    <span style="font-weight:700;color:#374151;">live_streaming_guide</span>
+  </div>
   <div class="section-header-card">
-    <div class="label">マッチング シート｜使用プロンプト: v4.0</div>
+    <div class="label">ライブコマース・LCEMC シート ｜ v4.2（レイアウトオーバーフロー問題あり）</div>
+    <div class="title">ライブ配信で自分の得意なことを伝えてみる</div>
+    <div class="topic">趣旨: 15分の少人数配信で個人の経験・専門性を共有するための実践ガイド</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">職種別ケース7本は配信者向けとして適切。全般的に焦点が当たっている</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">問題定義→心理→フレーム→テーマ設定→構成設計→伝え方→ケース→手順の流れが整理されている</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">「1テーマ1メッセージ」の主張がSlides 50・53で重複。セクション内の繰り返しが散見される</div>
+    </div>
+  </div>
+
+  <div class="issue-block warn">
+    <div class="issue-title">デザイン問題: 43/85スライド（50.6%）でレイアウトオーバーフロー — v4.3で対策済み</div>
+    <p>スライドの物理的な高さ（720px）を超えた要素配置が全体の半数超で発生。主因は① 末尾追加ボックス（「まとめ/ポイント/成功の鍵」）② 4セクション積み上げ ③ 3行グリッド（3×3=9カード）。v4.3でコンテンツセクション上限3つ・カード縦2行上限・高さ目標680px→580pxに変更。</p>
+  </div>
+
+  <!-- LC-4: v4.3 calm -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v43">v4.3</span>
+    <span style="font-weight:700;color:#374151;">live_commerce_calm_judgment</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">ライブコマース シート ｜ v4.3（最新版）</div>
+    <div class="title">「盛り上がっているから買う」を冷静に考える</div>
+    <div class="topic">趣旨: ライブコマースの集団心理を見極め、雰囲気に流されない購買判断力を身につける</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">全85枚が購買判断・心理メカニズム・冷静判断フレームの範囲内に収まる</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">心理メカニズム解説→問題提起→4要素フレーム→各要素深掘り→注意点→ケース別→手順→まとめ の流れが完璧</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-a">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">「通常EC置き換え質問」が3箇所に分散するが、文脈と役割が異なり許容範囲内</div>
+    </div>
+  </div>
+
+  <div class="issue-block ok">
+    <div class="issue-title">総括: 9本中で最もバランスの取れた一本 — v4.3の改善効果を確認</div>
+    <ul>
+      <li>ページ番号埋め込みなし（v4.2→v4.3のページ番号禁止が機能）</li>
+      <li>スコープ管理が9本中最良。スコープ宣言（STEP1）に「心理メカニズム・購買判断ツール」と明示されており、一切逸脱なし</li>
+      <li>物語の流れが最も自然。「集団心理を知る→自分に引きつける→フレームで武装する→注意点を押さえる→場面で使う→今すぐ実践」の一本道</li>
+      <li>オーバーフロー未確認（v4.3の構造的上限追加の効果は次回生成で確認予定）</li>
+    </ul>
+  </div>
+
+
+  <!-- ======================================================
+       ライブコマースECモール 詳細
+  ====================================================== -->
+  <h2 class="section-title" id="lcemc">カテゴリ別詳細評価：ライブコマースECモール（LCEMC）</h2>
+
+  <!-- LCEMC-1: v4.1 audio -->
+  <div class="phase-bar">
+    <span class="phase-label phase-v41">v4.1</span>
+    <span style="font-weight:700;color:#374151;">new85_audio_clarity_basics</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">ライブコマースECモール シート ｜ v4.1</div>
+    <div class="title">「声が聞き取りにくい」を解消する音声まわりの基本</div>
+    <div class="topic">趣旨: ライブ配信者向けの音声品質改善の基礎知識と実践手順</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">機材選定の深掘り12枚が「基本」を超えた深さ過多（全体の14%）</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">問題定義→改善の3軸→フレーム→機材→位置→環境→ケース→手順の流れは論理的</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">「セクション | N/10」「ページ | N/85」のページ番号・セクション番号がコンテンツに埋め込まれており読み体験を損なう</div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-title">ページ番号問題: 「ページ | N/85」形式がコンテンツ内に存在（v4.1特有）</div>
+    <p>Slide 17・20・21・23・31・32・33・34などのコンテンツ内に「ページ | 17/85」「ページ | 20/85」という形式でページ番号が埋め込まれている。v4.2で禁止⑬を追加したが、v4.2テスト版（memo_balance）では「Page N of 85」として別形式で残存。v4.3で完全解消。</p>
+  </div>
+
+  <!-- LCEMC-2: v4.2 memo -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v42">v4.2</span>
+    <span style="font-weight:700;color:#374151;">live_streaming_memo_balance</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">ライブコマースECモール シート ｜ v4.2（ページ番号問題あり）</div>
+    <div class="title">台本はどこまで作る？メモと台本のちょうどいいバランス</div>
+    <div class="topic">趣旨: ライブコマース配信者が自然に話せるための「3層メモ術」の習得</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">台本vsメモvsアドリブの比較、3層フレームの深掘り、7ケースすべてがライブコマース文脈で一貫</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">問題定義→なぜメモが良いか→3層フレーム→流れメモ深掘り→要点メモ深掘り→時間メモ深掘り→ケース→手順の構造が整理されている</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">「単語メモで十分」「道標であり原稿ではない」の論点が複数箇所で繰り返される</div>
+    </div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-title">重大問題: 全85スライドに「Page N of 85」が埋め込まれている</div>
+    <p>Slide 1（Page 1 of 85）〜Slide 85（Page 85 of 85）と、全枚数分のページ番号がコンテンツとして存在。タイトルや本文の直後に配置されており、スライドデザインを大きく損なう。v4.2で追加した禁止⑬が機能しなかったことを示す（この検証がv4.3への改善動機となった）。</p>
+  </div>
+
+  <!-- LCEMC-3: v4.2 missed -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v42">v4.2</span>
+    <span style="font-weight:700;color:#374151;">missed_streaming_comparison_tool</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">ライブコマースECモール シート ｜ v4.2</div>
+    <div class="title">見逃し配信を比較検討ツールとして活用する</div>
+    <div class="topic">趣旨: ライブコマース購入者が見逃した配信のアーカイブを使って商品を賢く比較検討する方法</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">見逃し配信の比較活用に終始。コメント活用・視聴者心理の理解も含むが文脈内で適切</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">リアルタイム視聴の限界→アーカイブの価値→比較フレーム→行き来視聴技術→コメント活用→ケース→手順の流れが整っている</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">「往復視聴で差分認識が最大化」という論点が複数箇所で繰り返される傾向</div>
+    </div>
+  </div>
+
+  <div class="issue-block info">
+    <div class="issue-title">備考: テキスト抽出時の文字化けについて（Slides 1〜41）</div>
+    <p>分析スクリプトによる抽出でSlides 1〜41が文字化け（UTF-8の日本語をLatin-1として読み込んだアーティファクト）。PPTXファイル自体の内容には問題なし。Slides 42〜85では正常な日本語テキストが確認できており、評価は可読スライドを中心に実施した。</p>
+  </div>
+
+  <!-- LCEMC-4: v4.3 engagement -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v43">v4.3</span>
+    <span style="font-weight:700;color:#374151;">live_streaming_engagement_guide</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">ライブコマースECモール シート ｜ v4.3（LCEMCジャンル初のv4.3検証）</div>
+    <div class="title">コメントが少ない配信でも盛り上がりを作る方法</div>
+    <div class="topic">趣旨: 配信初心者〜3カ月目のECモール配信者が、コメントが少ない状況でも視聴者を巻き込むための実践技術</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">商品紹介・価格・CTA等のEC要素が要所に組み込まれているが、お題に固有語彙がなく汎用ライブ配信技術が占める割合が高い</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">心理的背景→フレーム→3要素（自問自答/入室即反応/低負荷参加）→7ケース→実行手順の流れは整理されている</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">セクションまとめが5箇所（Slides 25/47/67/76/84）。「自問自答」「沈黙を恐れない」の論点が多数スライドで繰り返される</div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">特記事項</h3>
+  <div class="issue-block warn">
+    <div class="issue-title">スコープ: お題固有文脈の欠如がスコープ★4にとどまった主因</div>
+    <p>「コメントが少ない配信でも盛り上がりを作る方法」というお題はECモール配信者以外（教育配信者・ゲーム配信者・雑談配信者）にも適用可能。v4.3のスコープ宣言は機能しているが、お題自体にLCEMC固有の語彙（ECモール・配信枠・商品SKU・カート誘導等）がないため、AIが汎用技術として生成する傾向が抑えられない。<br>
+    <strong>EC関連コンテンツ</strong>: Slides 37〜43（疑問リスト・価格優先・機能・実例台本A商品紹介・実例台本Bサービス案内・CTAへのつなぎ）、Slide 70（ケース3「商品紹介中」）でEC文脈は組み込まれており、スコープ宣言の部分的な効果は確認できる。</p>
+  </div>
+  <div class="issue-block ok">
+    <div class="issue-title">総括: v4.3×LCEMCの初検証として有用な知見を獲得</div>
+    <ul>
+      <li>ページ番号埋め込みなし（v4.3対策が継続して機能）</li>
+      <li>スコープ宣言が機能していることは確認できるが、お題設計がスコープの上限を決める</li>
+      <li>「募集者の目に留まる応募メッセージ」（Matching・★5）との比較で、お題固有文脈の重要性が明確になった</li>
+      <li>くどさ（★3）はv4.3でも未解消。セクションまとめ5箇所の定型化が全ジャンル共通課題</li>
+    </ul>
+  </div>
+
+
+  <!-- ======================================================
+       マッチング 詳細
+  ====================================================== -->
+  <h2 class="section-title" id="match">カテゴリ別詳細評価：マッチング（Matching）</h2>
+
+  <!-- Match-1: v4.1 fraud -->
+  <div class="phase-bar">
+    <span class="phase-label phase-v41">v4.1</span>
+    <span style="font-weight:700;color:#374151;">new85_fraud_broker_detection_training</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">マッチング シート ｜ v4.1</div>
     <div class="title">不適切投稿の見極め：詐欺案件・ブローカーの排除</div>
     <div class="topic">趣旨: プラットフォーム運営者向け、詐欺案件・ブローカー投稿を早期発見・排除するための実践的判定スキル研修</div>
   </div>
-  <div class="card">
-    <table>
-      <tr><th>項目</th><th>内容</th></tr>
-      <tr><td>ファイル</td><td><code>new85_fraud_broker_detection_training_20260423085112.pptx</code></td></tr>
-      <tr><td>評価</td><td><span class="badge badge-warn">△ ヘッダーUI問題のみ（コンテンツ品質は4本中最高）</span></td></tr>
-    </table>
-  </div>
 
-  <h3 class="sub-title">4-1. セクション構成の評価</h3>
-  <p style="margin-bottom:12px;">スライド4（全体構成）に10セクション・85ページの設計図が明示されており、実際のタイトル一覧との突合で構成の整合性を検証した。</p>
-  <div class="card">
-    <table>
-      <tr><th>セクション</th><th>スライド範囲</th><th>ページ数</th><th>評価</th></tr>
-      <tr><td>1. 導入（目的・対象者・全体構成）</td><td>1〜4</td><td>4ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>2. 背景と課題（重要性・危険信号地図）</td><td>5〜13</td><td>9ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>3. 理解の基盤（行動パターン・心理・メカニズム）</td><td>14〜24</td><td>11ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>4. コアフレームワーク（3判定軸・3段階対応）</td><td>25〜34</td><td>10ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>5. 詐欺案件の深掘り（高報酬・費用要求・比較）</td><td>35〜46</td><td>12ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>6. ブローカー投稿の深掘り（大量投稿・DM誘導）</td><td>47〜55</td><td>9ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>7. 業界知識と注意点（判断メモ・失敗パターン）</td><td>56〜66</td><td>11ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>8. ケース別実践（7ケース）</td><td>67〜76</td><td>10ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>9. 実行手順と改善（チェックリスト・手順）</td><td>77〜83</td><td>7ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-      <tr><td>10. 全体まとめ（全体整理・次アクション）</td><td>84〜85</td><td>2ページ</td><td><span class="badge badge-ok">○</span></td></tr>
-    </table>
-  </div>
-  <div class="issue-block ok">
-    <div class="issue-title">構成評価: ○</div>
-    <p>スライド4の設計図と実タイトル一覧のページ数が完全一致。ページ埋め目的の希薄スライド・重複スライドは確認されなかった。構成の健全性は4本中で最も高い。</p>
-  </div>
-
-  <h3 class="sub-title">4-2. ヘッダーUI問題（v4.0で未解決・v4.1で対応済み）</h3>
-  <div class="issue-block">
-    <div class="issue-title">問題: スライド上部にナビゲーションバー「運営者研修資料」が描画され、コンテンツ領域（680px）が圧迫</div>
-    <table style="margin-top:10px;">
-      <tr><th>確認スライド</th><th>状態</th></tr>
-      <tr><td>Slide 3（対象者と扱う範囲）</td><td>「運営者研修資料」ヘッダーバーを確認</td></tr>
-      <tr><td>Slide 5（不適切投稿排除の重要性）</td><td>「運営者研修資料」ヘッダーバーを確認</td></tr>
-      <tr><td>Slide 7（早期発見が必要な理由）</td><td>「運営者研修資料」ヘッダーバーを確認</td></tr>
-    </table>
-    <p style="margin-top:10px;">あわせて一部スライドにフッター（「© 2024 Safety Platform Management」・「Slide 8」等）も確認。v4.0のフッター禁止ルールが完全には機能していなかった。</p>
-  </div>
-  <div class="issue-block info">
-    <div class="issue-title">原因と対応</div>
-    <p><strong>原因:</strong> 禁止ルール⑩が「フッター」のみを対象としており、スライド上部のナビゲーションバー形式ヘッダーUIへの明示的な禁止がなかった。</p>
-    <p style="margin-top:6px;"><strong>v4.1での対応:</strong> 禁止ルール⑩を「ヘッダーUI・フッターの表示」に拡張し、ナビゲーションバー・タイトルバー等を明示的に禁止した。</p>
-  </div>
-
-  <h3 class="sub-title">4-3. スコープ遵守の評価（v4.0改善効果確認）</h3>
-  <div class="issue-block ok">
-    <div class="issue-title">評価: ○（スコープ遵守 — v4.0の改善が機能）</div>
-    <p>スライド3が「扱わない範囲」として①法律の詳細解説・法的対応 ②警察相談の手順・被害回収 ③システム実装・技術設計 ④一般的な営業・マーケティング論 を明示的に宣言。全85タイトルを精査した結果、上記スコープ外の内容に相当するスライドは1枚も確認されなかった。</p>
-  </div>
-
-  <h3 class="sub-title">4-4. ページ数の妥当性（85ページは適切か）</h3>
-  <div class="card">
-    <table>
-      <tr><th>85ページを正当化する要素</th><th>該当セクション</th></tr>
-      <tr><td>詐欺案件とブローカー投稿の並列深掘り — 別々の特徴・判定基準・対処法が必要</td><td>Section 5（12p）+ Section 6（9p）</td></tr>
-      <tr><td>7ケース別実践 — 高報酬・登録料・研修費・大量投稿・DM誘導・曖昧・境界線上を網羅</td><td>Section 8（10p）</td></tr>
-      <tr><td>三軸判定フレーム・3段階対応・エスカレーション基準の体系化</td><td>Section 4（10p）</td></tr>
-      <tr><td>発見→削除→通知→記録の実行手順と通知テンプレート — 研修後の即実践を可能にする</td><td>Section 9（7p）</td></tr>
-    </table>
-  </div>
-  <div class="verdict-row"><span class="badge badge-ok">○ 適切</span> 85ページが内容に対して過剰でも不足でもない</div>
-
-  <h3 class="sub-title">4-5. デザイン品質・チープ化の評価</h3>
-  <div class="card">
-    <table>
-      <tr><th>デザイン観点</th><th>評価</th><th>確認内容</th></tr>
-      <tr><td>情報の階層構造</td><td><span class="badge badge-ok">○</span></td><td>1スライド1トピック原則を維持。番号付きリスト・判定基準・対応フローが明確に分離</td></tr>
-      <tr><td>比較・対比の活用</td><td><span class="badge badge-ok">○</span></td><td>良い投稿 vs 悪い投稿（Slide 43/44）、曖昧投稿 vs 明確投稿（Slide 53）等の比較スライド多数</td></tr>
-      <tr><td>フレームワークの視覚化</td><td><span class="badge badge-ok">○</span></td><td>3軸判定（Slide 25）・ブローカー対処境界線（Slide 55）・マスターチェックリスト（Slide 82）が構造化レイアウト</td></tr>
-      <tr><td>学習確認要素</td><td><span class="badge badge-ok">○</span></td><td>判定クイズ（Slide 13・65）で学習確認を挟む設計（内容は別々、重複なし）</td></tr>
-      <tr><td>まとめスライドの独立性</td><td><span class="badge badge-ok">○</span></td><td>Slide 84（全体整理）とSlide 85（次アクション）は内容が分離されており重複なし</td></tr>
-      <tr><td>ヘッダーUI/フッター</td><td><span class="badge badge-warn">△</span></td><td>一部スライドにヘッダーバーとフッター著作権表示・ページ番号が残存（v4.1対応済み）</td></tr>
-    </table>
-  </div>
-
-  <div class="issue-block ok">
-    <div class="issue-title">総括: △（コンテンツ品質は4本中で最も高い。課題はレイアウト問題のみ）</div>
-    <table style="margin-top:10px;">
-      <tr><th>評価軸</th><th>結果</th><th>備考</th></tr>
-      <tr><td>スコープ管理</td><td><span class="badge badge-ok">○</span></td><td>スコープ外宣言あり・85タイトルで逸脱なし</td></tr>
-      <tr><td>ページ数の妥当性</td><td><span class="badge badge-ok">○</span></td><td>85ページが内容に対して適切</td></tr>
-      <tr><td>デザイン構造</td><td><span class="badge badge-ok">○</span></td><td>比較・フレームワーク・クイズ等で密度を担保</td></tr>
-      <tr><td>コンテンツ密度</td><td><span class="badge badge-ok">○</span></td><td>ページ埋め目的の希薄スライド・重複スライドなし</td></tr>
-      <tr><td>v4.0改善効果</td><td><span class="badge badge-ok">○</span></td><td>スコープ逸脱・深さ逸脱・性質転換いずれも発生せず</td></tr>
-      <tr><td>ヘッダーUI/フッター</td><td><span class="badge badge-warn">△</span></td><td>残存あり（v4.1で対応済み）</td></tr>
-    </table>
-  </div>
-
-
-  <!-- 5. 比較まとめ -->
-  <h2 class="section-title">5. スライド比較まとめ（4本）</h2>
-
-  <div class="card">
-    <table>
-      <tr>
-        <th>観点</th>
-        <th>音声周り<br><small>ECモール／v3.2</small></th>
-        <th>条件変更<br><small>マッチング／v3.2</small></th>
-        <th>BGM・演出<br><small>ライブコマース／v3.2</small></th>
-        <th>不適切投稿<br><small>マッチング／v4.0</small></th>
-      </tr>
-      <tr>
-        <td>コアテーマへの集中度</td>
-        <td><span class="badge badge-ok">○</span></td>
-        <td><span class="badge badge-ok">○</span></td>
-        <td><span class="badge badge-warn">△</span></td>
-        <td><span class="badge badge-ok">○</span></td>
-      </tr>
-      <tr>
-        <td>余計な話題の混入</td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ng">× あり（Slide 9）</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-      </tr>
-      <tr>
-        <td>本筋からの大幅逸脱</td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ng">× あり（7スライド）</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-      </tr>
-      <tr>
-        <td>深さの適切性</td>
-        <td><span class="badge badge-warn">△ 深すぎ</span></td>
-        <td><span class="badge badge-ok">○ 適切</span></td>
-        <td><span class="badge badge-ok">○ 適切</span></td>
-        <td><span class="badge badge-ok">○ 適切</span></td>
-      </tr>
-      <tr>
-        <td>重複コンテンツ</td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-warn">△ Slide 84/85</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-      </tr>
-      <tr>
-        <td>ヘッダーUI/フッター</td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-ok">○ なし</span></td>
-        <td><span class="badge badge-warn">△ 残存（v4.1対応済み）</span></td>
-      </tr>
-    </table>
-  </div>
-
-  <h3 class="sub-title">残課題の分類と根本原因</h3>
-  <div class="card">
-    <table>
-      <tr><th>課題の種類</th><th>発生箇所</th><th>根本原因</th></tr>
-      <tr>
-        <td><span class="cause-tag">テーマ外混入</span></td>
-        <td>BGM Slide 9（市場データ）</td>
-        <td>ページ数を埋めるための補足情報追加</td>
-      </tr>
-      <tr>
-        <td><span class="cause-tag">記事性質の転換</span></td>
-        <td>BGM Slides 77〜83（チェックリスト）</td>
-        <td>お題の「性質（啓発系）」を無視した実践プログラム化</td>
-      </tr>
-      <tr>
-        <td><span class="cause-tag amber">深さの逸脱</span></td>
-        <td>音声 Slides 35〜47（機材選定）</td>
-        <td>お題の「レベル感（基本）」を無視した深掘り</td>
-      </tr>
-      <tr>
-        <td><span class="cause-tag amber">重複スライド</span></td>
-        <td>条件変更 Slide 84/85</td>
-        <td>ページ数維持のための内容水増し</td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="issue-block info">
-    <div class="issue-title">残課題の共通原因</div>
-    <p>今回の検証で浮かび上がった問題はすべて、<strong>「ページ数を埋めようとする際の判断ルールが不明確」</strong> という一点に集約される。</p>
-    <ul>
-      <li>スコープの「幅」の管理（テーマ外を入れない）はSTEP1でそれなりに機能している</li>
-      <li>不足しているのは「深さ」の管理と「お題の性質（啓発系/スキル習得系/実践ガイド系）」に合ったコンテンツタイプの制御</li>
-      <li>コンテンツが不足する際に「スコープを広げる」のではなく「具体例・事例・データで密度を上げる」という発想が必要</li>
-    </ul>
-    <p style="margin-top:8px">これら2点を次バージョンのプロンプトで制御することで、残課題の大部分が解消できると考えられる。</p>
-  </div>
-
-  <!-- ===== Section 6: プロンプト改善内容 ===== -->
-  <h2 class="section-title">6. プロンプト改善内容（v3.2 → v4.0）</h2>
-
-  <h3 class="sub-title">6-1. 何が足りていなかったか（v3.2時点の課題）</h3>
-  <div class="card">
-    <table>
-      <tr><th>#</th><th>課題</th><th>具体的な発生事象</th></tr>
-      <tr>
-        <td><strong>A</strong></td>
-        <td>お題の「深さ」を制御するルールがなかった</td>
-        <td>「音声まわりの基本」に対して機材選定が12スライド（14%）の詳細解説になった</td>
-      </tr>
-      <tr>
-        <td><strong>B</strong></td>
-        <td>お題の「性質（記事タイプ）」を宣言させるルールがなかった</td>
-        <td>「BGMや演出にも意味がある（理解・啓発系）」に対して、チェックリスト7スライドと改善サイクルが追加され、行動変容プログラムに転換した</td>
-      </tr>
-      <tr>
-        <td><strong>C</strong></td>
-        <td>ページ不足時の補填方法が指定されていなかった</td>
-        <td>ページ数を埋めるためにスコープ外の市場データ（BGM Slide 9）や重複スライド（条件変更 Slide 84/85）が追加された</td>
-      </tr>
-    </table>
-  </div>
-
-  <h3 class="sub-title">6-2. プロンプトに加えた修正（v4.0の変更点）</h3>
-
-  <div class="card" style="border-left: 4px solid #2563eb;">
-    <div class="issue-title" style="margin-bottom:10px;">修正① STEP1に「お題の性質」と「レベル感」の宣言を追加</div>
-    <p style="margin-bottom:8px;color:#6b7280;">変更前（v3.2）: スコープ内・スコープ外の宣言のみ</p>
-    <p style="margin-bottom:8px;">変更後（v4.0）: 以下の2項目を追加し、それぞれの定義を明文化</p>
-    <div style="background:#f1f5f9;border-radius:6px;padding:12px 16px;font-family:monospace;font-size:13px;color:#1e3a5f;margin-bottom:10px;">
-      お題の性質: 【理解・啓発系 / スキル習得系 / 実践ガイド系】のいずれかを選択<br>
-      レベル感: 【基本・入門 / 中級 / 上級・専門】のいずれかを選択
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">全85枚が詐欺案件/ブローカー排除の文脈に終始。スライド3で除外範囲を明示し、遵守されている</div>
     </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">なぜ重要か→危険信号→行動パターン→3判定軸フレーム→詐欺深掘り→ブローカー深掘り→7ケース→手順の流れが完璧</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">セクションまとめ5箇所で「前セクションの3ポイントを整理し次セクションの予告を確認します」が反復。定型文化が顕著</div>
+    </div>
+  </div>
+
+  <div class="issue-block ok">
+    <div class="issue-title">総括: スコープ・構成ともに9本中最高水準（★5）</div>
+    <p>テーマの専門性（詐欺案件とブローカーの二本軸）が明確であり、AIが逸脱しにくい構造になっている点も功を奏している。くどさのみ★3で、セクションまとめの定型化が全体の唯一の弱点。</p>
+  </div>
+
+  <!-- Match-2: v4.1 handling -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v41">v4.1</span>
+    <span style="font-weight:700;color:#374151;">new85_handling_condition_changes</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">マッチング シート ｜ v4.1（汎用ビジネスコミュニケーション）</div>
+    <div class="title">途中で条件が変わったときの対応の考え方</div>
+    <div class="topic">趣旨: 業務中の条件変更依頼を適切に扱い、信頼関係を築く実務スキル</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">テーマ自体は汎用ビジネスコミュニケーションであり、マッチングプラットフォーム固有の事例がほぼ出てこない</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">背景→心理→5ステップフレーム→曖昧表現の分解→影響判断→無理対応回避→7ケース→テンプレートの構造が完璧に近い</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">スライド84/85が両方「全体まとめと次アクション」として存在。「曖昧表現は具体的に置き換えよ」の論点が複数箇所で反復</div>
+    </div>
+  </div>
+
+  <div class="issue-block warn">
+    <div class="issue-title">スコープ評価: マッチングシートへの紐付きが弱い</div>
+    <p>「途中で条件が変わったとき」はあらゆる業種で発生する汎用スキル。マッチングプラットフォーム運営者向けの文脈（会員対応での条件変更、パートナー企業との調整など）を事例として含めれば★★★★☆に向上。スコープ宣言の精度改善余地あり。</p>
+  </div>
+
+  <!-- Match-3: v4.3 application_message -->
+  <div class="phase-bar" style="margin-top:36px;">
+    <span class="phase-label phase-v43">v4.3</span>
+    <span style="font-weight:700;color:#374151;">application_message_writing</span>
+  </div>
+  <div class="section-header-card">
+    <div class="label">マッチング シート ｜ v4.3（Matchingジャンル初のv4.3検証）</div>
+    <div class="title">募集者の目に留まる応募メッセージの書き方</div>
+    <div class="topic">趣旨: フリーランス・副業でマッチングプラットフォームを使って案件に応募する際、返信率を上げる応募文の5要素と実践方法</div>
+  </div>
+
+  <div class="three-dim">
+    <div class="dim-card">
+      <div class="dim-label">①スコープ外の話</div>
+      <div class="dim-score dim-a">★★★★★</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">全85枚が案件応募・募集者視点・応募文の構成に終始。汎用ビジネス文書作成への漂流なし</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">②物語の構成</div>
+      <div class="dim-score dim-b">★★★★☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">第一印象→テンプレートリスク→理解の基盤→5要素フレーム→深掘り3段（書き出し/経験スキル/スケジュール）→7ケース→実行手順の流れが整理されている</div>
+    </div>
+    <div class="dim-card">
+      <div class="dim-label">③くどさ</div>
+      <div class="dim-score dim-b">★★★☆☆</div>
+      <div style="font-size:12px;color:#374151;margin-top:6px;">セクションまとめが5箇所（Slides 14/24/35/46/77）。「案件を読んだことが伝わる」の論点が多数スライドで反復される</div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">特記事項</h3>
+  <div class="issue-block ok">
+    <div class="issue-title">スコープ評価: お題固有文脈×v4.3スコープ宣言の相乗効果を確認</div>
+    <p>「募集者の目に留まる応募メッセージの書き方」というお題自体に「募集者」「応募メッセージ」というMatching固有語彙が含まれている。v4.3のスコープ宣言との組み合わせで、AIが汎用ビジネス文書・就活エントリーシート・ビジネスメール等への漂流を完全に防いでいる。<br>
+    <strong>handling_condition_changes（v4.1・★3）との対比</strong>: お題が「業種・職種を問わず」という汎用表現を内包していたため、Matchingプラットフォーム文脈がゼロになった。同じMatchingジャンルでもお題設計次第でスコープ★3〜★5の幅が生じることが11本の検証で確認された。</p>
+  </div>
+  <div class="issue-block warn">
+    <div class="issue-title">くどさ: セクションまとめ5箇所の定型化が依然残存</div>
+    <p>Slides 14（背景と課題の要点整理）・24（理解の基盤の要点整理）・35（フレームワークの要点整理）・46（深掘り①の要点整理）・77（ケース別実践の要点整理）の5スライドが「前セクションのN点を整理し、次のセクションの内容を予告」する定型構造で統一されている。v4.3でも解消されておらず、プロンプト改訂の次の課題。</p>
+  </div>
+  <div class="issue-block ok">
+    <div class="issue-title">総括: v4.3×Matchingの初検証として最良の結果を達成</div>
     <ul>
-      <li><strong>理解・啓発系</strong>: 仕組みの解説・気づきの提供が目的。行動変容チェックリストや改善サイクルは含めない</li>
-      <li><strong>基本・入門</strong>: 対象読者が即日実践できる内容に絞る。機材の詳細仕様・専門技術・例外ケースは最小限</li>
+      <li>ページ番号埋め込みなし（v4.3対策が継続して機能）</li>
+      <li>スコープ★5は、v4.3 calm_judgment（LC）に並ぶ最高水準</li>
+      <li>7ケース（短期/継続/未経験近接/経験豊富/返信速度重視/確認事項多い/募集文が短い）で応募パターンを幅広く網羅</li>
+      <li>お題固有語彙の有無がスコープを決定する構造が、handling_condition_changes（★3）との比較で明確化された</li>
     </ul>
-    <div class="verdict-row" style="margin-top:10px;"><span class="badge badge-ok">解消</span> 課題A（深さ過多）・課題B（性質転換）</div>
   </div>
 
-  <div class="card" style="border-left: 4px solid #2563eb;">
-    <div class="issue-title" style="margin-bottom:10px;">修正② STEP2に「コンテンツ密度ルール」を追加</div>
-    <p style="margin-bottom:8px;color:#6b7280;">変更前（v3.2）: ページ不足時の補填方法の規定なし</p>
-    <p style="margin-bottom:8px;">変更後（v4.0）: ページが不足した場合の補填手段を明示的に指定</p>
-    <ul>
-      <li>具体的な実例・事例・エピソードを追加する</li>
-      <li>比較・対比スライドを追加する（良い例 vs 悪い例）</li>
-      <li>よくある質問・誤解・落とし穴のスライドを追加する</li>
-      <li>データや数字で裏付けるスライドを追加する（出典不明の場合は「例」として扱う）</li>
-    </ul>
-    <div class="verdict-row" style="margin-top:10px;"><span class="badge badge-ok">解消</span> 課題C（ページ埋め目的の外部情報追加・重複スライド）</div>
-  </div>
 
-  <div class="card" style="border-left: 4px solid #2563eb;">
-    <div class="issue-title" style="margin-bottom:10px;">修正③ STEP3に禁止ルール⑪・⑫を追加</div>
-    <p style="margin-bottom:8px;color:#6b7280;">変更前（v3.2）: 禁止ルールは①〜⑩の10項目</p>
-    <p style="margin-bottom:8px;">変更後（v4.0）: 以下の2項目を追加（計12項目）</p>
-    <table>
-      <tr><th>追加禁止</th><th>禁止事項</th><th>基準</th></tr>
-      <tr>
-        <td>⑪</td>
-        <td>ページ埋め目的の重複・希薄コンテンツの追加</td>
-        <td>他スライドと内容が80%以上重複するスライドは禁止。不足分は「具体例・比較・Q&A」で補う</td>
-      </tr>
-      <tr>
-        <td>⑫</td>
-        <td>お題の性質と異なるコンテンツタイプの混入</td>
-        <td>「理解・啓発系」に行動変容チェックリスト/改善サイクルは含めない。「基本・入門」に機材仕様の詳細/専門ケースは含めない</td>
-      </tr>
-    </table>
-    <div class="verdict-row" style="margin-top:10px;"><span class="badge badge-ok">解消</span> 課題A・B・C すべて</div>
-  </div>
+  <!-- ======================================================
+       バージョン比較
+  ====================================================== -->
+  <h2 class="section-title" id="version">バージョン別比較分析</h2>
 
-  <div class="card" style="border-left: 4px solid #2563eb;">
-    <div class="issue-title" style="margin-bottom:10px;">修正④ STEP5の自己検証を11項目 → 12項目に拡張</div>
-    <p>新規追加の検証項目⑫: 他スライドと内容が80%以上重複するスライドがないか / お題の性質・レベル感と合わないコンテンツが含まれていないか（基準: 0件）</p>
-  </div>
-
-  <h3 class="sub-title">6-3. 修正の対応関係まとめ</h3>
   <div class="card">
     <table>
-      <tr><th>検証で発見した課題</th><th>根本原因</th><th>v4.0での対応</th></tr>
       <tr>
-        <td>機材選定の深さ過多（音声）</td>
-        <td>「基本・入門」レベルの宣言なし</td>
-        <td>STEP1「レベル感」宣言 ＋ 禁止⑫</td>
+        <th style="width:12%;">バージョン</th>
+        <th>①スコープ外</th>
+        <th>②物語の構成</th>
+        <th>③くどさ</th>
+        <th>ページ番号</th>
+        <th>オーバーフロー</th>
+        <th>主な特徴・改善点</th>
       </tr>
       <tr>
-        <td>チェックリスト過剰（BGM）</td>
-        <td>「理解・啓発系」性質の宣言なし</td>
-        <td>STEP1「お題の性質」宣言 ＋ 禁止⑫</td>
+        <td><span class="ver-badge ver-old" style="font-size:13px;">旧版</span></td>
+        <td>★★★☆☆<br><span style="font-size:11px;color:#6b7280">スコープ宣言なし</span></td>
+        <td>★★★★★<br><span style="font-size:11px;color:#6b7280">最も自然な流れ</span></td>
+        <td>★★★★☆<br><span style="font-size:11px;color:#6b7280">繰り返し少ない</span></td>
+        <td><span class="badge badge-ok">なし</span></td>
+        <td><span class="badge badge-info">未測定</span></td>
+        <td style="font-size:13px;">STEP1スコープ宣言・STEP2密度補填ルールなし。スライドの密度は高く物語も自然だが、AIの裁量でテーマ外ケースが含まれるリスクがある</td>
       </tr>
       <tr>
-        <td>市場データ混入（BGM Slide 9）</td>
-        <td>ページ埋め時の補填ルールなし</td>
-        <td>STEP2「コンテンツ密度ルール」＋ 禁止⑪</td>
+        <td><span class="ver-badge ver-41" style="font-size:13px;">v4.1</span></td>
+        <td>★★★★☆<br><span style="font-size:11px;color:#6b7280">宣言で改善</span></td>
+        <td>★★★★★<br><span style="font-size:11px;color:#6b7280">構成品質維持</span></td>
+        <td>★★★☆☆<br><span style="font-size:11px;color:#6b7280">まとめ定型文問題</span></td>
+        <td><span class="badge badge-warn">一部あり</span></td>
+        <td><span class="badge badge-info">未測定</span></td>
+        <td style="font-size:13px;">STEP1「お題の性質・レベル感」宣言追加でスコープ逸脱が減少。しかし「ページ|N/85」「セクション|N/10」形式のページ番号が一部ファイルで混入。セクションまとめの定型文パターン（5〜6箇所）が固定化し始め、「くどさ」の新たな課題が浮上</td>
       </tr>
       <tr>
-        <td>重複スライド（条件変更 84/85）</td>
-        <td>ページ埋め時の補填ルールなし</td>
-        <td>STEP2「コンテンツ密度ルール」＋ 禁止⑪</td>
+        <td><span class="ver-badge ver-42" style="font-size:13px;">v4.2</span></td>
+        <td>★★★★☆</td>
+        <td>★★★★☆</td>
+        <td>★★★☆☆</td>
+        <td><span class="badge badge-ng">一部全面あり</span></td>
+        <td><span class="badge badge-ng">50%超（1本）</span></td>
+        <td style="font-size:13px;">ページ番号禁止強化（禁止⑬追加）→memo_balanceでも「Page N of 85」が全枚数分残存（部分的な効果のみ）。レイアウトオーバーフロー（43/85枚）が新たに発覚。コンテンツ品質は旧版・v4.1と同等水準を維持</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td><span class="ver-badge ver-43" style="font-size:13px;">v4.3</span><br><span style="font-size:11px;color:#15803d;">3本検証済</span></td>
+        <td>LC★5 / LCEMC★4 / Match★5<br><span style="font-size:11px;color:#6b7280">お題固有文脈の有無が上限を決定</span></td>
+        <td>★★★★☆〜★★★★★<br><span style="font-size:11px;color:#6b7280">全3本で★4以上を達成</span></td>
+        <td>★★★☆☆<br><span style="font-size:11px;color:#6b7280">セクションまとめ定型化が未解消</span></td>
+        <td><span class="badge badge-ok">なし（全3本確認済）</span></td>
+        <td><span class="badge badge-info">未測定（全3本）</span></td>
+        <td style="font-size:13px;">全3ジャンルで検証完了。ページ番号は全3本で解消。スコープ制御はLC・Matchingで★5、LCEMCは★4（お題固有文脈の薄さが原因）。くどさ（セクションまとめ定型文）はv4.3でも依然★3。オーバーフロー対策（コンテンツ上限・末尾ボックス禁止）の効果は実測未完了。</td>
       </tr>
     </table>
   </div>
 
-</div><!-- /container -->
+  <h3 class="sub-title">バージョンごとに残る共通課題</h3>
+
+  <div class="version-compare">
+    <div class="vc-title">「くどさ」—すべてのバージョンで★3〜4どまりの根本原因</div>
+    <p>STEP2のセクション構成テンプレートが「各セクションの末尾にまとめスライドを入れよ」と指示するため、AIが画一的な定型文（「前セクションの3ポイント要約と次セクションへの予告」）を5〜6回繰り返す。この定型文そのものをプロンプトで制限（1回の使用文字数・表現の多様化を要求）するか、まとめスライドの追加頻度を減らすことが次の改善策として考えられる。</p>
+  </div>
+
+  <div class="version-compare" style="border-color: var(--amber); background: var(--amber-bg);">
+    <div class="vc-title" style="color: var(--amber);">「スコープ外」—お題固有文脈の設計がプロンプト以上に重要</div>
+    <p>11本の検証で「お題自体にジャンル固有語彙が含まれるかどうか」がスコープ評価の上限を決定することが確認された。<br>
+    ✅ 固有語彙あり（募集者/応募文/案件・盛り上がっているから買う等）→★5達成<br>
+    ⚠️ 固有語彙なし（コメントが少ない配信でも盛り上がりを/途中で条件が変わったとき等）→★3〜4にとどまる<br>
+    v4.3のスコープ宣言は有効だが、汎用お題ではその効果に限界がある。お題作成時点でジャンル固有の文脈（プラットフォーム名・操作・関係性等）を含めることが最も確実なスコープ制御策。</p>
+  </div>
+
+
+  <!-- ======================================================
+       過去の詳細評価（旧Phase 1/2）
+  ====================================================== -->
+  <h2 class="section-title" id="history">旧評価記録（Phase 1/2 — v3.2/v4.0使用）</h2>
+
+  <p style="color:#6b7280;font-size:14px;margin-bottom:20px;">以下は旧プロンプト（v3.2/v4.0）で生成したファイルの評価記録。現在フォルダに残っているファイルはv4.1再生成版（new85_prefix）であり、以下の評価は既に置き換え済みのバージョンに対するものです。</p>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <div style="background:#1e3a5f;color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;">PHASE 1</div>
+    <span style="font-weight:700;color:#1e3a5f;">問題発見 — v3.2 プロンプトで3テーマを検証し、品質課題を洗い出す</span>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr><th>#</th><th>カテゴリー｜シート</th><th>お題</th><th>評価</th><th>主な発見</th></tr>
+      <tr>
+        <td>1</td>
+        <td><strong>音声周り</strong><br><span style="font-size:12px;color:#6b7280">ライブコマースECモール／v3.2</span></td>
+        <td>「声が聞き取りにくい」を解消する音声まわりの基本</td>
+        <td><span class="badge badge-warn">△</span></td>
+        <td>マイク機材選定（12スライド）が「基本」を超えた深さ過多。お題のレベル感を制御するルールが必要</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>途中で条件が変更になったもの</strong><br><span style="font-size:12px;color:#6b7280">マッチング／v3.2</span></td>
+        <td>途中で条件が変わったときの対応の考え方</td>
+        <td><span class="badge badge-ok">○</span></td>
+        <td>Slide 84/85 の重複のみ。3本中で最も良好</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>ライブ配信やBGM・演出</strong><br><span style="font-size:12px;color:#6b7280">ライブコマース／v3.2</span></td>
+        <td>ライブ配信のBGMや演出にも意味がある</td>
+        <td><span class="badge badge-warn">△</span></td>
+        <td>市場データ混入・チェックリスト7枚で「啓発記事」から「行動変容プログラム」へ性質転換</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="issue-block warn">
+    <div class="issue-title">Phase 1 で特定された3つの課題の共通原因</div>
+    <p>ページ数を埋めようとした際に、①深さのコントロール ②コンテンツタイプ（お題の性質）の制御 ③補填ルール の3点が機能していなかった。</p>
+  </div>
+
+  <div style="text-align:center;font-size:22px;color:#2563eb;margin:12px 0;">↓ プロンプトを v3.2 → v4.0 に改訂（STEP1強化・STEP2追加・禁止ルール⑪⑫追加）</div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <div style="background:#16a34a;color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;">PHASE 2</div>
+    <span style="font-weight:700;color:#16a34a;">改善効果の確認 — v4.0 プロンプトで別テーマを検証</span>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr><th>お題</th><th>評価</th><th>検証結果</th></tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>不適切投稿の見極め：詐欺案件・ブローカーの排除</strong><br><span style="font-size:12px;color:#6b7280">マッチング／v4.0</span></td>
+        <td><span class="badge badge-warn">△ ヘッダーUI問題のみ</span></td>
+        <td>スコープ逸脱・深さ逸脱・性質転換はすべて発生せず。<strong>コンテンツ品質面の3課題は完全解消。</strong> 残課題はスライドのヘッダーUI表示（v4.1で対応済み）のみ。</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="issue-block ok">
+    <div class="issue-title">Phase 1/2 総括</div>
+    <ul>
+      <li>第1フェーズで発見した3課題（深さ過多・性質転換・スコープ外補填）は、v4.0で設計どおり解消された</li>
+      <li>v4.0で残った唯一の課題はヘッダーUI（スライド上部のナビゲーションバー）→ v4.1で禁止ルール⑩を拡張して対応済み</li>
+      <li>以降の課題（ページ番号・オーバーフロー・くどさ）はv4.1〜v4.3で段階的に対処</li>
+    </ul>
+  </div>
+
+
+  <!-- ======================================================
+       次のアクション
+  ====================================================== -->
+  <h2 class="section-title">次回検証に向けた優先アクション</h2>
+
+  <div class="card">
+    <table>
+      <tr><th>優先度</th><th>課題</th><th>対策の方向性</th><th>ステータス</th></tr>
+      <tr>
+        <td><span class="badge badge-ng">高</span></td>
+        <td>v4.3の全3本でオーバーフローが解消されているか未実測</td>
+        <td>overflow解析スクリプトを3本（calm_judgment / engagement_guide / application_message）に適用</td>
+        <td>未実施</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">中</span></td>
+        <td>セクションまとめの定型文（くどさ★3）がv4.3でも全3本で未解消</td>
+        <td>まとめスライドの文言多様化・回数削減の指示をプロンプトに追加（v4.4候補）</td>
+        <td>検討中</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">中</span></td>
+        <td>LCEMCのスコープが★4にとどまった（お題固有文脈の欠如）</td>
+        <td>LCEMCお題設計時にECモール固有語彙（配信枠・商品SKU・カート誘導等）を含める。または「コメントが少ないECモール配信でも〜」のようにジャンルを明示する</td>
+        <td>次回お題設計時に適用</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-ok">低</span></td>
+        <td>missed_streamingの前半テキスト抽出文字化け</td>
+        <td>抽出スクリプトの文字コード設定を修正（ファイル自体は問題なし）</td>
+        <td>必要時対応</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-ok">低</span></td>
+        <td>旧版（最初の30秒）がLC/LCEMCの検証リストに含まれているが旧版プロンプト使用</td>
+        <td>v4.3プロンプトで「最初の30秒」を再生成し最新版と比較</td>
+        <td>検討中</td>
+      </tr>
+    </table>
+  </div>
+
+
+</div>
 
 <div class="page-footer">
-  検証対象（4本）: nwe85_audio_clarity_basics_...pptx / new85_handling_condition_...pptx / new85_live_commerce_bgm_...pptx / new85_fraud_broker_detection_training_20260423085112.pptx<br>
-  使用プロンプト: v3.2（初回3本） → v4.0（4本目） → v4.1（ヘッダーUI修正版） ｜ 検証日: 2026年4月23日
+  <p>ニッチお題・スライド検証レポート — 更新: 2026年4月25日</p>
+  <p style="margin-top:4px;">評価対象: 85ページスライド 11本（旧版1・v4.1×4・v4.2×3・v4.3×3） ｜ 使用プロンプト: 旧版〜v4.3</p>
 </div>
 
 </body>
