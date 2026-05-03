@@ -525,14 +525,20 @@
   <div class="container">
     <div class="section-label">FULL ROUTE MAP</div>
     <h2 class="section-title">全行程マップ ― 3日間の旅路</h2>
-    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">世田谷出発→安曇野(Day1)→あづみの公園(Day2)→グランピングヴィーナス→アルプス公園(Day3)→帰路を全て1枚の地図で。各マーカーをクリックすると詳細が表示されます。</p>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">世田谷出発→安曇野(Day1)→あづみの公園(Day2)→グランピングヴィーナス→アルプス公園(Day3)→帰路を全て1枚の地図で。<strong>SA/IC/JCT には番号が付いており、①〜⑨が往路メインルート、⑩〜⑬が復路メインルート、⓹〜⓼が三才山トンネル経由のサブルート</strong>です。各マーカーをクリックすると詳細が表示されます。</p>
 
     <!-- Map legend -->
     <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin:1rem 0; font-size:.9rem">
-      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#F5A7A0; border:2px solid white; box-shadow:0 0 0 1px #F5A7A0"></span> Day 1 (5/4)</div>
-      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#F6CB6B; border:2px solid white; box-shadow:0 0 0 1px #F6CB6B"></span> Day 2 (5/5)</div>
-      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#6FA86F; border:2px solid white; box-shadow:0 0 0 1px #6FA86F"></span> Day 3 (5/6)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#F5A7A0; border:2px solid white; box-shadow:0 0 0 1px #F5A7A0"></span> Day 1 (5/4) 観光地</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#F6CB6B; border:2px solid white; box-shadow:0 0 0 1px #F6CB6B"></span> Day 2 (5/5) 観光地</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#6FA86F; border:2px solid white; box-shadow:0 0 0 1px #6FA86F"></span> Day 3 (5/6) 観光地</div>
       <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; background:#3B5C3F; border-radius:2px"></span> 宿泊施設</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; background:#F5A7A0; border-radius:3px; border:2px solid white"></span> 往路メイン SA/IC/JCT (①〜⑨)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; background:#6FA86F; border-radius:3px; border:2px solid white"></span> 復路メイン SA/IC/JCT (⑩〜⑬)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; background:#9B6FA8; border-radius:3px; border:2px dashed white"></span> サブルート分岐点 (⓹〜⓼)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:24px; height:4px; background:#F5A7A0"></span> 往路メイン(全線高速)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:24px; height:4px; background:#6FA86F"></span> 復路メイン(中央道経由)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:24px; height:0; border-top:3px dashed #9B6FA8"></span> サブルート(三才山経由)</div>
     </div>
 
     <!-- Leaflet map container -->
@@ -612,6 +618,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // SA/IC icons (高速道路の休憩・交代ポイント用)
+  function highwayIcon(color, label, type) {
+    var emoji = type === 'IC' ? '🛣️' : type === 'JCT' ? '🔀' : '🅿️';
+    return L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background:' + color + '; width:28px; height:28px; border-radius:4px; border:2px solid white; box-shadow:0 2px 6px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:11px; font-family:Georgia,serif">' + label + '</div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14]
+    });
+  }
+
+  // ============ 往路 (Day 1) 高速ルート上のSA/IC ============
+  // 練馬IC → 関越道 → 高坂SA → 藤岡JCT(関越→上信越) → 横川SA → 東部湯の丸SA → 更埴JCT(上信越→長野道) → 姨捨SA → 梓川SA → 安曇野IC
+  var outboundHighway = [
+    {lat:35.7547, lng:139.6073, name:'① 練馬IC', time:'08:50頃', desc:'関越道入口・往路スタート', label:'①', type:'IC', color:'#F5A7A0'},
+    {lat:35.9867, lng:139.3845, name:'② 高坂SA(下り)', time:'09:30', desc:'★犬休憩・名物いも恋・Driver B交代(40km/1h)', label:'②', type:'SA', color:'#F5A7A0'},
+    {lat:36.2712, lng:139.0718, name:'③ 藤岡JCT', time:'10:30頃', desc:'関越道→上信越道へ分岐', label:'③', type:'JCT', color:'#F5A7A0'},
+    {lat:36.3390, lng:138.7392, name:'④ 横川SA(下り)', time:'11:30', desc:'★峠の釜めし発祥地・犬休憩・Driver A交代(90km/1.5h)', label:'④', type:'SA', color:'#F5A7A0'},
+    {lat:36.3722, lng:138.3483, name:'⑤ 東部湯の丸SA(上り側位置・任意)', time:'12:30', desc:'任意休憩・牛乳パン・北アルプス絶景', label:'⑤', type:'SA', color:'#F5A7A0'},
+    {lat:36.5529, lng:138.1415, name:'⑥ 更埴JCT', time:'13:00頃', desc:'上信越道→長野道へ分岐(松本方面)', label:'⑥', type:'JCT', color:'#F5A7A0'},
+    {lat:36.4972, lng:138.0972, name:'⑦ 姨捨SA(任意)', time:'13:30', desc:'★しおり記載の最後の給油ポイント・善光寺平眺望', label:'⑦', type:'SA', color:'#F5A7A0'},
+    {lat:36.2604, lng:137.9340, name:'⑧ 梓川SA(下り・任意)', time:'13:50頃', desc:'長野道下り・GSあり・最後の給油可', label:'⑧', type:'SA', color:'#F5A7A0'},
+    {lat:36.2987, lng:137.9250, name:'⑨ 安曇野IC', time:'14:00', desc:'★Day1ゴール・sanpoランチへ', label:'⑨', type:'IC', color:'#F5A7A0'}
+  ];
+
+  // ============ 復路 (Day 3) 高速ルート上のSA/IC ============
+  // 松本IC → 長野道 → 岡谷JCT(長野道→中央道) → 諏訪湖SA → 談合坂SA → 八王子IC → 世田谷
+  var returnHighway = [
+    {lat:36.2338, lng:137.9384, name:'⑩ 松本IC', time:'13:30', desc:'★Day3 中央道へ・帰路スタート', label:'⑩', type:'IC', color:'#6FA86F'},
+    {lat:36.0517, lng:138.0424, name:'⑪ 岡谷JCT', time:'13:50頃', desc:'長野道→中央道へ分岐(東京方面)', label:'⑪', type:'JCT', color:'#6FA86F'},
+    {lat:36.0263, lng:138.0761, name:'⑫ 諏訪湖SA(上り)', time:'14:30', desc:'★犬休憩・諏訪湖一望・お土産最終チャンス', label:'⑫', type:'SA', color:'#6FA86F'},
+    {lat:35.6324, lng:139.0638, name:'⑬ 談合坂SA(上り)', time:'16:30', desc:'★大型SA・Driver B交代(90km/1.5h)・ピザや焼き立てパン', label:'⑬', type:'SA', color:'#6FA86F'}
+  ];
+
+  // ============ 観光地のマーカー (各日) ============
+
   // Day 1 stops
   var day1 = [
     {lat:36.282, lng:137.9155, name:'SOBA & CAFE sanpo', time:'14:00', desc:'★Day1ランチ第1候補・通し営業11-17時(L.O.16:30)・サンルーム室内で犬OK', color:'#F5A7A0', label:'1'},
@@ -645,29 +687,130 @@ document.addEventListener('DOMContentLoaded', function() {
     return L.marker([stop.lat, stop.lng], {icon: icon}).bindPopup(popupContent).addTo(map);
   }
 
+  // Add highway markers (SA/IC/JCT)
+  function addHighwayMarker(stop) {
+    var icon = highwayIcon(stop.color, stop.label, stop.type);
+    var typeLabel = stop.type === 'IC' ? 'インターチェンジ' : stop.type === 'JCT' ? 'ジャンクション' : 'サービスエリア';
+    var popupContent = '<div style="font-family:sans-serif; min-width:220px"><div style="font-weight:bold; font-size:1.05rem; color:#3B5C3F; margin-bottom:.3rem">' + stop.name + '</div><div style="font-size:.75rem; color:#999; margin-bottom:.2rem">' + typeLabel + '</div><div style="font-size:.85rem; color:#666; margin-bottom:.4rem">⏰ ' + stop.time + '</div><div style="font-size:.85rem; line-height:1.4">' + stop.desc + '</div></div>';
+    return L.marker([stop.lat, stop.lng], {icon: icon}).bindPopup(popupContent).addTo(map);
+  }
+
   // Add Setagaya as start/end
   addMarker(setagaya);
+
+  // Add highway markers (往路・復路)
+  outboundHighway.forEach(addHighwayMarker);
+  returnHighway.forEach(addHighwayMarker);
 
   // Add all day stops
   [day1, day2, day3].forEach(function(day) {
     day.forEach(addMarker);
   });
 
-  // Draw route polylines
-  // Day 1 route: Setagaya → sanpo → 大王わさび → わんパラ
-  var day1Route = [[setagaya.lat, setagaya.lng]].concat(day1.map(function(s){return [s.lat, s.lng];}));
-  L.polyline(day1Route, {color:'#F5A7A0', weight:4, opacity:0.7, dashArray:'8, 6'}).addTo(map).bindTooltip('Day 1 (5/4) ルート', {sticky:true});
+  // ============ 高速道路ルートのポリライン描画 ============
+  // 往路 (Day 1): 世田谷 → 練馬IC → 関越道(藤岡JCTで上信越分岐) → 上信越道(更埴JCTで長野道分岐) → 長野道 → 安曇野IC → sanpo
+  // 各高速道路のおおよその経路を表現するための中継点を追加
+  var outboundFullRoute = [
+    [setagaya.lat, setagaya.lng],         // 世田谷
+    [outboundHighway[0].lat, outboundHighway[0].lng],  // 練馬IC
+    [outboundHighway[1].lat, outboundHighway[1].lng],  // 高坂SA
+    [outboundHighway[2].lat, outboundHighway[2].lng],  // 藤岡JCT
+    [outboundHighway[3].lat, outboundHighway[3].lng],  // 横川SA
+    [outboundHighway[4].lat, outboundHighway[4].lng],  // 東部湯の丸SA
+    [outboundHighway[5].lat, outboundHighway[5].lng],  // 更埴JCT
+    [outboundHighway[6].lat, outboundHighway[6].lng],  // 姨捨SA
+    [outboundHighway[7].lat, outboundHighway[7].lng],  // 梓川SA
+    [outboundHighway[8].lat, outboundHighway[8].lng],  // 安曇野IC
+    [day1[0].lat, day1[0].lng]            // sanpo
+  ];
+  L.polyline(outboundFullRoute, {color:'#F5A7A0', weight:5, opacity:0.85}).addTo(map).bindTooltip('Day 1 メインルート(全線高速・約260km)', {sticky:true});
+
+  // ============ サブルート: 三才山トンネル経由 (Day 1 当日渋滞時の代替) ============
+  // 練馬IC → 関越→上信越道 → 東部湯の丸IC → 国道254号 → 鹿教湯温泉 → 三才山トンネル → 松本市街 → 安曇野IC手前 → sanpo
+  // メリット: 距離-37km・通行料-740円 / デメリット: 一般道+山道で時間はほぼ同じ
+  // 実際に降りる位置を示すため、東部湯の丸IC位置に専用マーカーを追加
+  var misayamaSubMarkers = [
+    {lat:36.3760, lng:138.3450, name:'⓹ 東部湯の丸IC(降車)', time:'12:30頃', desc:'★サブルート分岐点・三才山トンネル経由を選ぶ場合はここで高速降車', label:'⓹', type:'IC', color:'#9B6FA8'},
+    {lat:36.2980, lng:138.1101, name:'⓺ 鹿教湯温泉(国道254号)', time:'13:00頃', desc:'温泉街を経由する一般道の中継地点・小休憩可', label:'⓺', type:'SA', color:'#9B6FA8'},
+    {lat:36.2820, lng:138.0612, name:'⓻ 三才山トンネル', time:'13:15頃', desc:'★無料化済み2510m長大トンネル・上田⇔松本のショートカット', label:'⓻', type:'JCT', color:'#9B6FA8'},
+    {lat:36.2380, lng:137.9700, name:'⓼ 松本市街通過', time:'13:45頃', desc:'国道254→147で松本市街を経由・安曇野へ北上', label:'⓼', type:'IC', color:'#9B6FA8'}
+  ];
+
+  // 三才山ルート用の専用紫アイコン
+  function misayamaIcon(label, type) {
+    var color = '#9B6FA8'; // 紫
+    return L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background:' + color + '; width:26px; height:26px; border-radius:4px; border:2px dashed white; box-shadow:0 2px 6px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:11px; font-family:Georgia,serif">' + label + '</div>',
+      iconSize: [26, 26],
+      iconAnchor: [13, 13]
+    });
+  }
+
+  function addMisayamaMarker(stop) {
+    var icon = misayamaIcon(stop.label, stop.type);
+    var typeLabel = stop.type === 'IC' ? 'インターチェンジ/中継点' : stop.type === 'JCT' ? 'トンネル' : '中継点';
+    var popupContent = '<div style="font-family:sans-serif; min-width:220px"><div style="font-weight:bold; font-size:1.05rem; color:#9B6FA8; margin-bottom:.3rem">' + stop.name + '</div><div style="font-size:.75rem; color:#999; margin-bottom:.2rem">サブルート(三才山経由)・' + typeLabel + '</div><div style="font-size:.85rem; color:#666; margin-bottom:.4rem">⏰ ' + stop.time + '</div><div style="font-size:.85rem; line-height:1.4">' + stop.desc + '</div></div>';
+    return L.marker([stop.lat, stop.lng], {icon: icon}).bindPopup(popupContent).addTo(map);
+  }
+
+  misayamaSubMarkers.forEach(addMisayamaMarker);
+
+  // サブルートのポリライン: 東部湯の丸IC で分岐 → 鹿教湯 → 三才山トンネル → 松本 → sanpo
+  var misayamaSubRoute = [
+    [outboundHighway[4].lat, outboundHighway[4].lng],   // 東部湯の丸SA(上信越道経由)から
+    [misayamaSubMarkers[0].lat, misayamaSubMarkers[0].lng],  // 東部湯の丸IC降車
+    [misayamaSubMarkers[1].lat, misayamaSubMarkers[1].lng],  // 鹿教湯温泉
+    [misayamaSubMarkers[2].lat, misayamaSubMarkers[2].lng],  // 三才山トンネル
+    [misayamaSubMarkers[3].lat, misayamaSubMarkers[3].lng],  // 松本市街通過
+    [day1[0].lat, day1[0].lng]                              // sanpo(安曇野)
+  ];
+  L.polyline(misayamaSubRoute, {color:'#9B6FA8', weight:4, opacity:0.7, dashArray:'10, 8'}).addTo(map).bindTooltip('Day 1 サブルート(三才山トンネル経由・約215km・渋滞時の代替)', {sticky:true});
+
+  // 復路 (Day 3): 松本IC → 長野道 → 岡谷JCT → 中央道 → 諏訪湖SA → 談合坂SA → 世田谷
+  var returnFullRoute = [
+    [day3[3].lat, day3[3].lng],           // 松本IC(Day3 ICマーカーから)
+    [returnHighway[1].lat, returnHighway[1].lng],  // 岡谷JCT
+    [returnHighway[2].lat, returnHighway[2].lng],  // 諏訪湖SA
+    [returnHighway[3].lat, returnHighway[3].lng],  // 談合坂SA
+    [setagaya.lat, setagaya.lng]          // 世田谷
+  ];
+  L.polyline(returnFullRoute, {color:'#6FA86F', weight:5, opacity:0.85}).addTo(map).bindTooltip('Day 3 メインルート(中央道経由・約230km)', {sticky:true});
+
+  // ============ 復路サブルート: 三才山トンネル + 上信越道 (Day 3 中央道渋滞時の代替) ============
+  // アルプス公園 → 松本市街 → 三才山トンネル → 鹿教湯 → 東部湯の丸IC → 上信越道 → 関越道 → 世田谷
+  // 同じ三才山ルートの逆走で、中央道が渋滞している場合の代替
+  var returnSubRoute = [
+    [day3[3].lat, day3[3].lng],                          // 松本IC位置(分岐点として表示)
+    [misayamaSubMarkers[3].lat, misayamaSubMarkers[3].lng],  // 松本市街
+    [misayamaSubMarkers[2].lat, misayamaSubMarkers[2].lng],  // 三才山トンネル
+    [misayamaSubMarkers[1].lat, misayamaSubMarkers[1].lng],  // 鹿教湯温泉
+    [misayamaSubMarkers[0].lat, misayamaSubMarkers[0].lng],  // 東部湯の丸IC乗車
+    [outboundHighway[3].lat, outboundHighway[3].lng],        // 横川SA(上信越)
+    [outboundHighway[2].lat, outboundHighway[2].lng],        // 藤岡JCT
+    [outboundHighway[1].lat, outboundHighway[1].lng],        // 高坂SA(関越)
+    [outboundHighway[0].lat, outboundHighway[0].lng],        // 練馬IC
+    [setagaya.lat, setagaya.lng]                             // 世田谷
+  ];
+  L.polyline(returnSubRoute, {color:'#9B6FA8', weight:4, opacity:0.6, dashArray:'10, 8'}).addTo(map).bindTooltip('Day 3 サブルート(三才山+上信越道経由・中央道渋滞時の代替)', {sticky:true});
+
+  // Day 1 ローカル: 安曇野IC → sanpo → 大王わさび → わんパラ
+  var day1LocalRoute = day1.map(function(s){return [s.lat, s.lng];});
+  L.polyline(day1LocalRoute, {color:'#F5A7A0', weight:3, opacity:0.6, dashArray:'6, 6'}).addTo(map).bindTooltip('Day 1 安曇野ローカル', {sticky:true});
 
   // Day 2 route: わんパラ → あづみの公園 → 牧場 → 彩香 → ヴィーナス
   var day2Route = [[day1[2].lat, day1[2].lng]].concat(day2.map(function(s){return [s.lat, s.lng];}));
   L.polyline(day2Route, {color:'#E5A93D', weight:4, opacity:0.8}).addTo(map).bindTooltip('Day 2 (5/5) ルート', {sticky:true});
 
-  // Day 3 route: ヴィーナス → アルプス公園 → LaPACE/カワノホトリ → 松本IC → Setagaya
-  var day3Route = [[day2[3].lat, day2[3].lng]].concat(day3.map(function(s){return [s.lat, s.lng];})).concat([[setagaya.lat, setagaya.lng]]);
-  L.polyline(day3Route, {color:'#6FA86F', weight:4, opacity:0.7, dashArray:'8, 6'}).addTo(map).bindTooltip('Day 3 (5/6) ルート', {sticky:true});
+  // Day 3 ローカル: ヴィーナス → アルプス公園 → LaPACE → 松本IC
+  var day3LocalRoute = [[day2[3].lat, day2[3].lng]].concat(day3.map(function(s){return [s.lat, s.lng];}));
+  L.polyline(day3LocalRoute, {color:'#6FA86F', weight:3, opacity:0.6, dashArray:'6, 6'}).addTo(map).bindTooltip('Day 3 松本ローカル', {sticky:true});
 
-  // Fit map to show all markers
+  // Fit map to show all markers (high速SA/IC含む)
   var allPoints = [[setagaya.lat, setagaya.lng]]
+    .concat(outboundHighway.map(function(s){return [s.lat, s.lng];}))
+    .concat(returnHighway.map(function(s){return [s.lat, s.lng];}))
+    .concat(misayamaSubMarkers.map(function(s){return [s.lat, s.lng];}))
     .concat(day1.map(function(s){return [s.lat, s.lng];}))
     .concat(day2.map(function(s){return [s.lat, s.lng];}))
     .concat(day3.map(function(s){return [s.lat, s.lng];}));
