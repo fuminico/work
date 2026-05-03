@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>愛犬と巡る安曇野・松本 2泊3日 | 2026.05.04–05.06</title>
+<style>
+  :root{
+    --forest:#2C5F2D; --moss:#97BC62; --moss-dark:#6d9446;
+    --cream:#F7F6F1; --paleGreen:#EAF1DD;
+    --text:#1A2E1B; --muted:#5A6D5B;
+    --accent:#D97D54; --border:#C8D4B4;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--text); background:var(--cream);
+    font-family:'Hiragino Sans','Meiryo','Yu Gothic',system-ui,sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:Georgia,'Hiragino Mincho ProN','Yu Mincho',serif; letter-spacing:.02em}
+
+  /* Hero */
+  .hero{
+    position:relative; min-height:92vh; padding:6rem 2rem 4rem;
+    background: radial-gradient(circle at 15% 90%, rgba(151,188,98,.5), transparent 55%),
+                radial-gradient(circle at 88% 12%, rgba(217,125,84,.35), transparent 45%),
+                linear-gradient(135deg,#234a24 0%,#2C5F2D 60%,#3d7a3e 100%);
+    color:var(--white); overflow:hidden;
+    display:flex; align-items:center;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,.04) 0, transparent 1.5px),
+      radial-gradient(circle at 80% 60%, rgba(255,255,255,.05) 0, transparent 1.5px);
+    background-size:60px 60px, 90px 90px;
+    pointer-events:none;
+  }
+  .hero-inner{max-width:1100px; margin:0 auto; width:100%; position:relative}
+  .hero .date{
+    font-size:.9rem; letter-spacing:.5em; color:var(--moss);
+    font-weight:700; margin-bottom:1.5rem;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 5.2rem); margin:0 0 1rem; font-weight:700;
+    line-height:1.15;
+  }
+  .hero .sub{
+    font-size:clamp(1.1rem, 1.8vw, 1.5rem);
+    color:var(--paleGreen); font-style:italic; margin-bottom:3rem; opacity:.92;
+  }
+  .badges{display:flex; flex-wrap:wrap; gap:1rem}
+  .badge{
+    background:rgba(255,255,255,.08); border:1px solid rgba(151,188,98,.5);
+    padding:.75rem 1.2rem; border-radius:.4rem; backdrop-filter:blur(6px);
+    min-width:140px; flex:1 1 160px;
+  }
+  .badge .label{font-size:.7rem; letter-spacing:.3em; color:var(--moss); font-weight:700}
+  .badge .value{font-size:1.15rem; font-weight:700; margin-top:.25rem}
+
+  /* Nav sticky */
+  nav.toc{
+    position:sticky; top:0; background:rgba(247,246,241,.92);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
+    z-index:50; padding:.85rem 1rem;
+  }
+  .toc-inner{
+    max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; gap:.5rem;
+    justify-content:center;
+  }
+  .toc a{
+    color:var(--forest); text-decoration:none; font-size:.85rem; font-weight:600;
+    padding:.4rem .9rem; border-radius:999px; transition:.2s;
+    border:1px solid transparent;
+  }
+  .toc a:hover{background:var(--paleGreen); border-color:var(--moss)}
+
+  /* Section */
+  section{padding:5rem 1.5rem 3rem}
+  .container{max-width:1100px; margin:0 auto}
+  .section-label{
+    font-size:.75rem; letter-spacing:.5em; color:var(--moss-dark);
+    font-weight:700; margin-bottom:.75rem;
+  }
+  h2.section-title{
+    font-size:clamp(1.9rem, 3.5vw, 2.8rem); margin:0 0 2.5rem; color:var(--forest);
+    position:relative; padding-bottom:1rem;
+  }
+  h2.section-title::after{
+    content:""; position:absolute; bottom:0; left:0; width:60px; height:3px;
+    background:var(--moss);
+  }
+
+  /* Overview cards */
+  .summary-grid{display:grid; grid-template-columns:1fr 1fr; gap:2.5rem}
+  .day-stack{display:flex; flex-direction:column; gap:1rem}
+  .day-row{
+    background:var(--white); border:1px solid var(--border); border-radius:.6rem;
+    padding:1.25rem 1.5rem; display:grid; grid-template-columns:auto 1px 1fr;
+    gap:1.5rem; align-items:center; transition:.2s;
+  }
+  .day-row:hover{transform:translateX(4px); border-color:var(--moss)}
+  .day-row .day-num{
+    font-family:Georgia,serif; font-size:1.4rem; font-weight:700; color:var(--forest);
+    min-width:90px;
+  }
+  .day-row .day-num small{display:block; font-size:.75rem; color:var(--muted); font-weight:400; margin-top:.25rem; font-family:inherit}
+  .day-row .sep{width:1px; height:50px; background:var(--border)}
+  .day-row .day-info strong{display:block; font-size:1rem; color:var(--text); margin-bottom:.25rem}
+  .day-row .day-info span{font-size:.85rem; color:var(--muted)}
+  .features-box{
+    background:var(--forest); color:var(--white); padding:2rem; border-radius:.6rem;
+    align-self:start;
+  }
+  .features-box h3{color:var(--moss); margin:0 0 1rem; font-size:1.2rem}
+  .features-box ul{margin:0; padding-left:1.25rem; list-style:none}
+  .features-box li{position:relative; padding-left:1rem; margin-bottom:.6rem; font-size:.95rem}
+  .features-box li::before{
+    content:"■"; position:absolute; left:-.5rem; color:var(--moss); font-size:.7rem;
+  }
+
+  /* Timeline */
+  .timeline{position:relative; padding-left:2rem}
+  .timeline::before{
+    content:""; position:absolute; left:1rem; top:1rem; bottom:1rem;
+    width:2px; background:var(--moss);
+  }
+  .tl-item{position:relative; padding:1rem 0 1.5rem 2rem}
+  .tl-item::before{
+    content:""; position:absolute; left:-1.4rem; top:1.2rem;
+    width:.9rem; height:.9rem; border-radius:50%; background:var(--accent);
+    border:3px solid var(--cream); box-shadow:0 0 0 1px var(--moss);
+  }
+  .tl-item.sub::before{background:var(--muted)}
+  .tl-item.sub2::before{background:var(--forest)}
+  .tl-time{
+    display:inline-block; font-family:Georgia,serif; font-size:1.25rem;
+    font-weight:700; color:var(--accent); margin-right:1rem; min-width:70px;
+  }
+  .tl-item.sub .tl-time{color:var(--muted)}
+  .tl-item.sub2 .tl-time{color:var(--forest)}
+  .tl-title{font-size:1.15rem; font-weight:700; color:var(--text); margin:.25rem 0}
+  .tl-note{color:var(--muted); font-size:.9rem; font-style:italic}
+
+  /* Highlight cards */
+  .hl-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem}
+  .hl-card{
+    background:var(--white); border:1px solid var(--border); border-radius:.6rem;
+    overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.04);
+    display:flex; flex-direction:column; transition:.25s;
+  }
+  .hl-card:hover{transform:translateY(-4px); box-shadow:0 6px 20px rgba(0,0,0,.08)}
+  .hl-bar{height:6px; background:var(--forest)}
+  .hl-bar.accent{background:var(--accent)}
+  .hl-bar.moss{background:var(--moss)}
+  .hl-body{padding:1.5rem; flex:1; display:flex; flex-direction:column}
+  .hl-sub{font-size:.7rem; letter-spacing:.3em; color:var(--accent); font-weight:700; margin-bottom:.5rem}
+  .hl-card:has(.hl-bar.moss) .hl-sub{color:var(--moss-dark)}
+  .hl-card:has(.hl-bar:not(.accent):not(.moss)) .hl-sub{color:var(--forest)}
+  .hl-title{font-size:1.25rem; font-weight:700; margin:0 0 .75rem}
+  .hl-desc{color:var(--muted); font-size:.92rem; flex:1; margin-bottom:1rem}
+  .hl-tag{
+    align-self:flex-start; background:var(--paleGreen); color:var(--forest);
+    font-size:.78rem; font-weight:700; padding:.4rem .8rem; border-radius:999px;
+  }
+  .hl-link{
+    display:inline-block; margin-top:.75rem; color:var(--forest); font-size:.85rem;
+    text-decoration:none; border-bottom:1px solid var(--moss);
+  }
+  .hl-link:hover{color:var(--accent)}
+
+  /* Table */
+  .table-wrap{overflow-x:auto; border-radius:.6rem; box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  table{
+    width:100%; border-collapse:collapse; background:var(--white); font-size:.9rem;
+  }
+  th{
+    background:var(--forest); color:var(--white); padding:1rem; text-align:left;
+    font-weight:700; font-size:.85rem; letter-spacing:.1em;
+  }
+  td{padding:.9rem 1rem; border-bottom:1px solid var(--border); vertical-align:top}
+  tr:nth-child(even) td{background:var(--paleGreen)}
+  tr:hover td{background:#dfead0}
+  td a{color:var(--forest); font-weight:600}
+
+  /* Checklist */
+  .check-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem}
+  .check-box{
+    background:var(--paleGreen); border:1px solid var(--moss); border-radius:.6rem;
+    padding:1.75rem;
+  }
+  .check-box h3{color:var(--forest); margin:0 0 1rem; font-size:1.15rem}
+  .check-box ul{margin:0; padding-left:0; list-style:none}
+  .check-box li{position:relative; padding-left:1.5rem; margin-bottom:.6rem; font-size:.9rem}
+  .check-box li::before{
+    content:"✓"; position:absolute; left:0; color:var(--forest); font-weight:700;
+  }
+
+  /* Rainy */
+  .rainy-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem}
+  .rainy-card{
+    background:var(--white); border-radius:.6rem; overflow:hidden;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+  }
+  .rainy-head{
+    padding:1.25rem; text-align:center; color:var(--white); font-weight:700;
+    letter-spacing:.3em; font-size:1.1rem; font-family:Georgia,serif;
+  }
+  .rainy-head.d1{background:var(--accent)}
+  .rainy-head.d2{background:var(--moss-dark)}
+  .rainy-head.d3{background:var(--forest)}
+  .rainy-body{padding:1.5rem}
+  .rainy-body h3{margin:0 0 .75rem; font-size:1.1rem; color:var(--text)}
+  .rainy-body p{color:var(--muted); font-size:.9rem; margin:0}
+
+  /* Confirm list */
+  .confirm-list{display:flex; flex-direction:column; gap:.5rem}
+  .confirm-item{
+    display:grid; grid-template-columns:auto 1fr 2fr; gap:1.25rem; align-items:center;
+    background:var(--white); border:1px solid var(--border); border-radius:.4rem;
+    padding:1rem 1.25rem;
+  }
+  .confirm-num{
+    background:var(--forest); color:var(--white); width:2rem; height:2rem;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:.9rem;
+  }
+  .confirm-name{font-weight:700; color:var(--text)}
+  .confirm-note{color:var(--muted); font-size:.88rem}
+
+  /* Footer */
+  footer{
+    background:var(--forest); color:var(--paleGreen); padding:3rem 1.5rem;
+    text-align:center; margin-top:4rem;
+  }
+  footer p{margin:.5rem 0; font-size:.9rem}
+  footer .paw{color:var(--moss); font-size:1.2rem}
+
+  /* Responsive */
+  @media (max-width:900px){
+    .summary-grid{grid-template-columns:1fr}
+    .hl-grid{grid-template-columns:1fr}
+    .check-grid{grid-template-columns:1fr}
+    .rainy-grid{grid-template-columns:1fr}
+    .confirm-item{grid-template-columns:auto 1fr; row-gap:.25rem}
+    .confirm-note{grid-column:1/-1; padding-left:3rem}
+    th,td{padding:.7rem .6rem; font-size:.8rem}
+    .toc-inner{justify-content:flex-start; overflow-x:auto; flex-wrap:nowrap}
+    .toc a{white-space:nowrap}
+    .hero{padding:4rem 1.25rem 3rem; min-height:auto}
+  }
+  /* Weather toggle */
+  .weather-toggle{
+    display:inline-flex; gap:0; margin:1.5rem 0 2rem;
+    background:var(--paleGreen); border-radius:999px;
+    padding:.3rem; border:1px solid var(--border);
+  }
+  .weather-toggle button{
+    border:none; background:transparent; padding:.6rem 1.5rem;
+    border-radius:999px; cursor:pointer; font-size:.95rem; font-weight:600;
+    color:var(--muted); transition:all .25s ease;
+    font-family:inherit;
+  }
+  .weather-toggle button.active{
+    background:var(--white); color:var(--forest);
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  .weather-toggle button .icon{margin-right:.4rem}
+  .weather-pane{display:none}
+  .weather-pane.active{display:block; animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)}}
+  /* Distance badge */
+  .tl-dist{
+    display:inline-block; margin-right:.5rem; padding:.1rem .55rem;
+    border-radius:999px; background:var(--paleGreen); color:var(--moss-dark);
+    font-size:.75rem; font-weight:600; vertical-align:middle;
+  }
+  .tl-dist.walk{background:#FFF5D6; color:#856200}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="date">2026 . 05 . 04 — 05 . 06</div>
+    <h1>愛犬と巡る<br>安曇野・松本</h1>
+    <p class="sub">新緑と温泉、北アルプスを望む2泊3日</p>
+    <div class="badges">
+      <div class="badge"><div class="label">DURATION</div><div class="value">2泊3日</div></div>
+      <div class="badge"><div class="label">TRAVELERS</div><div class="value">大人2名 + 犬1匹</div></div>
+      <div class="badge"><div class="label">TRANSPORT</div><div class="value">車</div></div>
+      <div class="badge"><div class="label">AREA</div><div class="value">安曇野・松本</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#overview">旅のサマリー</a>
+    <a href="#routes">ルート比較</a>
+    <a href="#drivers">運転交代</a>
+    <a href="#route-map">全行程マップ</a>
+    <a href="#day1">1日目</a>
+    <a href="#day2">2日目</a>
+    <a href="#day3">3日目</a>
+    <a href="#food">食事</a>
+    <a href="#lunch-picks">松本ランチ</a>
+    <a href="#soba-azumino">安曇野そば</a>
+    <a href="#soba-matsumoto">松本そば</a>
+    <a href="#spots">観光</a>
+    <a href="#rainy">雨天時</a>
+    <a href="#checklist">持ち物</a>
+    <a href="#confirm">事前確認</a>
+  </div>
+</nav>
+
+<!-- Overview -->
+<section id="overview">
+  <div class="container">
+    <div class="section-label">TRIP OVERVIEW</div>
+    <h2 class="section-title">旅の全体サマリー</h2>
+    <div class="summary-grid">
+      <div class="day-stack">
+        <div class="day-row">
+          <div class="day-num">1日目<small>5/4 (月・祝) ☀/☂</small></div>
+          <div class="sep"></div>
+          <div class="day-info">
+            <strong>安曇野エリア(晴雨2案)</strong>
+            <span>宿:わんわんパラダイス 安曇野</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">2日目<small>5/5 (火・祝) ☀</small></div>
+          <div class="sep"></div>
+          <div class="day-info">
+            <strong>安曇野(花の公園)→松本</strong>
+            <span>宿:グランピングリゾートヴィーナス</span>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">3日目<small>5/6 (水・祝) ☀</small></div>
+          <div class="sep"></div>
+          <div class="day-info">
+            <strong>松本周辺 → 帰路</strong>
+            <span>余裕ある行程で帰宅</span>
+          </div>
+        </div>
+      </div>
+      <div class="features-box">
+        <h3>この旅の特徴</h3>
+        <ul>
+          <li>犬同伴可スポット中心の行程</li>
+          <li>車移動は1区間60分以内</li>
+          <li>温泉付き宿に2泊(コテージ+グランピング)</li>
+          <li>必訪:国営アルプスあづみの公園</li>
+          <li>5月上旬の菜の花500万本と新緑</li>
+          <li>北アルプス牧場の名物ソフトクリーム</li>
+          <li>松本市美術館&城下町で犬連れ散策</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Route Comparison -->
+<section id="routes" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-label">ROUTE COMPARISON</div>
+    <h2 class="section-title">世田谷→安曇野 ルート比較</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">走りやすさ重視・長時間運転の疲労最小化の観点で再評価。三才山TN工事規制リスクと中央道渋滞を両方回避できるルートCを推奨。</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.2rem; margin-top:1.5rem">
+      <!-- Route A -->
+      <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--white)">
+        <div style="background:var(--muted); color:var(--white); padding:.7rem 1rem">
+          <div style="display:flex; justify-content:space-between; font-size:.85rem"><span style="font-weight:bold">ルートA</span><span style="font-style:italic; opacity:.85">(従来案)</span></div>
+          <div style="font-size:1.05rem; font-weight:bold; margin-top:.3rem; font-family:Georgia, serif">中央道→長野道</div>
+        </div>
+        <div style="padding:1rem">
+          <p style="font-size:.85rem; color:var(--text); margin:0 0 .8rem">首都高→中央道→岡谷JCT→長野道→安曇野IC</p>
+          <p style="font-size:.9rem; margin:0 0 .3rem"><strong style="color:var(--muted); font-size:.8rem">距離</strong> 約220km　<strong style="color:var(--muted); font-size:.8rem">料金</strong> 5,170円</p>
+          <p style="font-size:.85rem; color:var(--muted); margin:0 0 .8rem"><strong>所要</strong> 通常3〜3.5h / 5/4渋滞時 4.5〜5.5h</p>
+          <p style="font-size:.85rem; color:var(--forest); font-weight:bold; margin:0 0 .3rem">◎ メリット</p>
+          <ul style="font-size:.8rem; color:var(--text); margin:0 0 .8rem; padding-left:1.2rem; line-height:1.6">
+            <li>走行ルート最短</li>
+            <li>北アルプス絶景</li>
+          </ul>
+          <p style="font-size:.85rem; color:var(--accent); font-weight:bold; margin:0 0 .3rem">△ デメリット</p>
+          <ul style="font-size:.8rem; color:var(--text); margin:0; padding-left:1.2rem; line-height:1.6">
+            <li>🚨 小仏TN車線減少+45km渋滞</li>
+            <li>1982年全線開通で規格古い</li>
+            <li>カーブ起伏激しい(笹子/恵那山前後)</li>
+            <li>路面悪い口コミ多数</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Route B -->
+      <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--white)">
+        <div style="background:var(--muted); color:var(--white); padding:.7rem 1rem">
+          <div style="display:flex; justify-content:space-between; font-size:.85rem"><span style="font-weight:bold">ルートB</span><span style="font-style:italic; opacity:.85">(短距離・要規制確認)</span></div>
+          <div style="font-size:1.05rem; font-weight:bold; margin-top:.3rem; font-family:Georgia, serif">関越+上信越+三才山TN(国道254)</div>
+        </div>
+        <div style="padding:1rem">
+          <p style="font-size:.85rem; color:var(--text); margin:0 0 .8rem">練馬IC→関越→上信越→東部湯の丸IC→国道254→三才山TN(無料)→松本→安曇野</p>
+          <p style="font-size:.9rem; margin:0 0 .3rem"><strong style="color:var(--muted); font-size:.8rem">距離</strong> 約220km　<strong style="color:var(--muted); font-size:.8rem">料金</strong> 4,430円</p>
+          <p style="font-size:.85rem; color:var(--muted); margin:0 0 .8rem"><strong>所要</strong> 通常3.5〜4h / 工事規制時 +30分</p>
+          <p style="font-size:.85rem; color:var(--forest); font-weight:bold; margin:0 0 .3rem">◎ メリット</p>
+          <ul style="font-size:.8rem; color:var(--text); margin:0 0 .8rem; padding-left:1.2rem; line-height:1.6">
+            <li>最短距離・最安料金</li>
+            <li>関越+上信越は走りやすい</li>
+            <li>東部湯の丸SAで犬休憩◎・峠の釜めし</li>
+          </ul>
+          <p style="font-size:.85rem; color:var(--accent); font-weight:bold; margin:0 0 .3rem">△ デメリット</p>
+          <ul style="font-size:.8rem; color:var(--text); margin:0; padding-left:1.2rem; line-height:1.6">
+            <li>🚨 鹿教湯大橋補修工事(毎年5-11月実施・2026GW中も実施可能性高)</li>
+            <li>三才山TN設計速度40km/h・狭い</li>
+            <li>松本側急下り・国道254集落区間に急カーブ</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Route C (推奨) -->
+      <div style="border:2px solid var(--accent); border-radius:8px; overflow:hidden; background:var(--pale-pink); position:relative">
+        <div style="background:var(--accent); color:var(--white); padding:.7rem 1rem">
+          <div style="display:flex; justify-content:space-between; font-size:.85rem"><span style="font-weight:bold">ルートC</span><span style="font-weight:bold">✨ 推奨(走りやすさ◎)</span></div>
+          <div style="font-size:1.05rem; font-weight:bold; margin-top:.3rem; font-family:Georgia, serif">関越+上信越+長野道(更埴JCT経由)</div>
+        </div>
+        <div style="padding:1rem">
+          <p style="font-size:.85rem; color:var(--text); margin:0 0 .8rem">練馬IC→関越→上信越→更埴JCT→長野道→安曇野IC(全線高速)</p>
+          <p style="font-size:.9rem; margin:0 0 .3rem"><strong style="color:var(--muted); font-size:.8rem">距離</strong> 約260km　<strong style="color:var(--muted); font-size:.8rem">料金</strong> 約5,500円</p>
+          <p style="font-size:.85rem; color:var(--accent); margin:0 0 .8rem; font-weight:bold"><strong>所要</strong> 通常4〜4.5h</p>
+          <p style="font-size:.85rem; color:var(--forest); font-weight:bold; margin:0 0 .3rem">◎ メリット</p>
+          <ul style="font-size:.8rem; color:var(--text); margin:0 0 .8rem; padding-left:1.2rem; line-height:1.6">
+            <li>全線高速で疲労軽減</li>
+            <li>関越3車線+上信越新規格◎</li>
+            <li>口コミ「上信越は同じ山道でも苦痛なし」</li>
+            <li>小仏TN渋滞も三才山工事も無関係</li>
+            <li>梓川SAで給油可</li>
+          </ul>
+          <p style="font-size:.85rem; color:var(--accent); font-weight:bold; margin:0 0 .3rem">△ デメリット</p>
+          <ul style="font-size:.8rem; color:var(--text); margin:0; padding-left:1.2rem; line-height:1.6">
+            <li>40km長い・料金やや高め</li>
+            <li>長野道安曇野〜更埴は「カーブ連続区間 注意」標識あり</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Driver Rotation -->
+<section id="drivers" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">DRIVER ROTATION</div>
+    <h2 class="section-title">運転交代計画</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">SA/PAでの交代スポット (ドライバー2名・犬同伴)・連続運転は最大2時間が目安</p>
+
+    <div style="background:var(--pale-yellow); border-left:3px solid var(--accent2); padding:.7rem 1rem; margin:1rem 0; font-size:.9rem; font-style:italic; color:var(--text)">
+      長距離Day1/Day3は3〜4回交代、各SAで犬休憩(15-20分)。Day2は短距離のため任意交代でOK。
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.2rem; margin-top:1.5rem">
+
+      <!-- DAY 1 -->
+      <div style="border:1px solid var(--forest); border-radius:8px; overflow:hidden; background:var(--pale-green)">
+        <div style="background:var(--forest); color:var(--white); padding:.7rem 1rem">
+          <div style="font-size:1.05rem; font-weight:bold; font-family:Georgia, serif">DAY 1 (5/4) 往路</div>
+          <div style="font-size:.8rem; opacity:.9; margin-top:.2rem">約260km | 世田谷→関越→上信越→更埴JCT→長野道→安曇野(全線高速)</div>
+        </div>
+        <div style="padding:1rem; font-size:.85rem">
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--forest); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">08:30</span><span><strong>世田谷出発</strong><br><em style="color:var(--muted); font-size:.8rem">練馬IC→関越道</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">🔄</span><span style="min-width:3rem; font-weight:bold">09:30</span><span><strong>高坂SA</strong><br><span style="color:var(--accent); font-size:.8rem">→ B交代 (40km/1h) ・犬休憩&名物いも恋</span></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--forest); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">10:00</span><span><strong>高坂SA出発</strong><br><em style="color:var(--muted); font-size:.8rem">Driver B運転継続</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">🔄</span><span style="min-width:3rem; font-weight:bold">11:30</span><span><strong>横川SA</strong><br><span style="color:var(--accent); font-size:.8rem">→ A交代 (90km/1.5h) ・峠の釜めし発祥地</span></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--forest); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">12:00</span><span><strong>横川SA出発</strong><br><em style="color:var(--muted); font-size:.8rem">上信越道→更埴JCT→長野道</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--forest); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">12:30</span><span><strong>東部湯の丸SA(任意)</strong><br><em style="color:var(--muted); font-size:.8rem">牛乳パン・北アルプス絶景</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--forest); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">13:30</span><span><strong>姨捨SA/梓川SA(任意)</strong><br><em style="color:var(--muted); font-size:.8rem">長野道休憩・最後の給油可</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">🏁</span><span style="min-width:3rem; font-weight:bold">14:00</span><span><strong>安曇野IC→sanpo</strong><br><span style="color:var(--accent); font-size:.8rem">遅めランチ→大王わさび農場散策</span></span></div>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div style="border:1px solid var(--accent); border-radius:8px; overflow:hidden; background:var(--pale-pink)">
+        <div style="background:var(--accent); color:var(--white); padding:.7rem 1rem">
+          <div style="font-size:1.05rem; font-weight:bold; font-family:Georgia, serif">DAY 2 (5/5) 周遊</div>
+          <div style="font-size:.8rem; opacity:.9; margin-top:.2rem">約30km | 安曇野(あづみの公園)→寄り道&買い出し→ヴィーナス</div>
+        </div>
+        <div style="padding:1rem; font-size:.85rem">
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">08:30</span><span><strong>宿で朝散歩・出発準備</strong><br><em style="color:var(--muted); font-size:.8rem">Driver B(前日リフレッシュ)</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">09:30</span><span><strong>国営アルプスあづみの公園 IN</strong><br><em style="color:var(--muted); font-size:.8rem">9:30開園と同時に入園・誓約書記入</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">12:30</span><span><strong>公園内レストラン/軽食コーナー</strong><br><em style="color:var(--muted); font-size:.8rem">5/5は食堂&軽食コーナー営業</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">🔄</span><span style="min-width:3rem; font-weight:bold">14:00</span><span><strong>北アルプス牧場&肉工房</strong><br><span style="color:var(--accent); font-size:.8rem">→ A交代・ソフト&グランピング用ソーセージ</span></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">15:00</span><span><strong>あづみ野菓子工房 彩香</strong><br><em style="color:var(--muted); font-size:.8rem">ジェラート&お土産・婦人画報/LEON掲載</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">16:30</span><span><strong>グランピングヴィーナス IN</strong><br><em style="color:var(--muted); font-size:.8rem">美ヶ原方向・山道はA推奨</em></span></div>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div style="border:1px solid var(--moss); border-radius:8px; overflow:hidden; background:var(--pale-yellow)">
+        <div style="background:var(--moss); color:var(--white); padding:.7rem 1rem">
+          <div style="font-size:1.05rem; font-weight:bold; font-family:Georgia, serif">DAY 3 (5/6) 復路</div>
+          <div style="font-size:.8rem; opacity:.9; margin-top:.2rem">約230km | ヴィーナス→アルプス公園→IC近辺ランチ→中央道→世田谷</div>
+        </div>
+        <div style="padding:1rem; font-size:.85rem">
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--moss); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">08:30</span><span><strong>ヴィーナス CO → 出発</strong><br><em style="color:var(--muted); font-size:.8rem">朝食後・山道下りはDriver B</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--moss); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">09:45</span><span><strong>松本市アルプス公園 IN</strong><br><em style="color:var(--muted); font-size:.8rem">南入口駐車場・10:00開園に合わせて到着</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--moss); font-weight:bold; min-width:1.5rem">Ⓑ</span><span style="min-width:3rem; font-weight:bold">10:00</span><span><strong>ドリームコースター&マレットゴルフ</strong><br><em style="color:var(--muted); font-size:.8rem">10:00開園と同時に乗車・空いている時間</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--moss); font-weight:bold; min-width:1.5rem">🔄</span><span style="min-width:3rem; font-weight:bold">12:00</span><span><strong>★LaPACE 新橋店ランチ(第1候補)</strong><br><span style="color:var(--accent); font-size:.8rem">→ A交代・国道19号沿い・テラス犬OK・通し営業</span></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--moss); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">13:30</span><span><strong>松本IC→中央道</strong><br><em style="color:var(--muted); font-size:.8rem">5/6復路は中央道渋滞軽め</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--moss); font-weight:bold; min-width:1.5rem">Ⓐ</span><span style="min-width:3rem; font-weight:bold">14:30</span><span><strong>諏訪湖SA</strong><br><em style="color:var(--muted); font-size:.8rem">諏訪湖一望・お土産最終チャンス</em></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0; border-bottom:1px solid var(--border)"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">🔄</span><span style="min-width:3rem; font-weight:bold">16:30</span><span><strong>談合坂SA</strong><br><span style="color:var(--accent); font-size:.8rem">→ B交代 (90km/1.5h) ・大型SA</span></span></div>
+          <div style="display:flex; gap:.6rem; padding:.4rem 0"><span style="color:var(--accent); font-weight:bold; min-width:1.5rem">🏁</span><span style="min-width:3rem; font-weight:bold">18:00</span><span><strong>世田谷 帰宅</strong><br><em style="color:var(--muted); font-size:.8rem">Driver Bが都内ラスト1h担当</em></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROUTE MAP OVERVIEW -->
+<section id="route-map" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">FULL ROUTE MAP</div>
+    <h2 class="section-title">全行程マップ ― 3日間の旅路</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">世田谷出発→安曇野(Day1)→あづみの公園(Day2)→グランピングヴィーナス→アルプス公園(Day3)→帰路を全て1枚の地図で。各マーカーをクリックすると詳細が表示されます。</p>
+
+    <!-- Map legend -->
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin:1rem 0; font-size:.9rem">
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#F5A7A0; border:2px solid white; box-shadow:0 0 0 1px #F5A7A0"></span> Day 1 (5/4)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#F6CB6B; border:2px solid white; box-shadow:0 0 0 1px #F6CB6B"></span> Day 2 (5/5)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#6FA86F; border:2px solid white; box-shadow:0 0 0 1px #6FA86F"></span> Day 3 (5/6)</div>
+      <div style="display:flex; align-items:center; gap:.4rem"><span style="display:inline-block; width:14px; height:14px; background:#3B5C3F; border-radius:2px"></span> 宿泊施設</div>
+    </div>
+
+    <!-- Leaflet map container -->
+    <div id="trip-map" style="width:100%; height:600px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,.1); border:1px solid var(--border)"></div>
+
+    <!-- Distance summary -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1.5rem">
+      <div style="padding:1rem; background:rgba(245,167,160,.12); border-radius:8px; border-left:4px solid #F5A7A0">
+        <div style="font-size:.85rem; color:var(--muted); margin-bottom:.2rem">DAY 1 走行距離</div>
+        <div style="font-size:1.4rem; font-weight:bold; color:var(--accent)">約260km</div>
+        <div style="font-size:.85rem; color:var(--muted); margin-top:.3rem">世田谷→安曇野(全線高速)</div>
+      </div>
+      <div style="padding:1rem; background:rgba(246,203,107,.15); border-radius:8px; border-left:4px solid #F6CB6B">
+        <div style="font-size:.85rem; color:var(--muted); margin-bottom:.2rem">DAY 2 走行距離</div>
+        <div style="font-size:1.4rem; font-weight:bold; color:#C99A3F">約30km</div>
+        <div style="font-size:.85rem; color:var(--muted); margin-top:.3rem">安曇野公園周辺で短距離周遊</div>
+      </div>
+      <div style="padding:1rem; background:rgba(111,168,111,.12); border-radius:8px; border-left:4px solid #6FA86F">
+        <div style="font-size:.85rem; color:var(--muted); margin-bottom:.2rem">DAY 3 走行距離</div>
+        <div style="font-size:1.4rem; font-weight:bold; color:var(--forest)">約230km</div>
+        <div style="font-size:.85rem; color:var(--muted); margin-top:.3rem">松本→中央道→世田谷</div>
+      </div>
+      <div style="padding:1rem; background:rgba(111,168,111,.05); border-radius:8px; border-left:4px solid #3B5C3F">
+        <div style="font-size:.85rem; color:var(--muted); margin-bottom:.2rem">3日間 合計</div>
+        <div style="font-size:1.4rem; font-weight:bold; color:var(--dark-text)">約520km</div>
+        <div style="font-size:.85rem; color:var(--muted); margin-top:.3rem">ドライバー2名で交代運転</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Leaflet CSS+JS (SRIなし・複数CDNフォールバック) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+// Leafletが読み込めなかった場合、cdnjsをフォールバックに動的読込
+if (typeof L === 'undefined') {
+  document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />');
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"><\/script>');
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Leafletが読み込まれているか確認
+  if (typeof L === 'undefined') {
+    var mapEl = document.getElementById('trip-map');
+    if (mapEl) {
+      mapEl.innerHTML = '<div style="padding:2rem; text-align:center; color:#666; background:#f5f5f5; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column"><p style="font-size:1rem; margin-bottom:.5rem">⚠ 地図ライブラリの読み込みに失敗しました</p><p style="font-size:.85rem">ネットワーク環境を確認してページを再読み込みしてください</p></div>';
+    }
+    return;
+  }
+  // Initialize map centered on Azumino-Matsumoto area
+  var map = L.map('trip-map').setView([36.27, 137.92], 11);
+
+  // Use OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Custom icons by day color
+  function createIcon(color, label) {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background:' + color + '; width:32px; height:32px; border-radius:50%; border:3px solid white; box-shadow:0 2px 8px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:13px; font-family:Georgia,serif">' + label + '</div>',
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
+  }
+
+  function lodgingIcon() {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background:#3B5C3F; width:36px; height:36px; border-radius:6px; border:3px solid white; box-shadow:0 2px 8px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; color:white; font-size:18px">🏠</div>',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18]
+    });
+  }
+
+  // Day 1 stops
+  var day1 = [
+    {lat:36.282, lng:137.9155, name:'SOBA & CAFE sanpo', time:'14:00', desc:'★Day1ランチ第1候補・通し営業11-17時(L.O.16:30)・サンルーム室内で犬OK', color:'#F5A7A0', label:'1'},
+    {lat:36.3242, lng:137.9028, name:'大王わさび農場', time:'15:30', desc:'園内リード可・わさびソフト&コロッケ・新緑の名水散策', color:'#F5A7A0', label:'2'},
+    {lat:36.3411, lng:137.8268, name:'わんわんパラダイス安曇野', time:'17:30', desc:'宿IN・夕食ケータリング(黒毛和牛しゃぶしゃぶ)17:30〜・19万坪の森', color:'#3B5C3F', isLodging:true}
+  ];
+
+  // Day 2 stops
+  var day2 = [
+    {lat:36.3146, lng:137.8417, name:'国営アルプスあづみの公園', time:'09:00-13:30', desc:'★Day2のメイン・1日中ゆっくり花散策・5/5は食堂&軽食コーナー営業・ドッグラン有', color:'#F6CB6B', label:'3'},
+    {lat:36.3413, lng:137.8406, name:'北アルプス牧場&肉工房', time:'14:00', desc:'食べログアイス百名店の濃厚ソフト&グランピング夕食用ソーセージ買い出し', color:'#F6CB6B', label:'4'},
+    {lat:36.3154, lng:137.8713, name:'あづみ野菓子工房 彩香', time:'15:00', desc:'★Day2おやつ・お土産立寄・婦人画報/LEON/SPUR掲載・あづみ野プリン&バウム名物・10-18時月休', color:'#F6CB6B', label:'5'},
+    {lat:36.2062, lng:138.0959, name:'グランピングヴィーナス', time:'16:30', desc:'宿IN・温泉半露天+テントサウナ+多国籍BBQ(17時〜飲み放題)', color:'#3B5C3F', isLodging:true}
+  ];
+
+  // Day 3 stops
+  var day3 = [
+    {lat:36.2642, lng:137.9544, name:'松本市アルプス公園', time:'09:30-12:00', desc:'★Day3朝のメイン・愛犬同伴OK・入園&駐車無料・ドリームコースター&マレットゴルフ', color:'#6FA86F', label:'6'},
+    {lat:36.1969, lng:137.9335, name:'PASTA&PIZZA LaPACE 新橋店', time:'12:00', desc:'★Day3ランチ第1候補・国道19号沿い・テラス席5テーブル犬OK・GW通し営業11-21時', color:'#6FA86F', label:'7'},
+    {lat:36.1602, lng:137.9179, name:'カワノホトリCAFE', time:'12:00', desc:'✧Day3ランチ第2候補・松本IC直近・5/6水曜は11:30-15:30営業・キッシュセット¥1,200', color:'#F5A7A0', label:'7\''},
+    {lat:36.2227, lng:137.9420, name:'松本IC', time:'13:30', desc:'中央道へ・諏訪湖SA→談合坂SA経由で18時頃世田谷帰宅', color:'#6FA86F', label:'8'}
+  ];
+
+  // World start point (Setagaya approx)
+  var setagaya = {lat:35.6464, lng:139.6533, name:'世田谷(出発・帰宅地点)', time:'5/4 8:30発 / 5/6 18:00着', desc:'関越→上信越→更埴JCT→長野道で全線高速・8:30発で14:00 sanpo着', color:'#3B5C3F', isLodging:true};
+
+  // Add all markers
+  function addMarker(stop) {
+    var icon = stop.isLodging ? lodgingIcon() : createIcon(stop.color, stop.label || '');
+    var popupContent = '<div style="font-family:sans-serif; min-width:220px"><div style="font-weight:bold; font-size:1.05rem; color:#3B5C3F; margin-bottom:.3rem">' + stop.name + '</div><div style="font-size:.85rem; color:#666; margin-bottom:.4rem">⏰ ' + stop.time + '</div><div style="font-size:.85rem; line-height:1.4">' + stop.desc + '</div></div>';
+    return L.marker([stop.lat, stop.lng], {icon: icon}).bindPopup(popupContent).addTo(map);
+  }
+
+  // Add Setagaya as start/end
+  addMarker(setagaya);
+
+  // Add all day stops
+  [day1, day2, day3].forEach(function(day) {
+    day.forEach(addMarker);
+  });
+
+  // Draw route polylines
+  // Day 1 route: Setagaya → sanpo → 大王わさび → わんパラ
+  var day1Route = [[setagaya.lat, setagaya.lng]].concat(day1.map(function(s){return [s.lat, s.lng];}));
+  L.polyline(day1Route, {color:'#F5A7A0', weight:4, opacity:0.7, dashArray:'8, 6'}).addTo(map).bindTooltip('Day 1 (5/4) ルート', {sticky:true});
+
+  // Day 2 route: わんパラ → あづみの公園 → 牧場 → 彩香 → ヴィーナス
+  var day2Route = [[day1[2].lat, day1[2].lng]].concat(day2.map(function(s){return [s.lat, s.lng];}));
+  L.polyline(day2Route, {color:'#E5A93D', weight:4, opacity:0.8}).addTo(map).bindTooltip('Day 2 (5/5) ルート', {sticky:true});
+
+  // Day 3 route: ヴィーナス → アルプス公園 → LaPACE/カワノホトリ → 松本IC → Setagaya
+  var day3Route = [[day2[3].lat, day2[3].lng]].concat(day3.map(function(s){return [s.lat, s.lng];})).concat([[setagaya.lat, setagaya.lng]]);
+  L.polyline(day3Route, {color:'#6FA86F', weight:4, opacity:0.7, dashArray:'8, 6'}).addTo(map).bindTooltip('Day 3 (5/6) ルート', {sticky:true});
+
+  // Fit map to show all markers
+  var allPoints = [[setagaya.lat, setagaya.lng]]
+    .concat(day1.map(function(s){return [s.lat, s.lng];}))
+    .concat(day2.map(function(s){return [s.lat, s.lng];}))
+    .concat(day3.map(function(s){return [s.lat, s.lng];}));
+  map.fitBounds(allPoints, {padding:[40, 40]});
+});
+</script>
+
+<!-- DAY 1 -->
+<section id="day1" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-label">DAY 1  —  5月4日 (月・祝)</div>
+    <h2 class="section-title">1日目 ― 安曇野へ</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">天気予報に揺れがあるため、晴れ/雨の2プランを併記。当日朝の予報で切替を。</p>
+
+    <div class="weather-toggle" role="tablist" aria-label="天気プラン切替">
+      <button type="button" class="active" data-pane="day1-sunny" role="tab" aria-selected="true"><span class="icon">☀</span>晴れプラン</button>
+      <button type="button" data-pane="day1-rainy" role="tab" aria-selected="false"><span class="icon">☂</span>雨プラン</button>
+    </div>
+
+    <!-- 晴れプラン -->
+    <div class="weather-pane active" id="day1-sunny">
+      <div class="timeline">
+        <div class="tl-item sub">
+          <span class="tl-time">08:30</span>
+          <div class="tl-title" style="display:inline-block">世田谷を出発</div>
+          <div class="tl-note"><span class="tl-dist">🚗 関越→上信越→長野道</span>全線高速ルートC・約260km</div>
+        </div>
+        <div class="tl-item sub">
+          <span class="tl-time">09:00</span>
+          <div class="tl-title" style="display:inline-block">練馬IC→関越道へ</div>
+          <div class="tl-note"><span class="tl-dist">🚗 高坂SA・横川SAで犬休憩</span>東部湯の丸SAで峠の釜めし(任意)</div>
+        </div>
+        <div class="tl-item sub">
+          <span class="tl-time">13:30</span>
+          <div class="tl-title" style="display:inline-block">梓川SA(任意休憩)</div>
+          <div class="tl-note"><span class="tl-dist">🚗 長野道下り</span>GSあり・最後の給油可</div>
+        </div>
+        <div class="tl-item sub2">
+          <span class="tl-time">14:00</span>
+          <div class="tl-title" style="display:inline-block">★ SOBA &amp; CAFE sanpo (遅めランチ)</div>
+          <div class="tl-note"><span class="tl-dist">🚗 安曇野IC→8分</span>通し営業L.O16:30・サンルーム室内席で犬OK・ドッグラン</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">15:30</span>
+          <div class="tl-title" style="display:inline-block">大王わさび農場 散策</div>
+          <div class="tl-note"><span class="tl-dist">🚗 5km・10分</span>園内リード歩行可・水車小屋&わさびソフト</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">16:30</span>
+          <div class="tl-title" style="display:inline-block">わさび田湧水群公園</div>
+          <div class="tl-note"><span class="tl-dist">🚗 約4km</span>名水百選・遊歩道で犬と散歩</div>
+        </div>
+        <div class="tl-item sub">
+          <span class="tl-time">17:30</span>
+          <div class="tl-title" style="display:inline-block">わんわんパラダイス 安曇野 IN</div>
+          <div class="tl-note"><span class="tl-dist">🚗 約20分</span>コテージ温泉&部屋食で黒毛和牛しゃぶしゃぶセット</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 雨プラン -->
+    <div class="weather-pane" id="day1-rainy">
+      <div class="timeline">
+        <div class="tl-item sub">
+          <span class="tl-time">08:30</span>
+          <div class="tl-title" style="display:inline-block">世田谷を出発</div>
+          <div class="tl-note"><span class="tl-dist">🚗 関越→上信越→長野道</span>全線高速・雨天時に特に有利</div>
+        </div>
+        <div class="tl-item sub">
+          <span class="tl-time">09:00</span>
+          <div class="tl-title" style="display:inline-block">練馬IC→関越道へ</div>
+          <div class="tl-note"><span class="tl-dist">🚗 高坂SAで犬休憩</span>雨天運転は車間距離を広めに</div>
+        </div>
+        <div class="tl-item sub">
+          <span class="tl-time">13:30</span>
+          <div class="tl-title" style="display:inline-block">梓川SA(任意休憩)</div>
+          <div class="tl-note"><span class="tl-dist">🚗 長野道下り</span>屋根付き休憩・最後の給油可</div>
+        </div>
+        <div class="tl-item sub2">
+          <span class="tl-time">14:00</span>
+          <div class="tl-title" style="display:inline-block">★ SOBA &amp; CAFE sanpo (遅めランチ)</div>
+          <div class="tl-note"><span class="tl-dist">🚗 安曇野IC→8分</span>サンルーム室内席で雨天も快適・通し営業L.O16:30</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">15:30</span>
+          <div class="tl-title" style="display:inline-block">Vif穂高 & 八面大王足湯</div>
+          <div class="tl-note"><span class="tl-dist">🚗 5km・約10分</span>屋根付き直売所/足湯待合は屋根付き</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">16:30</span>
+          <div class="tl-title" style="display:inline-block">わんわんパラダイス 早めIN</div>
+          <div class="tl-note"><span class="tl-dist">🚗 5km・約10分</span>温泉でゆったり夕食まで</div>
+        </div>
+        <div class="tl-item sub">
+          <span class="tl-time">17:30</span>
+          <div class="tl-title" style="display:inline-block">コテージで夕食</div>
+          <div class="tl-note">ケータリング(部屋食)/黒毛和牛しゃぶしゃぶセット ※野菜&ご飯&デザート付・配達16-18時</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:3rem; color:var(--forest); font-size:1.4rem">ハイライト</h3>
+    <div class="hl-grid">
+      <div class="hl-card">
+        <div class="hl-bar"></div>
+        <div class="hl-body">
+          <div class="hl-sub">★ 第1候補・通し営業の蕎麦カフェ</div>
+          <h3 class="hl-title">SOBA &amp; CAFE sanpo</h3>
+          <p class="hl-desc">大王わさび農場至近・安曇野IC8分。営業11:00〜17:00(L.O 16:30)で14時着でも余裕あり。サンルーム室内テラス席が冷暖房完備で犬同伴OK・ドッグラン併設。自家栽培二八蕎麦&カフェメニュー(蕎麦完売後はガレット・スイーツ)。犬用メニュー(ジビエ鹿肉)あり。電話/ネット予約可、水曜定休(祝日除く)。<strong>TEL: 0263-75-7474</strong></p>
+          <span class="hl-tag">通し営業・予約可</span>
+          <a class="hl-link" href="https://shop.daichi-sanpo.com/p/00002" target="_blank" rel="noopener">公式 →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar moss"></div>
+        <div class="hl-body">
+          <div class="hl-sub">✧ 第2候補・本格そばの殿堂</div>
+          <h3 class="hl-title">蕎麦処 伝道</h3>
+          <p class="hl-desc">穂高山麓線の森に佇む人気店。テラス席ペット同伴OK・店内は古民家風。安曇野産二八そば、ぶっかけ・天ぷらが評判。ただしGW期は12時で売切リスク高、営業時間も短め(〜15:00頃)。早く着けた日や本格そばを優先したい時の選択肢として。1〜3月冬季休業・営業情報は公式インスタ確認。<strong>TEL: 0263-87-5519</strong></p>
+          <span class="hl-tag">本格派・売切注意</span>
+          <a class="hl-link" href="https://tabelog.com/nagano/A2005/A200501/20021215/" target="_blank" rel="noopener">食べログ →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar accent"></div>
+        <div class="hl-body">
+          <div class="hl-sub">温泉&コテージ部屋食</div>
+          <h3 class="hl-title">わんわんパラダイス 安曇野</h3>
+          <p class="hl-desc">19万坪の森の温泉付コテージ。マナーウェア着用で愛犬も同室就寝OK・ペット用アメニティ充実。夕食は黒毛和牛しゃぶしゃぶセット(ケータリング部屋食・17:30〜)。配達16-18時で切り揃え済食材+調味料+調理器具をコテージへお届け。</p>
+          <span class="hl-tag">犬同室OK・部屋食</span>
+          <a class="hl-link" href="https://www.izumigo.co.jp/aiken/azumino/" target="_blank" rel="noopener">わんパラ公式 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 2 -->
+<section id="day2">
+  <div class="container">
+    <div class="section-label">DAY 2  —  5月5日 (火・祝) ☀</div>
+    <h2 class="section-title">2日目 ― 花の安曇野でゆったり1日</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">晴れ予報。あづみの公園のチューリップと菜の花500万本をゆっくり満喫。ランチも公園内で済ませて、午後は寄り道&買い出しでホテルへ。</p>
+    <div class="timeline">
+      <div class="tl-item sub">
+        <span class="tl-time">08:30</span>
+        <div class="tl-title" style="display:inline-block">宿周辺で朝散歩&出発準備</div>
+        <div class="tl-note"><span class="tl-dist walk">🚶 徒歩</span>19万坪の森の遊歩道で新緑を満喫</div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-time">09:30</span>
+        <div class="tl-title" style="display:inline-block">★ 国営アルプスあづみの公園 IN</div>
+        <div class="tl-note"><span class="tl-dist">🚗 12km・約20分</span>9:30開園と同時に入園・誓約書記入・チューリップ&菜の花500万本</div>
+      </div>
+      <div class="tl-item sub2">
+        <span class="tl-time">12:30</span>
+        <div class="tl-title" style="display:inline-block">公園内レストラン/軽食コーナーでランチ</div>
+        <div class="tl-note"><span class="tl-dist walk">🚶 徒歩</span>5/5は食堂&軽食コーナー営業・丘の上のテラス可</div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-time">14:00</span>
+        <div class="tl-title" style="display:inline-block">北アルプス牧場&安曇野ご馳走肉工房</div>
+        <div class="tl-note"><span class="tl-dist">🚗 4km・約8分</span>食べログアイス百名店ソフト+グランピング夕食用ソーセージ買い出し</div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-time">15:00</span>
+        <div class="tl-title" style="display:inline-block">★ あづみ野菓子工房 彩香</div>
+        <div class="tl-note"><span class="tl-dist">🚗 8km・約15分</span>婦人画報・LEON・SPUR掲載の安曇野洋菓子名店・ジェラート(ダブル400円〜)・あづみ野プリン&バウムが名物</div>
+      </div>
+      <div class="tl-item sub">
+        <span class="tl-time">16:30</span>
+        <div class="tl-title" style="display:inline-block">グランピングリゾートヴィーナス IN</div>
+        <div class="tl-note"><span class="tl-dist">🚗 25km・約45分</span>温泉半露天+テントサウナ+多国籍BBQ</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:3rem; color:var(--forest); font-size:1.4rem">ハイライト</h3>
+    <div class="hl-grid">
+      <div class="hl-card">
+        <div class="hl-bar accent"></div>
+        <div class="hl-body">
+          <div class="hl-sub">★ 本日の主役・1日中楽しめる</div>
+          <h3 class="hl-title">国営アルプスあづみの公園</h3>
+          <p class="hl-desc">5月上旬は菜の花(6ha・500万本)とチューリップ遅咲きが見頃。田園文化ゾーンと里山文化ゾーンの2エリアで花畑が広がる。ドッグラン有(中央口/穂高口で誓約書記入後利用可)。<strong>5/4-12は無料入園期間で5/5は食堂・軽食コーナー営業</strong>。広い園内で愛犬とゆったり散策&ランチを満喫。所在地:安曇野市堀金烏川。</p>
+          <span class="hl-tag">ペット可 · ドッグラン有</span>
+          <a class="hl-link" href="https://www.azumino-koen.jp/horigane_hotaka/" target="_blank" rel="noopener">公式サイト →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar moss"></div>
+        <div class="hl-body">
+          <div class="hl-sub">おやつ&グランピング食材買い出し</div>
+          <h3 class="hl-title">北アルプス牧場 & 肉工房</h3>
+          <p class="hl-desc">食べログアイス百名店受賞の濃厚ソフトクリーム(北アルプス牧場)と、隣接の安曇野ご馳走肉工房で自家製ソーセージ・ハム30種類超。<strong>北アルプス麓の安曇野げんき豚を使った生ソーセージはグランピング夕食(BBQ)の追加食材として最適</strong>。隣接で動線ロスなし。</p>
+          <span class="hl-tag">隣接で連続訪問</span>
+          <a class="hl-link" href="https://www.azumino-nikukoubou.com/" target="_blank" rel="noopener">肉工房公式 →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar"></div>
+        <div class="hl-body">
+          <div class="hl-sub">★ 午後のおやつ・お土産</div>
+          <h3 class="hl-title">あづみ野菓子工房 彩香</h3>
+          <p class="hl-desc">「安曇野に恋をした菓子職人」が営む安曇野市穂高柏原の洋菓子店。<strong>婦人画報・LEON・SPUR・東京ウォーカーなど雑誌掲載多数</strong>。バースデーケーキ累計3万台以上の実績。名物は<strong>あづみ野プリン・あづみ野バウム・チーズinタルトバウム・りんごのバウムクーヘン・アップルポテトパイ</strong>。<strong>ジェラート(ダブル400円・トリプル450円)</strong>はリーズナブルで口コミ評価も高い。営業10:00-18:00・月曜定休(5/5火は営業)。所在地:安曇野市穂高柏原4524-4。</p>
+          <span class="hl-tag">雑誌掲載多数の名店</span>
+          <a class="hl-link" href="https://shop.saica.co.jp/" target="_blank" rel="noopener">公式サイト →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar accent"></div>
+        <div class="hl-body">
+          <div class="hl-sub">温泉&テントサウナ+多国籍BBQ</div>
+          <h3 class="hl-title">グランピングリゾートヴィーナス</h3>
+          <p class="hl-desc">美ヶ原山麓・松本市入山辺の森のリゾート。<strong>D棟ペット可・中型犬まで</strong>。温泉半露天+テントサウナで山道運転後の疲労回復。多国籍BBQ夕食(17時〜飲み放題)+焚火タイム。早めのIN(16:30)で温泉&サウナをゆったり楽しむ。</p>
+          <span class="hl-tag">D棟ペット可</span>
+          <a class="hl-link" href="https://www.glamping-venus.jp/" target="_blank" rel="noopener">公式サイト →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DAY 3 -->
+<section id="day3" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">DAY 3  —  5月6日 (水・祝) ☀</div>
+    <h2 class="section-title">3日目 ― アルプス公園で遊んで帰路へ</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">朝一番でアルプス公園のドリームコースター&マレットゴルフ→IC近辺(LaPACE新橋店第1候補/カワノホトリ第2候補)でランチ→中央道で帰路。</p>
+    <div class="timeline">
+      <div class="tl-item sub">
+        <span class="tl-time">08:00</span>
+        <div class="tl-title" style="display:inline-block">朝食 & 朝の散歩</div>
+        <div class="tl-note"><span class="tl-dist walk">🚶 徒歩</span>グランピング場で最後のひと時</div>
+      </div>
+      <div class="tl-item sub">
+        <span class="tl-time">08:30</span>
+        <div class="tl-title" style="display:inline-block">ヴィーナス CO → 出発</div>
+        <div class="tl-note">美ヶ原山道下りはDriver B担当</div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-time">09:45</span>
+        <div class="tl-title" style="display:inline-block">★ 松本市アルプス公園 IN(南入口駐車場)</div>
+        <div class="tl-note"><span class="tl-dist">🚗 16km・約45分</span>10:00開園に合わせて到着・愛犬同伴OK・入園&駐車無料</div>
+      </div>
+      <div class="tl-item sub2">
+        <span class="tl-time">10:00</span>
+        <div class="tl-title" style="display:inline-block">アルプスドリームコースター(開園と同時)</div>
+        <div class="tl-note"><span class="tl-dist walk">🚶 徒歩</span>全長630m・大人410円/小人200円・10:00開園直後で空いている</div>
+      </div>
+      <div class="tl-item sub2">
+        <span class="tl-time">10:45</span>
+        <div class="tl-title" style="display:inline-block">マレットゴルフ(36ホール・無料)</div>
+        <div class="tl-note"><span class="tl-dist walk">🚶 徒歩</span>道具レンタル500円・松本市発祥の地・愛犬同伴で散策感覚</div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-time">12:00</span>
+        <div class="tl-title" style="display:inline-block">★ PASTA&PIZZA LaPACE 新橋店でランチ(第1候補)</div>
+        <div class="tl-note"><span class="tl-dist">🚗 7km・約15分</span>国道19号沿い・テラス席5テーブル犬同伴OK・GW通し営業11-21時・松本IC近く</div>
+      </div>
+      <div class="tl-item sub2">
+        <span class="tl-time">12:00</span>
+        <div class="tl-title" style="display:inline-block">✧ カワノホトリCAFE(第2候補)</div>
+        <div class="tl-note"><span class="tl-dist">🚗 12km・約25分</span>松本IC直近・テラス席犬同伴OK・5/6水曜は11:30-15:30短縮営業・キッシュ&パスタ</div>
+      </div>
+      <div class="tl-item sub">
+        <span class="tl-time">13:30</span>
+        <div class="tl-title" style="display:inline-block">松本IC → 中央道へ</div>
+        <div class="tl-note"><span class="tl-dist">🚗 約4km</span>5/6復路は中央道渋滞軽め</div>
+      </div>
+      <div class="tl-item sub">
+        <span class="tl-time">14:30</span>
+        <div class="tl-title" style="display:inline-block">諏訪湖SA(休憩)</div>
+        <div class="tl-note">諏訪湖一望・お土産最終チャンス</div>
+      </div>
+      <div class="tl-item sub">
+        <span class="tl-time">16:30</span>
+        <div class="tl-title" style="display:inline-block">談合坂SA(休憩)</div>
+        <div class="tl-note">大型SA・ドライバー交代</div>
+      </div>
+      <div class="tl-item sub">
+        <span class="tl-time">18:00</span>
+        <div class="tl-title" style="display:inline-block">世田谷 帰宅 🏁</div>
+        <div class="tl-note">Driver Bが都内ラスト1h担当</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:3rem; color:var(--forest); font-size:1.4rem">ハイライト</h3>
+    <div class="hl-grid">
+      <div class="hl-card">
+        <div class="hl-bar"></div>
+        <div class="hl-body">
+          <div class="hl-sub">★ Day3午前のメイン・標高800m絶景総合公園</div>
+          <h3 class="hl-title">松本市アルプス公園</h3>
+          <p class="hl-desc">約71haの広大な丘陵公園・愛犬同伴OK・入園&駐車無料。北アルプス連峰と安曇野を一望する絶景。<strong>ドリームコースター(全長630m・大人410円・10:00-16:00)</strong>と<strong>マレットゴルフ(36ホール無料・道具レンタル500円)</strong>を10時開園直後に楽しむ。所在地:松本市蟻ヶ崎2455-11。<strong>TEL: 0263-34-5640</strong></p>
+          <span class="hl-tag">愛犬OK+入園無料</span>
+          <a class="hl-link" href="https://toybox-net.jp/alpspark/" target="_blank" rel="noopener">公式サイト →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar accent"></div>
+        <div class="hl-body">
+          <div class="hl-sub">★ Day3ランチ第1候補</div>
+          <h3 class="hl-title">PASTA&PIZZA LaPACE 新橋店</h3>
+          <p class="hl-desc">松本市新橋・LIFE STYLE MARKET内のカジュアルイタリアン。奈良井川沿いの<strong>テラス席5テーブル(2名様用)が犬同伴OK</strong>・北アルプス絶景。<strong>GW全日&土日祝日は11:00-21:00通し営業</strong>で帰路前のランチに最適。季節のチョイスランチ¥1,991(サラダ+選べるパスタ/ピザ+プチドルチェ+ドリンク)。スフレパンケーキも名物。<strong>TEL: 0263-87-8807</strong>(予約推奨)</p>
+          <span class="hl-tag">テラス犬OK+通し営業</span>
+          <a class="hl-link" href="https://tabelog.com/nagano/A2002/A200201/20025783/" target="_blank" rel="noopener">食べログ →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar moss"></div>
+        <div class="hl-body">
+          <div class="hl-sub">✧ Day3ランチ第2候補・松本IC直近</div>
+          <h3 class="hl-title">カワノホトリCAFE</h3>
+          <p class="hl-desc">松本IC直近・松本市今井のテラス犬同伴OKカフェ。<strong>キッシュセット¥1,200(サラダ・スープ・ドリンク付)・パスタセット</strong>などランチメニュー充実。<strong>5/6(水)は短縮営業11:30-15:30</strong>。所在地:松本市今井3256-13。<strong>TEL: 0263-31-6170</strong>。駐車場は店前2台のため要注意。</p>
+          <span class="hl-tag">テラス犬OK</span>
+          <a class="hl-link" href="https://www.instagram.com/kawanohotori_cafe/" target="_blank" rel="noopener">公式Instagram →</a>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-bar accent"></div>
+        <div class="hl-body">
+          <div class="hl-sub">帰路ルート・SA休憩計画</div>
+          <h3 class="hl-title">中央道→諏訪湖SA→談合坂SA</h3>
+          <p class="hl-desc">5/6(水・祝最終日)の中央道下り(東京方面)は通常的に渋滞軽め。<strong>諏訪湖SA</strong>(諏訪湖一望・お土産最終チャンス)→<strong>談合坂SA</strong>(大型SAでドライバーB交代・90km)→世田谷帰宅18時頃。各SAで犬の休憩を15-20分とる計画。</p>
+          <span class="hl-tag">渋滞軽め+SA休憩</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Food -->
+<section id="food">
+  <div class="container">
+    <div class="section-label">RESTAURANTS & CAFES</div>
+    <h2 class="section-title">食事スポット一覧</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>店名</th><th>エリア</th><th>犬同伴条件</th><th>特徴</th><th>URL</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(111,168,111,.08)">
+          <td><strong>SOBA &amp; CAFE sanpo</strong> <span style="font-size:.8rem; color:var(--forest); font-weight:bold">★Day1ランチ第1候補</span></td>
+          <td>安曇野市豊科南穂高(IC8分)</td>
+          <td>サンルーム室内席で犬OK・ドッグラン併設</td>
+          <td>通し営業11-17時(L.O16:30)・自家栽培二八蕎麦+カフェ・予約可</td>
+          <td><a href="https://shop.daichi-sanpo.com/p/00002" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>蕎麦処 伝道</strong> <span style="font-size:.8rem; color:var(--moss)">✧Day1ランチ第2候補</span></td>
+          <td>安曇野穂高有明3067-2</td>
+          <td>テラス席ペット同伴OK</td>
+          <td>二八そば名店・GW期12時で売切リスク・〜15時頃</td>
+          <td><a href="https://tabelog.com/nagano/A2005/A200501/20021215/" target="_blank" rel="noopener">食べログ</a></td>
+        </tr>
+        <tr>
+          <td><strong>大王わさび農場 フードコート</strong></td>
+          <td>安曇野穂高</td>
+          <td>園内リード可/テラス席可※</td>
+          <td>わさびコロッケ・わさびソフト・わさび飯(食後散策で立寄)</td>
+          <td><a href="https://www.daiowasabi.co.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>北アルプス牧場 直売店</strong></td>
+          <td>安曇野穂高有明</td>
+          <td>外ベンチ・テイクアウト(店内不可)</td>
+          <td>食べログアイス百名店・濃厚ソフトクリーム</td>
+          <td><a href="https://www.bokujyo.co.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr style="background:rgba(184,216,156,.12)">
+          <td><strong>★ あづみ野菓子工房 彩香</strong> <span style="font-size:.8rem; color:var(--moss); font-weight:bold">★Day2おやつ立寄</span></td>
+          <td>安曇野市穂高柏原4524-4</td>
+          <td>店外イートイン可</td>
+          <td>婦人画報/LEON掲載・あづみ野プリン&バウム名物・ジェラート安価・10-18時月休</td>
+          <td><a href="https://shop.saica.co.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>MDI アイスクリーム 安曇野店</strong> <span style="font-size:.8rem; color:var(--muted)">(代替候補)</span></td>
+          <td>安曇野穂高(わさび農場至近)</td>
+          <td>テラス・店外利用可</td>
+          <td>全米トップ25選出のクラフトアイス・信州素材50種以上(わさび・酒粕・松本ブルワリーetc)</td>
+          <td><a href="https://www.mdiic.com/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>シュテルン 安曇野本店</strong> <span style="font-size:.8rem; color:var(--muted)">(代替候補)</span></td>
+          <td>安曇野三郷温(HAMAフラワーパーク内)</td>
+          <td>店外イートイン可</td>
+          <td>本格イタリアンジェラート&パティスリー・地産地消無添加・火曜定休</td>
+          <td><a href="https://stern-1.com/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>安曇野ご馳走肉工房</strong></td>
+          <td>安曇野穂高有明</td>
+          <td>テイクアウトのみ(席なし)</td>
+          <td>自家製ソーセージ・ハム30種/GW期間通常営業</td>
+          <td><a href="https://www.azumino-nikukoubou.com/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr style="background:rgba(111,168,111,.12)">
+          <td><strong>あづみの公園内ランチ</strong> <span style="font-size:.8rem; color:var(--forest); font-weight:bold">★Day2ランチ</span></td>
+          <td>国営アルプスあづみの公園内</td>
+          <td>屋外テラス・ベンチ多数</td>
+          <td>5/5は食堂&軽食コーナー営業・公園散策のついでに</td>
+          <td><a href="https://www.azumino-koen.jp/horigane_hotaka/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr style="background:rgba(111,168,111,.12)">
+          <td><strong>★ PASTA&PIZZA LaPACE 新橋店</strong> <span style="font-size:.8rem; color:var(--forest); font-weight:bold">★Day3ランチ第1候補</span></td>
+          <td>松本市新橋(国道19号沿い)</td>
+          <td>テラス席5テーブル犬同伴OK</td>
+          <td>GW通し営業11-21時・カジュアルイタリアン・スフレパンケーキ・松本IC近く</td>
+          <td><a href="https://tabelog.com/nagano/A2002/A200201/20025783/" target="_blank" rel="noopener">食べログ</a></td>
+        </tr>
+        <tr style="background:rgba(245,167,160,.12)">
+          <td><strong>✧ カワノホトリCAFE</strong> <span style="font-size:.8rem; color:var(--accent); font-weight:bold">✧Day3ランチ第2候補</span></td>
+          <td>松本市今井3256-13(松本IC直近)</td>
+          <td>テラス席ペット同伴OK</td>
+          <td>キッシュセット¥1,200・パスタ・5/6水曜は11:30-15:30短縮営業・駐車場2台</td>
+          <td><a href="https://www.instagram.com/kawanohotori_cafe/" target="_blank" rel="noopener">Instagram</a></td>
+        </tr>
+        <tr>
+          <td><strong>SHOKUDO&CAFE yumyum</strong> <span style="font-size:.8rem; color:var(--moss)">(松本市内代替候補)</span></td>
+          <td>松本市美術館内</td>
+          <td>テラス席9席犬同伴可</td>
+          <td>創作洋食・信州米豚ローストポーク・デザート豊富</td>
+          <td><a href="https://matsumoto-artmuse.jp/visit/facility/restaurant/" target="_blank" rel="noopener">美術館公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>わんわんパラダイス夕食(ケータリング)</strong></td>
+          <td>穂高温泉郷</td>
+          <td>部屋食・犬同室OK</td>
+          <td>黒毛和牛しゃぶしゃぶセット/国産牛ステーキ/信州贅沢鍋から選択(野菜&ご飯&デザート付/17:30〜)</td>
+          <td><a href="https://www.izumigo.co.jp/aiken/azumino/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>グランピングヴィーナス夕食</strong></td>
+          <td>松本入山辺</td>
+          <td>ドーム内で犬同室可</td>
+          <td>多国籍BBQ+17時〜飲み放題(オールインクルーシブ)</td>
+          <td><a href="https://www.glamping-venus.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="color:var(--muted); font-size:.85rem; margin-top:1rem; font-style:italic">※犬同伴条件は変更される可能性があります。公式サイトや電話で最新情報を事前にご確認ください。</p>
+  </div>
+</section>
+
+<!-- Matsumoto Lunch Picks -->
+<section id="lunch-picks" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-label">MATSUMOTO LUNCH SPOTS</div>
+    <h2 class="section-title">松本市内 犬連れOKランチ 5選</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">Day 3のランチはLaPACE新橋店を第1候補・カワノホトリCAFEを第2候補として両記。他にも松本市内で愛犬と楽しめる候補をピックアップ。</p>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>店名</th><th>エリア</th><th>犬同伴条件</th><th>特徴・メニュー</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(111,168,111,.12)">
+          <td><strong>PASTA&PIZZA SWEETS LaPACE 新橋店</strong> <span style="font-size:.8rem; color:var(--forest); font-weight:bold">★Day3ランチ第1候補</span></td>
+          <td>松本市新橋(国道19号沿い・LIFE STYLE MARKET内)</td>
+          <td>テラス席5テーブル(2名様用)犬同伴OK・奈良井川眺望</td>
+          <td>GW全日通し営業11-21時・季節のチョイスランチ¥1,991・スフレパンケーキ</td>
+        </tr>
+        <tr>
+          <td><strong>CAVA CAVA (キャバキャバ)</strong></td>
+          <td>松本市城山</td>
+          <td>テラス席ペットOK</td>
+          <td>本格パスタ・スパニッシュ・ワインの大人空間</td>
+        </tr>
+        <tr>
+          <td><strong>COURTYARD (コートヤード)</strong></td>
+          <td>松本市中央2(駅近)</td>
+          <td>店内ペットOK</td>
+          <td>おしゃれピザ・カフェメニュー(夜カフェも可)</td>
+        </tr>
+        <tr>
+          <td><strong>ドルチェ / かつ富</strong></td>
+          <td>松本市内</td>
+          <td>店内一部小型犬同伴可</td>
+          <td>本格イタリアン+白馬SPF豚とんかつのユニーク店</td>
+        </tr>
+        <tr>
+          <td><strong>ベーカリースイート 並柳店</strong></td>
+          <td>松本市並柳</td>
+          <td>屋外テラス席ペットOK</td>
+          <td>石窯焼きパン・イートインで焼きたてを</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="color:var(--muted); font-size:.85rem; margin-top:1rem; font-style:italic">※犬同伴条件は変更される可能性があります。来店前の電話確認をおすすめします。</p>
+  </div>
+</section>
+
+<!-- Soba Picks - Azumino -->
+<section id="soba-azumino" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">AZUMINO SOBA SPOTS</div>
+    <h2 class="section-title">安曇野 犬連れOKそば 5選</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">わさびと名水の里・安曇野は信州そばの本場。テラス席利用が中心のため天候要注意。</p>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>店名</th><th>住所</th><th>犬同伴条件</th><th>特徴・メニュー</th><th>食べログ</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(111,168,111,.08)">
+          <td><strong>SOBA & CAFE sanpo</strong> <span style="font-size:.75rem; color:var(--forest); font-weight:bold">★Day1ランチ第1候補</span></td>
+          <td>安曇野市豊科南穂高6351-5</td>
+          <td>サンルームテラスOK+ドッグラン+犬連れ専用入口</td>
+          <td>通し営業11-17時(L.O16:30)・自家栽培そば+カフェ・水曜定休</td>
+          <td><a href="https://tabelog.com/nagano/A2005/A200501/20023610/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>蕎麦処 伝道</strong> <span style="font-size:.75rem; color:var(--moss)">✧Day1ランチ第2候補</span></td>
+          <td>安曇野市穂高有明3067-2</td>
+          <td>テラス席ペット同伴OK</td>
+          <td>天ざる/そばの実アイス・GW期12時で売切リスク・〜15時頃</td>
+          <td><a href="https://tabelog.com/nagano/A2005/A200501/20021215/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>時遊庵あさかわ</strong></td>
+          <td>安曇野市穂高有明8053-4</td>
+          <td>犬同伴は要事前電話確認(公式情報なし)</td>
+          <td>わさび花芽茎ざる/雪花ざるそば・百名店3.62・水曜定休・予約推奨</td>
+          <td><a href="https://tabelog.com/nagano/A2005/A200501/20000817/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>こばやし安曇野庵</strong></td>
+          <td>安曇野市豊科南穂高(安曇野スイス村内)</td>
+          <td>テラス席ペットOK・安曇野IC約5分</td>
+          <td>スイス村複合施設内・道の駅併設で食後散策可・無料大型駐車場</td>
+          <td><a href="https://tabelog.com/nagano/A2005/A200501/20010434/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>そば処 上條</strong></td>
+          <td>安曇野市穂高5256-1(碌山美術館近く)</td>
+          <td>テラス席犬同伴可(食べログ口コミ確認)</td>
+          <td>天恵そば(具材10種)が看板・元ペンションのカフェ風建物・水そばも提供</td>
+          <td><a href="https://tabelog.com/nagano/A2005/A200501/20001060/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- Soba Picks - Matsumoto -->
+<section id="soba-matsumoto" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-label">MATSUMOTO SOBA SPOTS</div>
+    <h2 class="section-title">松本市・近郊 犬連れOKそば 5選</h2>
+    <p style="color:var(--muted); font-style:italic; margin-top:-.3rem">松本市中心部は犬同伴可の蕎麦屋が少なく、近郊(朝日村等)まで含めて選定。来店前の電話確認推奨。</p>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>店名</th><th>住所</th><th>犬同伴条件</th><th>特徴・メニュー</th><th>食べログ</th></tr>
+      </thead>
+      <tbody>
+        <tr style="opacity:.7">
+          <td><strong>小昼堂 cohiludo</strong> <span style="font-size:.8rem; color:var(--accent)">※既訪問済</span></td>
+          <td>松本市大手3-3-2(松本城下町)</td>
+          <td>テラス席ワンコOK</td>
+          <td>信州そば・おやき・甘味・珈琲のカフェ</td>
+          <td><a href="https://tabelog.com/nagano/A2002/A200201/20023198/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>そば処もえぎ野</strong></td>
+          <td>東筑摩郡朝日村古見278</td>
+          <td>屋根付きテラスペットOK</td>
+          <td>鴨ねぎ焼き・ざるかつ重・水曜定休・松本中心から車30分</td>
+          <td><a href="https://tabelog.com/nagano/A2002/A200203/20001399/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>手打ちそば信州家</strong></td>
+          <td>松本市筑摩1-2-5</td>
+          <td>犬同伴可否は要事前確認</td>
+          <td>安曇野契約農家の十割+名物そうすかつ・月曜定休(祝日営業)</td>
+          <td><a href="https://tabelog.com/nagano/A2002/A200201/20000082/" target="_blank" rel="noopener">詳細 →</a></td>
+        </tr>
+        <tr>
+          <td><strong>手打ち十割蕎麦処 蕎仙</strong></td>
+          <td>松本市内 ※詳細は要問合せ</td>
+          <td>テラス席同伴OK・事前予約&紹介制</td>
+          <td>そば粉から食材まで女将こだわり・イタリアン風そばも</td>
+          <td style="color:var(--muted); font-size:.85rem; font-style:italic">URL未確認</td>
+        </tr>
+        <tr>
+          <td><strong>天小屋</strong></td>
+          <td>松本市内 ※詳細は要問合せ</td>
+          <td>デッキ犬同伴OK・ペット専用入口</td>
+          <td>ボリューム満点ランチ+14時以降は自家焙煎コーヒー</td>
+          <td style="color:var(--muted); font-size:.85rem; font-style:italic">URL未確認</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- Spots -->
+<section id="spots" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">PLACES TO VISIT</div>
+    <h2 class="section-title">観光・散歩スポット一覧</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>スポット</th><th>エリア</th><th>犬同伴条件</th><th>滞在目安</th><th>向いている時間帯</th><th>URL</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(245,167,160,.12)">
+          <td><strong>★ 国営アルプスあづみの公園 (Day2メイン)</strong></td><td>安曇野堀金</td>
+          <td>園内可+ドッグラン(誓約書)</td><td>3-4時間</td><td>Day2 1日中ゆったり花散策・公園内ランチ</td>
+          <td><a href="https://www.azumino-koen.jp/horigane_hotaka/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr style="background:rgba(111,168,111,.12)">
+          <td><strong>★ 松本市アルプス公園 (Day3朝のメイン)</strong></td><td>松本市蟻ヶ崎</td>
+          <td>園内全域犬同伴OK・無料</td><td>2-2.5時間</td><td>Day3朝(ドリームコースター+マレットゴルフ)</td>
+          <td><a href="https://toybox-net.jp/alpspark/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>大王わさび農場</strong></td><td>安曇野穂高</td>
+          <td>園内リード可</td><td>1時間</td><td>Day1午後(13時着→sanpoランチ→再立寄も可)</td>
+          <td><a href="https://www.daiowasabi.co.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>北アルプス牧場 直売店</strong></td><td>安曇野穂高有明</td>
+          <td>外ベンチのみ(店内不可)</td><td>30分</td><td>Day2午後 ソフトクリーム+買い出し</td>
+          <td><a href="https://www.bokujyo.co.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr style="background:rgba(184,216,156,.12)">
+          <td><strong>★ あづみ野菓子工房 彩香</strong></td><td>安曇野市穂高柏原</td>
+          <td>店外イートイン可</td><td>30分</td><td>★Day2 15時のおやつ&お土産立寄</td>
+          <td><a href="https://shop.saica.co.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>MDI アイスクリーム 安曇野店</strong></td><td>安曇野穂高(わさび農場近く)</td>
+          <td>テラス・店外利用可</td><td>20分</td><td>Day1 ランチ後の立寄候補(代替)</td>
+          <td><a href="https://www.mdiic.com/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>シュテルン 安曇野本店</strong></td><td>安曇野三郷温(HAMAフラワーパーク)</td>
+          <td>店外イートイン可</td><td>30分</td><td>Day2午後 おやつ候補(代替)</td>
+          <td><a href="https://stern-1.com/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>安曇野ご馳走肉工房</strong></td><td>安曇野穂高有明</td>
+          <td>テイクアウトのみ(席なし)</td><td>20分</td><td>Day2 牧場と隣接訪問</td>
+          <td><a href="https://www.azumino-nikukoubou.com/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>Vif穂高 & 八面大王足湯</strong></td><td>安曇野穂高有明</td>
+          <td>屋外エリア・犬同伴可</td><td>45分</td><td>Day1 屋根付き直売所(雨天代替)</td>
+          <td><a href="https://vif-hotaka.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>わさび田湧水群公園(憩いの池)</strong></td><td>安曇野豊科</td>
+          <td>遊歩道・犬同伴可</td><td>30分</td><td>朝〜午前(散歩◎)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>松本市美術館</strong></td><td>松本市中央</td>
+          <td>外周のみ可・館内不可</td><td>1時間</td><td>雨天時の代替候補</td>
+          <td><a href="https://matsumoto-artmuse.jp/" target="_blank" rel="noopener">公式</a></td>
+        </tr>
+        <tr>
+          <td><strong>松本城公園(外堀)</strong></td><td>松本市内</td>
+          <td>公園エリアのみ可(天守NG)</td><td>1時間</td><td>雨天時の代替候補</td>
+          <td><a href="https://www.matsumoto-castle.jp/faq" target="_blank" rel="noopener">FAQ</a></td>
+        </tr>
+        <tr>
+          <td><strong>縄手通り商店街</strong></td><td>松本市内</td>
+          <td>屋外通路で可</td><td>45分</td><td>雨天時の代替候補</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- Rainy -->
+<section id="rainy">
+  <div class="container">
+    <div class="section-label">RAINY DAY BACKUP</div>
+    <h2 class="section-title">雨天時代替プラン</h2>
+    <div class="rainy-grid">
+      <div class="rainy-card">
+        <div class="rainy-head d1">DAY 1</div>
+        <div class="rainy-body">
+          <h3>テーマ展示館と東屋で雨をしのぐ</h3>
+          <p>国営アルプスあづみの公園のテーマ展示館は屋内施設が充実(大水槽・そば打ち体験など)で雨天時も楽しめる。大王わさび農場は園内各所に東屋あり。Vif穂高で直売所ショッピング+足湯(屋根付き待合)で時間調整も◎。</p>
+        </div>
+      </div>
+      <div class="rainy-card">
+        <div class="rainy-head d2">DAY 2</div>
+        <div class="rainy-body">
+          <h3>あづみの公園は屋内施設で対応</h3>
+          <p>晴れ予報が外れた場合、あづみの公園は<strong>屋内施設(理科教室の大水槽・クラフト体験の芸術教室・そば打ち体験)</strong>で滞在。ランチも公園内屋内レストラン。午後はVif穂高(屋根付き直売所)で買い物→ヴィーナスへ早めIN。</p>
+        </div>
+      </div>
+      <div class="rainy-card">
+        <div class="rainy-head d3">DAY 3</div>
+        <div class="rainy-body">
+          <h3>アルプス公園不可→直接帰路へ</h3>
+          <p>雨ならアルプス公園(コースター運休)はスキップし、宿でゆったり朝食→温泉でひと風呂。チェックアウト後直接松本IC方面へ→<strong>LaPACE新橋店(屋内席あり)で軽くランチ</strong>→そのまま帰路。高速SAでこまめに犬の休憩を。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Checklist -->
+<section id="checklist" style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">CHECKLIST & NOTES</div>
+    <h2 class="section-title">持ち物・注意点</h2>
+    <div class="check-grid">
+      <div class="check-box">
+        <h3>🐾 犬の持ち物</h3>
+        <ul>
+          <li>狂犬病予防接種済票・ワクチン証明書</li>
+          <li>リード(予備含め2本)・首輪</li>
+          <li>マナーウェア/マナーパンツ</li>
+          <li>食器・ドッグフード・おやつ</li>
+          <li>飲み水・折りたたみボウル</li>
+          <li>トイレシート・ゴミ袋</li>
+          <li>タオル・ブラシ</li>
+          <li>キャリー/クレート</li>
+          <li>5月夜用の薄手ブランケット</li>
+        </ul>
+      </div>
+      <div class="check-box">
+        <h3>🌸 5月の長野で注意</h3>
+        <ul>
+          <li>朝晩10℃前後まで冷える(羽織り物必須)</li>
+          <li>日中は20℃前後・紫外線強い</li>
+          <li>高原・美ヶ原方面は一段と肌寒い</li>
+          <li>GW期間のため渋滞・駐車場混雑を想定</li>
+          <li>雨具(傘よりカッパが犬連れ向き)</li>
+          <li>マダニ対策(散歩後のブラッシング)</li>
+          <li>公園は花粉・蜂にも注意</li>
+        </ul>
+      </div>
+      <div class="check-box">
+        <h3>🏡 宿・施設マナー</h3>
+        <ul>
+          <li>わんパラ: ホテル棟・レストランは犬不可</li>
+          <li>ヴィーナス: D棟のみペット可(要予約確認)</li>
+          <li>宿の愛犬宿泊規約に署名(予防接種要)</li>
+          <li>神社は境内での排泄NG</li>
+          <li>店舗テラス席は他客への配慮を</li>
+          <li>混雑時は無理に入店せず代替へ</li>
+          <li>あづみの公園は誓約書記入必須</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Confirm -->
+<section id="confirm">
+  <div class="container">
+    <div class="section-label">CONFIRM BEFORE TRIP</div>
+    <h2 class="section-title">要事前確認事項</h2>
+    <div class="confirm-list">
+      <div class="confirm-item" style="background:rgba(217,125,84,.08); border-left:3px solid var(--accent)">
+        <div class="confirm-num" style="background:var(--accent)">!</div>
+        <div class="confirm-name">GW渋滞対策・推奨ルート</div>
+        <div class="confirm-note">推奨ルートC:関越→上信越→更埴JCT→長野道→安曇野IC(全線高速・約260km)/三才山TN工事規制&中央道渋滞を両方回避・8:30世田谷発で14:00 sanpo着想定</div>
+      </div>
+      <div class="confirm-item" style="background:rgba(111,168,111,.10); border-left:3px solid var(--forest)">
+        <div class="confirm-num" style="background:var(--forest)">★</div>
+        <div class="confirm-name">SOBA &amp; CAFE sanpo (Day1ランチ第1候補・要予約)</div>
+        <div class="confirm-note">GW中の営業確認&amp;14時着の予約推奨。0263-75-7474。通し営業11:00〜17:00(L.O 16:30)で14時着でも余裕あり。蕎麦完売時はカフェメニュー(ガレット・スイーツ)で対応可。水曜定休だがGW中は祝日のため営業の見込み</div>
+      </div>
+      <div class="confirm-item" style="background:rgba(184,216,156,.15); border-left:3px solid var(--moss)">
+        <div class="confirm-num" style="background:var(--moss)">✧</div>
+        <div class="confirm-name">蕎麦処 伝道 (Day1ランチ第2候補)</div>
+        <div class="confirm-note">sanpoが満席時や本格そばを優先したい時の代替。0263-87-5519。GW営業/夜営業有無/予約可否/売切時間を公式インスタで当日チェック。1〜3月冬季休業のためGW期は通常営業期に該当</div>
+      </div>
+      <div class="confirm-item" style="background:rgba(245,167,160,.10); border-left:3px solid var(--accent)">
+        <div class="confirm-num" style="background:var(--accent)">★</div>
+        <div class="confirm-name">国営アルプスあづみの公園 (Day2メイン)</div>
+        <div class="confirm-note">5/4-6の花開花状況/<strong>5/5の食堂&軽食コーナー営業</strong>確認/ドッグラン誓約書の要件。0263-71-5511。GW期間は開園予定</div>
+      </div>
+      <div class="confirm-item" style="background:rgba(111,168,111,.10); border-left:3px solid var(--forest)">
+        <div class="confirm-num" style="background:var(--forest)">★</div>
+        <div class="confirm-name">松本市アルプス公園 (Day3朝のメイン)</div>
+        <div class="confirm-note">5/6(水)のドリームコースター稼働&マレットゴルフ営業確認(降雨時はコースター中止)。0263-34-5640。GW中の南入口駐車場の混雑想定・愛犬同伴OK</div>
+      </div>
+      <div class="confirm-item" style="background:rgba(111,168,111,.10); border-left:3px solid var(--forest)">
+        <div class="confirm-num" style="background:var(--forest)">★</div>
+        <div class="confirm-name">PASTA&PIZZA LaPACE 新橋店 (Day3ランチ第1候補)</div>
+        <div class="confirm-note">GW全日11-21時通し営業確認&テラス席5テーブルの予約推奨。<strong>0263-87-8807</strong>。テラス席のみワンちゃん連れ可・予約可能。松本IC近く</div>
+      </div>
+      <div class="confirm-item" style="background:rgba(245,167,160,.10); border-left:3px solid var(--accent)">
+        <div class="confirm-num" style="background:var(--accent)">✧</div>
+        <div class="confirm-name">カワノホトリCAFE (Day3ランチ第2候補)</div>
+        <div class="confirm-note"><strong>5/6(水)11:30-15:30短縮営業</strong>確認。0263-31-6170。テラス席のみ犬連れOK。駐車場は店前2台のみ・要余裕を持って到着</div>
+      </div>
+      <div class="confirm-item">
+        <div class="confirm-num">1</div>
+        <div class="confirm-name">わんわんパラダイス 安曇野</div>
+        <div class="confirm-note">2026年2月リブランド後の犬受入条件(犬種/料金/食事プラン)</div>
+      </div>
+      <div class="confirm-item">
+        <div class="confirm-num">2</div>
+        <div class="confirm-name">グランピングリゾートヴィーナス</div>
+        <div class="confirm-note">D棟(ペット可棟)の空室・中型犬までのサイズ制限確認</div>
+      </div>
+      <div class="confirm-item">
+        <div class="confirm-num">3</div>
+        <div class="confirm-name">北アルプス牧場 / 安曇野ご馳走肉工房</div>
+        <div class="confirm-note">GW期間(5/1-6)通常営業確認/Day2午後・牧場と肉工房はセット訪問</div>
+      </div>
+      <div class="confirm-item">
+        <div class="confirm-num">4</div>
+        <div class="confirm-name">国営アルプスあづみの公園 (Day2メイン)</div>
+        <div class="confirm-note">5/4-6開園確認/食堂&軽食コーナー5/5営業/ドッグラン誓約書要件/花の開花状況</div>
+      </div>
+      <div class="confirm-item">
+        <div class="confirm-num">5</div>
+        <div class="confirm-name">Vif穂高</div>
+        <div class="confirm-note">Vif穂高GW営業確認(雨天時代替の屋根付き直売所)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="paw">🐾  🐾  🐾</p>
+  <p>愛犬と巡る安曇野・松本 2泊3日 旅のしおり</p>
+  <p style="opacity:.6; font-size:.8rem">2026.05.04 — 05.06  |  Have a wonderful trip with your dog!</p>
+</footer>
+
+<script>
+  // 晴れ/雨プラン切替
+  document.querySelectorAll('.weather-toggle').forEach(group => {
+    const buttons = group.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.pane;
+        // siblingのbuttonの状態切替
+        buttons.forEach(b => {
+          b.classList.toggle('active', b === btn);
+          b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        // pane切替: 同じセクション内の.weather-paneを操作
+        const section = btn.closest('section');
+        section.querySelectorAll('.weather-pane').forEach(pane => {
+          pane.classList.toggle('active', pane.id === targetId);
+        });
+      });
+    });
+  });
+</script>
+</body>
+</html>
