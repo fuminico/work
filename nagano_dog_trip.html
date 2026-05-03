@@ -567,6 +567,133 @@
         <div style="font-size:.85rem; color:var(--muted); margin-top:.3rem">ドライバー2名で交代運転</div>
       </div>
     </div>
+
+    <!-- リアルタイム渋滞情報セクション -->
+    <div style="margin-top:2.5rem; padding:1.5rem; background:linear-gradient(135deg, rgba(155,111,168,.08) 0%, rgba(245,167,160,.08) 100%); border-radius:12px; border:1px solid rgba(155,111,168,.2)">
+      <h3 style="margin:0 0 .5rem 0; color:var(--forest); font-size:1.3rem; display:flex; align-items:center; gap:.5rem">
+        <span style="font-size:1.5rem">🚗</span> リアルタイム渋滞情報(ルート分岐の判断用)
+      </h3>
+      <p style="margin:0 0 1.2rem 0; color:var(--muted); font-style:italic; font-size:.9rem">メインルート/サブルートの選択は <strong>横川SA(往路④)</strong>・<strong>松本IC手前(復路⑩)</strong> でのチェックがベスト。スマホでブックマーク&アプリ事前インストール推奨。</p>
+
+      <!-- 推奨度別カード -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem">
+
+        <!-- 1位: JARTIC -->
+        <div style="background:white; border-radius:10px; padding:1.2rem; box-shadow:0 2px 8px rgba(0,0,0,.06); border-top:4px solid #FFD700">
+          <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem">
+            <span style="background:#FFD700; color:#7A5C00; font-weight:bold; font-size:.75rem; padding:.15rem .5rem; border-radius:4px">🥇 最推奨</span>
+            <span style="font-size:.75rem; color:var(--muted)">中央道+長野道+関越+上信越 すべて統合</span>
+          </div>
+          <h4 style="margin:.3rem 0; font-size:1.05rem; color:var(--forest)">JARTIC 公式 / ATISアプリ</h4>
+          <p style="margin:.4rem 0 .8rem 0; font-size:.85rem; line-height:1.5; color:var(--dark-text)">日本道路交通情報センター(国交省・警察庁認定)。NEXCO東日本/中日本/西日本のすべての情報を統合。<strong>会社の縦割りを意識せずに長野道全区間+中央道を一発確認</strong>できる唯一のソース。</p>
+          <div style="display:flex; flex-direction:column; gap:.4rem; font-size:.85rem">
+            <a href="https://www.jartic.or.jp/" target="_blank" rel="noopener" style="background:#3B5C3F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center; font-weight:bold">🌐 JARTIC公式ウェブ →</a>
+            <a href="https://www.atis.co.jp/traffic/highway/highway/1039006/" target="_blank" rel="noopener" style="background:#6FA86F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center">📱 ATIS 長野道ページ →</a>
+            <a href="https://www.atis.co.jp/traffic/highway/highway/1015001/" target="_blank" rel="noopener" style="background:#6FA86F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center">📱 ATIS 中央道ページ →</a>
+          </div>
+        </div>
+
+        <!-- 2位: NEXCO中日本 iHighway -->
+        <div style="background:white; border-radius:10px; padding:1.2rem; box-shadow:0 2px 8px rgba(0,0,0,.06); border-top:4px solid #C0C0C0">
+          <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem">
+            <span style="background:#C0C0C0; color:#555; font-weight:bold; font-size:.75rem; padding:.15rem .5rem; border-radius:4px">🥈 推奨2</span>
+            <span style="font-size:.75rem; color:var(--muted)">中央道・長野道(松本以南)の最速情報</span>
+          </div>
+          <h4 style="margin:.3rem 0; font-size:1.05rem; color:var(--forest)">iHighway / NEXCO中日本 公式</h4>
+          <p style="margin:.4rem 0 .8rem 0; font-size:.85rem; line-height:1.5; color:var(--dark-text)">中央道・長野道(安曇野IC以南)の運営会社・<strong>NEXCO中日本の公式</strong>。中継時間が最短で最速。マイルート登録で<strong>渋滞発生をプッシュ通知</strong>してくれる便利機能あり。完全無料。</p>
+          <div style="display:flex; flex-direction:column; gap:.4rem; font-size:.85rem">
+            <a href="https://www.c-nexco.co.jp/jam/" target="_blank" rel="noopener" style="background:#3B5C3F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center; font-weight:bold">🌐 NEXCO中日本 渋滞情報 →</a>
+            <a href="https://global.c-nexco.co.jp/ihighway/" target="_blank" rel="noopener" style="background:#6FA86F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center">📱 iHighway アプリDL →</a>
+          </div>
+        </div>
+
+        <!-- 3位: NEXCO東日本 ドラぷら -->
+        <div style="background:white; border-radius:10px; padding:1.2rem; box-shadow:0 2px 8px rgba(0,0,0,.06); border-top:4px solid #CD7F32">
+          <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem">
+            <span style="background:#CD7F32; color:white; font-weight:bold; font-size:.75rem; padding:.15rem .5rem; border-radius:4px">🥉 推奨3</span>
+            <span style="font-size:.75rem; color:var(--muted)">関越+上信越+長野道(更埴JCT〜安曇野)用</span>
+          </div>
+          <h4 style="margin:.3rem 0; font-size:1.05rem; color:var(--forest)">ドラぷら / NEXCO東日本 公式</h4>
+          <p style="margin:.4rem 0 .8rem 0; font-size:.85rem; line-height:1.5; color:var(--dark-text)">往路で使う関越道・上信越道・長野道(更埴JCT〜安曇野IC)の運営会社の公式情報。<strong>GW期間の渋滞予測カレンダー</strong>もここで確認可能。出発前夜のチェックに最適。</p>
+          <div style="display:flex; flex-direction:column; gap:.4rem; font-size:.85rem">
+            <a href="https://www.driveplaza.com/traffic/" target="_blank" rel="noopener" style="background:#3B5C3F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center; font-weight:bold">🌐 ドラぷら 渋滞情報 →</a>
+            <a href="https://www.driveplaza.com/traffic/forecast/" target="_blank" rel="noopener" style="background:#6FA86F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center">📅 GW渋滞予測 →</a>
+          </div>
+        </div>
+
+        <!-- 補助: Yahoo!カーナビ・Google Maps -->
+        <div style="background:white; border-radius:10px; padding:1.2rem; box-shadow:0 2px 8px rgba(0,0,0,.06); border-top:4px solid #B8D89C">
+          <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem">
+            <span style="background:#B8D89C; color:#3B5C3F; font-weight:bold; font-size:.75rem; padding:.15rem .5rem; border-radius:4px">🛠 補助</span>
+            <span style="font-size:.75rem; color:var(--muted)">普段使いのナビアプリで十分</span>
+          </div>
+          <h4 style="margin:.3rem 0; font-size:1.05rem; color:var(--forest)">Yahoo!カーナビ / Google Maps</h4>
+          <p style="margin:.4rem 0 .8rem 0; font-size:.85rem; line-height:1.5; color:var(--dark-text)">JARTIC情報を活用する民間ナビアプリ。<strong>Yahoo!カーナビは渋滞時の自動迂回ルート提案が優秀</strong>。Google Mapsは到着時刻の精度が高い。普段使い慣れたアプリでもOK。</p>
+          <div style="display:flex; flex-direction:column; gap:.4rem; font-size:.85rem">
+            <a href="https://car.yahoo.co.jp/navi/" target="_blank" rel="noopener" style="background:#3B5C3F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center">📱 Yahoo!カーナビ →</a>
+            <a href="https://roadway.yahoo.co.jp/traffic/road/1039006/list" target="_blank" rel="noopener" style="background:#6FA86F; color:white; padding:.5rem .8rem; border-radius:6px; text-decoration:none; text-align:center">🌐 Yahoo!道路交通情報 →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 走行中のラジオ補助 -->
+      <div style="margin-top:1.2rem; padding:.9rem 1rem; background:rgba(59,92,63,.08); border-radius:8px; border-left:3px solid var(--forest); display:flex; gap:.8rem; align-items:flex-start">
+        <span style="font-size:1.5rem; flex-shrink:0">📻</span>
+        <div>
+          <div style="font-weight:bold; color:var(--forest); font-size:.95rem">走行中の補助:ハイウェイラジオ AM 1620kHz</div>
+          <div style="font-size:.85rem; color:var(--dark-text); margin-top:.2rem; line-height:1.5">スマホを見られない運転中の即時情報源。SA到着時間の30分前から自動的に流れる。Driver単独運転時の頼れる情報源。</div>
+        </div>
+      </div>
+
+      <!-- 使い分けチートシート -->
+      <details style="margin-top:1rem; padding:.9rem 1rem; background:white; border-radius:8px; border:1px solid var(--border)">
+        <summary style="cursor:pointer; font-weight:bold; color:var(--forest); font-size:.95rem">⏱ タイミング別の使い分けチートシート(タップで展開)</summary>
+        <div style="margin-top:1rem; overflow-x:auto">
+          <table style="width:100%; border-collapse:collapse; font-size:.85rem">
+            <thead style="background:rgba(111,168,111,.15)">
+              <tr>
+                <th style="padding:.5rem; text-align:left; border:1px solid var(--border)">タイミング</th>
+                <th style="padding:.5rem; text-align:left; border:1px solid var(--border)">推奨ソース</th>
+                <th style="padding:.5rem; text-align:left; border:1px solid var(--border)">用途</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>出発前夜・5/3夜</strong></td>
+                <td style="padding:.5rem; border:1px solid var(--border)">ドラぷら GW渋滞予測</td>
+                <td style="padding:.5rem; border:1px solid var(--border)">5/4のピーク時間を確認・出発時刻調整</td>
+              </tr>
+              <tr style="background:rgba(245,167,160,.05)">
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>出発当日朝・5/4 7時頃</strong></td>
+                <td style="padding:.5rem; border:1px solid var(--border)">JARTIC + iHighway</td>
+                <td style="padding:.5rem; border:1px solid var(--border)">出発時のリアルタイム状況確認</td>
+              </tr>
+              <tr>
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>横川SA④・11:30頃</strong></td>
+                <td style="padding:.5rem; border:1px solid var(--border)">JARTIC + iHighway</td>
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>★メイン/サブルート分岐判断ポイント</strong></td>
+              </tr>
+              <tr style="background:rgba(245,167,160,.05)">
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>走行中(運転継続)</strong></td>
+                <td style="padding:.5rem; border:1px solid var(--border)">📻 ハイウェイラジオ 1620kHz</td>
+                <td style="padding:.5rem; border:1px solid var(--border)">スマホを見られない時の即時情報</td>
+              </tr>
+              <tr>
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>松本IC手前・5/6 13:00頃</strong></td>
+                <td style="padding:.5rem; border:1px solid var(--border)">iHighway + JARTIC</td>
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>★復路メイン/サブ分岐判断</strong></td>
+              </tr>
+              <tr style="background:rgba(111,168,111,.05)">
+                <td style="padding:.5rem; border:1px solid var(--border)"><strong>SA停車中</strong></td>
+                <td style="padding:.5rem; border:1px solid var(--border)">iHighway マイルート通知</td>
+                <td style="padding:.5rem; border:1px solid var(--border)">プッシュ通知で渋滞発生をいち早く把握</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
   </div>
 </section>
 
