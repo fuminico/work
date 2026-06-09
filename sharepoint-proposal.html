@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SharePoint 統合イントラサイト構築 初期方針案 — 武蔵野美術大学</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f1fb;
+    --accent: #e67e22;
+    --green: #27ae60;
+    --red: #c0392b;
+    --gray: #f5f6f8;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+    --tab-h: 52px;
+    --header-h: 72px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.75;
+  }
+
+  /* ─── ヘッダー ─── */
+  .page-header {
+    background: var(--primary); color: #fff;
+    padding: 0 32px;
+    height: var(--header-h);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .draft { font-size: 12px; opacity: .65; margin-top: 2px; }
+
+  /* ─── タブバー ─── */
+  .tab-bar {
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+    display: flex; overflow-x: auto;
+    position: sticky; top: var(--header-h); z-index: 100;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 0 22px;
+    height: var(--tab-h);
+    font-size: 13px; font-weight: 600;
+    color: var(--muted);
+    border: none; background: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--primary); }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .tab-btn .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--primary-light); color: var(--primary);
+    font-size: 11px; margin-right: 7px;
+  }
+  .tab-btn.active .num { background: var(--primary); color: #fff; }
+
+  /* ─── コンテンツ ─── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .content { max-width: 780px; margin: 0 auto; padding: 36px 28px 80px; }
+
+  /* ─── コンポーネント ─── */
+  .panel-title {
+    font-size: 20px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  h3 { font-size: 15px; font-weight: 700; margin: 22px 0 8px; }
+
+  .card {
+    background: var(--gray); border-radius: 10px;
+    padding: 18px 22px; margin: 12px 0;
+  }
+  .card.primary { background: var(--primary-light); border-left: 4px solid var(--primary); }
+  .card.green   { background: #e8f8f0; border-left: 4px solid var(--green); }
+  .card.orange  { background: #fef5ec; border-left: 4px solid var(--accent); }
+  .card.red     { background: #fdf0ee; border-left: 4px solid var(--red); }
+  .card-title   { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th { background: var(--primary); color: #fff; padding: 9px 12px; text-align: left; font-weight: 600; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--primary-light); }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .b-red    { background: #fdf0ee; color: var(--red); }
+  .b-orange { background: #fef5ec; color: var(--accent); }
+  .b-gray   { background: #eef0f3; color: #555; }
+  .b-green  { background: #e8f8f0; color: var(--green); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  .cmp-card { border-radius: 8px; padding: 16px 18px; border: 1px solid var(--border); background: #fff; }
+  .cmp-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 10px; }
+  .cmp-card ul { list-style: none; }
+  .cmp-card ul li { padding: 3px 0; font-size: 14px; }
+  .cmp-card ul li::before { content: '・'; color: var(--muted); }
+
+  .flow {
+    background: #1e293b; color: #e2e8f0;
+    border-radius: 8px; padding: 18px 20px;
+    font-family: monospace; font-size: 13px;
+    line-height: 1.8; margin: 12px 0;
+    white-space: pre; overflow-x: auto;
+  }
+
+  .phase { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .phase:last-child { border-bottom: none; }
+  .phase-lbl {
+    min-width: 96px; text-align: center;
+    background: var(--primary); color: #fff;
+    padding: 7px 10px; border-radius: 6px;
+    font-size: 13px; font-weight: 700; line-height: 1.4;
+  }
+  .phase-lbl small { display: block; font-weight: 400; font-size: 11px; opacity: .85; }
+  .phase-lbl.g { background: var(--green); }
+  .phase-lbl.o { background: var(--accent); }
+  .phase-body ul { padding-left: 18px; font-size: 14px; color: var(--muted); }
+  .phase-body strong { display: block; margin-bottom: 4px; }
+
+  .q-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--border); margin-bottom: 8px; background: #fff; }
+  .q-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .q-body strong { display: block; font-size: 14px; }
+  .q-body span { font-size: 13px; color: var(--muted); }
+
+  .checklist { list-style: none; margin: 8px 0; }
+  .checklist li { display: flex; gap: 10px; padding: 9px 12px; border-radius: 6px; background: var(--gray); margin-bottom: 6px; font-size: 14px; align-items: flex-start; }
+  .checklist li .ic { flex-shrink: 0; font-size: 16px; }
+  .checklist li .bd strong { display: block; }
+  .checklist li .bd span { color: var(--muted); font-size: 13px; }
+
+  p { margin: 8px 0; font-size: 14px; }
+  ul.ul { padding-left: 20px; margin: 8px 0; }
+  ul.ul li { font-size: 14px; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div class="h1-wrap" style="font-size:17px;font-weight:700">SharePoint 統合イントラサイト構築 初期方針案</div>
+    <div class="draft">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月4日 ドラフト</div>
+  </div>
+</div>
+
+<div class="tab-bar" id="tabs">
+  <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>概要・目的</button>
+  <button class="tab-btn" onclick="show(1)"><span class="num">2</span>設計方針</button>
+  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>サイト構成案</button>
+  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>Garoon対応表</button>
+  <button class="tab-btn" onclick="show(4)"><span class="num">5</span>進め方（フェーズ）</button>
+  <button class="tab-btn" onclick="show(5)"><span class="num">6</span>ワークフロー</button>
+  <button class="tab-btn" onclick="show(6)"><span class="num">7</span>ご確認事項</button>
+</div>
+
+<!-- ===== Panel 0: 概要 ===== -->
+<div class="tab-panel active" id="p0">
+<div class="content">
+  <div class="panel-title">概要・目的</div>
+
+  <div class="card primary">
+    <div class="card-title">この資料について</div>
+    <p>Garoon（maunet.）からMicrosoft 365への移行にあたり、SharePointをどのように活用するかの初期方針をまとめたものです。来週の定例でご確認・ご意見をいただきたい内容を整理しています。</p>
+  </div>
+
+  <h3>SharePointの現在地</h3>
+  <div class="grid2">
+    <div class="cmp-card" style="border-left:3px solid var(--red)">
+      <div class="cmp-title">今あるもの（手をつけない）</div>
+      <ul>
+        <li>Teamsチーム作成時に自動生成されたサイトが多数存在</li>
+        <li>各チームの業務ファイルなどが保存されている</li>
+        <li>今回の作業対象ではない</li>
+      </ul>
+    </div>
+    <div class="cmp-card" style="border-left:3px solid var(--green)">
+      <div class="cmp-title">今回 新しく作るもの</div>
+      <ul>
+        <li>全教職員が使う「統合イントラサイト」を1つ新規作成</li>
+        <li>Garoon・Googleに分散している情報発信を集約</li>
+        <li>いわゆる「職員ポータル」にあたるもの</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card orange" style="margin-top:16px">
+    <div class="card-title">ひとことで言うと</div>
+    <p>Garoonの掲示板・回覧板・文書管理の置き換え先となる、全教職員向けの情報発信基地を新しく構築します。</p>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 1: 設計方針 ===== -->
+<div class="tab-panel" id="p1">
+<div class="content">
+  <div class="panel-title">設計の基本方針</div>
+
+  <ul class="checklist">
+    <li>
+      <span class="ic">①</span>
+      <div class="bd"><strong>シンプルに始める</strong><span>複雑な構成は避け、最小限の形で動かす。使いながら少しずつ拡張していく。</span></div>
+    </li>
+    <li>
+      <span class="ic">②</span>
+      <div class="bd"><strong>権限はグループ単位で管理する</strong><span>個人への権限付与は原則行わず、「教員グループ」「職員グループ」「学生グループ」の単位で管理する。</span></div>
+    </li>
+    <li>
+      <span class="ic">③</span>
+      <div class="bd"><strong>ファイルサーバーとは共存する</strong><span>既存の共有ファイルサーバーはすぐに廃止しない。SharePointは「情報発信・共有」の場として活用し、段階的に移行していく。</span></div>
+    </li>
+  </ul>
+
+  <h3>ファイルサーバーとSharePointの使い分け（現時点の想定）</h3>
+  <table>
+    <tr><th>保存先</th><th>向いている用途</th></tr>
+    <tr><td><strong>共有ファイルサーバー</strong></td><td>機密性の高い情報・長期保存が必要な公式文書</td></tr>
+    <tr><td><strong>SharePoint</strong></td><td>部署間の情報共有・回覧板コンテンツ・作業中のファイル</td></tr>
+    <tr><td><strong>OneDrive</strong></td><td>個人の作業ファイル・草稿</td></tr>
+  </table>
+
+  <h3>権限グループの整備（Entra IDグループ）</h3>
+  <table>
+    <tr><th>グループ</th><th>対象者</th><th>SharePointでの使い方</th></tr>
+    <tr><td>職員グループ</td><td>専任・嘱託・派遣職員</td><td>職員向けサイトの閲覧・編集</td></tr>
+    <tr><td>教員グループ</td><td>専任・非常勤教員（〜1,000名）</td><td>教職員共通サイトの閲覧</td></tr>
+    <tr><td>学生グループ</td><td>学生</td><td>（将来的に）公開コンテンツのみ閲覧</td></tr>
+  </table>
+  <div class="card orange"><p>教員グループはまだEntra ID（M365の管理基盤）上で整備されていないため、SharePoint構築と並行して設定が必要です。</p></div>
+</div>
+</div>
+
+<!-- ===== Panel 2: サイト構成 ===== -->
+<div class="tab-panel" id="p2">
+<div class="content">
+  <div class="panel-title">サイト構成案</div>
+
+  <div class="flow">統合イントラサイト（武蔵野美術大学 職員ポータル）
+│
+├─ 🏠 ホーム
+│   ├─ 最新のお知らせ（ニュースフィード）
+│   ├─ 重要なリンク集（各種業務システムへのリンク）
+│   └─ 今週の予定・イベント
+│
+├─ 📢 お知らせ・回覧
+│   ├─ 全学向けお知らせ（全教職員）
+│   ├─ 職員向けお知らせ（職員のみ）
+│   └─ 部署からのお知らせ
+│
+├─ 📁 規程・マニュアル
+│   ├─ 学内規程集
+│   ├─ 情報セキュリティポリシー・マニュアル
+│   └─ 各種申請書・様式ダウンロード
+│
+└─ 🔗 リンク集・ポータル
+    ├─ X-point・LiveCampus等の業務システム
+    └─ よく使うツール一覧</div>
+
+  <h3>誰が何をできるか（権限設計）</h3>
+  <table>
+    <tr><th>役割</th><th>対象者</th><th>できること</th></tr>
+    <tr><td>サイト管理者</td><td>情報管理担当</td><td>サイト全体の管理・設定変更</td></tr>
+    <tr><td>投稿者</td><td>各部署の担当者</td><td>お知らせ・ドキュメントの投稿・編集</td></tr>
+    <tr><td>閲覧者（教職員）</td><td>全教職員</td><td>閲覧のみ</td></tr>
+    <tr><td>（将来）学生</td><td>公開コンテンツのみ対象</td><td>閲覧のみ</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ===== Panel 3: Garoon対応 ===== -->
+<div class="tab-panel" id="p3">
+<div class="content">
+  <div class="panel-title">Garoon（maunet.）との対応表</div>
+
+  <table>
+    <tr><th>Garoonの機能</th><th>SharePointでの代替方法</th><th>優先度</th></tr>
+    <tr>
+      <td>掲示板・回覧板（全学向け）</td>
+      <td>SharePointニュース機能（見やすくレイアウトできる）</td>
+      <td><span class="badge b-red">優先対応</span></td>
+    </tr>
+    <tr>
+      <td>掲示板（職員向け）</td>
+      <td>SharePointニュース（表示対象を職員グループに限定）</td>
+      <td><span class="badge b-red">優先対応</span></td>
+    </tr>
+    <tr>
+      <td>文書管理（規程・マニュアル）</td>
+      <td>SharePointドキュメントライブラリ</td>
+      <td><span class="badge b-orange">順次対応</span></td>
+    </tr>
+    <tr>
+      <td>リンク集・各種ページ</td>
+      <td>SharePointページ（リンクカード形式）</td>
+      <td><span class="badge b-orange">順次対応</span></td>
+    </tr>
+    <tr>
+      <td>スケジュール・施設予約</td>
+      <td>Outlookカレンダー（SharePointとは別）</td>
+      <td>メール移行後に対応</td>
+    </tr>
+    <tr>
+      <td>ワークフロー（申請フロー）</td>
+      <td>別途検討（「ワークフロー」タブを参照）</td>
+      <td><span class="badge b-gray">別途検討</span></td>
+    </tr>
+  </table>
+
+  <div class="card primary" style="margin-top:20px">
+    <div class="card-title">Garoonはいつまで使うか</div>
+    <p>Garoonは今年度末（2026年度末）まで継続利用します。SharePointへの移行は、機能ごとに準備ができたものから順次切り替えていく方針です。一気に切り替えるのではなく、段階的に進めます。</p>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 4: フェーズ ===== -->
+<div class="tab-panel" id="p4">
+<div class="content">
+  <div class="panel-title">進め方（フェーズ案）</div>
+
+  <div class="phase">
+    <div class="phase-lbl">Phase 1<small>6〜7月</small></div>
+    <div class="phase-body">
+      <strong>サイトの骨格を作る</strong>
+      <ul>
+        <li>統合イントラサイトを1つ作成。ホームページ・お知らせ機能・規程集ページの実装</li>
+        <li>権限グループの整備（教員グループ・職員グループの設定）</li>
+        <li>1〜2部署でのパイロット（試験運用）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="phase-lbl g">Phase 2<small>8〜9月</small></div>
+    <div class="phase-body">
+      <strong>全学展開</strong>
+      <ul>
+        <li>Garoonの掲示板コンテンツをSharePointに移行開始</li>
+        <li>各部署の投稿担当者に操作方法を案内</li>
+        <li>リンク集・業務システムへのポータル整備</li>
+        <li>スマートフォンからの動作確認</li>
+      </ul>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="phase-lbl o">Phase 3<small>年度末に向けて</small></div>
+    <div class="phase-body">
+      <strong>Garoon廃止に向けた最終整備</strong>
+      <ul>
+        <li>Garoonの情報発信機能をSharePointに完全移行</li>
+        <li>移行完了後にGaroon停止</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card green" style="margin-top:16px">
+    <div class="card-title">まず進めること（Phase 1）</div>
+    <p>まず全学ポータルとなるサイトの土台を1つ作ることから始めます。試験的に1〜2部署に使ってもらい、使い勝手を確認しながら改善していきます。</p>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 5: ワークフロー ===== -->
+<div class="tab-panel" id="p5">
+<div class="content">
+  <div class="panel-title">ワークフロー（申請フロー）の移行について</div>
+
+  <div class="card orange">
+    <div class="card-title">現状の認識</div>
+    <p>Garoon上には約100個の申請ワークフローがあり、移行先は現時点では未確定です。SharePointには申請・承認フローを作る機能はありますが、<strong>操作が複雑で現場担当者には使いづらい</strong>という課題があります。</p>
+  </div>
+
+  <h3>考えられる選択肢</h3>
+  <table>
+    <tr><th>候補</th><th>メリット</th><th>デメリット</th></tr>
+    <tr>
+      <td>Microsoft標準機能（Power Automate等）</td>
+      <td>追加費用なし（M365ライセンスに含まれる）</td>
+      <td>設計が複雑。IT担当者が常に関与する必要がある</td>
+    </tr>
+    <tr>
+      <td><strong>M365向け専用ワークフローアドオン</strong><br><small>（ネクストセット社製など）</small></td>
+      <td>Garoonに近い使い勝手。現場担当者が自分で操作できる</td>
+      <td>別途ライセンス費用が発生する</td>
+    </tr>
+  </table>
+
+  <div class="card green">
+    <div class="card-title">提案</div>
+    <p>操作性と現場への定着を重視するなら、専用のワークフローアドオン導入の検討をお勧めします。まず現在Garoon上で動いている約100個のワークフローの一覧を整理し、優先順位をつけた上でツールを選定する流れが現実的です。</p>
+  </div>
+
+  <h3>移行の流れ（段階的）</h3>
+  <table>
+    <tr><th>ステップ</th><th>内容</th></tr>
+    <tr><td>Step 1</td><td>約100個のワークフローを一覧化。種類・申請頻度・承認者を整理する</td></tr>
+    <tr><td>Step 2</td><td>優先順位の高いものから着手順を決める</td></tr>
+    <tr><td>Step 3</td><td>ツール選定を協議（コスト・機能比較）</td></tr>
+    <tr><td>Step 4</td><td>優先度の高いフローから順に新ツールで実装・テスト・切り替え</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:13px;margin-top:8px">Garoonは年度末まで継続利用のため、移行は急がず段階的に進めます。</p>
+</div>
+</div>
+
+<!-- ===== Panel 6: 確認事項 ===== -->
+<div class="tab-panel" id="p6">
+<div class="content">
+  <div class="panel-title">ご確認・ご意見をいただきたい点</div>
+
+  <div class="q-item">
+    <div class="q-num">1</div>
+    <div class="q-body">
+      <strong>「統合イントラサイトを1つ作る」という方向性でよいか</strong>
+      <span>部署ごとに個別のサイトを作る案もあるが、まず全員が使うポータルを1つ作ることを優先したい。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">2</div>
+    <div class="q-body">
+      <strong>試験的に先行して進める部署はどこがよいか</strong>
+      <span>Phase 1でパイロット的に1〜2部署を先行して構築・確認したい。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">3</div>
+    <div class="q-body">
+      <strong>お知らせ・回覧の投稿者を誰にするか</strong>
+      <span>各部署の担当者が自由に投稿できる形か、申請制にするか。Garoonでの運用に近い形が望ましいか。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">4</div>
+    <div class="q-body">
+      <strong>Garoonの文書・記事をどこまで移行するか</strong>
+      <span>過去の掲示板記事やファイルの移行が必要か。新規コンテンツから始めるほうがシンプル。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">5</div>
+    <div class="q-body">
+      <strong>ワークフロー（申請フロー）の移行をどのように進めるか</strong>
+      <span>専用ツール導入の検討を含め、今後のアプローチを確認したい。</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function show(n) {
+  document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === n));
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams 利用ルール整備 進め方案 — 武蔵野美術大学</title>
+<style>
+  :root {
+    --primary: #1a7a4a;
+    --primary-light: #e6f4ec;
+    --accent: #e67e22;
+    --blue: #2563eb;
+    --red: #c0392b;
+    --gray: #f5f6f8;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+    --tab-h: 52px;
+    --header-h: 72px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.75;
+  }
+
+  .page-header {
+    background: var(--primary); color: #fff;
+    padding: 0 32px;
+    height: var(--header-h);
+    display: flex; align-items: center;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .draft { font-size: 12px; opacity: .65; margin-top: 2px; }
+
+  .tab-bar {
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+    display: flex; overflow-x: auto;
+    position: sticky; top: var(--header-h); z-index: 100;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 0 22px;
+    height: var(--tab-h);
+    font-size: 13px; font-weight: 600;
+    color: var(--muted);
+    border: none; background: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--primary); }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .tab-btn .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--primary-light); color: var(--primary);
+    font-size: 11px; margin-right: 7px;
+  }
+  .tab-btn.active .num { background: var(--primary); color: #fff; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .content { max-width: 780px; margin: 0 auto; padding: 36px 28px 80px; }
+
+  .panel-title {
+    font-size: 20px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  h3 { font-size: 15px; font-weight: 700; margin: 22px 0 8px; }
+
+  .card { background: var(--gray); border-radius: 10px; padding: 18px 22px; margin: 12px 0; }
+  .card.primary { background: var(--primary-light); border-left: 4px solid var(--primary); }
+  .card.orange  { background: #fef5ec; border-left: 4px solid var(--accent); }
+  .card.blue    { background: #eff6ff; border-left: 4px solid var(--blue); }
+  .card.red     { background: #fdf0ee; border-left: 4px solid var(--red); }
+  .card.green   { background: var(--primary-light); border-left: 4px solid var(--primary); }
+  .card-title   { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th { background: var(--primary); color: #fff; padding: 9px 12px; text-align: left; font-weight: 600; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--primary-light); }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .b-red    { background: #fdf0ee; color: var(--red); }
+  .b-orange { background: #fef5ec; color: var(--accent); }
+  .b-green  { background: var(--primary-light); color: var(--primary); }
+  .b-gray   { background: #eef0f3; color: #555; }
+
+  /* 3段階 */
+  .stage { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .stage-lbl { min-width: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; font-weight: 700; font-size: 14px; text-align: center; line-height: 1.4; }
+  .stage-lbl small { display: block; font-weight: 400; font-size: 11px; margin-top: 4px; opacity: .85; }
+  .stage-lbl.s1 { background: var(--red); color: #fff; }
+  .stage-lbl.s2 { background: var(--accent); color: #fff; }
+  .stage-lbl.s3 { background: var(--blue); color: #fff; }
+  .stage-body { padding: 16px 20px; flex: 1; background: #fff; }
+  .stage-body strong { display: block; font-size: 15px; margin-bottom: 6px; }
+  .stage-body ul { padding-left: 18px; font-size: 14px; color: var(--muted); }
+  .stage-body ul li { margin-bottom: 3px; }
+  .stage-effort { display: inline-block; font-size: 12px; background: var(--gray); padding: 2px 10px; border-radius: 999px; margin-top: 8px; color: var(--muted); }
+
+  /* 仕分け */
+  .triage { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .tr-card { border-radius: 8px; padding: 14px 16px; border-top: 4px solid transparent; }
+  .tr-card.t1 { border-top-color: var(--red); background: #fdf0ee; }
+  .tr-card.t2 { border-top-color: var(--accent); background: #fef5ec; }
+  .tr-card.t3 { border-top-color: var(--primary); background: var(--primary-light); }
+  .tr-card .t-lbl { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .tr-card .t-cond { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .tr-card .t-act { font-size: 13px; font-weight: 600; }
+
+  /* ルール */
+  .rule-box { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin: 12px 0; }
+  .rule-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); background: #fff; }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-ic { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .rule-body strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .rule-body span { font-size: 13px; color: var(--muted); }
+
+  /* 確認 */
+  .q-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--border); margin-bottom: 8px; background: #fff; }
+  .q-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .q-body strong { display: block; font-size: 14px; }
+  .q-body span { font-size: 13px; color: var(--muted); }
+
+  p { margin: 8px 0; font-size: 14px; }
+  ul.ul { padding-left: 20px; margin: 8px 0; }
+  ul.ul li { font-size: 14px; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div style="font-size:17px;font-weight:700">Teams 利用ルール整備 進め方案</div>
+    <div class="draft">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月4日 ドラフト</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>概要・課題</button>
+  <button class="tab-btn" onclick="show(1)"><span class="num">2</span>3段階アプローチ</button>
+  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>チーム作成ルール案</button>
+  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>既存チームの棚卸し</button>
+  <button class="tab-btn" onclick="show(4)"><span class="num">5</span>スケジュール</button>
+  <button class="tab-btn" onclick="show(5)"><span class="num">6</span>ご確認事項</button>
+</div>
+
+<!-- ===== Panel 0: 概要 ===== -->
+<div class="tab-panel active" id="p0">
+<div class="content">
+  <div class="panel-title">概要・現状の課題</div>
+
+  <div class="card primary">
+    <div class="card-title">この資料について</div>
+    <p>Teams上では多数のチームが整理されないまま存在しており、ルールがない状態で利用が続いています。この状況に対してどのように対処していくかの進め方をまとめています。</p>
+  </div>
+
+  <h3>現在の課題</h3>
+  <table>
+    <tr><th>課題</th><th>現在の状況</th></tr>
+    <tr><td>チームの乱立</td><td>ルールなしに作成が続き、多数のチームが積み上がっている</td></tr>
+    <tr><td>セキュリティリスク</td><td>過去に「パブリック（公開）」設定のチームから情報が漏れる事故が発生済み。見直しが必要なチームが残っている可能性がある</td></tr>
+    <tr><td>ルールの不在</td><td>チームの作り方・チャンネルの使い方・ファイルの保存方法が各チームでバラバラ</td></tr>
+    <tr><td>情報の分散</td><td>共有ファイルサーバー・Teams・個人OneDriveにファイルが散らばり、どこに何があるかわかりにくい</td></tr>
+  </table>
+
+  <div class="card red">
+    <div class="card-title">放置すると起きること</div>
+    <ul class="ul">
+      <li>将来的にCopilot（AI機能）を全員に展開しようとしたとき、整理されていない情報をAIが参照してしまい、意図しない情報が出てくるリスクがある</li>
+      <li>チームが増え続けることで、管理コストがさらに上がる</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 1: 3段階 ===== -->
+<div class="tab-panel" id="p1">
+<div class="content">
+  <div class="panel-title">3段階アプローチ</div>
+
+  <div class="card orange">
+    <div class="card-title">基本的な考え方</div>
+    <p>数千件のチームをすべて一気に整理しようとすることは現実的ではありません。<strong>セキュリティ上のリスクがあるものだけ今すぐ対処し</strong>、新しいルールを整えることで今後の悪化を止め、残りは時間をかけて整理していく3段階のアプローチを提案します。</p>
+  </div>
+
+  <div class="stage">
+    <div class="stage-lbl s1">第1段階<small>今すぐ対応</small></div>
+    <div class="stage-body">
+      <strong>セキュリティ上のリスクだけを先に解消する</strong>
+      <ul>
+        <li>「パブリック（公開）」設定のチームを全て特定し、プライベートに変更する</li>
+        <li>管理者（オーナー）がいなくなったチームをリストアップする</li>
+      </ul>
+      <span class="stage-effort">工数目安: 2〜4時間</span>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-lbl s2">第2段階<small>6月中</small></div>
+    <div class="stage-body">
+      <strong>「これ以上増やさない」ルールを作る</strong>
+      <ul>
+        <li>チームを作るときの基準・命名規則を決める</li>
+        <li>新しく作るチームはすべてこのルールに従う</li>
+        <li>既存チームへはまだ強制しない</li>
+      </ul>
+      <span class="stage-effort">工数目安: 1〜2週間（合意形成含む）</span>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-lbl s3">第3段階<small>8月以降・緩やかに</small></div>
+    <div class="stage-body">
+      <strong>古いチームを少しずつ整理する</strong>
+      <ul>
+        <li>1年以上使われていないチームをリストアップ</li>
+        <li>オーナーに「このチームまだ必要ですか？」と確認メールを送る</li>
+        <li>返答がなければアーカイブ（削除ではなく読み取り専用状態にする）</li>
+      </ul>
+      <span class="stage-effort">工数目安: 月1〜2時間のペースで継続</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 2: チーム作成ルール ===== -->
+<div class="tab-panel" id="p2">
+<div class="content">
+  <div class="panel-title">チーム作成ルール案（第2段階）</div>
+
+  <h3>チームの種類と作れる人</h3>
+  <table>
+    <tr><th>チームの種類</th><th>目的・使い方</th><th>作れる人</th></tr>
+    <tr>
+      <td><strong>部署チーム</strong></td>
+      <td>部署内の業務連絡・ファイル共有</td>
+      <td>各部署の担当者（確認制を推奨）</td>
+    </tr>
+    <tr>
+      <td><strong>プロジェクトチーム</strong></td>
+      <td>特定プロジェクト・タスクフォース</td>
+      <td>プロジェクトリーダー（申請制を推奨）</td>
+    </tr>
+    <tr>
+      <td><strong>授業チーム</strong></td>
+      <td>授業・ゼミ（学生との双方向）</td>
+      <td>教員（「クラス」機能を使用）</td>
+    </tr>
+    <tr>
+      <td><strong>全学・組織横断チーム</strong></td>
+      <td>全教職員向けの情報共有</td>
+      <td>情報管理担当のみ</td>
+    </tr>
+  </table>
+
+  <h3>チーム名のつけ方（命名規則案）</h3>
+  <div class="card">
+    <div class="card-title">形式: 〔部署名・プロジェクト名〕＿〔用途〕＿〔年度〕</div>
+    <p><strong>例:</strong></p>
+    <ul class="ul" style="margin-top:6px">
+      <li>事務局_総務チーム_2026</li>
+      <li>入試_出願システム移行PJ_2026</li>
+      <li>授業_デザイン基礎01_2026（授業チームはTeamsの「クラス」機能を使用）</li>
+    </ul>
+  </div>
+
+  <h3>必ず守るルール</h3>
+  <div class="rule-box">
+    <div class="rule-item">
+      <span class="rule-ic">🔒</span>
+      <div class="rule-body">
+        <strong>チームは必ず「プライベート」設定で作成する</strong>
+        <span>「パブリック（公開）」設定は使用禁止。過去にこの設定が原因で情報漏洩が発生しました。</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-ic">📁</span>
+      <div class="rule-body">
+        <strong>業務ファイルはTeamsのファイルタブに保存する</strong>
+        <span>チャットへの添付（OneDrive保存）は、退職時にファイルが見えなくなるリスクがあります。</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-ic">🚫</span>
+      <div class="rule-body">
+        <strong>チャット本文に個人情報・機密情報を直接書かない</strong>
+        <span>成績・人事情報などはファイルに書いてTeams上で共有する形をとる。</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-ic">👤</span>
+      <div class="rule-body">
+        <strong>退職・異動時はオーナーの引き継ぎを必ず行う</strong>
+        <span>オーナー不在のチームは誰も管理できなくなってしまいます。</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 3: 棚卸し ===== -->
+<div class="tab-panel" id="p3">
+<div class="content">
+  <div class="panel-title">既存チームの棚卸しの進め方（第3段階）</div>
+
+  <h3>仕分けの基準</h3>
+  <div class="triage">
+    <div class="tr-card t1">
+      <div class="t-lbl">🔴 今すぐ対処</div>
+      <div class="t-cond">・「パブリック」設定のチーム<br>・オーナーが退職・異動済み</div>
+      <div class="t-act">→ 今すぐ設定変更またはオーナー設定</div>
+    </div>
+    <div class="tr-card t2">
+      <div class="t-lbl">🟡 確認する</div>
+      <div class="t-cond">・1年以上投稿がないチーム</div>
+      <div class="t-act">→ オーナーに確認メールを送付。返答なしはアーカイブ</div>
+    </div>
+    <div class="tr-card t3">
+      <div class="t-lbl">🟢 現状維持</div>
+      <div class="t-cond">・活発に使われているチーム</div>
+      <div class="t-act">→ 特に対処不要</div>
+    </div>
+  </div>
+
+  <h3>確認メールのテンプレート（案）</h3>
+  <div class="card" style="font-size:14px;line-height:1.7">
+    <p><strong>件名:</strong> [Teams] チームの継続利用確認のお願い</p>
+    <br>
+    <p>○○さん</p>
+    <p>情報管理担当です。Teamsの管理上、以下のチームの継続利用有無をご確認ください。</p>
+    <br>
+    <p>チーム名: 【チーム名】</p>
+    <br>
+    <p>□ 継続して利用している<br>
+    □ 不要なのでアーカイブしてよい<br>
+    □ 担当が変わったため、引き継ぎ先を別途連絡する</p>
+    <br>
+    <p>〇月〇日までにご回答がない場合、アーカイブ予定です。<br>（アーカイブ後も過去のファイル・メッセージは閲覧可能です）</p>
+  </div>
+
+  <div class="card blue" style="margin-top:16px">
+    <div class="card-title">「アーカイブ」とは（削除ではありません）</div>
+    <p>過去のメッセージやファイルは引き続き見られる状態にしたまま、新しい投稿だけをできなくする設定です。必要になれば元に戻すこともできます。</p>
+  </div>
+</div>
+</div>
+
+<!-- ===== Panel 4: スケジュール ===== -->
+<div class="tab-panel" id="p4">
+<div class="content">
+  <div class="panel-title">今後のスケジュール案</div>
+
+  <table>
+    <tr><th>時期</th><th>対応内容</th><th>担当</th></tr>
+    <tr>
+      <td><strong>今すぐ</strong></td>
+      <td>パブリック設定のチームを特定→プライベートに変更<br>オーナー不在チームのリストアップ</td>
+      <td>情報管理担当 + 三井田</td>
+    </tr>
+    <tr>
+      <td><strong>6月中</strong></td>
+      <td>チーム作成ルール・命名規則を合意・周知</td>
+      <td>三井田（案作成）→ 合意後に周知</td>
+    </tr>
+    <tr>
+      <td><strong>7月</strong></td>
+      <td>利用ガイドラインとして文書化</td>
+      <td>三井田</td>
+    </tr>
+    <tr>
+      <td><strong>8月以降</strong></td>
+      <td>全チームの一覧を取得し棚卸し開始<br>オーナーへの確認メール送付</td>
+      <td>情報管理担当（三井田サポート）</td>
+    </tr>
+    <tr>
+      <td><strong>9〜10月</strong></td>
+      <td>休眠チームをアーカイブ（順次）</td>
+      <td>情報管理担当</td>
+    </tr>
+    <tr>
+      <td><strong>年度末に向けて</strong></td>
+      <td>ライフサイクルポリシー（期限切れチームの自動管理）の導入を検討</td>
+      <td>三井田</td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<!-- ===== Panel 5: 確認事項 ===== -->
+<div class="tab-panel" id="p5">
+<div class="content">
+  <div class="panel-title">ご確認・ご意見をいただきたい点</div>
+
+  <div class="q-item">
+    <div class="q-num">1</div>
+    <div class="q-body">
+      <strong>チームの作成を「申請制」にするか、担当者の判断で作成できる形にするか</strong>
+      <span>申請制にするとコントロールしやすいが手間が増える。担当者判断にするとルール遵守の徹底が課題になる。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">2</div>
+    <div class="q-body">
+      <strong>授業チーム（教員が学生とやり取りするチーム）は自由に作ってよいか</strong>
+      <span>授業ごとに作ることが多いため、申請制にすると手続きが煩雑になる可能性がある。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">3</div>
+    <div class="q-body">
+      <strong>既存チームの棚卸し作業を開始するタイミング</strong>
+      <span>8月のメールシステム移行後が一つの区切りとして適切と考えているが、いかがか。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">4</div>
+    <div class="q-body">
+      <strong>オーナー不在のチームへの対応方針</strong>
+      <span>担当部署を特定して引き継ぎを依頼するか、情報管理担当が一括で判断するか。</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function show(n) {
+  document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === n));
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
