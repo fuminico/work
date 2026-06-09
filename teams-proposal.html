@@ -152,9 +152,10 @@
   <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>概要・課題</button>
   <button class="tab-btn" onclick="show(1)"><span class="num">2</span>3段階アプローチ</button>
   <button class="tab-btn" onclick="show(2)"><span class="num">3</span>チーム作成ルール案</button>
-  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>既存チームの棚卸し</button>
-  <button class="tab-btn" onclick="show(4)"><span class="num">5</span>スケジュール</button>
-  <button class="tab-btn" onclick="show(5)"><span class="num">6</span>ご確認事項</button>
+  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>クラスチームとCopilot</button>
+  <button class="tab-btn" onclick="show(4)"><span class="num">5</span>既存チームの棚卸し</button>
+  <button class="tab-btn" onclick="show(5)"><span class="num">6</span>スケジュール</button>
+  <button class="tab-btn" onclick="show(6)"><span class="num">7</span>ご確認事項</button>
 </div>
 
 <!-- ===== Panel 0: 概要 ===== -->
@@ -311,7 +312,124 @@
 </div>
 </div>
 
-<!-- ===== Panel 3: 棚卸し ===== -->
+<!-- ===== Panel 3: クラスチーム ===== -->
+<div class="tab-panel" id="p3">
+<div class="content">
+  <div class="panel-title">クラスチームとCopilotリスク</div>
+
+  <div class="card orange">
+    <div class="card-title">なぜクラスチームを別枠で説明するか</div>
+    <p>現在の9,000件超のチームの大半は「授業チーム（クラスチーム）」です。この機能は一般の業務チームと権限設計が大きく異なり、Copilot展開時に独自のリスクを持ちます。</p>
+  </div>
+
+  <h3>Teams のチームタイプ（4種類）</h3>
+  <table>
+    <tr><th>種類</th><th>用途</th><th>特徴</th></tr>
+    <tr>
+      <td><strong>クラス</strong><br><span style="font-size:12px;color:#1a7a4a">教育機関専用</span></td>
+      <td>授業・ゼミ</td>
+      <td>教員と学生の権限が非対称。課題・成績管理機能を内蔵</td>
+    </tr>
+    <tr>
+      <td><strong>標準</strong></td>
+      <td>部署・プロジェクト</td>
+      <td>全メンバーが対等。最も汎用的なタイプ</td>
+    </tr>
+    <tr>
+      <td><strong>PLC</strong><br><span style="font-size:12px;color:#1a7a4a">教育機関専用</span></td>
+      <td>教職員の勉強会・研究グループ</td>
+      <td>教員同士のコラボレーション向け</td>
+    </tr>
+    <tr>
+      <td><strong>スタッフ</strong><br><span style="font-size:12px;color:#1a7a4a">教育機関専用</span></td>
+      <td>職員チーム</td>
+      <td>管理者とメンバーの階層構造</td>
+    </tr>
+  </table>
+
+  <h3>クラスチームの特徴（標準チームとの違い）</h3>
+  <div class="rule-box">
+    <div class="rule-item">
+      <span class="rule-ic">🎓</span>
+      <div class="rule-body">
+        <strong>権限が非対称（教員と学生で異なる）</strong>
+        <span>教員（所有者）はすべての操作が可能。学生（メンバー）は教員が許可した操作のみ。デフォルトで他の学生のファイルにはアクセス不可。</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-ic">📝</span>
+      <div class="rule-body">
+        <strong>課題・成績管理が内蔵されている</strong>
+        <span>課題の配布・提出・採点・フィードバックがTeams内で完結。成績表（グレードブック）も管理できる。</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-ic">📓</span>
+      <div class="rule-body">
+        <strong>OneNote クラスノートブックとの連携</strong>
+        <span>チーム作成時に学生1人につき1冊のノートブックが自動生成される。教員は全学生のノートを閲覧・フィードバック可能。</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-ic">🎙️</span>
+      <div class="rule-body">
+        <strong>会議のコントロール権限が教員に集中</strong>
+        <span>教員が全学生をミュートにできる。学生側から会議を終了できないよう制限することも可能。</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>武蔵野美術大学での現状</h3>
+  <div class="card primary">
+    <div class="card-title">チームが9,000件を超えている主な理由</div>
+    <p>「1授業 = 1クラスチーム」の運用が毎年繰り返されている。過年度のチームがそのまま残り続けるため、チーム数が年々増加している。</p>
+    <div style="background:#fff;border-radius:6px;padding:12px 16px;margin-top:10px;font-size:13px;color:#555">
+      例）<br>
+      2023年度_デザイン基礎_1年A組　←　放置（過去のメッセージ・課題・録画が残存）<br>
+      2024年度_デザイン基礎_1年A組　←　放置<br>
+      2025年度_デザイン基礎_1年A組　←　現在使用中
+    </div>
+  </div>
+
+  <h3 style="color:var(--red)">⚠️ Copilot 展開時のリスク</h3>
+  <div class="card red">
+    <div class="card-title">整理されていないクラスチームがあると何が起こるか</div>
+    <ul class="ul">
+      <li><strong>過去の授業録画・チャット・提出課題</strong>がCopilotのナレッジとして参照される可能性がある</li>
+      <li>学生の課題・成績データは個人情報であり、秘密度ラベルが設定されていないチームでは<strong>情報漏洩リスクが高くなる</strong></li>
+      <li>卒業した学生のデータが整理されないまま残っており、アクセス制御が不明確</li>
+      <li>過年度チームが多いほど、AIが参照できる「意図していない情報の範囲」が広がる</li>
+    </ul>
+  </div>
+
+  <h3>Copilot展開前に確認・対処すべき事項</h3>
+  <table>
+    <tr><th>確認項目</th><th>リスクレベル</th><th>対応方針</th></tr>
+    <tr>
+      <td>クラスチームの秘密度ラベル設定状況</td>
+      <td><span class="badge b-red">高</span></td>
+      <td>未設定チームにデフォルトラベルを適用</td>
+    </tr>
+    <tr>
+      <td>卒業生アカウントのライセンス剥奪タイミング</td>
+      <td><span class="badge b-red">高</span></td>
+      <td>卒業後のアクセス権を明確化</td>
+    </tr>
+    <tr>
+      <td>過年度クラスチームのアーカイブ</td>
+      <td><span class="badge b-orange">中</span></td>
+      <td>1年以上未使用のものを順次アーカイブ</td>
+    </tr>
+    <tr>
+      <td>クラスチーム作成権限の付与範囲</td>
+      <td><span class="badge b-orange">中</span></td>
+      <td>教員全員か、申請制かを決定</td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<!-- ===== Panel 4: 棚卸し ===== -->
 <div class="tab-panel" id="p3">
 <div class="content">
   <div class="panel-title">既存チームの棚卸しの進め方（第3段階）</div>
@@ -430,6 +548,27 @@
     <div class="q-body">
       <strong>オーナー不在のチームへの対応方針</strong>
       <span>担当部署を特定して引き継ぎを依頼するか、情報管理担当が一括で判断するか。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">5</div>
+    <div class="q-body">
+      <strong>クラスチームの作成権限は誰に付与されているか</strong>
+      <span>現在、教員全員がクラスチームを自由に作成できる状態か。申請・承認フローはあるか。M365 A3ライセンスではデフォルトで全教員に権限が付与されている。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">6</div>
+    <div class="q-body">
+      <strong>卒業・修了後の学生アカウントの扱い</strong>
+      <span>卒業後にいつライセンスを剥奪しているか。過年度クラスチームに卒業生がメンバーとして残っているケースはあるか。Copilot展開前に整理が必要。</span>
+    </div>
+  </div>
+  <div class="q-item">
+    <div class="q-num">7</div>
+    <div class="q-body">
+      <strong>過年度クラスチームのアーカイブルールの有無</strong>
+      <span>現状、年度末に過年度チームをアーカイブ・削除する運用があるか。なければ今後Copilot展開の前提として整備が必要。</span>
     </div>
   </div>
 </div>
