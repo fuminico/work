@@ -153,7 +153,7 @@
 <div class="page-header">
   <div>
     <div class="h1-wrap" style="font-size:17px;font-weight:700">SharePoint 統合イントラサイト構築 初期方針案</div>
-    <div class="draft">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月4日 ドラフト</div>
+    <div class="draft">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月11日 更新（初版：6月4日）</div>
   </div>
 </div>
 
@@ -228,18 +228,165 @@
   <table>
     <tr><th>保存先</th><th>向いている用途</th></tr>
     <tr><td><strong>共有ファイルサーバー</strong></td><td>機密性の高い情報・長期保存が必要な公式文書</td></tr>
-    <tr><td><strong>SharePoint</strong></td><td>部署間の情報共有・回覧板コンテンツ・作業中のファイル</td></tr>
-    <tr><td><strong>OneDrive</strong></td><td>個人の作業ファイル・草稿</td></tr>
+    <tr><td><strong>SharePoint</strong></td><td>部署間の情報共有・回覧板コンテンツ・作業中のファイル。<strong>他者への共有ファイルはここから</strong></td></tr>
+    <tr><td><strong>OneDrive</strong></td><td>個人の作業ファイル・草稿のみ。共有URLでの送付は非推奨（後述）</td></tr>
   </table>
 
-  <h3>権限グループの整備（Entra IDグループ）</h3>
+  <div class="card red" style="margin-top:14px">
+    <div class="card-title">⚠️ メール移行（8月）に伴うOneDrive共有URLの無効化</div>
+    <p style="margin-bottom:8px">UPN変更（@fs.musabi.ac.jp → @musabi.ac.jp）が実施される8月のメール移行時に、<strong>OneDriveの個人フォルダから作成した共有URLはすべて無効化</strong>されます。チャットやメールで送付した共有リンクも機能しなくなります。</p>
+    <p><strong>推奨対応：</strong><br>
+    学内でファイルを共有する際は <strong>SharePoint ドキュメントライブラリ</strong>を使用してください。SharePointのサイトURLはUPN変更の影響を受けないため、移行後もリンクが継続して有効です。<br>
+    移行前に「ファイル共有はSharePointから」のルールを教職員に周知するタイミングとして活用します。</p>
+  </div>
+
+  <h3>Entra IDグループ設計案（ドラフト・2026-06-12）</h3>
+
+  <!-- ネストの概念説明 -->
+  <div class="card primary" style="margin-bottom:20px">
+    <div class="card-title">「グループの中にグループを入れる」設計（ネスト構造）</div>
+    <p style="margin-bottom:10px">Entra IDでは、グループの中に別のグループを入れること（ネスト）ができます。<br>例：「職員全体」グループの中に「専任職員」「派遣職員」「職卓職員」の3グループを入れる。</p>
+    <p><strong>これにより何が便利になるか：</strong><br>
+    「全職員向け」のお知らせを出したいとき、専任・派遣・職卓の3グループをバラバラに指定する必要がなく、<code>MAU_職員_全体</code> を一つ指定するだけで全員に届きます。<br>
+    逆に「専任職員だけ」のお知らせは <code>MAU_職員_専任</code> を指定すれば、派遣・職卓には届きません。</p>
+  </div>
+
+  <!-- ビジュアル階層図 -->
+  <style>
+    .grp-outer { border: 2px solid #1a56a0; border-radius: 10px; padding: 14px 16px; background: #e8f1fb; margin-bottom: 14px; }
+    .grp-outer-title { font-size: 13px; font-weight: 700; color: #1a56a0; margin-bottom: 4px; }
+    .grp-outer-sub { font-size: 11px; color: #6b7280; margin-bottom: 10px; }
+    .grp-cols { display: flex; gap: 12px; flex-wrap: wrap; }
+    .grp-col { flex: 1; min-width: 160px; }
+    .grp-mid { border: 2px solid #7a56d0; border-radius: 8px; padding: 10px 12px; background: #f5f0ff; margin-bottom: 0; }
+    .grp-mid-title { font-size: 12px; font-weight: 700; color: #5b3fb5; margin-bottom: 6px; }
+    .grp-mid-sub { font-size: 11px; color: #6b7280; margin-bottom: 8px; }
+    .grp-chips { display: flex; flex-direction: column; gap: 5px; }
+    .grp-chip { font-size: 11px; font-weight: 600; background: #fff; border: 1px solid #c4b5fd; border-radius: 5px; padding: 4px 8px; color: #4c1d95; }
+    .grp-chip.warn { border-color: #fbbf24; color: #92400e; background: #fffbeb; }
+    .grp-dept { border: 2px solid #059669; border-radius: 8px; padding: 10px 12px; background: #ecfdf5; }
+    .grp-dept-title { font-size: 12px; font-weight: 700; color: #065f46; margin-bottom: 6px; }
+    .grp-mfa { border: 2px solid #dc2626; border-radius: 8px; padding: 10px 12px; background: #fef2f2; margin-top: 12px; }
+    .grp-mfa-title { font-size: 12px; font-weight: 700; color: #991b1b; margin-bottom: 4px; }
+    .grp-count { display: inline-block; font-size: 10px; background: #1a56a0; color: #fff; padding: 1px 7px; border-radius: 999px; margin-left: 6px; font-weight: 600; }
+    .grp-count.purple { background: #7c3aed; }
+    .grp-count.green { background: #059669; }
+    .nest-arrow { font-size: 11px; color: #9ca3af; margin: 4px 0 4px 8px; }
+  </style>
+
+  <!-- 全体ボックス -->
+  <div class="grp-outer">
+    <div class="grp-outer-title">MAU_全教職員 <span class="grp-count">〜1,500名</span></div>
+    <div class="grp-outer-sub">全教職員が入る最上位グループ。イントラサイト全体の閲覧権限・全員向けお知らせに使用。</div>
+    <div class="grp-cols">
+
+      <!-- 職員 -->
+      <div class="grp-col">
+        <div class="grp-mid">
+          <div class="grp-mid-title">MAU_職員_全体 <span class="grp-count purple">〜350名</span></div>
+          <div class="grp-mid-sub">職員全員向けのお知らせ・MFAポリシー対象<br>（現在のClerk Usersグループの後継）</div>
+          <div class="nest-arrow">▼ この中に含まれるグループ</div>
+          <div class="grp-chips">
+            <div class="grp-chip">MAU_職員_専任 〜200名<br><span style="font-weight:400;color:#6b7280">専任職員のみへの通知・権限</span></div>
+            <div class="grp-chip">MAU_職員_派遣 〜50名<br><span style="font-weight:400;color:#6b7280">派遣職員向け通知</span></div>
+            <div class="grp-chip">MAU_職員_職卓 〜50名<br><span style="font-weight:400;color:#6b7280">職卓職員向け通知</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 教員 -->
+      <div class="grp-col">
+        <div class="grp-mid">
+          <div class="grp-mid-title">MAU_教員_全体 <span class="grp-count purple">〜1,000名</span></div>
+          <div class="grp-mid-sub">教員全員向けのお知らせ・権限設定</div>
+          <div class="nest-arrow">▼ この中に含まれるグループ</div>
+          <div class="grp-chips">
+            <div class="grp-chip">MAU_教員_常勤 〜200名<br><span style="font-weight:400;color:#6b7280">常勤教員向け通知（研究費・人事等）</span></div>
+            <div class="grp-chip warn">MAU_教員_非常勤講師 約800名<br><span style="font-weight:400;color:#92400e">⚠️ Garoon非参加・M365登録済み。通知範囲を大学側と要確認</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 部署グループ（別軸） -->
+  <div class="grp-dept">
+    <div class="grp-dept-title">部署グループ（別軸） <span class="grp-count green">各10〜50名 × 全部署数</span></div>
+    <p style="font-size:12px;color:#065f46;margin-bottom:8px">特定の部署だけにお知らせを出す・部署専用ページへのアクセス制御に使用。全教職員グループとは独立した軸。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="grp-chip" style="border-color:#6ee7b7;color:#065f46">MAU_部署_事務局総務</span>
+      <span class="grp-chip" style="border-color:#6ee7b7;color:#065f46">MAU_部署_学務</span>
+      <span class="grp-chip" style="border-color:#6ee7b7;color:#065f46">MAU_部署_入試センター</span>
+      <span class="grp-chip" style="border-color:#6ee7b7;color:#065f46">MAU_部署_キャリア</span>
+      <span class="grp-chip" style="border-color:#6ee7b7;color:#065f46;opacity:0.6">... 全部署（要一覧取得）</span>
+    </div>
+  </div>
+
+  <!-- MFA用グループ -->
+  <div class="grp-mfa">
+    <div class="grp-mfa-title">🔐 MFA・条件付きアクセス用グループ（別途管理）</div>
+    <p style="font-size:12px;color:#991b1b">SharePointの配信とは独立して、MFAポリシーに割り当てるグループを管理する。<br>
+    <code>MAU_MFA対象_職員</code>（現Clerk Users相当）、<code>MAU_MFA対象_教員</code>（メール移行8月後に順次展開）</p>
+  </div>
+
+  <!-- ネスト動作の補足説明 -->
+  <div style="background:#f9fafb;border:1px solid #d1d5db;border-radius:8px;padding:14px 16px;margin-top:16px">
+    <p style="font-size:13px;font-weight:700;margin-bottom:8px">📌 ネスト構造の動作イメージ（具体例）</p>
+    <table style="margin:0;font-size:13px">
+      <tr><th>やりたいこと</th><th>指定するグループ</th><th>届く人</th></tr>
+      <tr><td>全教職員にお知らせ</td><td><code>MAU_全教職員</code></td><td>職員〜350名＋教員〜1,000名</td></tr>
+      <tr><td>職員全員にお知らせ</td><td><code>MAU_職員_全体</code></td><td>専任＋派遣＋職卓職員〜350名</td></tr>
+      <tr><td>専任職員だけにお知らせ</td><td><code>MAU_職員_専任</code></td><td>専任職員〜200名のみ</td></tr>
+      <tr><td>特定の部署だけにお知らせ</td><td><code>MAU_部署_XXX</code></td><td>その部署のメンバーのみ</td></tr>
+    </table>
+  </div>
+
+  <h3 style="margin-top:20px">GaroonのSP → SharePoint オーディエンスターゲティング 対応表</h3>
   <table>
-    <tr><th>グループ</th><th>対象者</th><th>SharePointでの使い方</th></tr>
-    <tr><td>職員グループ</td><td>専任・嘱託・派遣職員</td><td>職員向けサイトの閲覧・編集</td></tr>
-    <tr><td>教員グループ</td><td>専任・非常勤教員（〜1,000名）</td><td>教職員共通サイトの閲覧</td></tr>
-    <tr><td>学生グループ</td><td>学生</td><td>（将来的に）公開コンテンツのみ閲覧</td></tr>
+    <tr><th>Garoonでの配信パターン</th><th>SharePointでの実現方法</th></tr>
+    <tr><td>全職員</td><td>オーディエンス: <code>MAU_職員_全体</code></td></tr>
+    <tr><td>専任職員のみ</td><td>オーディエンス: <code>MAU_職員_専任</code></td></tr>
+    <tr><td>全教職員</td><td>オーディエンス: <code>MAU_全教職員</code></td></tr>
+    <tr><td>特定の部署のみ</td><td>オーディエンス: <code>MAU_部署_XXX</code></td></tr>
+    <tr style="background:#fff8e1"><td>特定の10名（個人指定）</td><td>⚠️ SharePointでは個人指定配信は困難 → Teams通知/メールで代替する設計で合意取り付けが必要</td></tr>
   </table>
-  <div class="card orange"><p>教員グループはまだEntra ID（M365の管理基盤）上で整備されていないため、SharePoint構築と並行して設定が必要です。</p></div>
+
+  <h3 style="margin-top:20px">実装ロードマップ</h3>
+  <table>
+    <tr><th>フェーズ</th><th>時期</th><th>内容</th></tr>
+    <tr style="background:#fee2e2">
+      <td><strong>Phase 0</strong><br>設計合意</td>
+      <td>6/18定例</td>
+      <td>本設計案を大学側と合意。人数・定義・部署一覧を確認する</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 1</strong><br>コア作成</td>
+      <td>〜6月末</td>
+      <td>Layer 1〜2のグループ（全教職員・職員全体・教員全体）を先行作成。既存Clerk Usersとの整合を確認。</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2</strong><br>詳細グループ</td>
+      <td>7月</td>
+      <td>Layer 3（専任・派遣・職卓職員、常勤・非常勤教員）を作成。大学からユーザー一覧CSV提供を依頼。</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 3</strong><br>部署グループ</td>
+      <td>7〜8月</td>
+      <td>全部署分のグループを作成。SharePointパイロットサイトのオーディエンス設定に適用。</td>
+    </tr>
+  </table>
+
+  <div class="card red" style="margin-top:14px">
+    <div class="card-title">6/18 定例でご確認いただきたい事項</div>
+    <ol style="padding-left:16px;line-height:2">
+      <li>「専任職員」「派遣職員」「職卓職員」の<strong>定義と正確な人数</strong>（現在Entra IDユーザー属性で区別できているか）</li>
+      <li>部署の<strong>正式一覧</strong>（部署名・人数の目安）</li>
+      <li>非常勤講師へのSharePoint通知の<strong>必要性・範囲</strong>（何を届けるべきか）</li>
+      <li>「特定の10名のみ」配信 → <strong>Teams/メール代替</strong>での運用に同意いただけるか</li>
+      <li>グループへのユーザーアサイン作業のための<strong>ユーザー一覧CSV</strong>の提供依頼</li>
+    </ol>
+  </div>
 </div>
 </div>
 
@@ -312,6 +459,11 @@
       <td>Outlookカレンダー（SharePointとは別）</td>
       <td>メール移行後に対応</td>
     </tr>
+    <tr style="background:#fff8e1">
+      <td>OneDriveでのファイル共有<br><small>（個人フォルダのリンクを送付する運用）</small></td>
+      <td>SharePoint ドキュメントライブラリから共有<br><small>※8月のUPN変更でOneDrive共有URLが無効化されるため、SharePointへ移行</small></td>
+      <td><span class="badge b-orange">8月前に周知</span></td>
+    </tr>
     <tr>
       <td>ワークフロー（申請フロー）</td>
       <td>別途検討（「ワークフロー」タブを参照）</td>
@@ -345,12 +497,14 @@
   <div class="phase">
     <div class="phase-lbl g">Phase 2<small>8〜9月</small></div>
     <div class="phase-body">
-      <strong>全学展開</strong>
+      <strong>全学展開 ＋ メール移行との連動</strong>
       <ul>
         <li>Garoonの掲示板コンテンツをSharePointに移行開始</li>
         <li>各部署の投稿担当者に操作方法を案内</li>
         <li>リンク集・業務システムへのポータル整備</li>
         <li>スマートフォンからの動作確認</li>
+        <li style="color:#c0392b"><strong>【メール移行連動】</strong> メール移行（8月）に合わせて「ファイル共有はSharePointから」を全学周知。OneDrive共有URL無効化のタイミングにあわせてSharePointへの移行を促す</li>
+        <li style="color:#c0392b"><strong>【MFA連動】</strong> UPN変更に伴い全ユーザーのMFAがリセットされるタイミングで、<code>MAU_MFA対象_教員</code>グループへのMFA展開を一括実施（メール移行担当と要調整）</li>
       </ul>
     </div>
   </div>
@@ -382,35 +536,132 @@
     <p>Garoon上には約100個の申請ワークフローがあり、移行先は現時点では未確定です。SharePointには申請・承認フローを作る機能はありますが、<strong>操作が複雑で現場担当者には使いづらい</strong>という課題があります。</p>
   </div>
 
-  <h3>考えられる選択肢</h3>
+  <h3>ツール比較</h3>
   <table>
-    <tr><th>候補</th><th>メリット</th><th>デメリット</th></tr>
+    <tr><th>候補</th><th>操作性</th><th>コスト</th><th>Garoon移行への適合</th></tr>
     <tr>
-      <td>Microsoft標準機能（Power Automate等）</td>
-      <td>追加費用なし（M365ライセンスに含まれる）</td>
+      <td>Power Automate<br><small>（Microsoft標準）</small></td>
       <td>設計が複雑。IT担当者が常に関与する必要がある</td>
+      <td>M365ライセンスに含まれる（追加費用なし）</td>
+      <td><span style="color:var(--accent);font-weight:600">△ 複雑なフローの再現が困難</span></td>
     </tr>
     <tr>
-      <td><strong>M365向け専用ワークフローアドオン</strong><br><small>（ネクストセット社製など）</small></td>
-      <td>Garoonに近い使い勝手。現場担当者が自分で操作できる</td>
-      <td>別途ライセンス費用が発生する</td>
+      <td><strong>ネクストセット・ワークフロー<br>for Microsoft 365</strong></td>
+      <td>Garoonに近い操作感。現場担当者が自分で設定・運用できる</td>
+      <td>別途ライセンス費用（下記参照）</td>
+      <td><span style="color:var(--green);font-weight:600">✅ 申請・承認フロー・Teams通知など機能が充実</span></td>
     </tr>
   </table>
 
-  <div class="card green">
-    <div class="card-title">提案</div>
-    <p>操作性と現場への定着を重視するなら、専用のワークフローアドオン導入の検討をお勧めします。まず現在Garoon上で動いている約100個のワークフローの一覧を整理し、優先順位をつけた上でツールを選定する流れが現実的です。</p>
+  <h3 style="margin-top:24px">ネクストセット社 ライセンス費用</h3>
+  <div class="card primary" style="margin-bottom:16px">
+    <div class="card-title">ライセンス体系の概要（2024年10月改定・税抜）</div>
+    <p>「アドオン」単位でライセンスを購入します。ワークフローのみ導入する場合は <strong>1アドオン = 200円/月/ユーザー</strong> となります。他のアドオンと組み合わせるとまとめ割が適用されます。</p>
+  </div>
+  <table>
+    <tr><th>利用アドオン数</th><th>月額（税抜/ユーザー）</th><th>年額（税抜/ユーザー）</th><th>備考</th></tr>
+    <tr style="background:#e8f8ee">
+      <td><strong>1アドオン</strong><br><small>ワークフローのみ</small></td>
+      <td><strong>200円</strong></td>
+      <td><strong>2,400円</strong></td>
+      <td>今回の導入候補はこのプラン</td>
+    </tr>
+    <tr>
+      <td>2アドオン</td>
+      <td>300円</td>
+      <td>3,600円</td>
+      <td rowspan="3" style="vertical-align:middle;color:var(--muted);font-size:13px">他のSateraito系アドオン（カレンダー同期等）を追加する場合</td>
+    </tr>
+    <tr>
+      <td>3アドオン</td>
+      <td>400円</td>
+      <td>4,800円</td>
+    </tr>
+    <tr>
+      <td>全アドオン（5種）</td>
+      <td>600円</td>
+      <td>7,200円</td>
+    </tr>
+  </table>
+
+  <h3 style="margin-top:24px">必要ライセンスの対象者</h3>
+  <div class="card orange" style="margin-bottom:12px">
+    <div class="card-title">対象者の考え方</div>
+    <p>「ネクストセット・ワークフロー for Microsoft 365」はユーザー単位ライセンスです。申請フォームを送信するユーザー・承認するユーザー、双方にライセンスが必要となります。</p>
+  </div>
+  <table>
+    <tr><th>対象者</th><th>人数（概算）</th><th>ライセンス要否</th></tr>
+    <tr>
+      <td>専任職員</td>
+      <td>〜200名程度（要確認）</td>
+      <td><span style="color:var(--green);font-weight:600">✅ 必要</span>（申請者・承認者として利用）</td>
+    </tr>
+    <tr>
+      <td>派遣・職卓職員</td>
+      <td>〜100名程度（要確認）</td>
+      <td><span style="color:var(--green);font-weight:600">✅ 必要</span>（申請者として利用する場合）</td>
+    </tr>
+    <tr>
+      <td>常勤教員</td>
+      <td>〜200名程度</td>
+      <td>利用するフロー次第（要確認）</td>
+    </tr>
+    <tr>
+      <td>非常勤講師</td>
+      <td>約800名</td>
+      <td>Garoonワークフロー対象外のため<strong>不要の可能性が高い</strong></td>
+    </tr>
+    <tr>
+      <td>学生</td>
+      <td>多数</td>
+      <td><span style="color:var(--red);font-weight:600">不要</span>（申請フローの対象外）</td>
+    </tr>
+  </table>
+
+  <h3 style="margin-top:24px">武蔵野美術大学向けコスト試算（概算）</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:8px">1アドオン = 200円/月/ユーザー（税抜）で試算。実際のユーザー数は大学側に確認が必要。</p>
+  <table>
+    <tr><th>シナリオ</th><th>対象ユーザー数</th><th>月額概算（税抜）</th><th>年額概算（税抜）</th><th>年額概算（税込）</th></tr>
+    <tr>
+      <td><strong>A: 職員のみ</strong><br><small>専任＋派遣＋職卓職員</small></td>
+      <td>〜400名</td>
+      <td>80,000円</td>
+      <td>960,000円</td>
+      <td><strong>約106万円</strong></td>
+    </tr>
+    <tr style="background:#e8f8ee">
+      <td><strong>B: 職員＋常勤教員（推奨試算）</strong></td>
+      <td>〜600名</td>
+      <td>120,000円</td>
+      <td>1,440,000円</td>
+      <td><strong>約158万円</strong></td>
+    </tr>
+    <tr>
+      <td>C: 全教職員（非常勤含む）</td>
+      <td>〜1,400名</td>
+      <td>280,000円</td>
+      <td>3,360,000円</td>
+      <td>約370万円</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:6px">※ 非常勤講師（約800名）はGaroonワークフロー対象外のため、現実的にはシナリオBの〜600名が妥当な見積もり基準と考えます。</p>
+  <p style="font-size:12px;color:var(--muted)">※ 正式な見積もりはユーザー数・利用するアドオン数・契約期間によって変わるため、導入決定後にネクストセット社へ見積もり依頼が必要です。</p>
+
+  <div class="card green" style="margin-top:16px">
+    <div class="card-title">推奨案</div>
+    <p>操作性と現場への定着を重視するなら、ネクストセット・ワークフロー for Microsoft 365 の導入をお勧めします。<br>
+    まず <strong>Garoon上の約100個のワークフローの一覧を大学側で整理</strong> し、対象ユーザー数・優先順位を確認した上で正式見積もりに進む流れが現実的です。</p>
   </div>
 
-  <h3>移行の流れ（段階的）</h3>
+  <h3 style="margin-top:24px">移行の流れ（段階的）</h3>
   <table>
-    <tr><th>ステップ</th><th>内容</th></tr>
-    <tr><td>Step 1</td><td>約100個のワークフローを一覧化。種類・申請頻度・承認者を整理する</td></tr>
-    <tr><td>Step 2</td><td>優先順位の高いものから着手順を決める</td></tr>
-    <tr><td>Step 3</td><td>ツール選定を協議（コスト・機能比較）</td></tr>
-    <tr><td>Step 4</td><td>優先度の高いフローから順に新ツールで実装・テスト・切り替え</td></tr>
+    <tr><th>ステップ</th><th>内容</th><th>担当</th></tr>
+    <tr><td>Step 1</td><td>約100個のワークフローを一覧化。種類・申請頻度・承認者・対象ユーザーを整理する</td><td>大学側</td></tr>
+    <tr><td>Step 2</td><td>ツール選定・正式見積もり依頼（ネクストセット社等）</td><td>三井田</td></tr>
+    <tr><td>Step 3</td><td>優先度の高いフローから順にアドオンで実装・テスト</td><td>三井田＋大学側</td></tr>
+    <tr><td>Step 4</td><td>全フロー移行完了をもってGaroonのワークフロー機能を停止</td><td>大学側</td></tr>
   </table>
-  <p style="color:var(--muted);font-size:13px;margin-top:8px">Garoonは年度末まで継続利用のため、移行は急がず段階的に進めます。</p>
+  <p style="color:var(--muted);font-size:13px;margin-top:8px">Garoonは年度末まで継続利用のため、移行は急がず段階的に進めます。まず Step 1 のワークフロー一覧化を大学側に依頼します。</p>
 </div>
 </div>
 
@@ -419,39 +670,51 @@
 <div class="content">
   <div class="panel-title">ご確認・ご意見をいただきたい点</div>
 
-  <div class="q-item">
-    <div class="q-num">1</div>
+  <div class="card primary" style="margin-bottom:20px">
+    <div class="card-title">2026-06-11 定例での確認結果</div>
+    <p>下記のうち✅がついた項目は方向性が確認できました。継続検討中の項目は引き続きお知らせください。</p>
+  </div>
+
+  <div class="q-item" style="border-color:#27ae60">
+    <div class="q-num" style="background:#27ae60">✅</div>
     <div class="q-body">
       <strong>「統合イントラサイトを1つ作る」という方向性でよいか</strong>
-      <span>部署ごとに個別のサイトを作る案もあるが、まず全員が使うポータルを1つ作ることを優先したい。</span>
+      <span style="color:#27ae60;font-weight:600">→ 確認済み（2026-06-11）：方向性に合意いただきました。</span>
     </div>
   </div>
   <div class="q-item">
     <div class="q-num">2</div>
     <div class="q-body">
       <strong>試験的に先行して進める部署はどこがよいか</strong>
-      <span>Phase 1でパイロット的に1〜2部署を先行して構築・確認したい。</span>
+      <span>候補部署あり（後日確定・連絡いただく予定）。</span>
     </div>
   </div>
   <div class="q-item">
     <div class="q-num">3</div>
     <div class="q-body">
-      <strong>お知らせ・回覧の投稿者を誰にするか</strong>
-      <span>各部署の担当者が自由に投稿できる形か、申請制にするか。Garoonでの運用に近い形が望ましいか。</span>
+      <strong>お知らせ・回覧の投稿者と受信者をどのように設定するか</strong>
+      <span>現在のGaroonは誰でも投稿可能。受信者も「特定の部署」「指定した10名」など細かく設定している運用がある。SharePointでの受信者制御の設計（Entra IDグループ設計）について次回以降に具体案をご提示します。</span>
     </div>
   </div>
-  <div class="q-item">
-    <div class="q-num">4</div>
+  <div class="q-item" style="border-color:#27ae60">
+    <div class="q-num" style="background:#27ae60">✅</div>
     <div class="q-body">
       <strong>Garoonの文書・記事をどこまで移行するか</strong>
-      <span>過去の掲示板記事やファイルの移行が必要か。新規コンテンツから始めるほうがシンプル。</span>
+      <span style="color:#27ae60;font-weight:600">→ 確認済み（2026-06-11）：新しいコンテンツから始め、各部署が責任を持って挙げ直す方針で合意。過去文書の移行は各部署の判断で進める。</span>
     </div>
   </div>
   <div class="q-item">
     <div class="q-num">5</div>
     <div class="q-body">
       <strong>ワークフロー（申請フロー）の移行をどのように進めるか</strong>
-      <span>専用ツール導入の検討を含め、今後のアプローチを確認したい。</span>
+      <span>アドオン導入に前向きいただいています。次回以降に費用感・導入規模の説明を行います。</span>
+    </div>
+  </div>
+  <div class="q-item" style="border-color:var(--accent)">
+    <div class="q-num" style="background:var(--accent)">新</div>
+    <div class="q-body">
+      <strong>Entra IDのグループ設計：どの単位のグループが必要か</strong>
+      <span>現在のGaroonの受信者制御を引き継ぐためには、専任職員・派遣職員・職卓職員・非常勤講師などの細かいグループ定義が必要です。現在どのような区分けで運用しているか、一覧と利用実態をお聞きしたい。</span>
     </div>
   </div>
 </div>

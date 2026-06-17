@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ワークフロー比較資料 — Power Automate vs Nextset</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f1fb;
+    --accent: #e67e22;
+    --green: #27ae60;
+    --red: #c0392b;
+    --gray: #f5f6f8;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+    --pa-blue: #0066ff;
+    --pa-light: #e6f0ff;
+    --nx-green: #1a7a4a;
+    --nx-light: #e6f4ed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.75;
+  }
+
+  /* ─── ヘッダー ─── */
+  .page-header {
+    background: var(--primary); color: #fff;
+    padding: 0 32px;
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .sub { font-size: 12px; opacity: .65; margin-top: 2px; }
+
+  /* ─── タブバー ─── */
+  .tab-bar {
+    background: #fff; border-bottom: 2px solid var(--border);
+    display: flex; overflow-x: auto; position: sticky; top: 72px; z-index: 100;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0; padding: 0 22px; height: 52px;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    border: none; background: none; cursor: pointer;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: color .15s, border-color .15s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--primary); }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .tab-btn .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--primary-light); color: var(--primary);
+    font-size: 11px; margin-right: 7px;
+  }
+  .tab-btn.active .num { background: var(--primary); color: #fff; }
+
+  /* ─── コンテンツ ─── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .content { max-width: 860px; margin: 0 auto; padding: 36px 28px 80px; }
+
+  .panel-title {
+    font-size: 20px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  h3 { font-size: 15px; font-weight: 700; margin: 24px 0 10px; }
+  h4 { font-size: 14px; font-weight: 700; margin: 16px 0 8px; }
+  p { margin: 8px 0; font-size: 14px; }
+
+  .card {
+    background: var(--gray); border-radius: 10px;
+    padding: 18px 22px; margin: 12px 0;
+  }
+  .card.primary { background: var(--primary-light); border-left: 4px solid var(--primary); }
+  .card.green   { background: #e8f8f0; border-left: 4px solid var(--green); }
+  .card.orange  { background: #fef5ec; border-left: 4px solid var(--accent); }
+  .card.red     { background: #fdf0ee; border-left: 4px solid var(--red); }
+  .card-title   { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th { background: var(--primary); color: #fff; padding: 9px 12px; text-align: left; font-weight: 600; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .b-red    { background: #fdf0ee; color: var(--red); }
+  .b-orange { background: #fef5ec; color: var(--accent); }
+  .b-gray   { background: #eef0f3; color: #555; }
+  .b-green  { background: #e8f8f0; color: var(--green); }
+  .b-blue   { background: var(--pa-light); color: var(--pa-blue); }
+
+  /* ─── 2カラム比較 ─── */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;
+  }
+  @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+
+  .compare-card {
+    border-radius: 10px; padding: 18px 20px; border: 2px solid var(--border); background: #fff;
+  }
+  .compare-card.pa { border-color: var(--pa-blue); }
+  .compare-card.nx { border-color: var(--nx-green); }
+
+  .tool-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; margin-bottom: 12px;
+    padding: 6px 12px; border-radius: 6px;
+  }
+  .tool-badge.pa { background: var(--pa-light); color: var(--pa-blue); }
+  .tool-badge.nx { background: var(--nx-light); color: var(--nx-green); }
+  .tool-icon { font-size: 18px; }
+
+  .pro-list, .con-list { list-style: none; margin: 8px 0; }
+  .pro-list li, .con-list li { padding: 4px 0 4px 22px; font-size: 14px; position: relative; }
+  .pro-list li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .con-list li::before { content: '✗'; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+
+  /* ─── スクリーンモックアップ ─── */
+  .screen-wrap {
+    border: 1px solid #ccc; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.1); margin: 14px 0;
+    background: #fff;
+  }
+  .screen-bar {
+    background: #e8eaed; padding: 8px 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #febc2e; }
+  .dot.g { background: #28c840; }
+  .url-bar {
+    flex: 1; background: #fff; border-radius: 4px; padding: 3px 10px;
+    font-size: 11px; color: #666; font-family: monospace;
+  }
+
+  /* ─── Power Automate フロービルダーモックアップ ─── */
+  .pa-screen { background: #f8fafd; padding: 0; }
+  .pa-app-bar {
+    background: var(--pa-blue); color: #fff; padding: 8px 16px;
+    display: flex; align-items: center; gap: 14px; font-size: 13px;
+  }
+  .pa-app-logo { font-weight: 800; font-size: 14px; }
+  .pa-app-name { opacity: .85; }
+  .pa-body { display: flex; }
+  .pa-sidebar {
+    width: 210px; background: #fff; border-right: 1px solid #dde; padding: 12px 10px;
+    font-size: 12px;
+  }
+  .pa-sidebar-title { font-weight: 700; font-size: 11px; color: #888; letter-spacing: .05em; margin-bottom: 8px; }
+  .pa-trigger-item {
+    padding: 6px 8px; border-radius: 5px; margin-bottom: 4px;
+    font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 7px;
+  }
+  .pa-trigger-item:hover, .pa-trigger-item.sel { background: var(--pa-light); color: var(--pa-blue); }
+  .pa-trigger-icon { font-size: 14px; }
+  .pa-canvas {
+    flex: 1; padding: 20px 30px; display: flex; flex-direction: column; align-items: center;
+    min-height: 420px;
+  }
+  .pa-flow-block {
+    width: 240px; border-radius: 8px; border: 1.5px solid #c5d5f0; background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,100,.08);
+    overflow: hidden; margin-bottom: 0;
+  }
+  .pa-block-head {
+    background: var(--pa-blue); color: #fff; padding: 7px 12px;
+    font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px;
+  }
+  .pa-block-head.trig { background: #7c3aed; }
+  .pa-block-head.cond { background: #d97706; }
+  .pa-block-head.act  { background: #059669; }
+  .pa-block-head.mail { background: #dc2626; }
+  .pa-block-body { padding: 8px 12px; font-size: 12px; color: #555; }
+  .pa-block-body span { display: block; }
+  .pa-connector {
+    display: flex; flex-direction: column; align-items: center;
+    height: 36px; position: relative;
+  }
+  .pa-connector::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 2px; background: #9ca3af;
+  }
+  .pa-connector-plus {
+    width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 2px solid #9ca3af;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #9ca3af; z-index: 1; margin-top: 7px;
+  }
+  .pa-branch {
+    display: flex; gap: 12px; align-items: flex-start; margin-top: 0;
+  }
+  .pa-branch-line {
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+  .pa-branch-label {
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;
+  }
+  .pa-branch-label.yes { background: #dcfce7; color: #166534; }
+  .pa-branch-label.no  { background: #fee2e2; color: #991b1b; }
+
+  /* ─── Nextset フォームモックアップ ─── */
+  .nx-screen { background: #f5f7f5; }
+  .nx-app-bar {
+    background: var(--nx-green); color: #fff; padding: 8px 16px;
+    display: flex; align-items: center; gap: 14px; font-size: 13px;
+  }
+  .nx-app-logo { font-weight: 800; font-size: 14px; }
+  .nx-body { display: flex; }
+  .nx-sidebar {
+    width: 180px; background: #1a3a2a; padding: 12px 0; font-size: 12px;
+  }
+  .nx-menu-item {
+    padding: 8px 16px; color: #9dc7b0; font-size: 12px;
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  .nx-menu-item:hover, .nx-menu-item.sel { background: rgba(255,255,255,.1); color: #fff; }
+  .nx-menu-section { padding: 14px 16px 4px; font-size: 10px; font-weight: 700; color: #7aaa8e; letter-spacing: .06em; }
+  .nx-main { flex: 1; padding: 16px 20px; }
+  .nx-page-title {
+    font-size: 15px; font-weight: 700; color: #1a3a2a; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 2px solid #c5e0d0;
+  }
+
+  /* 申請書フォーム */
+  .nx-form {
+    background: #fff; border-radius: 8px; border: 1px solid #c8ddd0; padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .nx-form-title {
+    font-size: 14px; font-weight: 800; color: #1a3a2a; margin-bottom: 12px;
+    text-align: center; border-bottom: 2px solid #1a7a4a; padding-bottom: 8px;
+  }
+  .nx-form-grid { display: grid; grid-template-columns: 120px 1fr; gap: 0; }
+  .nx-form-label {
+    background: #e8f4ed; border: 1px solid #c5e0d0; padding: 7px 10px;
+    font-size: 12px; font-weight: 700; color: #1a3a2a;
+    display: flex; align-items: center;
+  }
+  .nx-form-input {
+    border: 1px solid #c5e0d0; border-left: none; padding: 7px 10px;
+    font-size: 12px; color: #333; background: #fff;
+  }
+  .nx-form-input.filled { background: #fafff8; color: #1a3a2a; }
+  .nx-form-input.req::after {
+    content: '必須'; font-size: 10px; background: #dc2626; color: #fff;
+    padding: 1px 5px; border-radius: 3px; margin-left: 6px;
+  }
+  .nx-form-row { display: contents; }
+  .nx-form-row:not(:last-child) .nx-form-label,
+  .nx-form-row:not(:last-child) .nx-form-input { border-bottom: none; }
+
+  /* 承認ルート */
+  .nx-route {
+    background: #fff; border-radius: 8px; border: 1px solid #c8ddd0; padding: 16px 20px;
+  }
+  .nx-route-title { font-size: 13px; font-weight: 700; color: #1a3a2a; margin-bottom: 12px; }
+  .nx-route-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .nx-route-node {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .nx-route-box {
+    width: 90px; border-radius: 6px; padding: 8px 6px; text-align: center;
+    border: 2px solid #c5e0d0; background: #f0faf4;
+    font-size: 11px;
+  }
+  .nx-route-box.start { background: #e0f0ff; border-color: #90c0e0; }
+  .nx-route-box.done  { background: #e8f4ed; border-color: #1a7a4a; opacity: 0.9; }
+  .nx-route-box.pending { border-color: #f59e0b; background: #fffbeb; }
+  .nx-route-box .role { font-weight: 700; font-size: 11px; }
+  .nx-route-box .name { color: #666; font-size: 11px; }
+  .nx-route-box .status { font-size: 10px; margin-top: 3px; font-weight: 700; }
+  .nx-route-box.done .status { color: var(--nx-green); }
+  .nx-route-box.pending .status { color: #b45309; }
+  .nx-route-arrow { font-size: 16px; color: #9ca3af; margin-top: -14px; }
+  .nx-btns { display: flex; gap: 8px; margin-top: 14px; }
+  .nx-btn { padding: 7px 18px; border-radius: 5px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; }
+  .nx-btn.submit { background: var(--nx-green); color: #fff; }
+  .nx-btn.save   { background: #fff; color: var(--nx-green); border: 2px solid var(--nx-green); }
+  .nx-badge { font-size: 10px; background: #fff; border: 1px solid #c5e0d0; padding: 1px 5px; border-radius: 3px; color: #1a7a4a; margin-top: 2px; }
+
+  /* ─── 推奨セクション ─── */
+  .rec-box {
+    background: linear-gradient(135deg, #1a56a0 0%, #1a4080 100%);
+    color: #fff; border-radius: 12px; padding: 24px 28px; margin: 20px 0;
+  }
+  .rec-box h3 { color: #fff; margin-top: 0; }
+  .rec-row { display: flex; gap: 14px; margin-top: 12px; }
+  .rec-item { flex: 1; background: rgba(255,255,255,.12); border-radius: 8px; padding: 14px 16px; }
+  .rec-item .label { font-size: 11px; opacity: .75; font-weight: 700; margin-bottom: 6px; }
+  .rec-item .val { font-size: 14px; font-weight: 700; }
+  .rec-item .sub { font-size: 12px; opacity: .85; margin-top: 4px; }
+  @media (max-width: 560px) { .rec-row { flex-direction: column; } }
+
+  .step-list { list-style: none; margin: 12px 0; }
+  .step-list li {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 14px; border-radius: 8px; background: var(--gray); margin-bottom: 6px;
+    font-size: 14px;
+  }
+  .step-num {
+    min-width: 26px; height: 26px; border-radius: 50%;
+    background: var(--primary); color: #fff; display: flex; align-items: center;
+    justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .step-body strong { display: block; }
+  .step-body span { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>ワークフローツール比較資料</h1>
+    <div class="sub">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月12日</div>
+  </div>
+</div>
+
+<div class="tab-bar" id="tabs">
+  <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>概要・比較表</button>
+  <button class="tab-btn" onclick="show(1)"><span class="num">2</span>Power Automate</button>
+  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>Nextset ワークフロー</button>
+  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>推奨・導入方針</button>
+</div>
+
+<!-- ===== Panel 0: 概要・比較表 ===== -->
+<div class="tab-panel active" id="p0">
+<div class="content">
+  <div class="panel-title">概要・比較表</div>
+
+  <div class="card primary">
+    <div class="card-title">この資料の目的</div>
+    <p>Garoon（maunet.）のワークフロー機能（稟議・申請・承認）をMicrosoft 365に移行する際、<strong>どのツールを使えばよいか</strong>を整理するものです。<br>
+    2択: ① M365に標準搭載されている <strong>Power Automate</strong>、② 日本製アドインの <strong>Nextset ワークフロー for M365</strong>。</p>
+  </div>
+
+  <h3>一目でわかる比較表</h3>
+  <table>
+    <tr>
+      <th style="width:160px">比較項目</th>
+      <th><span style="color:#90c0ff">⚡ Power Automate</span></th>
+      <th><span style="color:#90e4b0">🌿 Nextset ワークフロー</span></th>
+    </tr>
+    <tr>
+      <td><strong>費用</strong></td>
+      <td>基本無料（M365に含まれる）<br><small>高度機能はPower Automate有料プランが必要（1,670円/月/ユーザー〜）</small></td>
+      <td>200円/月/ユーザー〜<br><small>全アドオン込みで600円/月/ユーザー（税抜）</small></td>
+    </tr>
+    <tr>
+      <td><strong>操作のしやすさ</strong></td>
+      <td><span class="badge b-orange">中級者向け</span><br><small>設計にはフロー構築の習熟が必要</small></td>
+      <td><span class="badge b-green">初心者向け</span><br><small>申請書スタイルで直感的に設定できる</small></td>
+    </tr>
+    <tr>
+      <td><strong>日本語対応</strong></td>
+      <td><span class="badge b-green">○ 対応済み</span><br><small>UIは日本語。ただし一部英語表示あり</small></td>
+      <td><span class="badge b-green">◎ 完全対応</span><br><small>国産ツール。UI/サポートすべて日本語</small></td>
+    </tr>
+    <tr>
+      <td><strong>承認ルート設定</strong></td>
+      <td><span class="badge b-orange">やや複雑</span><br><small>フローブロックを組み合わせて設定</small></td>
+      <td><span class="badge b-green">簡単</span><br><small>承認者を順番に並べるだけで設定完了</small></td>
+    </tr>
+    <tr>
+      <td><strong>申請フォーム</strong></td>
+      <td>Microsoft Forms と組み合わせて作成</td>
+      <td>ツール内でフォームを直接デザイン</td>
+    </tr>
+    <tr>
+      <td><strong>Garoonとの類似度</strong></td>
+      <td><span class="badge b-orange">やや異なる</span><br><small>概念が違うため移行時に慣れが必要</small></td>
+      <td><span class="badge b-green">高い</span><br><small>「申請書→承認ルート」の概念がGaroonに近い</small></td>
+    </tr>
+    <tr>
+      <td><strong>複雑な条件分岐</strong></td>
+      <td><span class="badge b-green">強い</span><br><small>条件・分岐・ループなど柔軟に設定可</small></td>
+      <td><span class="badge b-gray">限定的</span><br><small>単純な承認ルートが主なユースケース</small></td>
+    </tr>
+    <tr>
+      <td><strong>M365との連携</strong></td>
+      <td><span class="badge b-green">非常に強い</span><br><small>Teams・SharePoint・Outlookと深く連携</small></td>
+      <td><span class="badge b-green">必要十分</span><br><small>SharePoint上で動作。通知はメール/Teams</small></td>
+    </tr>
+    <tr>
+      <td><strong>現場担当者による管理</strong></td>
+      <td><span class="badge b-orange">難しい</span><br><small>情シス or IT経験者でないと修正が困難</small></td>
+      <td><span class="badge b-green">可能</span><br><small>現場の管理者がフォーム・ルートを修正できる</small></td>
+    </tr>
+    <tr>
+      <td><strong>トライアル</strong></td>
+      <td>今すぐ使える（M365に含まれる）</td>
+      <td>30日間無料トライアルあり</td>
+    </tr>
+  </table>
+
+  <h3>どちらがどんな申請に向いているか</h3>
+  <div class="compare-grid">
+    <div class="compare-card pa">
+      <div class="tool-badge pa"><span class="tool-icon">⚡</span>Power Automateに向いている申請</div>
+      <ul class="pro-list">
+        <li>複雑な条件で承認者が変わる申請<br><small style="color:var(--muted)">例：金額によって承認ルートが変わる</small></li>
+        <li>他システムと連動させたい申請<br><small style="color:var(--muted)">例：Teamsに通知→スプレッドシートに記録</small></li>
+        <li>定型業務の自動化（申請以外も含む）</li>
+        <li>IT担当者がいて、設定・保守できる環境</li>
+      </ul>
+    </div>
+    <div class="compare-card nx">
+      <div class="tool-badge nx"><span class="tool-icon">🌿</span>Nextsetに向いている申請</div>
+      <ul class="pro-list">
+        <li>Garoonのワークフローをそのまま移行したい<br><small style="color:var(--muted)">例：休暇申請・購入申請・稟議書</small></li>
+        <li>現場の担当者がフォームを自分で修正したい</li>
+        <li>IT知識のない管理者でも運用したい</li>
+        <li>シンプルな承認ルート（順番に承認）</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ===== Panel 1: Power Automate ===== -->
+<div class="tab-panel" id="p1">
+<div class="content">
+  <div class="panel-title">Power Automate — M365 標準機能</div>
+
+  <div class="card primary">
+    <div class="card-title">Power Automateとは</div>
+    <p>Microsoft 365 に標準で含まれる自動化ツールです。「○○が起きたら、△△する」というルール（フロー）を、プログラミングなしでブロックを組み合わせて作ることができます。</p>
+    <p>承認ワークフロー以外にも、「毎日定時にメールを送る」「Teamsに投稿があったらスプレッドシートに記録する」など、幅広い自動化に使えます。</p>
+  </div>
+
+  <h3>実際の画面イメージ（フロービルダー）</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ 以下は「休暇申請フォームが送信されたら、上長に承認依頼を送る」フローの設定画面の例です。</p>
+
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <div class="url-bar">https://make.powerautomate.com/environments/Default-xxx/flows/new</div>
+    </div>
+    <div class="pa-screen">
+      <div class="pa-app-bar">
+        <div class="pa-app-logo">⚡ Power Automate</div>
+        <div class="pa-app-name">休暇申請承認フロー（新規作成）</div>
+        <div style="margin-left:auto;display:flex;gap:10px;font-size:12px">
+          <span style="background:rgba(255,255,255,.2);padding:4px 12px;border-radius:4px;cursor:pointer">テスト</span>
+          <span style="background:#fff;color:var(--pa-blue);padding:4px 12px;border-radius:4px;font-weight:700;cursor:pointer">保存</span>
+        </div>
+      </div>
+      <div class="pa-body">
+        <div class="pa-sidebar">
+          <div class="pa-sidebar-title">コネクタを追加</div>
+          <div class="pa-trigger-item sel"><span class="pa-trigger-icon">📋</span>Microsoft Forms</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">✉️</span>Outlook</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">💬</span>Teams</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">📁</span>SharePoint</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">✅</span>承認</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">📊</span>Excel</div>
+          <div style="margin-top:14px" class="pa-sidebar-title">変数 / 条件</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">🔀</span>条件分岐</div>
+          <div class="pa-trigger-item"><span class="pa-trigger-icon">🔁</span>繰り返し</div>
+        </div>
+        <div class="pa-canvas">
+          <!-- トリガー -->
+          <div class="pa-flow-block">
+            <div class="pa-block-head trig">🔔 トリガー</div>
+            <div class="pa-block-body">
+              <span style="font-weight:700">フォームの回答が送信されたとき</span>
+              <span style="color:#888;margin-top:2px">フォーム: 休暇申請フォーム</span>
+            </div>
+          </div>
+          <div class="pa-connector"><div class="pa-connector-plus">+</div></div>
+          <!-- 承認 -->
+          <div class="pa-flow-block">
+            <div class="pa-block-head act">✅ アクション</div>
+            <div class="pa-block-body">
+              <span style="font-weight:700">承認を開始して結果を待つ</span>
+              <span style="color:#888;margin-top:2px">承認者: <span style="color:var(--pa-blue)">@動的コンテンツ: 直属上長</span></span>
+              <span style="color:#888">タイトル: <span style="color:var(--pa-blue)">@申請者名</span> からの休暇申請</span>
+            </div>
+          </div>
+          <div class="pa-connector"><div class="pa-connector-plus">+</div></div>
+          <!-- 条件分岐 -->
+          <div class="pa-flow-block">
+            <div class="pa-block-head cond">🔀 条件</div>
+            <div class="pa-block-body">
+              <span style="font-weight:700">承認の結果が「承認」の場合</span>
+              <span style="color:#888;margin-top:2px">応答 = "Approve"</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:12px">
+            <div class="pa-branch-line">
+              <div class="pa-branch-label yes">はい（承認）</div>
+              <div class="pa-flow-block">
+                <div class="pa-block-head act">✉️ メール送信</div>
+                <div class="pa-block-body">
+                  <span style="font-weight:700">承認通知を申請者に送信</span>
+                  <span style="color:#888;font-size:11px">「休暇申請が承認されました」</span>
+                </div>
+              </div>
+            </div>
+            <div class="pa-branch-line">
+              <div class="pa-branch-label no">いいえ（否決）</div>
+              <div class="pa-flow-block">
+                <div class="pa-block-head mail">✉️ メール送信</div>
+                <div class="pa-block-body">
+                  <span style="font-weight:700">否決通知を申請者に送信</span>
+                  <span style="color:#888;font-size:11px">「休暇申請が差し戻されました」</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>メリット</h3>
+  <ul class="pro-list">
+    <li>追加費用なし（M365ライセンスに含まれる）</li>
+    <li>Teams・SharePoint・Outlook・Excelなど、M365の各ツールと深く連携できる</li>
+    <li>承認ワークフロー以外の自動化（リマインド送信・データ集計・ファイル移動など）にも使える</li>
+    <li>複雑な条件分岐（金額によって承認者が変わる、など）にも対応できる</li>
+    <li>既製テンプレートが豊富で、よく使う承認フローはテンプレートから始められる</li>
+  </ul>
+
+  <h3>デメリット・注意点</h3>
+  <ul class="con-list">
+    <li>フロー設計の習熟が必要で、初心者が一から作るのは難しい</li>
+    <li>「申請書」のデザインはForms側で行い、Power Automateと組み合わせる必要がある（分かれていて把握しづらい）</li>
+    <li>現場担当者がフローを修正するのは難しい（IT担当者依存になりやすい）</li>
+    <li>高度な機能（RPA・プレミアムコネクタ）は有料プランが必要（1,670円/月/ユーザー〜）</li>
+    <li>Garoonの「申請書」「ルート設定」とは概念が異なるため、移行時に戸惑いやすい</li>
+  </ul>
+
+  <h3>武蔵野美術大学での活用イメージ</h3>
+  <div class="card orange">
+    <div class="card-title">向いているケース（MAU）</div>
+    <ul style="padding-left:18px;font-size:14px">
+      <li style="margin-bottom:4px">承認ルートが複雑な申請（例：50万円超は学長決裁、など）</li>
+      <li style="margin-bottom:4px">申請以外の自動化も一緒にやりたい場合（例：毎週月曜に担当者へリマインドメール）</li>
+      <li>IT担当者が設定・保守を担当できる場合</li>
+    </ul>
+  </div>
+  <div class="card red">
+    <div class="card-title">向いていないケース（MAU）</div>
+    <ul style="padding-left:18px;font-size:14px">
+      <li style="margin-bottom:4px">現場の担当者が自分でフォームや承認ルートを修正したいケース</li>
+      <li>Garoonのワークフローをそのまま移行したいケース（概念が違いすぎる）</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+<!-- ===== Panel 2: Nextset ===== -->
+<div class="tab-panel" id="p2">
+<div class="content">
+  <div class="panel-title">Nextset ワークフロー for Microsoft 365</div>
+
+  <div class="card" style="background:var(--nx-light);border-left:4px solid var(--nx-green)">
+    <div class="card-title">Nextsetワークフローとは</div>
+    <p>株式会社ネクストセット（日本）が開発した、SharePoint上で動作する申請・承認ワークフローのアドインです。</p>
+    <p>「紙の申請書をそのままデジタル化する」というコンセプトで、Garoonのワークフローを使っていたユーザーが移行しやすいように設計されています。現場の担当者がプログラミングなしで申請フォームと承認ルートを作成・管理できます。</p>
+  </div>
+
+  <h3>実際の画面イメージ（申請フォーム）</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ 以下は「休暇申請」の申請フォームと承認ルートの画面例です（実際のUI構成をベースにしたモックアップ）。</p>
+
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <div class="url-bar">https://mau.sharepoint.com/sites/intranet/workflow/apply?form=leave</div>
+    </div>
+    <div class="nx-screen">
+      <div class="nx-app-bar">
+        <div class="nx-app-logo">🌿 Nextset ワークフロー</div>
+        <div style="margin-left:auto;font-size:12px;opacity:.8">武蔵野美術大学イントラサイト</div>
+      </div>
+      <div class="nx-body">
+        <div class="nx-sidebar">
+          <div class="nx-menu-section">申請する</div>
+          <div class="nx-menu-item sel">📋 休暇申請</div>
+          <div class="nx-menu-item">🛒 物品購入申請</div>
+          <div class="nx-menu-item">📄 稟議書</div>
+          <div class="nx-menu-item">✈️ 出張申請</div>
+          <div class="nx-menu-item">🏢 会議室使用申請</div>
+          <div class="nx-menu-section">確認する</div>
+          <div class="nx-menu-item">📬 自分の申請一覧</div>
+          <div class="nx-menu-item">✅ 承認待ち一覧</div>
+          <div class="nx-menu-section" style="color:#5a8a6a">管理</div>
+          <div class="nx-menu-item">⚙️ フォーム管理</div>
+        </div>
+        <div class="nx-main">
+          <div class="nx-page-title">休暇申請</div>
+          <!-- 申請書フォーム -->
+          <div class="nx-form">
+            <div class="nx-form-title">休暇申請書</div>
+            <div class="nx-form-grid">
+              <div class="nx-form-row">
+                <div class="nx-form-label">申請者</div>
+                <div class="nx-form-input filled">山田 太郎（事務局総務部）</div>
+              </div>
+              <div class="nx-form-row">
+                <div class="nx-form-label">申請日</div>
+                <div class="nx-form-input filled">2026年6月12日</div>
+              </div>
+              <div class="nx-form-row">
+                <div class="nx-form-label" style="border-top:1px solid #c5e0d0">休暇種別 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
+                <div class="nx-form-input" style="border-top:1px solid #c5e0d0">
+                  <select style="width:100%;border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px">
+                    <option>年次有給休暇</option>
+                    <option>特別休暇</option>
+                    <option>慶弔休暇</option>
+                  </select>
+                </div>
+              </div>
+              <div class="nx-form-row">
+                <div class="nx-form-label" style="border-top:1px solid #c5e0d0">休暇期間 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
+                <div class="nx-form-input" style="border-top:1px solid #c5e0d0;display:flex;gap:8px;align-items:center">
+                  <input type="text" value="2026/06/20" style="border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
+                  <span style="font-size:12px">〜</span>
+                  <input type="text" value="2026/06/21" style="border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
+                  <span style="font-size:12px;color:#888">（2日間）</span>
+                </div>
+              </div>
+              <div class="nx-form-row">
+                <div class="nx-form-label" style="border-top:1px solid #c5e0d0">理由・備考</div>
+                <div class="nx-form-input" style="border-top:1px solid #c5e0d0">
+                  <textarea style="width:100%;border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px;height:44px">私用のため</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 承認ルート -->
+          <div class="nx-route">
+            <div class="nx-route-title">承認ルート（設定済み）</div>
+            <div class="nx-route-flow">
+              <div class="nx-route-node">
+                <div class="nx-route-box start">
+                  <div class="role">申請者</div>
+                  <div class="name">山田 太郎</div>
+                  <div class="status" style="color:var(--pa-blue)">申請中</div>
+                </div>
+              </div>
+              <div class="nx-route-arrow">→</div>
+              <div class="nx-route-node">
+                <div class="nx-route-box pending">
+                  <div class="role">直属上長</div>
+                  <div class="name">鈴木 部長</div>
+                  <div class="status">承認待ち</div>
+                </div>
+                <div class="nx-badge">第1承認者</div>
+              </div>
+              <div class="nx-route-arrow">→</div>
+              <div class="nx-route-node">
+                <div class="nx-route-box">
+                  <div class="role">人事担当</div>
+                  <div class="name">人事部</div>
+                  <div class="status" style="color:#aaa">未</div>
+                </div>
+                <div class="nx-badge">第2承認者</div>
+              </div>
+              <div class="nx-route-arrow">→</div>
+              <div class="nx-route-node">
+                <div class="nx-route-box" style="background:#f0f4ff;border-color:#90a0d0">
+                  <div class="role">完了</div>
+                  <div class="name">承認完了後</div>
+                  <div class="status" style="color:#aaa">メール通知</div>
+                </div>
+              </div>
+            </div>
+            <div class="nx-btns">
+              <button class="nx-btn submit">申請する</button>
+              <button class="nx-btn save">下書き保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>メリット</h3>
+  <ul class="pro-list">
+    <li>Garoonの「申請書 + 承認ルート」の概念と非常に近く、移行時に違和感が少ない</li>
+    <li>現場担当者がフォーム項目・承認ルートを自分で修正できる</li>
+    <li>申請書のデザインが「紙の申請書」に近く、現場ユーザーが直感的に使える</li>
+    <li>国産ツールのため、UIと公式サポートがすべて日本語</li>
+    <li>費用が安価（ワークフローのみなら200円/月/ユーザー）</li>
+    <li>SharePoint上で動作するため、イントラサイトと同じ場所に統合できる</li>
+  </ul>
+
+  <h3>デメリット・注意点</h3>
+  <ul class="con-list">
+    <li>複雑な条件分岐（金額によって承認者が変わる、など）には対応が限定的</li>
+    <li>Power Automateほど柔軟な自動化（承認以外の処理）はできない</li>
+    <li>追加費用が発生する（ただし安価）</li>
+    <li>シェアや実績がPower Automateより小さい（ベンダー依存リスクが若干ある）</li>
+    <li>高度なAPI連携や外部サービス連携はPower Automateに劣る</li>
+  </ul>
+
+  <h3>費用（再掲）</h3>
+  <table>
+    <tr><th>アドオン数</th><th>月額（税抜/ユーザー）</th><th>利用可能な機能</th></tr>
+    <tr><td>1アドオン</td><td><strong>200円</strong></td><td>ワークフロー（申請・承認）のみ</td></tr>
+    <tr><td>2アドオン</td><td>300円</td><td>＋設備予約 or 日報など</td></tr>
+    <tr><td>3アドオン</td><td>400円</td><td>複数機能を組み合わせ</td></tr>
+    <tr><td>全アドオン</td><td>600円</td><td>すべての機能を利用可</td></tr>
+  </table>
+  <div class="card orange" style="margin-top:12px">
+    <div class="card-title">武蔵野美術大学での費用試算（再掲）</div>
+    <table style="margin:4px 0">
+      <tr><th>対象範囲</th><th>人数概算</th><th>年額（税込）</th><th>備考</th></tr>
+      <tr><td>職員のみ</td><td>〜400名</td><td>約106万円</td><td></td></tr>
+      <tr style="background:#fff8e1"><td><strong>職員＋常勤教員</strong></td><td><strong>〜600名</strong></td><td><strong>約158万円</strong></td><td>★ 推奨</td></tr>
+      <tr><td>全教職員</td><td>〜1,400名</td><td>約370万円</td><td>非常勤講師含む場合</td></tr>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ===== Panel 3: 推奨・導入方針 ===== -->
+<div class="tab-panel" id="p3">
+<div class="content">
+  <div class="panel-title">推奨・導入方針（三井田案）</div>
+
+  <div class="rec-box">
+    <h3 style="font-size:17px;margin-bottom:10px">推奨: 段階的な併用アプローチ</h3>
+    <p style="font-size:14px;opacity:.9;margin-bottom:16px">「まずNextsetで移行、将来的にPower Automateを部分併用」を推奨します。<br>一方だけに絞るのではなく、それぞれの強みを活かす構成です。</p>
+    <div class="rec-row">
+      <div class="rec-item">
+        <div class="label">第1フェーズ（移行時）</div>
+        <div class="val">🌿 Nextset メイン</div>
+        <div class="sub">Garoonから申請フォームをそのまま移行。現場担当者が自立運用できる体制を作る。</div>
+      </div>
+      <div class="rec-item">
+        <div class="label">第2フェーズ（安定後）</div>
+        <div class="val">⚡ Power Automate 部分活用</div>
+        <div class="sub">複雑な条件が必要な申請や、申請以外の自動化ニーズが出てきたタイミングで導入する。</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>推奨の理由</h3>
+  <div class="card primary">
+    <ul style="padding-left:18px;font-size:14px">
+      <li style="margin-bottom:6px">武蔵野美術大学には情シス専任担当者がいないため、<strong>現場担当者が自分でメンテできる</strong>Nextsetが適している</li>
+      <li style="margin-bottom:6px">Garoonのワークフローを使っていたユーザーに<strong>最もなじみやすい</strong>UI・概念</li>
+      <li style="margin-bottom:6px">費用対効果が高い（職員＋常勤教員600名で年158万円）</li>
+      <li>将来的にPower Automateも使えるようにしておくことで、複雑なニーズにも対応できる</li>
+    </ul>
+  </div>
+
+  <h3>導入ステップ（案）</h3>
+  <ul class="step-list">
+    <li>
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>6/18定例：方針承認 + Nextsetトライアル開始の合意を取り付ける</strong>
+        <span>費用試算（年158万円）と今回の比較資料をもとに大学側の意思決定を得る。30日間無料トライアルの開始を提案。</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>〜7月末：Garoonのワークフロー棚卸し + Nextset検証</strong>
+        <span>現在使っているGaroonの申請フォーム一覧を大学側から提供してもらい、Nextsetで再現できるか確認。トライアル環境で実際に動かして評価。</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>8月：パイロット申請フォームの本番展開</strong>
+        <span>まず利用頻度の高い申請書2〜3種（休暇申請・物品購入など）をNextsetで本番運用開始。</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>9月以降：全申請フォームの移行 + Power Automate検討</strong>
+        <span>残りのGaroonワークフローを順次移行。複雑な条件が必要なケースはPower Automateとの組み合わせを検討。</span>
+      </div>
+    </li>
+  </ul>
+
+  <h3>6/18定例で確認したいこと</h3>
+  <table>
+    <tr><th>#</th><th>確認事項</th><th>理由</th></tr>
+    <tr>
+      <td>1</td>
+      <td>Nextsetへの費用許容感（年158万円〜）</td>
+      <td>意思決定のボトルネックになりうる。早期に確認が必要。</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>現在Garoonで使っている申請フォームの種類・件数</td>
+      <td>移行工数を見積もるため。</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>現場担当者（フォーム管理を任せられる人）は誰か</td>
+      <td>Nextsetは現場自立運用が前提。担当者を確定する必要あり。</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Garoonのワークフロー移行の優先順位（時期）</td>
+      <td>SharePointイントラ構築と並行して進めるため、スケジュール調整が必要。</td>
+    </tr>
+  </table>
+
+  <div class="card green" style="margin-top:20px">
+    <div class="card-title">もし費用が難しい場合の代替案</div>
+    <p>Nextsetの費用が難しい場合は、<strong>Power Automateを使ったシンプルな承認フロー</strong>を三井田が設計・構築し、IT担当者へ引き継ぐ方法もあります。この場合、追加費用はかかりません（ただし、現場担当者のメンテナンスが難しいことを事前に周知する必要があります）。</p>
+  </div>
+
+</div>
+</div>
+
+<script>
+function show(n) {
+  document.querySelectorAll('.tab-panel').forEach((p, i) => {
+    p.classList.toggle('active', i === n);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === n);
+  });
+}
+</script>
+</body>
+</html>
