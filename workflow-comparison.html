@@ -731,10 +731,25 @@
     <table style="margin:4px 0">
       <tr><th>シナリオ</th><th>対象人数</th><th>月額（税抜）</th><th>年額（税抜）</th><th>年額（税込）</th></tr>
       <tr><td>見積想定（教員400名＋学生600名）</td><td>1,000名</td><td>9万円</td><td>108万円</td><td>約119万円</td></tr>
+      <tr><td>職員のみ（ワークフロー実利用者）</td><td>〜300名</td><td>2.7万円</td><td>32.4万円</td><td>約36万円</td></tr>
       <tr><td>教職員のみ</td><td>〜1,400名</td><td>〜12.6万円</td><td>〜151万円</td><td>〜166万円</td></tr>
-      <tr style="background:#fff3cd"><td><strong>教職員＋学生（全体）</strong></td><td><strong>実数要確認</strong></td><td colspan="3" style="color:#c0392b;text-align:center">学生の正確な人数確認後に試算</td></tr>
+      <tr style="background:#fde8e8"><td><strong>⚠️ テナント全体（課金リスク）</strong></td><td><strong>教職員〜1,400＋学生〜5,000＝約6,400名</strong></td><td style="color:#c0392b"><strong>〜57.6万円</strong></td><td style="color:#c0392b"><strong>〜691万円</strong></td><td style="color:#c0392b"><strong>約760万円</strong></td></tr>
     </table>
-    <p style="font-size:12px;color:#856404;margin-top:8px">学生の正確な人数はM365管理センターで確認が必要。対象範囲が確定次第、最終的な年間コストを算出します。</p>
+    <p style="font-size:12px;color:#856404;margin-top:8px">
+      <strong>6/18定例MTGで確認</strong>：学生のアクティブユーザーは約5,000名近く存在する（大学側Tokitaさんより）。
+      Nextsetの課金がテナント全体（SharePoint/Teams保有者全員）に適用される場合、年間約760万円になるリスクがある。
+      職員のみ（実利用者約300名）で適用できるなら年約36万円と現実的。<strong>課金スコープの正確な確認が最優先。</strong>
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:12px;border-left:4px solid #1a56a0;padding:14px 18px;">
+    <div class="card-title" style="color:#1a56a0;">💡 Power Automateとの費用比較観点</div>
+    <p style="font-size:13px;margin-bottom:8px">6/18定例で出た意見：「人事ID情報と連携した承認ルートの自動化」がM365の理想形。</p>
+    <ul style="font-size:13px;padding-left:18px;">
+      <li>ガルーンでは人事異動のたびにHatanaka氏が手作業でグループを更新している</li>
+      <li>M365のEntra IDグループに正しく所属者が反映されれば、Power Automateで「教務チームの誰が申請しても、教務チームリーダーが承認者になる」という自動化が可能</li>
+      <li>Nextsetはガルーンに近い操作性だが、費用が課題。まず<strong>Nextset無料トライアル（30日）でUX評価</strong>してから判断を推奨</li>
+    </ul>
   </div>
 
 </div>
