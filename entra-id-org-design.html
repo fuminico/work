@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entra ID 組織構造設計 — 武蔵野美術大学</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f1fb;
+    --accent: #e67e22;
+    --green: #27ae60;
+    --red: #c0392b;
+    --purple: #7b3fa0;
+    --purple-light: #f3eafa;
+    --gray: #f5f6f8;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+    --tab-h: 52px;
+    --header-h: 72px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.75;
+  }
+
+  .page-header {
+    background: var(--primary); color: #fff;
+    padding: 0 32px;
+    height: var(--header-h);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .meta { font-size: 12px; opacity: .65; margin-top: 2px; }
+
+  .tab-bar {
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+    display: flex; overflow-x: auto;
+    position: sticky; top: var(--header-h); z-index: 100;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 0 22px;
+    height: var(--tab-h);
+    font-size: 13px; font-weight: 600;
+    color: var(--muted);
+    border: none; background: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .tab-panel { display: none; padding: 32px; max-width: 960px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px; margin-bottom: 20px;
+  }
+  .card h2 { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
+  .card h3 { font-size: 14px; font-weight: 700; margin: 16px 0 8px; color: var(--text); }
+  .card p { margin-bottom: 10px; color: #3a3d45; }
+  .card ul, .card ol { padding-left: 20px; margin-bottom: 10px; }
+  .card li { margin-bottom: 4px; }
+
+  /* Alert cards */
+  .card-green { border-left: 4px solid var(--green); }
+  .card-green h2 { color: var(--green); }
+  .card-orange { border-left: 4px solid var(--accent); }
+  .card-orange h2 { color: var(--accent); }
+  .card-red { border-left: 4px solid var(--red); }
+  .card-red h2 { color: var(--red); }
+  .card-purple { border-left: 4px solid var(--purple); }
+  .card-purple h2 { color: var(--purple); }
+  .card-blue { border-left: 4px solid var(--primary); }
+  .card-blue h2 { color: var(--primary); }
+
+  /* Action items */
+  .action-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+  .action-table th {
+    background: var(--gray); padding: 10px 14px; text-align: left;
+    font-weight: 600; border-bottom: 2px solid var(--border); font-size: 13px;
+  }
+  .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .action-table tr:hover td { background: var(--gray); }
+  .owner-me { background: #fff3e0; color: #e65100; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .owner-client { background: #e8f5e9; color: #1b5e20; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .owner-tokita { background: #e3f2fd; color: #0d47a1; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .deadline { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  /* Tree diagram */
+  .tree {
+    font-family: 'Courier New', monospace; font-size: 13px;
+    background: var(--gray); border-radius: 8px; padding: 16px;
+    margin: 12px 0; line-height: 1.8;
+  }
+  .tree .node-top { color: var(--primary); font-weight: 700; }
+  .tree .node-mid { color: #2d7d46; font-weight: 600; }
+  .tree .node-leaf { color: #555; }
+  .tree .node-special { color: var(--purple); font-weight: 600; }
+
+  /* Comparison table */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .cmp-table th {
+    padding: 10px 14px; text-align: center; font-weight: 700;
+    border-bottom: 2px solid var(--border); border-right: 1px solid var(--border);
+  }
+  .cmp-table td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border); vertical-align: top;
+  }
+  .cmp-table .feature-col { font-weight: 600; background: var(--gray); width: 200px; }
+  .cmp-table .good { color: var(--green); font-weight: 600; }
+  .cmp-table .warn { color: var(--accent); font-weight: 600; }
+  .cmp-table .bad { color: var(--red); font-weight: 600; }
+
+  /* Badge */
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 600; margin-left: 6px;
+  }
+  .badge-yes { background: #e8f5e9; color: #1b5e20; }
+  .badge-cond { background: #fff3e0; color: #e65100; }
+  .badge-no { background: #fde8e8; color: #c0392b; }
+
+  /* Step list */
+  .steps { list-style: none; padding: 0; margin: 12px 0; }
+  .steps li {
+    display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;
+  }
+  .step-num {
+    flex-shrink: 0; width: 28px; height: 28px;
+    background: var(--primary); color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; margin-top: 2px;
+  }
+  .step-body { flex: 1; }
+  .step-body strong { display: block; margin-bottom: 3px; }
+
+  /* Callout */
+  .callout {
+    border-radius: 8px; padding: 14px 18px; margin: 12px 0;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .callout-info { background: var(--primary-light); border: 1px solid #b3d1f5; }
+  .callout-warn { background: #fff8e1; border: 1px solid #ffe082; }
+  .callout-danger { background: #fde8e8; border: 1px solid #f5b7b1; }
+  .callout-ok { background: #e8f5e9; border: 1px solid #a5d6a7; }
+  .callout-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .callout-body { font-size: 14px; line-height: 1.65; }
+
+  /* User card */
+  .user-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0;
+  }
+  .user-chip {
+    border-radius: 20px; padding: 6px 16px;
+    font-size: 13px; font-weight: 600; border: 1px solid;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chip-blue { background: var(--primary-light); color: var(--primary); border-color: #b3d1f5; }
+  .chip-green { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+  .chip-purple { background: var(--purple-light); color: var(--purple); border-color: #c9a8e0; }
+  .chip-orange { background: #fff3e0; color: #e65100; border-color: #ffcc80; }
+
+  /* Code block */
+  pre.code {
+    background: #1e1e2e; color: #cdd6f4; border-radius: 8px;
+    padding: 14px 18px; font-size: 12.5px; line-height: 1.7;
+    overflow-x: auto; margin: 12px 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+  }
+  pre.code .kw { color: #89b4fa; }
+  pre.code .str { color: #a6e3a1; }
+  pre.code .cm { color: #6c7086; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  @media (max-width: 640px) {
+    .tab-panel { padding: 16px; }
+    .card { padding: 16px; }
+    .page-header { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Entra ID 組織構造設計 — 階層・兼務の実現可否</h1>
+    <div class="meta">武蔵野美術大学 M365 導入支援 ／ 2026-06-18 定例フォローアップ</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('action')">📋 アクションプラン</button>
+  <button class="tab-btn" onclick="switchTab('hierarchy')">🏛️ 階層構造の実現</button>
+  <button class="tab-btn" onclick="switchTab('concurrent')">🔄 兼務設定の実現</button>
+  <button class="tab-btn" onclick="switchTab('comparison')">📊 Garoon 比較</button>
+  <button class="tab-btn" onclick="switchTab('design')">⚙️ 設計案</button>
+</div>
+
+<!-- ===== TAB 1: アクションプラン ===== -->
+<div id="tab-action" class="tab-panel active">
+
+  <div class="card card-blue">
+    <h2>📋 2026-06-18 定例 — 会議サマリー</h2>
+    <p>セキュリティマニュアル整備とEntra IDグループ設計、ワークフローツール比較について検討。組織構造（兼務含む）のEntra ID実現可否は持ち帰り事項となった。</p>
+    <h3>三井田 担当アクション（来週6/25までに対応）</h3>
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th style="width:40%">アクション</th>
+          <th style="width:15%">担当</th>
+          <th style="width:20%">期限</th>
+          <th>対応状況</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>グループ設計の再検討</strong><br>
+          Entra IDで兼務・複雑な組織構造が実現可能か検討・説明</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">6/25 定例まで</td>
+          <td>→ この資料で対応</td>
+        </tr>
+        <tr>
+          <td><strong>ライセンス費用の正確な試算</strong><br>
+          学生・非常勤含む全ユーザーでの試算</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">6/25 定例まで</td>
+          <td>→ 要対応</td>
+        </tr>
+        <tr>
+          <td><strong>正式費用の算出・提示</strong></td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">6/25 定例まで</td>
+          <td>→ 要対応</td>
+        </tr>
+        <tr>
+          <td><strong>シンプルな承認フローの作成・提案</strong></td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">6/25 定例まで</td>
+          <td>→ 要対応</td>
+        </tr>
+        <tr>
+          <td><strong>資料展開</strong><br>
+          本日の要望を反映した資料を作成</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">6/25 定例まで</td>
+          <td>→ この資料 + 更新版ワークフロー資料</td>
+        </tr>
+        <tr>
+          <td><strong>ワークフロー比較Webページ共有</strong></td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">6/25 定例まで</td>
+          <td>→ <a href="./workflow-comparison.html">workflow-comparison.html</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-green">
+    <h2>✅ 先方・Tokita さん 担当アクション（参考）</h2>
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th style="width:40%">アクション</th>
+          <th style="width:20%">担当</th>
+          <th>期限</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>電話番号情報の提供（緊急時連絡先のマニュアル追記用）</td>
+          <td><span class="owner-client">伊藤朋子さん</span></td>
+          <td class="deadline">随時</td>
+        </tr>
+        <tr>
+          <td>Outlook 送信取り消し機能の設定調査・報告</td>
+          <td><span class="owner-tokita">Tokita Naoya</span></td>
+          <td class="deadline">6/25 定例まで</td>
+        </tr>
+        <tr>
+          <td>テストアカウント発行（畠中幹太さん経由で三井田・Tokitaへ送付）</td>
+          <td><span class="owner-client">伊藤朋子さん</span></td>
+          <td class="deadline">次回まで</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-orange">
+    <h2>⚠️ 今回のキーイシュー：組織構造の再現性</h2>
+    <p>伊藤朋子さんより「現在のガルーンと比較して、M365で複雑な組織構造（兼務など）を再現できるか」という懸念が示されました。</p>
+    <div class="callout callout-info">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>この資料の目的</strong>：上記の懸念に対して「Entra IDでどこまで実現できるか」「どこが限界か」を整理し、次回定例で説明するための根拠資料として使用する。
+      </div>
+    </div>
+    <h3>結論（先にまとめ）</h3>
+    <ul>
+      <li>✅ <strong>階層構造（ネスト型グループ）</strong>：完全に実現可能。すでに提案済みの設計で対応できる</li>
+      <li>✅ <strong>兼務設定</strong>：機能的には実現可能。ユーザーを複数グループに所属させることで同等の効果が得られる</li>
+      <li>⚠️ <strong>ガルーンとの視覚的な差異</strong>：「兼務」という明示的なラベルは存在しない。組織図的な表示はManagerフィールドの一本鎖に限られる</li>
+      <li>💡 <strong>代替手段あり</strong>：カスタム属性（extensionAttribute）で兼務を記録し、動的グループで自動管理する方式が有効</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== TAB 2: 階層構造 ===== -->
+<div id="tab-hierarchy" class="tab-panel">
+
+  <div class="card card-green">
+    <h2>🏛️ 結論：階層構造は完全に実現可能</h2>
+    <div class="callout callout-ok">
+      <span class="callout-icon">✅</span>
+      <div class="callout-body">
+        Entra ID セキュリティグループはネスト（入れ子）構造をサポートしています。すでに提案済みの設計がそのまま適用できます。
+      </div>
+    </div>
+    <p>Entra IDでは、グループの中に別のグループをメンバーとして追加できます（最大ネスト深度：制限なし）。これにより「大学全体 → 大部門 → 小部門」という階層を表現できます。</p>
+  </div>
+
+  <div class="card">
+    <h2>🌳 提案済みのネスト型グループ構造</h2>
+    <p>提示済みの5層構造案（再掲）：</p>
+    <div class="tree">
+<span class="node-top">MAU_全教職員</span>  ← 最上位：全員対象の一斉連絡・SharePointアクセス用<br>
+├── <span class="node-mid">MAU_職員_全体</span><br>
+│   ├── <span class="node-leaf">MAU_職員_事務局_教務部</span><br>
+│   ├── <span class="node-leaf">MAU_職員_事務局_総務部</span><br>
+│   ├── <span class="node-leaf">MAU_職員_事務局_学生部</span><br>
+│   └── <span class="node-leaf">MAU_職員_市ヶ谷キャンパス</span><br>
+└── <span class="node-mid">MAU_教員_全体</span><br>
+    ├── <span class="node-leaf">MAU_教員_造形学部_油絵学科</span><br>
+    ├── <span class="node-leaf">MAU_教員_造形学部_工業デザイン学科</span><br>
+    ├── <span class="node-leaf">MAU_教員_造形構想学部</span><br>
+    └── <span class="node-leaf">MAU_教員_非常勤講師</span>
+    </div>
+    <h3>この構造の動作メカニズム</h3>
+    <ul>
+      <li>「MAU_全教職員」に何かアクセス権を付与すると、配下の全グループのメンバー全員に自動的に権限が継承される</li>
+      <li>「MAU_職員_事務局_教務部」だけに権限を付与すると、教務部のメンバーだけがアクセスできる</li>
+      <li>ユーザーは下位グループ（末端）に追加するだけで、上位グループの権限も自動的に得られる</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📌 SharePoint への適用例</h2>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="feature-col">SharePointサイト</th>
+          <th>アクセス付与対象グループ</th>
+          <th>結果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="feature-col">大学ポータル（全体）</td>
+          <td>MAU_全教職員</td>
+          <td class="good">全教職員・非常勤含む全員</td>
+        </tr>
+        <tr>
+          <td class="feature-col">教務部専用サイト</td>
+          <td>MAU_職員_事務局_教務部</td>
+          <td class="good">教務部員のみ</td>
+        </tr>
+        <tr>
+          <td class="feature-col">造形学部教員向けサイト</td>
+          <td>MAU_教員_造形学部_油絵学科 + MAU_教員_造形学部_工業デザイン学科 + …</td>
+          <td class="good">対象学科教員のみ</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout callout-info" style="margin-top:14px;">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        SharePoint の「対象ユーザー設定」（オーディエンス ターゲティング）でも Entra ID グループを指定できるため、<strong>ナビゲーションや告知記事の表示を部門別に切り替える</strong>ことも可能です。
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <h2>⚙️ 技術的な制約（参考）</h2>
+    <ul>
+      <li>ネスト上限：Microsoft 365 グループはネスト不可だが、<strong>セキュリティグループはネスト可能</strong>（今回はセキュリティグループで設計）</li>
+      <li>SharePoint のオーディエンスターゲティングはセキュリティグループを直接参照可能</li>
+      <li>Teams の通知・チャネルは独立したグループ管理だが、セキュリティグループをメンバー追加の基準にできる</li>
+      <li>動的メンバーシップルール（Entra ID P1 = A3ライセンス以上で利用可能）を使えば、ユーザー属性変更時にグループ所属が自動更新される</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== TAB 3: 兼務設定 ===== -->
+<div id="tab-concurrent" class="tab-panel">
+
+  <div class="card card-green">
+    <h2>🔄 結論：兼務設定は機能的に実現可能</h2>
+    <div class="callout callout-ok">
+      <span class="callout-icon">✅</span>
+      <div class="callout-body">
+        Entra IDではユーザーは<strong>複数のグループに同時所属</strong>できます。これにより「造形学部の教授が大学院研究科も兼任」「職員が複数部署を兼務」といったケースに対応できます。
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        ガルーンのような<strong>「兼務」という明示的なラベル表示</strong>はありません。あくまでグループへの所属で権限・アクセスを管理します。
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 兼務の仕組み（概念説明）</h2>
+    <p>ガルーンでは「主所属」と「兼務所属」を明示的に区別します。Entra IDでは<strong>すべて「グループメンバー」として同等</strong>に扱います。</p>
+
+    <h3>具体例：教務部を兼任する工業デザイン学科教授</h3>
+    <div class="user-row">
+      <div class="user-chip chip-blue">👤 田中 太郎 教授</div>
+      <div style="display:flex; align-items:center; color:#667085;">→ 所属グループ：</div>
+      <div class="user-chip chip-green">MAU_教員_造形学部_工業デザイン学科</div>
+      <div class="user-chip chip-orange">MAU_職員_事務局_教務部</div>
+    </div>
+    <div style="margin: 12px 0; padding-left: 20px;">
+      <p>結果として、田中教授は：</p>
+      <ul>
+        <li>工業デザイン学科向けの SharePoint サイトにアクセスできる</li>
+        <li>教務部向けの SharePoint サイトにもアクセスできる</li>
+        <li>MAU_全教職員 の一括連絡を受け取れる</li>
+        <li>教務部の Teams チャネルにも参加できる</li>
+      </ul>
+    </div>
+
+    <h3>別例：研究科と学部を兼任する教員</h3>
+    <div class="user-row">
+      <div class="user-chip chip-blue">👤 鈴木 花子 教授</div>
+      <div style="display:flex; align-items:center; color:#667085;">→ 所属グループ：</div>
+      <div class="user-chip chip-green">MAU_教員_造形構想学部</div>
+      <div class="user-chip chip-purple">MAU_教員_造形学部_油絵学科</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ 実装方法：3つのアプローチ</h2>
+
+    <ol class="steps">
+      <li>
+        <div class="step-num">A</div>
+        <div class="step-body">
+          <strong>手動追加（推奨・シンプル）</strong>
+          管理者がユーザーを複数のセキュリティグループに手動で追加する。グループ設計がシンプルならこれで十分。
+          <div class="callout callout-ok" style="margin-top:8px;">
+            <span class="callout-icon">✅</span>
+            <div class="callout-body">追加ライセンス不要。即実施可能。</div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">B</div>
+        <div class="step-body">
+          <strong>動的メンバーシップルール（自動化）</strong>
+          ユーザーの属性（department、jobTitle、employeeType等）に基づいてグループ所属を自動化。
+          <pre class="code"><span class="cm">// 例：工業デザイン学科の教員を自動追加するルール</span>
+<span class="kw">user.department</span> <span class="str">-eq</span> <span class="str">"造形学部_工業デザイン学科"</span>
+<span class="kw">-and user.userType</span> <span class="str">-eq</span> <span class="str">"Member"</span>
+
+<span class="cm">// 例：兼務グループの自動化（extensionAttribute を使う場合）</span>
+<span class="kw">user.extensionAttribute1</span> <span class="str">-contains</span> <span class="str">"教務部兼務"</span></pre>
+          <div class="callout callout-warn" style="margin-top:8px;">
+            <span class="callout-icon">⚠️</span>
+            <div class="callout-body"><strong>Entra ID P1 ライセンスが必要</strong>（A3/A5、または個別購入 約680円/月/ユーザー）</div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">C</div>
+        <div class="step-body">
+          <strong>カスタム属性での兼務記録（推奨・現実的）</strong>
+          ユーザーオブジェクトの extensionAttribute（拡張属性）に兼務情報を記録し、管理台帳として活用する。
+          <div class="callout callout-info" style="margin-top:8px;">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">
+              extensionAttribute は15個あり、自由に活用できます。例：<br>
+              <code>extensionAttribute1 = "工業デザイン学科"</code>（主所属）<br>
+              <code>extensionAttribute2 = "教務部兼務"</code>（兼務）<br>
+              これを台帳として管理し、グループ追加の根拠にする。
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card card-purple">
+    <h2>🔍 ガルーンとの「兼務」概念の違い</h2>
+    <p>伊藤さんの懸念は「ガルーンの兼務が再現できるか」でした。以下が正確な答えです：</p>
+
+    <table class="cmp-table" style="margin-top:14px;">
+      <thead>
+        <tr>
+          <th class="feature-col">観点</th>
+          <th>ガルーン</th>
+          <th>Entra ID（M365）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="feature-col">主所属の概念</td>
+          <td class="good">明示的に設定可能</td>
+          <td class="warn">なし（全グループ同等）</td>
+        </tr>
+        <tr>
+          <td class="feature-col">兼務の概念</td>
+          <td class="good">明示的に「兼務」として登録</td>
+          <td class="warn">なし（複数グループ所属で代替）</td>
+        </tr>
+        <tr>
+          <td class="feature-col">権限・アクセス効果</td>
+          <td class="good">主+兼務の両方が付与される</td>
+          <td class="good">複数グループの権限が全て付与される</td>
+        </tr>
+        <tr>
+          <td class="feature-col">組織図表示</td>
+          <td class="good">兼務を視覚的に表示可能</td>
+          <td class="bad">Managerフィールドの1系統のみ（兼務表示は非対応）</td>
+        </tr>
+        <tr>
+          <td class="feature-col">メーリングリスト</td>
+          <td class="good">各所属グループから受信</td>
+          <td class="good">各グループから受信（同等）</td>
+        </tr>
+        <tr>
+          <td class="feature-col">管理の煩雑さ</td>
+          <td class="warn">ガルーンの管理画面で一元管理</td>
+          <td class="warn">Entra ID管理センターで個別追加が必要</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-info" style="margin-top:16px;">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>伊藤さんへの説明ポイント</strong>：<br>
+        「ガルーンの兼務が持っている<strong>機能的な効果</strong>（権限・メール受信・アクセス）はEntra IDでも全て実現できます。<br>
+        一方で<strong>視覚的な組織図への兼務表示</strong>はM365では標準機能では対応していません。組織図は主所属（Managerフィールド）の1系統のみの表示になります。<br>
+        この点をどこまで重視するかを確認してください。」
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB 4: ガルーン比較 ===== -->
+<div id="tab-comparison" class="tab-panel">
+
+  <div class="card">
+    <h2>📊 ガルーン vs M365 Entra ID — 組織構造機能比較</h2>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="feature-col" style="text-align:left;">機能・要件</th>
+          <th style="width:200px;">ガルーン</th>
+          <th style="width:200px;">M365 Entra ID</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="feature-col">階層型組織構造</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td>ネスト型セキュリティグループで実現</td>
+        </tr>
+        <tr>
+          <td class="feature-col">兼務設定</td>
+          <td><span class="badge badge-yes">✅ 明示的</span></td>
+          <td><span class="badge badge-cond">⚠️ 代替可能</span></td>
+          <td>複数グループ所属で機能的に同等。「兼務」ラベルなし</td>
+        </tr>
+        <tr>
+          <td class="feature-col">主所属の概念</td>
+          <td><span class="badge badge-yes">✅ あり</span></td>
+          <td><span class="badge badge-no">❌ なし</span></td>
+          <td>extensionAttributeで代替管理可能</td>
+        </tr>
+        <tr>
+          <td class="feature-col">権限・アクセス制御</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td>SharePoint/Teamsともにグループベースで制御可能</td>
+        </tr>
+        <tr>
+          <td class="feature-col">全員への一括配信</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td>最上位グループ（MAU_全教職員）に送ればOK</td>
+        </tr>
+        <tr>
+          <td class="feature-col">部門別の絞り込み配信</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td>中間グループ（MAU_職員_全体 等）を宛先に</td>
+        </tr>
+        <tr>
+          <td class="feature-col">視覚的な組織図</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-cond">⚠️ 限定的</span></td>
+          <td>M365はManagerフィールドの1系統のみ。Teams/Delveで表示</td>
+        </tr>
+        <tr>
+          <td class="feature-col">組織図への兼務表示</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-no">❌ 非対応</span></td>
+          <td>M365の組織図には兼務を表示する標準機能なし</td>
+        </tr>
+        <tr>
+          <td class="feature-col">自動グループ更新</td>
+          <td><span class="badge badge-cond">⚠️ 限定的</span></td>
+          <td><span class="badge badge-cond">⚠️ P1必要</span></td>
+          <td>動的メンバーシップルール（Entra ID P1 = A3ライセンス以上）で自動化可能</td>
+        </tr>
+        <tr>
+          <td class="feature-col">メーリングリスト</td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td><span class="badge badge-yes">✅ 対応</span></td>
+          <td>セキュリティグループまたは配布グループが同等の役割を担う</td>
+        </tr>
+        <tr>
+          <td class="feature-col">SharePoint連携</td>
+          <td><span class="badge badge-no">❌ 非対応</span></td>
+          <td><span class="badge badge-yes">✅ ネイティブ連携</span></td>
+          <td>M365の優位点。Entra IDグループをそのまま権限に使用</td>
+        </tr>
+        <tr>
+          <td class="feature-col">Teams連携</td>
+          <td><span class="badge badge-no">❌ 非対応</span></td>
+          <td><span class="badge badge-yes">✅ ネイティブ連携</span></td>
+          <td>M365の優位点</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-orange">
+    <h2>⚠️ ガルーン移行で注意すべき差異</h2>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>組織図の見え方が変わる</strong><br>
+          ガルーンでは兼務が視覚的に見えていたが、M365の組織図（TeamsのPeople/Delve）はManagerフィールドの1系統のみ表示。兼務は見えない。<br>
+          <em>→ 組織図を「人事の台帳」として使っていたなら代替手段が必要</em>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>グループ管理の手間が増える可能性</strong><br>
+          ガルーンでは人事情報との連動で自動更新されていた場合、M365では都度手動でグループ追加・削除が必要になる。<br>
+          <em>→ 動的グループ（Entra ID P1）か、人事システム連携（Azure AD Connect等）で対応可能</em>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>「主所属」の概念の扱い</strong><br>
+          Entra IDにはどのグループが「主所属」かを示す標準フィールドがない。<br>
+          <em>→ departmentフィールドを主所属として使い、extensionAttributeで補足情報を管理するのが現実的</em>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+</div>
+
+<!-- ===== TAB 5: 設計案 ===== -->
+<div id="tab-design" class="tab-panel">
+
+  <div class="card card-blue">
+    <h2>⚙️ 推奨設計案：Phase別アプローチ</h2>
+    <div class="callout callout-info">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        現時点では動的グループ（P1要件）は使わず、まず手動管理からスタートし、運用に慣れてから自動化を検討する段階的アプローチを推奨します。
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Phase 1 — 基本グループ設計（即実施可能）</h2>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>グループ命名規則の確定</strong><br>
+          <code>MAU_[種別]_[大分類]_[小分類]</code> の形式で統一
+          <div class="tree" style="margin-top:8px;">
+<span class="node-top">MAU_全教職員</span><br>
+├── <span class="node-mid">MAU_職員_全体</span><br>
+│   ├── <span class="node-leaf">MAU_職員_事務局_教務部</span><br>
+│   ├── <span class="node-leaf">MAU_職員_事務局_総務部</span><br>
+│   └── <span class="node-leaf">MAU_職員_市ヶ谷</span><br>
+├── <span class="node-mid">MAU_教員_全体</span><br>
+│   ├── <span class="node-leaf">MAU_教員_造形学部_[各学科]</span><br>
+│   ├── <span class="node-leaf">MAU_教員_造形構想学部_[各学科]</span><br>
+│   └── <span class="node-leaf">MAU_教員_非常勤講師</span><br>
+└── <span class="node-special">MAU_MFA対象_教職員</span>  ← セキュリティポリシー用
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>兼務ユーザーの管理台帳作成</strong><br>
+          Excelまたは SharePoint リストで「兼務者一覧」を管理。列：氏名・UPN・主所属グループ・兼務グループ1・兼務グループ2
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>テストアカウントで動作確認</strong><br>
+          伊藤さんから提供予定のテストアカウントを使い、複数グループ所属とSharePointアクセス確認
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Phase 2 — 運用改善（8月以降・状況に応じて）</h2>
+    <ol class="steps">
+      <li>
+        <div class="step-num">A</div>
+        <div class="step-body">
+          <strong>extensionAttribute の活用</strong><br>
+          ユーザーの主所属・兼務情報をEntra IDの拡張属性に記録し、管理台帳代わりにする
+          <pre class="code"><span class="cm">// Entra ID ユーザープロパティの例</span>
+<span class="kw">department</span>: <span class="str">"工業デザイン学科"</span>           <span class="cm">// 主所属</span>
+<span class="kw">extensionAttribute1</span>: <span class="str">"教員"</span>               <span class="cm">// 種別</span>
+<span class="kw">extensionAttribute2</span>: <span class="str">"教務部兼務"</span>          <span class="cm">// 兼務情報</span>
+<span class="kw">extensionAttribute3</span>: <span class="str">"大学院研究科兼務"</span>    <span class="cm">// 兼務情報2</span></pre>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">B</div>
+        <div class="step-body">
+          <strong>動的グループの検討（A3ライセンス前提）</strong><br>
+          人事情報の定期的な変更に対応するため、departmentフィールド基準の動的グループを導入。人事異動時のグループ更新を自動化。
+          <div class="callout callout-warn">
+            <span class="callout-icon">⚠️</span>
+            <div class="callout-body">現在のライセンス体系（A1）では利用不可。A3への拡張か個別のEntra ID P1追加購入が必要（約680円/月/ユーザー）</div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card card-green">
+    <h2>✅ 次回定例（6/25）での説明ポイント</h2>
+    <ul>
+      <li>階層構造：✅ すでに提案済みの設計で完全対応可能</li>
+      <li>兼務の機能的再現：✅ 複数グループ所属で権限・メール・アクセスはすべて対応できる</li>
+      <li>兼務の視覚表示（組織図）：⚠️ 標準機能では対応不可。組織図はManagerフィールドの1系統のみ</li>
+      <li>管理運用：段階的に手動→自動化で対応できる。まずテストアカウントで確認したい</li>
+      <li>不明点の確認：「ガルーンの兼務をどの場面で使っていたか」「組織図表示の必要性」を具体的に聞く</li>
+    </ul>
+
+    <hr class="divider">
+
+    <h3>伊藤さんへの確認事項（ヒアリング）</h3>
+    <ul>
+      <li>現在ガルーンの組織図を誰がどのような用途で使っているか？</li>
+      <li>「兼務」の情報は人事部が管理しているか？何名くらい兼務者がいるか？</li>
+      <li>兼務者への連絡は「主所属として」送るのか「兼務先として」送るのか、その両方か？</li>
+      <li>SharePoint で「兼務が見える」必要があるか？（機能的に動けばよいか、見た目も重要か）</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    const idx = ['action','hierarchy','concurrent','comparison','design'].indexOf(name);
+    document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
