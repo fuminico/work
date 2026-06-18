@@ -352,7 +352,7 @@
     <tr>
       <td><strong>費用</strong></td>
       <td>基本無料（M365に含まれる）<br><small>高度機能はPower Automate有料プランが必要（1,670円/月/ユーザー〜）</small></td>
-      <td>200円/月/ユーザー〜<br><small>全アドオン込みで600円/月/ユーザー（税抜）</small></td>
+      <td>100円/月/ユーザー〜（教育機関向け定価）<br><small>民間企業向けは200円/月〜。全アドオン込みは300円/月（税抜）</small></td>
     </tr>
     <tr>
       <td><strong>操作のしやすさ</strong></td>
@@ -706,32 +706,34 @@
     <li>高度なAPI連携や外部サービス連携はPower Automateに劣る</li>
   </ul>
 
-  <h3>費用（再掲）</h3>
+  <h3>費用（正式見積：2026-06-18受領）</h3>
   <table>
-    <tr><th>アドオン数</th><th>月額（税抜/ユーザー）</th><th>利用可能な機能</th></tr>
-    <tr><td>1アドオン</td><td><strong>200円</strong></td><td>ワークフロー（申請・承認）のみ</td></tr>
-    <tr><td>2アドオン</td><td>300円</td><td>＋設備予約 or 日報など</td></tr>
-    <tr><td>3アドオン</td><td>400円</td><td>複数機能を組み合わせ</td></tr>
-    <tr><td>全アドオン</td><td>600円</td><td>すべての機能を利用可</td></tr>
+    <tr><th></th><th>民間企業向け（定価）</th><th>教育機関向け（定価）</th><th>武蔵野美術大学（見積）</th></tr>
+    <tr><td><strong>月額/ユーザー</strong></td><td>200円</td><td><strong>100円</strong></td><td><strong>90円</strong></td></tr>
+    <tr><td><strong>年額/ユーザー</strong></td><td>2,400円</td><td><strong>1,200円</strong></td><td><strong>1,080円</strong></td></tr>
   </table>
+  <p style="font-size:12px;color:#555;margin-top:6px">見積前提：教員400名＋学生600名（計1,000名）。教育機関定価（100円）からさらに値引きされた価格。</p>
+
   <div class="card red" style="margin-top:12px">
-    <div class="card-title">⚠️ ライセンス課金の仕組みと懸念点</div>
-    <p style="font-size:13px;margin-bottom:8px">Nextsetの課金対象は「アドインを使う人数」ではなく、<strong>テナント内でSharePointまたはTeamsを利用できるライセンスを保有しているユーザー数</strong>が対象になります。</p>
+    <div class="card-title">⚠️ 課金対象の仕組みと対象範囲の確認が必要</div>
+    <p style="font-size:13px;margin-bottom:8px">課金対象は「実際にアドインを使う人数」ではなく、<strong>テナント内でSharePointまたはTeamsを利用できるライセンスを保有しているユーザー数</strong>です。A1（無償）ライセンスもSharePoint/Teamsを含むため、学生も同テナントにいる場合は対象になる可能性があります。</p>
     <table style="margin:4px 0;font-size:13px">
-      <tr><th>対象者</th><th>ライセンス種別</th><th>SharePoint/Teams</th><th>課金対象の可能性</th></tr>
-      <tr><td>教職員（〜1,400名）</td><td>M365 A3（有償）</td><td>✅ あり</td><td style="color:#c0392b">⚠️ 対象になる</td></tr>
-      <tr><td>学生（〜3,000〜4,000名）</td><td>M365 A1（無償提供）</td><td>✅ あり（A1もSharePoint/Teams含む）</td><td style="color:#c0392b">⚠️ 同一テナントのため対象になる可能性が高い</td></tr>
+      <tr><th>対象者</th><th>ライセンス</th><th>SharePoint/Teams</th><th>課金対象</th></tr>
+      <tr><td>教職員（〜1,400名）</td><td>A3（有償）</td><td>✅</td><td style="color:#c0392b">対象</td></tr>
+      <tr><td>学生</td><td>A1（無償）</td><td>✅（A1も含む）</td><td style="color:#c0392b">同テナントのため対象の可能性が高い</td></tr>
     </table>
-    <p style="font-size:12px;color:#7f1d1d;margin-top:8px">学生がA1であっても同テナント内にいる限り課金対象に含まれる可能性があるため、<strong>正式見積はNextset社に確認中</strong>。本日時点では参考価格のみ提示。</p>
+    <p style="font-size:12px;color:#7f1d1d;margin-top:8px">今後の進め方として、どこまでのユーザーを対象範囲とするかを大学側と確認する必要があります。</p>
   </div>
+
   <div class="card orange" style="margin-top:12px">
-    <div class="card-title">費用試算（参考・見積確認後に更新予定）</div>
+    <div class="card-title">費用試算（正式単価 90円/月/ユーザー・税抜ベース）</div>
     <table style="margin:4px 0">
-      <tr><th>シナリオ</th><th>対象人数</th><th>年額概算（税込・1アドオン）</th></tr>
-      <tr><td>教職員のみ（学生除外が認められた場合）</td><td>〜1,400名</td><td>約370万円</td></tr>
-      <tr style="background:#fff3cd"><td>教職員＋学生（同テナント全員が対象の場合）</td><td>〜5,000名以上</td><td>未試算（見積確認中）</td></tr>
+      <tr><th>シナリオ</th><th>対象人数</th><th>月額（税抜）</th><th>年額（税抜）</th><th>年額（税込）</th></tr>
+      <tr><td>見積想定（教員400名＋学生600名）</td><td>1,000名</td><td>9万円</td><td>108万円</td><td>約119万円</td></tr>
+      <tr><td>教職員のみ</td><td>〜1,400名</td><td>〜12.6万円</td><td>〜151万円</td><td>〜166万円</td></tr>
+      <tr style="background:#fff3cd"><td><strong>教職員＋学生（全体）</strong></td><td><strong>実数要確認</strong></td><td colspan="3" style="color:#c0392b;text-align:center">学生の正確な人数確認後に試算</td></tr>
     </table>
-    <p style="font-size:12px;color:#856404;margin-top:8px">★ Nextset社からの正式見積を受領次第、実数ベースで更新します。</p>
+    <p style="font-size:12px;color:#856404;margin-top:8px">学生の正確な人数はM365管理センターで確認が必要。対象範囲が確定次第、最終的な年間コストを算出します。</p>
   </div>
 
 </div>
@@ -764,7 +766,7 @@
     <ul style="padding-left:18px;font-size:14px">
       <li style="margin-bottom:6px">武蔵野美術大学には情シス専任担当者がいないため、<strong>現場担当者が自分でメンテできる</strong>Nextsetが適している</li>
       <li style="margin-bottom:6px">Garoonのワークフローを使っていたユーザーに<strong>最もなじみやすい</strong>UI・概念</li>
-      <li style="margin-bottom:6px">費用対効果が高い（課金対象はテナント内のSharePoint/Teamsライセンス保有者数。実数はM365管理センターで要確認）</li>
+      <li style="margin-bottom:6px">費用対効果が高い（正式見積：90円/月/ユーザー。対象範囲確定後に年間コストを算出予定）</li>
       <li>将来的にPower Automateも使えるようにしておくことで、複雑なニーズにも対応できる</li>
     </ul>
   </div>
