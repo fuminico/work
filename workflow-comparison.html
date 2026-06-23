@@ -968,13 +968,16 @@
 
   <div class="card orange" style="margin-top:12px">
     <div class="card-title">レコード数の考え方（重要）</div>
-    <p style="font-size:13px">Canbus.の費用はユーザー数ではなく<strong>「現在クラウドに保存されているレコード数・容量」</strong>で決まります。</p>
+    <p style="font-size:13px">Canbus.の費用はユーザー数ではなく<strong>「現在クラウドに保存されているレコード数・容量の累積値」</strong>で決まります。</p>
     <ul style="padding-left:18px;font-size:13px;margin-top:6px">
       <li>1申請（1ワークフロー）≈ 1レコード消費</li>
-      <li>Standardプランなら最大10,000レコードまで含まれる</li>
-      <li>古い申請を削除すれば使用レコード数が減少し、枠が戻る</li>
-      <li>レコードが不足した場合はオプションで追加購入（20,000レコード追加：月50,000円）</li>
+      <li>Standardプランで保持できる上限は <strong>累積10,000レコード</strong></li>
+      <li><strong>古い申請を削除すれば累積数が減り、枠が戻る</strong>→ 上限内に収め続ければ <strong>ずっと月額5万円で運用可能</strong></li>
+      <li>上限を超える場合はオプションで追加購入（20,000レコード追加：月50,000円）</li>
     </ul>
+    <p style="font-size:13px;margin-top:8px;padding:8px 10px;background:#fffbe6;border-radius:4px;border-left:3px solid #f59e0b">
+      <strong>💡 ポイント：</strong>「1万レコードは使い切り」ではなく「現在保持している件数の上限」。不要になった申請を定期的に削除・アーカイブする運用ルールを決めることで、追加費用なしで継続利用できる。
+    </p>
     <p style="font-size:13px;margin-top:8px"><strong>試算例（Standardプラン）：</strong>月50,000円で教職員〜1,400名＋学生〜5,000名すべてが利用可能。Nextsetの場合（最大760万円/年）と比べ圧倒的に安価。</p>
   </div>
 
@@ -1026,6 +1029,56 @@
       <td><strong>追加費用なし</strong></td>
     </tr>
   </table>
+
+  <h3>📋 導入前ヒアリング項目（Canbus. 検討に必要）</h3>
+  <div class="card" style="border-left:4px solid var(--cb-purple);background:var(--cb-light)">
+    <p style="font-size:13px;margin-bottom:10px">Standardプラン（月5万円・上限10,000レコード）で継続運用できるかを判断するために、以下2点を大学側（井上さん）に確認が必要です。</p>
+    <ol style="padding-left:18px;font-size:13px;line-height:2">
+      <li>
+        <strong>月間の申請件数（履歴発生数）は何件くらいか？</strong><br>
+        <span style="color:#555;font-size:12px">Garoon上のワークフロー申請件数の実績（直近1年間の月平均）を確認する。</span>
+      </li>
+      <li>
+        <strong>履歴をどのくらいの期間保持したいか？</strong><br>
+        <span style="color:#555;font-size:12px">何年分を常時参照できる状態にしておく必要があるか（監査・法定保存年限の要件も含めて確認）。</span>
+      </li>
+    </ol>
+  </div>
+
+  <h3>🧮 レコード保持期間 試算表（Standardプラン：上限10,000件）</h3>
+  <table>
+    <tr>
+      <th>月間申請数（件/月）</th>
+      <th>10,000件に達するまでの期間</th>
+      <th>上限内で保持できる履歴</th>
+      <th>判定</th>
+    </tr>
+    <tr>
+      <td>100件/月</td>
+      <td>約100ヶ月</td>
+      <td><strong>約8年分</strong></td>
+      <td style="color:#2e7d32;font-weight:700">✅ 十分（削除ほぼ不要）</td>
+    </tr>
+    <tr>
+      <td>200件/月</td>
+      <td>約50ヶ月</td>
+      <td><strong>約4年分</strong></td>
+      <td style="color:#2e7d32;font-weight:700">✅ 問題なし</td>
+    </tr>
+    <tr>
+      <td>500件/月</td>
+      <td>約20ヶ月</td>
+      <td><strong>約1.5年分</strong></td>
+      <td style="color:#e65100;font-weight:700">⚠️ 定期削除ルールが必要</td>
+    </tr>
+    <tr>
+      <td>1,000件/月</td>
+      <td>約10ヶ月</td>
+      <td><strong>約10ヶ月分</strong></td>
+      <td style="color:#c0392b;font-weight:700">❌ 上位プランまたは追加購入を検討</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:6px">※ 削除・アーカイブ運用で10,000件以内に収めれば、月5万円のまま継続可能。超過分はオプション追加（+20,000件：月5万円）で対応できる。</p>
 
 </div>
 </div>
