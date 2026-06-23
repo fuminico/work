@@ -280,71 +280,91 @@
   .nx-btn.save   { background: #fff; color: var(--nx-green); border: 2px solid var(--nx-green); }
   .nx-badge { font-size: 10px; background: #fff; border: 1px solid #c5e0d0; padding: 1px 5px; border-radius: 3px; color: #1a7a4a; margin-top: 2px; }
 
-  /* ─── Canbus. モックアップ ─── */
-  .cb-screen { background: #f8f5ff; }
-  .cb-app-bar {
-    background: var(--cb-purple); color: #fff; padding: 8px 16px;
-    display: flex; align-items: center; gap: 14px; font-size: 13px;
+  /* ─── Canbus. フロービルダー モックアップ ─── */
+  .cb-fb-screen { background: #f5f5f5; }
+  .cb-fb-bar {
+    background: #fff; border-bottom: 1px solid #e0e0e0;
+    padding: 7px 12px; display: flex; align-items: center; gap: 6px; font-size: 11px; flex-wrap: wrap;
   }
-  .cb-app-logo { font-weight: 800; font-size: 14px; }
-  .cb-body { display: flex; }
-  .cb-sidebar {
-    width: 180px; background: #2d1b5e; padding: 12px 0; font-size: 12px;
+  .cb-fb-field {
+    border: 1px solid #ddd; border-radius: 3px; padding: 3px 8px;
+    font-size: 11px; color: #333; background: #fff; min-width: 70px;
   }
-  .cb-menu-item {
-    padding: 8px 16px; color: #c4b5fd; font-size: 12px;
-    display: flex; align-items: center; gap: 8px; cursor: pointer;
+  .cb-fb-body { display: flex; min-height: 220px; }
+  .cb-fb-user-panel {
+    width: 120px; padding: 10px 8px; background: #fff; border-right: 1px solid #e8e8e8;
+    display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;
   }
-  .cb-menu-item:hover, .cb-menu-item.sel { background: rgba(255,255,255,.1); color: #fff; }
-  .cb-menu-section { padding: 14px 16px 4px; font-size: 10px; font-weight: 700; color: #a78bfa; letter-spacing: .06em; }
-  .cb-main { flex: 1; padding: 16px 20px; }
-  .cb-page-title {
-    font-size: 15px; font-weight: 700; color: #2d1b5e; margin-bottom: 14px;
-    padding-bottom: 8px; border-bottom: 2px solid #c4b5fd;
+  .cb-fb-panel-label { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 2px; }
+  .cb-fb-user-box {
+    background: #f5c244; border-radius: 5px; padding: 6px 8px;
+    font-size: 10px; font-weight: 700; color: #333; text-align: center;
+    border: 1px solid #e0aa20;
   }
-  .cb-form {
-    background: #fff; border-radius: 8px; border: 1px solid #d4c2f9; padding: 16px 20px;
-    margin-bottom: 14px;
+  .cb-fb-user-box.empty {
+    background: #fef9e7; border: 1.5px dashed #e0aa20; color: #bbb; font-weight: 400;
   }
-  .cb-form-title {
-    font-size: 14px; font-weight: 800; color: #2d1b5e; margin-bottom: 12px;
-    text-align: center; border-bottom: 2px solid var(--cb-purple); padding-bottom: 8px;
+  .cb-fb-canvas {
+    flex: 1; padding: 24px 16px; background: #f5f5f5;
+    display: flex; align-items: center; overflow-x: auto; gap: 0;
   }
-  .cb-form-grid { display: grid; grid-template-columns: 130px 1fr; gap: 0; }
-  .cb-form-label {
-    background: #f0ebff; border: 1px solid #d4c2f9; padding: 7px 10px;
-    font-size: 12px; font-weight: 700; color: #2d1b5e;
-    display: flex; align-items: center;
+  .cb-fb-col { display: flex; flex-direction: column; align-items: center; }
+  .cb-fb-oval {
+    border: 2px solid #bbb; border-radius: 24px; padding: 5px 14px;
+    font-size: 11px; font-weight: 700; white-space: nowrap;
+    background: #fff; color: #333;
   }
-  .cb-form-input {
-    border: 1px solid #d4c2f9; border-left: none; padding: 7px 10px;
-    font-size: 12px; color: #333; background: #fff;
+  .cb-fb-oval.process { border-color: #5b8fd6; color: #1a4a8a; }
+  .cb-fb-oval.done { background: #ff5a36; border-color: #ff5a36; color: #fff; }
+  .cb-fb-arrow { color: #bbb; font-size: 16px; padding: 0 3px; }
+  .cb-fb-cond {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: #fff; border: 1.5px solid #bbb;
+    font-size: 9px; font-weight: 700; color: #aaa;
+    display: flex; align-items: center; justify-content: center; margin-top: 3px;
   }
-  .cb-form-input.filled { background: #fdfaff; color: #2d1b5e; }
-  .cb-form-row { display: contents; }
-  .cb-form-row:not(:last-child) .cb-form-label,
-  .cb-form-row:not(:last-child) .cb-form-input { border-bottom: none; }
-  .cb-route {
-    background: #fff; border-radius: 8px; border: 1px solid #d4c2f9; padding: 16px 20px;
+  /* ─── Canbus. 申請書モックアップ ─── */
+  .cb-doc-screen { background: #f5f5f5; }
+  .cb-doc-topbar {
+    background: #fff; border-bottom: 1px solid #e0e0e0;
+    padding: 6px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px;
   }
-  .cb-route-title { font-size: 13px; font-weight: 700; color: #2d1b5e; margin-bottom: 12px; }
-  .cb-route-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .cb-route-node { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .cb-route-box {
-    width: 90px; border-radius: 6px; padding: 8px 6px; text-align: center;
-    border: 2px solid #d4c2f9; background: #f5f0ff; font-size: 11px;
+  .cb-status-ok { background: #4caf50; color: #fff; padding: 2px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+  .cb-doc-body { display: flex; }
+  .cb-doc-left {
+    width: 190px; padding: 12px; background: #fff; border-right: 1px solid #e8e8e8; flex-shrink: 0;
   }
-  .cb-route-box.start { background: #e0f0ff; border-color: #90c0e0; }
-  .cb-route-box.pending { border-color: #f59e0b; background: #fffbeb; }
-  .cb-route-box .role { font-weight: 700; font-size: 11px; }
-  .cb-route-box .name { color: #666; font-size: 11px; }
-  .cb-route-box .status { font-size: 10px; margin-top: 3px; font-weight: 700; }
-  .cb-route-box.pending .status { color: #b45309; }
-  .cb-route-arrow { font-size: 16px; color: #9ca3af; margin-top: -14px; }
-  .cb-btns { display: flex; gap: 8px; margin-top: 14px; }
-  .cb-btn { padding: 7px 18px; border-radius: 5px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; }
-  .cb-btn.submit { background: var(--cb-purple); color: #fff; }
-  .cb-btn.save   { background: #fff; color: var(--cb-purple); border: 2px solid var(--cb-purple); }
+  .cb-doc-left-title { font-size: 11px; font-weight: 700; color: #555; margin-bottom: 8px; }
+  .cb-doc-node { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
+  .cb-doc-nbox {
+    border-radius: 4px; padding: 3px 7px; font-size: 10px; font-weight: 700; white-space: nowrap;
+  }
+  .cb-doc-nbox.申請 { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+  .cb-doc-nbox.承認 { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .cb-doc-nbox.完了 { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+  .cb-doc-v { color: #ccc; font-size: 11px; padding-left: 14px; line-height: 1.2; }
+  .cb-doc-right { flex: 1; padding: 12px 16px; background: #fff; }
+  .cb-seal-row { display: flex; gap: 6px; justify-content: flex-end; margin-bottom: 10px; }
+  .cb-seal {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid #c0392b;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.3;
+  }
+  .cb-seal .s-role { font-size: 8px; color: #c0392b; }
+  .cb-seal .s-name { font-size: 9px; font-weight: 700; color: #c0392b; }
+  .cb-seal .s-date { font-size: 7px; color: #c0392b; }
+  .cb-doc-row { display: flex; border-bottom: 1px solid #eee; }
+  .cb-doc-row:first-of-type { border-top: 1px solid #eee; }
+  .cb-doc-lbl {
+    width: 88px; padding: 5px 7px; background: #f9f9f9;
+    font-size: 10px; color: #555; font-weight: 700; flex-shrink: 0;
+    border-right: 1px solid #eee; display: flex; align-items: center;
+  }
+  .cb-doc-val { padding: 5px 8px; font-size: 11px; color: #333; }
+  .cb-doc-btns { display: flex; gap: 6px; margin-top: 10px; align-items: center; justify-content: flex-end; }
+  .cb-doc-btn { padding: 5px 14px; border-radius: 3px; font-size: 12px; font-weight: 700; border: none; cursor: pointer; }
+  .cb-doc-btn.ok { background: #ff5a36; color: #fff; }
+  .cb-doc-btn.cl { background: #fff; color: #555; border: 1px solid #ccc; }
 
   /* ─── 推奨セクション ─── */
   .rec-box {
@@ -716,113 +736,191 @@
     <p>ワークフロー（申請・承認）機能を中心に、顧客管理・案件管理・勤怠管理・経費精算などあらゆる業務アプリをドラッグ&ドロップで構築できます。1,500社以上に導入実績があります。</p>
   </div>
 
-  <h3>画面イメージ（申請フォーム・承認ルート）</h3>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※「休暇申請」のフォームと承認ルートのイメージ（Garoonと同様の操作感）。</p>
+  <h3>画面イメージ① フロービルダー</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ ノーコードでフローを図式化。ドラッグ＆ドロップで承認ノードを追加・並び替え、条件分岐（C）で承認者を動的に切り替えられます。（提案資料 p.22）</p>
 
   <div class="screen-wrap">
     <div class="screen-bar">
       <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-      <div class="url-bar">https://mau.canbus.jp/apps/leave-request/apply</div>
+      <div class="url-bar">Canbus. — フロービルダー（稟議フロー）</div>
     </div>
-    <div class="cb-screen">
-      <div class="cb-app-bar">
-        <div class="cb-app-logo">🟣 Canbus.</div>
-        <div style="margin-left:auto;font-size:12px;opacity:.8">武蔵野美術大学 業務ポータル</div>
-      </div>
-      <div class="cb-body">
-        <div class="cb-sidebar">
-          <div class="cb-menu-section">申請する</div>
-          <div class="cb-menu-item sel">📋 休暇申請</div>
-          <div class="cb-menu-item">🛒 物品購入申請</div>
-          <div class="cb-menu-item">📄 稟議書</div>
-          <div class="cb-menu-item">✈️ 出張申請</div>
-          <div class="cb-menu-item">🏢 会議室使用申請</div>
-          <div class="cb-menu-section">確認する</div>
-          <div class="cb-menu-item">📬 自分の申請一覧</div>
-          <div class="cb-menu-item">✅ 承認待ち一覧</div>
-          <div class="cb-menu-section" style="color:#a78bfa">管理・分析</div>
-          <div class="cb-menu-item">⚙️ アプリ設定</div>
-          <div class="cb-menu-item">📊 ダッシュボード</div>
+    <div class="cb-fb-screen">
+      <!-- Top bar -->
+      <div class="cb-fb-bar">
+        <span style="color:#888;font-size:11px">業務フロー名:</span>
+        <span class="cb-fb-field">稟議フロー</span>
+        <span style="color:#888;font-size:11px;margin-left:6px">アプリ:</span>
+        <span class="cb-fb-field">稟議書</span>
+        <span style="color:#888;font-size:11px;margin-left:6px">テーブル:</span>
+        <span class="cb-fb-field">申請テーブル</span>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button style="padding:3px 10px;font-size:11px;border:1px solid #ddd;border-radius:3px;background:#fff;cursor:pointer">+ ステップ追加</button>
+          <button style="padding:3px 10px;font-size:11px;border:none;border-radius:3px;background:#ff5a36;color:#fff;cursor:pointer;font-weight:700">保存</button>
         </div>
-        <div class="cb-main">
-          <div class="cb-page-title">休暇申請</div>
-          <div class="cb-form">
-            <div class="cb-form-title">休暇申請書</div>
-            <div class="cb-form-grid">
-              <div class="cb-form-row">
-                <div class="cb-form-label">申請者</div>
-                <div class="cb-form-input filled">山田 太郎（事務局総務部）</div>
-              </div>
-              <div class="cb-form-row">
-                <div class="cb-form-label">申請日</div>
-                <div class="cb-form-input filled">2026年6月19日</div>
-              </div>
-              <div class="cb-form-row">
-                <div class="cb-form-label">休暇種別 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
-                <div class="cb-form-input">
-                  <select style="width:100%;border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px">
-                    <option>年次有給休暇</option>
-                    <option>特別休暇</option>
-                    <option>慶弔休暇</option>
-                  </select>
-                </div>
-              </div>
-              <div class="cb-form-row">
-                <div class="cb-form-label">休暇期間 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
-                <div class="cb-form-input" style="display:flex;gap:8px;align-items:center">
-                  <input type="text" value="2026/06/25" style="border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
-                  <span style="font-size:12px">〜</span>
-                  <input type="text" value="2026/06/26" style="border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
-                  <span style="font-size:12px;color:#888">（2日間）</span>
-                </div>
-              </div>
-              <div class="cb-form-row">
-                <div class="cb-form-label">理由・備考</div>
-                <div class="cb-form-input">
-                  <textarea style="width:100%;border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px;height:44px">私用のため</textarea>
-                </div>
-              </div>
+      </div>
+      <!-- Body -->
+      <div class="cb-fb-body">
+        <!-- Left: user selector panel -->
+        <div class="cb-fb-user-panel">
+          <div class="cb-fb-panel-label">申請者</div>
+          <div class="cb-fb-user-box">申請者</div>
+          <div class="cb-fb-panel-label" style="margin-top:8px">承認者</div>
+          <div class="cb-fb-user-box">ユーザー選択（+人）</div>
+          <div class="cb-fb-user-box">ユーザー選択（+人）</div>
+          <div class="cb-fb-user-box empty">ユーザー選択（+人）</div>
+        </div>
+        <!-- Right: flow canvas -->
+        <div class="cb-fb-canvas">
+          <div class="cb-fb-col">
+            <div class="cb-fb-oval">申請</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;margin-top:2px">
+            <div class="cb-fb-arrow">→</div>
+            <div class="cb-fb-cond">C</div>
+          </div>
+          <div class="cb-fb-col">
+            <div class="cb-fb-oval process">課長承認</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;margin-top:2px">
+            <div class="cb-fb-arrow">→</div>
+            <div class="cb-fb-cond">C</div>
+          </div>
+          <div class="cb-fb-col">
+            <div class="cb-fb-oval process">部長承認</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;margin-top:2px">
+            <div class="cb-fb-arrow">→</div>
+            <div class="cb-fb-cond">C</div>
+          </div>
+          <div class="cb-fb-col">
+            <div class="cb-fb-oval process">役員承認</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;margin-top:2px">
+            <div class="cb-fb-arrow">→</div>
+          </div>
+          <div class="cb-fb-col">
+            <div class="cb-fb-oval done">完了</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:7px 12px;font-size:10px;color:#bbb;background:#f5f5f5;text-align:center;border-top:1px solid #ececec">
+        各ノードはドラッグ＆ドロップで並び替え可能　▏　C（条件）は金額・職種などで承認者を動的に変更
+      </div>
+    </div>
+  </div>
+
+  <h3>画面イメージ② 申請書・承認履歴（電子印鑑付き）</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ 承認完了後の申請書には電子印鑑が自動押印され、承認履歴も記録されます。（提案資料 p.23）</p>
+
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <div class="url-bar">Canbus. — 申請書詳細（物品購入申請）</div>
+    </div>
+    <div class="cb-doc-screen">
+      <!-- Top bar -->
+      <div class="cb-doc-topbar">
+        <span>現在のステータス</span>
+        <span class="cb-status-ok">完了</span>
+        <span style="color:#888;font-size:11px">承認日時 2026/06/25 14:32</span>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button style="padding:3px 10px;font-size:11px;border:1px solid #ddd;border-radius:3px;background:#fff;cursor:pointer">📋 コピー</button>
+          <button style="padding:3px 10px;font-size:11px;border:1px solid #ddd;border-radius:3px;background:#fff;cursor:pointer">🖨 印刷</button>
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="cb-doc-body">
+        <!-- Left: flow + history -->
+        <div class="cb-doc-left">
+          <div class="cb-doc-left-title">承認フロー</div>
+          <div style="margin-bottom:4px">
+            <div class="cb-doc-node">
+              <div class="cb-doc-nbox 申請">申請</div>
+              <span style="font-size:10px;color:#1565c0">✓</span>
+            </div>
+            <div class="cb-doc-v">↓</div>
+            <div class="cb-doc-node">
+              <div class="cb-doc-nbox 承認">上司承認</div>
+              <span style="font-size:10px;color:#2e7d32">✓</span>
+            </div>
+            <div class="cb-doc-v">↓</div>
+            <div class="cb-doc-node">
+              <div class="cb-doc-nbox 承認">稟務確認</div>
+              <span style="font-size:10px;color:#2e7d32">✓</span>
+            </div>
+            <div class="cb-doc-v">↓</div>
+            <div class="cb-doc-node">
+              <div class="cb-doc-nbox 完了">完了</div>
             </div>
           </div>
-          <div class="cb-route">
-            <div class="cb-route-title">承認ルート（自動設定）</div>
-            <div class="cb-route-flow">
-              <div class="cb-route-node">
-                <div class="cb-route-box start">
-                  <div class="role">申請者</div>
-                  <div class="name">山田 太郎</div>
-                  <div class="status" style="color:var(--cb-purple)">申請中</div>
-                </div>
-              </div>
-              <div class="cb-route-arrow">→</div>
-              <div class="cb-route-node">
-                <div class="cb-route-box pending">
-                  <div class="role">直属上長</div>
-                  <div class="name">鈴木 部長</div>
-                  <div class="status">承認待ち</div>
-                </div>
-              </div>
-              <div class="cb-route-arrow">→</div>
-              <div class="cb-route-node">
-                <div class="cb-route-box">
-                  <div class="role">人事担当</div>
-                  <div class="name">人事部</div>
-                  <div class="status" style="color:#aaa">未</div>
-                </div>
-              </div>
-              <div class="cb-route-arrow">→</div>
-              <div class="cb-route-node">
-                <div class="cb-route-box" style="background:#f0ebff;border-color:#c4b5fd">
-                  <div class="role">完了</div>
-                  <div class="name">承認完了後</div>
-                  <div class="status" style="color:#aaa">通知送信</div>
-                </div>
-              </div>
+          <div style="font-size:11px;font-weight:700;color:#555;margin:12px 0 6px">承認履歴</div>
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;margin-bottom:4px;font-size:10px">
+            <div style="font-weight:700;color:#333">01 申請　申請</div>
+            <div style="color:#888">2026/06/19 09:00　山田 太郎</div>
+          </div>
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;margin-bottom:4px;font-size:10px">
+            <div style="font-weight:700;color:#333">02 上司承認　承認</div>
+            <div style="color:#888">2026/06/20 10:15　鈴木 一郎</div>
+          </div>
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;font-size:10px">
+            <div style="font-weight:700;color:#333">03 稟務確認　承認</div>
+            <div style="color:#888">2026/06/25 14:32　田中 花子</div>
+          </div>
+        </div>
+        <!-- Right: form with seals -->
+        <div class="cb-doc-right">
+          <!-- Seal stamps (right-aligned, 3 red circles) -->
+          <div class="cb-seal-row">
+            <div class="cb-seal">
+              <div class="s-role">稟務確認</div>
+              <div class="s-name">田中</div>
+              <div class="s-date">06/25</div>
             </div>
-            <div class="cb-btns">
-              <button class="cb-btn submit">申請する</button>
-              <button class="cb-btn save">下書き保存</button>
+            <div class="cb-seal">
+              <div class="s-role">上司承認</div>
+              <div class="s-name">鈴木</div>
+              <div class="s-date">06/20</div>
             </div>
+            <div class="cb-seal">
+              <div class="s-role">申請</div>
+              <div class="s-name">山田</div>
+              <div class="s-date">06/19</div>
+            </div>
+          </div>
+          <!-- Form fields -->
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">申請No.</div>
+            <div class="cb-doc-val">0012</div>
+          </div>
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">申請日時</div>
+            <div class="cb-doc-val">2026/06/19 09:00</div>
+          </div>
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">申請者</div>
+            <div class="cb-doc-val">山田 太郎</div>
+          </div>
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">所属部署</div>
+            <div class="cb-doc-val">事務局 / 総務部</div>
+          </div>
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">申請理由</div>
+            <div class="cb-doc-val" style="color:#555">新入職員向けPC手配のため</div>
+          </div>
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">品名・メーカー</div>
+            <div class="cb-doc-val">ノートPC × 3台（DELL）</div>
+          </div>
+          <div class="cb-doc-row">
+            <div class="cb-doc-lbl">金額</div>
+            <div class="cb-doc-val" style="font-weight:700">450,000円（税込）</div>
+          </div>
+          <!-- Action buttons -->
+          <div class="cb-doc-btns">
+            <span style="font-size:11px;color:#aaa;margin-right:6px">🗑 削除</span>
+            <button class="cb-doc-btn ok">確定</button>
+            <button class="cb-doc-btn cl">閉じる</button>
           </div>
         </div>
       </div>
