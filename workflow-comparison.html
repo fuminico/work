@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ワークフロー比較資料 — Power Automate vs Nextset</title>
+<title>ワークフロー比較資料 — Power Automate / Nextset / Canbus.</title>
 <style>
   :root {
     --primary: #1a56a0;
@@ -19,6 +19,8 @@
     --pa-light: #e6f0ff;
     --nx-green: #1a7a4a;
     --nx-light: #e6f4ed;
+    --cb-purple: #7c3aed;
+    --cb-light: #f3e8ff;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -65,7 +67,7 @@
   /* ─── コンテンツ ─── */
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
-  .content { max-width: 860px; margin: 0 auto; padding: 36px 28px 80px; }
+  .content { max-width: 900px; margin: 0 auto; padding: 36px 28px 80px; }
 
   .panel-title {
     font-size: 20px; font-weight: 800; color: var(--primary);
@@ -84,9 +86,10 @@
   .card.green   { background: #e8f8f0; border-left: 4px solid var(--green); }
   .card.orange  { background: #fef5ec; border-left: 4px solid var(--accent); }
   .card.red     { background: #fdf0ee; border-left: 4px solid var(--red); }
+  .card.purple  { background: var(--cb-light); border-left: 4px solid var(--cb-purple); }
   .card-title   { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
 
-  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
   th { background: var(--primary); color: #fff; padding: 9px 12px; text-align: left; font-weight: 600; }
   td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
@@ -97,18 +100,20 @@
   .b-gray   { background: #eef0f3; color: #555; }
   .b-green  { background: #e8f8f0; color: var(--green); }
   .b-blue   { background: var(--pa-light); color: var(--pa-blue); }
+  .b-purple { background: var(--cb-light); color: var(--cb-purple); }
 
-  /* ─── 2カラム比較 ─── */
+  /* ─── 比較カード ─── */
   .compare-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0;
   }
-  @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr; } }
 
   .compare-card {
     border-radius: 10px; padding: 18px 20px; border: 2px solid var(--border); background: #fff;
   }
   .compare-card.pa { border-color: var(--pa-blue); }
-  .compare-card.nx { border-color: var(--nx-green); }
+  .compare-card.nx { border-color: #9ca3af; opacity: .75; }
+  .compare-card.cb { border-color: var(--cb-purple); }
 
   .tool-badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -116,7 +121,8 @@
     padding: 6px 12px; border-radius: 6px;
   }
   .tool-badge.pa { background: var(--pa-light); color: var(--pa-blue); }
-  .tool-badge.nx { background: var(--nx-light); color: var(--nx-green); }
+  .tool-badge.nx { background: #f3f4f6; color: #6b7280; }
+  .tool-badge.cb { background: var(--cb-light); color: var(--cb-purple); }
   .tool-icon { font-size: 18px; }
 
   .pro-list, .con-list { list-style: none; margin: 8px 0; }
@@ -229,8 +235,6 @@
     font-size: 15px; font-weight: 700; color: #1a3a2a; margin-bottom: 14px;
     padding-bottom: 8px; border-bottom: 2px solid #c5e0d0;
   }
-
-  /* 申請書フォーム */
   .nx-form {
     background: #fff; border-radius: 8px; border: 1px solid #c8ddd0; padding: 16px 20px;
     margin-bottom: 14px;
@@ -250,35 +254,24 @@
     font-size: 12px; color: #333; background: #fff;
   }
   .nx-form-input.filled { background: #fafff8; color: #1a3a2a; }
-  .nx-form-input.req::after {
-    content: '必須'; font-size: 10px; background: #dc2626; color: #fff;
-    padding: 1px 5px; border-radius: 3px; margin-left: 6px;
-  }
   .nx-form-row { display: contents; }
   .nx-form-row:not(:last-child) .nx-form-label,
   .nx-form-row:not(:last-child) .nx-form-input { border-bottom: none; }
-
-  /* 承認ルート */
   .nx-route {
     background: #fff; border-radius: 8px; border: 1px solid #c8ddd0; padding: 16px 20px;
   }
   .nx-route-title { font-size: 13px; font-weight: 700; color: #1a3a2a; margin-bottom: 12px; }
   .nx-route-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .nx-route-node {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-  }
+  .nx-route-node { display: flex; flex-direction: column; align-items: center; gap: 4px; }
   .nx-route-box {
     width: 90px; border-radius: 6px; padding: 8px 6px; text-align: center;
-    border: 2px solid #c5e0d0; background: #f0faf4;
-    font-size: 11px;
+    border: 2px solid #c5e0d0; background: #f0faf4; font-size: 11px;
   }
   .nx-route-box.start { background: #e0f0ff; border-color: #90c0e0; }
-  .nx-route-box.done  { background: #e8f4ed; border-color: #1a7a4a; opacity: 0.9; }
   .nx-route-box.pending { border-color: #f59e0b; background: #fffbeb; }
   .nx-route-box .role { font-weight: 700; font-size: 11px; }
   .nx-route-box .name { color: #666; font-size: 11px; }
   .nx-route-box .status { font-size: 10px; margin-top: 3px; font-weight: 700; }
-  .nx-route-box.done .status { color: var(--nx-green); }
   .nx-route-box.pending .status { color: #b45309; }
   .nx-route-arrow { font-size: 16px; color: #9ca3af; margin-top: -14px; }
   .nx-btns { display: flex; gap: 8px; margin-top: 14px; }
@@ -287,9 +280,75 @@
   .nx-btn.save   { background: #fff; color: var(--nx-green); border: 2px solid var(--nx-green); }
   .nx-badge { font-size: 10px; background: #fff; border: 1px solid #c5e0d0; padding: 1px 5px; border-radius: 3px; color: #1a7a4a; margin-top: 2px; }
 
+  /* ─── Canbus. モックアップ ─── */
+  .cb-screen { background: #f8f5ff; }
+  .cb-app-bar {
+    background: var(--cb-purple); color: #fff; padding: 8px 16px;
+    display: flex; align-items: center; gap: 14px; font-size: 13px;
+  }
+  .cb-app-logo { font-weight: 800; font-size: 14px; }
+  .cb-body { display: flex; }
+  .cb-sidebar {
+    width: 180px; background: #2d1b5e; padding: 12px 0; font-size: 12px;
+  }
+  .cb-menu-item {
+    padding: 8px 16px; color: #c4b5fd; font-size: 12px;
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  .cb-menu-item:hover, .cb-menu-item.sel { background: rgba(255,255,255,.1); color: #fff; }
+  .cb-menu-section { padding: 14px 16px 4px; font-size: 10px; font-weight: 700; color: #a78bfa; letter-spacing: .06em; }
+  .cb-main { flex: 1; padding: 16px 20px; }
+  .cb-page-title {
+    font-size: 15px; font-weight: 700; color: #2d1b5e; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 2px solid #c4b5fd;
+  }
+  .cb-form {
+    background: #fff; border-radius: 8px; border: 1px solid #d4c2f9; padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .cb-form-title {
+    font-size: 14px; font-weight: 800; color: #2d1b5e; margin-bottom: 12px;
+    text-align: center; border-bottom: 2px solid var(--cb-purple); padding-bottom: 8px;
+  }
+  .cb-form-grid { display: grid; grid-template-columns: 130px 1fr; gap: 0; }
+  .cb-form-label {
+    background: #f0ebff; border: 1px solid #d4c2f9; padding: 7px 10px;
+    font-size: 12px; font-weight: 700; color: #2d1b5e;
+    display: flex; align-items: center;
+  }
+  .cb-form-input {
+    border: 1px solid #d4c2f9; border-left: none; padding: 7px 10px;
+    font-size: 12px; color: #333; background: #fff;
+  }
+  .cb-form-input.filled { background: #fdfaff; color: #2d1b5e; }
+  .cb-form-row { display: contents; }
+  .cb-form-row:not(:last-child) .cb-form-label,
+  .cb-form-row:not(:last-child) .cb-form-input { border-bottom: none; }
+  .cb-route {
+    background: #fff; border-radius: 8px; border: 1px solid #d4c2f9; padding: 16px 20px;
+  }
+  .cb-route-title { font-size: 13px; font-weight: 700; color: #2d1b5e; margin-bottom: 12px; }
+  .cb-route-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cb-route-node { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .cb-route-box {
+    width: 90px; border-radius: 6px; padding: 8px 6px; text-align: center;
+    border: 2px solid #d4c2f9; background: #f5f0ff; font-size: 11px;
+  }
+  .cb-route-box.start { background: #e0f0ff; border-color: #90c0e0; }
+  .cb-route-box.pending { border-color: #f59e0b; background: #fffbeb; }
+  .cb-route-box .role { font-weight: 700; font-size: 11px; }
+  .cb-route-box .name { color: #666; font-size: 11px; }
+  .cb-route-box .status { font-size: 10px; margin-top: 3px; font-weight: 700; }
+  .cb-route-box.pending .status { color: #b45309; }
+  .cb-route-arrow { font-size: 16px; color: #9ca3af; margin-top: -14px; }
+  .cb-btns { display: flex; gap: 8px; margin-top: 14px; }
+  .cb-btn { padding: 7px 18px; border-radius: 5px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; }
+  .cb-btn.submit { background: var(--cb-purple); color: #fff; }
+  .cb-btn.save   { background: #fff; color: var(--cb-purple); border: 2px solid var(--cb-purple); }
+
   /* ─── 推奨セクション ─── */
   .rec-box {
-    background: linear-gradient(135deg, #1a56a0 0%, #1a4080 100%);
+    background: linear-gradient(135deg, #5b21b6 0%, #2d1b5e 100%);
     color: #fff; border-radius: 12px; padding: 24px 28px; margin: 20px 0;
   }
   .rec-box h3 { color: #fff; margin-top: 0; }
@@ -308,11 +367,18 @@
   }
   .step-num {
     min-width: 26px; height: 26px; border-radius: 50%;
-    background: var(--primary); color: #fff; display: flex; align-items: center;
+    background: var(--cb-purple); color: #fff; display: flex; align-items: center;
     justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
   }
   .step-body strong { display: block; }
   .step-body span { font-size: 13px; color: var(--muted); }
+
+  .dismissed-banner {
+    background: #f3f4f6; border: 2px solid #d1d5db; border-radius: 8px;
+    padding: 12px 16px; margin: 12px 0; display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: #6b7280;
+  }
+  .dismissed-banner strong { color: #374151; }
 </style>
 </head>
 <body>
@@ -320,15 +386,16 @@
 <div class="page-header">
   <div>
     <h1>ワークフローツール比較資料</h1>
-    <div class="sub">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月12日</div>
+    <div class="sub">武蔵野美術大学 M365導入支援 ／ 三井田史親 ／ 2026年6月19日更新</div>
   </div>
 </div>
 
 <div class="tab-bar" id="tabs">
   <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>概要・比較表</button>
   <button class="tab-btn" onclick="show(1)"><span class="num">2</span>Power Automate</button>
-  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>Nextset ワークフロー</button>
-  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>推奨・導入方針</button>
+  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>Nextset（廃案）</button>
+  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>Canbus.（新候補）</button>
+  <button class="tab-btn" onclick="show(4)"><span class="num">5</span>推奨・導入方針</button>
 </div>
 
 <!-- ===== Panel 0: 概要・比較表 ===== -->
@@ -337,88 +404,132 @@
   <div class="panel-title">概要・比較表</div>
 
   <div class="card primary">
-    <div class="card-title">この資料の目的</div>
-    <p>Garoon（maunet.）のワークフロー機能（稟議・申請・承認）をMicrosoft 365に移行する際、<strong>どのツールを使えばよいか</strong>を整理するものです。<br>
-    2択: ① M365に標準搭載されている <strong>Power Automate</strong>、② 日本製アドインの <strong>Nextset ワークフロー for M365</strong>。</p>
+    <div class="card-title">この資料の目的と経緯</div>
+    <p>Garoon（maunet.）のワークフロー機能をMicrosoft 365に移行する際のツール選定資料です。</p>
+    <p>当初は ① <strong>Power Automate</strong>（M365標準）と ② <strong>Nextset ワークフロー for M365</strong> の2択で検討していましたが、<strong>Nextsetはテナント全体ユーザー数に対する課金のため費用が膨大になることが判明</strong>し、廃案となりました。</p>
+    <p>代わりにベンダーより紹介いただいた ③ <strong>Canbus.（キャンバス）</strong> を新候補として追加し、3択で比較します。</p>
   </div>
 
-  <h3>一目でわかる比較表</h3>
+  <div class="card red">
+    <div class="card-title">⚠️ Nextset廃案の理由（費用）</div>
+    <p style="font-size:13px">Nextsetの課金対象は「実際の利用者数」ではなく<strong>テナント内でSharePointまたはTeamsのライセンスを保有するユーザー全員</strong>です。武蔵野美術大学のテナントには教職員（約1,400名）と学生（約5,000名以上）が登録されており、合計約6,400名分の課金が発生するリスクがあります。</p>
+    <table style="margin-top:8px;font-size:13px">
+      <tr><th>シナリオ</th><th>対象人数</th><th>月額（税抜）</th><th>年額（税抜）</th></tr>
+      <tr><td>職員のみ（実利用者想定）</td><td>〜300名</td><td>2.7万円</td><td>約32万円</td></tr>
+      <tr><td>教職員のみ</td><td>〜1,400名</td><td>〜12.6万円</td><td>〜151万円</td></tr>
+      <tr style="background:#fde8e8"><td><strong>⚠️ テナント全体（実際のリスク）</strong></td><td><strong>約6,400名</strong></td><td style="color:#c0392b"><strong>〜57.6万円</strong></td><td style="color:#c0392b"><strong>約690万円</strong></td></tr>
+    </table>
+    <p style="font-size:12px;color:#7f1d1d;margin-top:8px">アクティブユーザーが5,000名以上のため、年間約760万円（税込）になるリスクがあり現実的ではないと判断。</p>
+  </div>
+
+  <h3>一目でわかる3択比較表</h3>
   <table>
     <tr>
-      <th style="width:160px">比較項目</th>
+      <th style="width:150px">比較項目</th>
       <th><span style="color:#90c0ff">⚡ Power Automate</span></th>
-      <th><span style="color:#90e4b0">🌿 Nextset ワークフロー</span></th>
+      <th><span style="color:#9ca3af">🌿 Nextset</span> <span style="font-size:11px;opacity:.7">（廃案）</span></th>
+      <th><span style="color:#c4b5fd">🟣 Canbus.</span> <span style="font-size:11px;color:#a78bfa">★新候補</span></th>
     </tr>
     <tr>
       <td><strong>費用</strong></td>
-      <td>基本無料（M365に含まれる）<br><small>高度機能はPower Automate有料プランが必要（1,670円/月/ユーザー〜）</small></td>
-      <td>100円/月/ユーザー〜（教育機関向け定価）<br><small>民間企業向けは200円/月〜。全アドオン込みは300円/月（税抜）</small></td>
+      <td>基本無料（M365に含まれる）</td>
+      <td><span class="badge b-red">課金リスク大</span><br><small>90円/月/ユーザー × テナント全体 = 最大760万円/年</small></td>
+      <td><span class="badge b-purple">ユーザー数無制限</span><br><small>月額5万円〜（レコード数・容量課金）</small></td>
     </tr>
     <tr>
       <td><strong>操作のしやすさ</strong></td>
-      <td><span class="badge b-orange">中級者向け</span><br><small>設計にはフロー構築の習熟が必要</small></td>
-      <td><span class="badge b-green">初心者向け</span><br><small>申請書スタイルで直感的に設定できる</small></td>
+      <td><span class="badge b-orange">中級者向け</span></td>
+      <td><span class="badge b-green">初心者向け</span></td>
+      <td><span class="badge b-green">初心者向け</span><br><small>ノーコード・ドラッグ&ドロップ</small></td>
     </tr>
     <tr>
       <td><strong>日本語対応</strong></td>
-      <td><span class="badge b-green">○ 対応済み</span><br><small>UIは日本語。ただし一部英語表示あり</small></td>
-      <td><span class="badge b-green">◎ 完全対応</span><br><small>国産ツール。UI/サポートすべて日本語</small></td>
+      <td><span class="badge b-green">○ 対応済み</span></td>
+      <td><span class="badge b-green">◎ 完全対応</span></td>
+      <td><span class="badge b-green">◎ 完全対応</span><br><small>国産（株式会社システナ開発）</small></td>
     </tr>
     <tr>
       <td><strong>承認ルート設定</strong></td>
-      <td><span class="badge b-orange">やや複雑</span><br><small>フローブロックを組み合わせて設定</small></td>
-      <td><span class="badge b-green">簡単</span><br><small>承認者を順番に並べるだけで設定完了</small></td>
+      <td><span class="badge b-orange">やや複雑</span></td>
+      <td><span class="badge b-green">簡単</span></td>
+      <td><span class="badge b-green">簡単</span><br><small>フローを図式化・条件分岐も柔軟に設定可</small></td>
     </tr>
     <tr>
       <td><strong>申請フォーム</strong></td>
-      <td>Microsoft Forms と組み合わせて作成</td>
-      <td>ツール内でフォームを直接デザイン</td>
+      <td>Microsoft Formsと組み合わせ</td>
+      <td>ツール内でデザイン</td>
+      <td>ドラッグ&ドロップで作成<br><small>27種の入力項目・紙申請書をそのまま電子化</small></td>
     </tr>
     <tr>
       <td><strong>Garoonとの類似度</strong></td>
-      <td><span class="badge b-orange">やや異なる</span><br><small>概念が違うため移行時に慣れが必要</small></td>
-      <td><span class="badge b-green">高い</span><br><small>「申請書→承認ルート」の概念がGaroonに近い</small></td>
+      <td><span class="badge b-orange">やや異なる</span></td>
+      <td><span class="badge b-green">高い</span></td>
+      <td><span class="badge b-green">高い</span><br><small>申請書→承認ルートの概念が同様</small></td>
     </tr>
     <tr>
       <td><strong>複雑な条件分岐</strong></td>
-      <td><span class="badge b-green">強い</span><br><small>条件・分岐・ループなど柔軟に設定可</small></td>
-      <td><span class="badge b-gray">限定的</span><br><small>単純な承認ルートが主なユースケース</small></td>
+      <td><span class="badge b-green">強い</span></td>
+      <td><span class="badge b-gray">限定的</span></td>
+      <td><span class="badge b-green">可能</span><br><small>細かく柔軟に条件分岐設定できる</small></td>
     </tr>
     <tr>
       <td><strong>M365との連携</strong></td>
-      <td><span class="badge b-green">非常に強い</span><br><small>Teams・SharePoint・Outlookと深く連携</small></td>
-      <td><span class="badge b-green">必要十分</span><br><small>SharePoint上で動作。通知はメール/Teams</small></td>
+      <td><span class="badge b-green">非常に強い</span></td>
+      <td><span class="badge b-green">必要十分</span><br><small>SharePoint上で動作</small></td>
+      <td><span class="badge b-orange">API連携</span><br><small>M365と別システム。Webhook/API経由で連携可</small></td>
     </tr>
     <tr>
       <td><strong>現場担当者による管理</strong></td>
-      <td><span class="badge b-orange">難しい</span><br><small>情シス or IT経験者でないと修正が困難</small></td>
-      <td><span class="badge b-green">可能</span><br><small>現場の管理者がフォーム・ルートを修正できる</small></td>
+      <td><span class="badge b-orange">難しい</span></td>
+      <td><span class="badge b-green">可能</span></td>
+      <td><span class="badge b-green">可能</span><br><small>情シス不在の現場でも運用できる設計</small></td>
+    </tr>
+    <tr>
+      <td><strong>ユーザー数制限</strong></td>
+      <td>M365ライセンス範囲内で無制限</td>
+      <td><span class="badge b-red">テナント全体に課金</span></td>
+      <td><span class="badge b-purple">完全無制限</span><br><small>ユーザー数による追加費用なし</small></td>
     </tr>
     <tr>
       <td><strong>トライアル</strong></td>
-      <td>今すぐ使える（M365に含まれる）</td>
-      <td>30日間無料トライアルあり</td>
+      <td>今すぐ使える</td>
+      <td>30日間無料</td>
+      <td>要確認（ベンダーに相談）</td>
+    </tr>
+    <tr>
+      <td><strong>サポート</strong></td>
+      <td>Microsoft（英語中心）</td>
+      <td>ネクストセット社</td>
+      <td>システナ社（SI伴走支援あり）</td>
     </tr>
   </table>
 
-  <h3>どちらがどんな申請に向いているか</h3>
+  <h3>どのツールがどんな申請に向いているか</h3>
   <div class="compare-grid">
     <div class="compare-card pa">
-      <div class="tool-badge pa"><span class="tool-icon">⚡</span>Power Automateに向いている申請</div>
+      <div class="tool-badge pa"><span class="tool-icon">⚡</span>Power Automate</div>
       <ul class="pro-list">
-        <li>複雑な条件で承認者が変わる申請<br><small style="color:var(--muted)">例：金額によって承認ルートが変わる</small></li>
-        <li>他システムと連動させたい申請<br><small style="color:var(--muted)">例：Teamsに通知→スプレッドシートに記録</small></li>
-        <li>定型業務の自動化（申請以外も含む）</li>
-        <li>IT担当者がいて、設定・保守できる環境</li>
+        <li>複雑な条件で承認者が変わる申請</li>
+        <li>他M365ツール（Teams/Excel等）と連動させたい</li>
+        <li>申請以外の自動化（定時メール等）も同時にしたい</li>
+        <li>IT担当者が設定・保守できる環境</li>
       </ul>
     </div>
     <div class="compare-card nx">
-      <div class="tool-badge nx"><span class="tool-icon">🌿</span>Nextsetに向いている申請</div>
+      <div class="tool-badge nx"><span class="tool-icon">🌿</span>Nextset <span style="font-size:11px;margin-left:4px">（廃案）</span></div>
+      <p style="font-size:13px;color:#6b7280;margin:4px 0 8px">費用問題のため廃案。参考情報として残す。</p>
+      <ul class="pro-list" style="opacity:.6">
+        <li>GaroonワークフローをM365に移行</li>
+        <li>現場担当者が自己管理したい</li>
+      </ul>
+    </div>
+    <div class="compare-card cb">
+      <div class="tool-badge cb"><span class="tool-icon">🟣</span>Canbus. <span style="font-size:11px;margin-left:4px;color:#a78bfa">★新候補</span></div>
       <ul class="pro-list">
-        <li>Garoonのワークフローをそのまま移行したい<br><small style="color:var(--muted)">例：休暇申請・購入申請・稟議書</small></li>
-        <li>現場の担当者がフォームを自分で修正したい</li>
-        <li>IT知識のない管理者でも運用したい</li>
-        <li>シンプルな承認ルート（順番に承認）</li>
+        <li>ユーザー数が多く費用を抑えたい（学生含む）</li>
+        <li>Garoonの申請書感覚でそのまま移行したい</li>
+        <li>現場担当者がノーコードで管理したい</li>
+        <li>まず小規模（月5万円）から始めて拡張したい</li>
       </ul>
     </div>
   </div>
@@ -438,7 +549,7 @@
   </div>
 
   <h3>実際の画面イメージ（フロービルダー）</h3>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ 以下は「休暇申請フォームが送信されたら、上長に承認依頼を送る」フローの設定画面の例です。</p>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ 「休暇申請フォームが送信されたら、上長に承認依頼を送る」フローの設定画面例です。</p>
 
   <div class="screen-wrap">
     <div class="screen-bar">
@@ -468,7 +579,6 @@
           <div class="pa-trigger-item"><span class="pa-trigger-icon">🔁</span>繰り返し</div>
         </div>
         <div class="pa-canvas">
-          <!-- トリガー -->
           <div class="pa-flow-block">
             <div class="pa-block-head trig">🔔 トリガー</div>
             <div class="pa-block-body">
@@ -477,7 +587,6 @@
             </div>
           </div>
           <div class="pa-connector"><div class="pa-connector-plus">+</div></div>
-          <!-- 承認 -->
           <div class="pa-flow-block">
             <div class="pa-block-head act">✅ アクション</div>
             <div class="pa-block-body">
@@ -487,7 +596,6 @@
             </div>
           </div>
           <div class="pa-connector"><div class="pa-connector-plus">+</div></div>
-          <!-- 条件分岐 -->
           <div class="pa-flow-block">
             <div class="pa-block-head cond">🔀 条件</div>
             <div class="pa-block-body">
@@ -534,10 +642,10 @@
   <h3>デメリット・注意点</h3>
   <ul class="con-list">
     <li>フロー設計の習熟が必要で、初心者が一から作るのは難しい</li>
-    <li>「申請書」のデザインはForms側で行い、Power Automateと組み合わせる必要がある（分かれていて把握しづらい）</li>
+    <li>「申請書」デザインはFormsで、フローはPower Automateで別管理（把握しづらい）</li>
     <li>現場担当者がフローを修正するのは難しい（IT担当者依存になりやすい）</li>
     <li>高度な機能（RPA・プレミアムコネクタ）は有料プランが必要（1,670円/月/ユーザー〜）</li>
-    <li>Garoonの「申請書」「ルート設定」とは概念が異なるため、移行時に戸惑いやすい</li>
+    <li>Garoonの「申請書」「ルート設定」とは概念が異なるため移行時に戸惑いやすい</li>
   </ul>
 
   <h3>武蔵野美術大学での活用イメージ</h3>
@@ -546,140 +654,174 @@
     <ul style="padding-left:18px;font-size:14px">
       <li style="margin-bottom:4px">承認ルートが複雑な申請（例：50万円超は学長決裁、など）</li>
       <li style="margin-bottom:4px">申請以外の自動化も一緒にやりたい場合（例：毎週月曜に担当者へリマインドメール）</li>
-      <li>IT担当者が設定・保守を担当できる場合</li>
-    </ul>
-  </div>
-  <div class="card red">
-    <div class="card-title">向いていないケース（MAU）</div>
-    <ul style="padding-left:18px;font-size:14px">
-      <li style="margin-bottom:4px">現場の担当者が自分でフォームや承認ルートを修正したいケース</li>
-      <li>Garoonのワークフローをそのまま移行したいケース（概念が違いすぎる）</li>
+      <li>Canbus.での費用負担が難しい場合の代替手段としても活用可能</li>
     </ul>
   </div>
 
 </div>
 </div>
 
-<!-- ===== Panel 2: Nextset ===== -->
+<!-- ===== Panel 2: Nextset（廃案） ===== -->
 <div class="tab-panel" id="p2">
 <div class="content">
-  <div class="panel-title">Nextset ワークフロー for Microsoft 365</div>
+  <div class="panel-title">Nextset ワークフロー for Microsoft 365（廃案）</div>
+
+  <div class="card red">
+    <div class="card-title">⛔ この選択肢は費用問題のため廃案となりました</div>
+    <p style="font-size:13px">課金対象が「実際の利用者」ではなく<strong>テナント内のSharePoint/Teamsライセンス保有者全員</strong>のため、学生（約5,000名以上）も含む約6,400名分の費用が発生します。年間約760万円（税込）となり現実的ではありません。</p>
+    <p style="font-size:13px;margin-top:6px">以下の情報は参考として残しています。</p>
+  </div>
 
   <div class="card" style="background:var(--nx-light);border-left:4px solid var(--nx-green)">
     <div class="card-title">Nextsetワークフローとは</div>
-    <p>株式会社ネクストセット（日本）が開発した、SharePoint上で動作する申請・承認ワークフローのアドインです。</p>
-    <p>「紙の申請書をそのままデジタル化する」というコンセプトで、Garoonのワークフローを使っていたユーザーが移行しやすいように設計されています。現場の担当者がプログラミングなしで申請フォームと承認ルートを作成・管理できます。</p>
+    <p>株式会社ネクストセット（日本）が開発した、SharePoint上で動作する申請・承認ワークフローのアドインです。「紙の申請書をそのままデジタル化する」というコンセプトで、Garoonのワークフローを使っていたユーザーが移行しやすいように設計されています。</p>
   </div>
 
-  <h3>実際の画面イメージ（申請フォーム）</h3>
-  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※ 以下は「休暇申請」の申請フォームと承認ルートの画面例です（実際のUI構成をベースにしたモックアップ）。</p>
+  <h3>メリット（参考）</h3>
+  <ul class="pro-list">
+    <li>Garoonの「申請書 + 承認ルート」の概念と非常に近く、移行時に違和感が少ない</li>
+    <li>現場担当者がフォーム項目・承認ルートを自分で修正できる</li>
+    <li>国産ツールのため、UIと公式サポートがすべて日本語</li>
+    <li>SharePoint上で動作するためイントラサイトと統合できる</li>
+  </ul>
+
+  <h3>費用（廃案の根拠）</h3>
+  <table>
+    <tr><th></th><th>教育機関向け（定価）</th><th>武蔵野美術大学（見積）</th></tr>
+    <tr><td><strong>月額/ユーザー</strong></td><td>100円</td><td><strong>90円</strong></td></tr>
+  </table>
+
+  <div class="card red" style="margin-top:12px">
+    <div class="card-title">⚠️ 課金対象の問題</div>
+    <table style="margin:4px 0;font-size:13px">
+      <tr><th>シナリオ</th><th>対象人数</th><th>月額（税抜）</th><th>年額（税抜）</th></tr>
+      <tr><td>職員のみ</td><td>〜300名</td><td>2.7万円</td><td>約32万円</td></tr>
+      <tr><td>教職員のみ</td><td>〜1,400名</td><td>〜12.6万円</td><td>〜151万円</td></tr>
+      <tr style="background:#fde8e8"><td><strong>テナント全体（実際のリスク）</strong></td><td><strong>約6,400名</strong></td><td style="color:#c0392b"><strong>〜57.6万円</strong></td><td style="color:#c0392b"><strong>約690万円</strong></td></tr>
+    </table>
+    <p style="font-size:12px;color:#7f1d1d;margin-top:8px">アクティブユーザーが5,000名以上（大学側井上さんより確認）。テナント全体課金となると年約760万円（税込）のリスクがあり廃案。</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ===== Panel 3: Canbus.（新候補） ===== -->
+<div class="tab-panel" id="p3">
+<div class="content">
+  <div class="panel-title">Canbus.（キャンバス）— 新候補ツール</div>
+
+  <div class="card purple">
+    <div class="card-title">Canbus.とは</div>
+    <p>株式会社システナ（東証プライム上場、売上836億円）が開発したノーコード業務アプリ作成プラットフォームです。<strong>ユーザー数無制限</strong>で、レコード数・容量に応じた月額料金体系のため、学生を含む大規模テナントでも費用が膨らみません。</p>
+    <p>ワークフロー（申請・承認）機能を中心に、顧客管理・案件管理・勤怠管理・経費精算などあらゆる業務アプリをドラッグ&ドロップで構築できます。1,500社以上に導入実績があります。</p>
+  </div>
+
+  <h3>画面イメージ（申請フォーム・承認ルート）</h3>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:8px">※「休暇申請」のフォームと承認ルートのイメージ（Garoonと同様の操作感）。</p>
 
   <div class="screen-wrap">
     <div class="screen-bar">
       <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-      <div class="url-bar">https://mau.sharepoint.com/sites/intranet/workflow/apply?form=leave</div>
+      <div class="url-bar">https://mau.canbus.jp/apps/leave-request/apply</div>
     </div>
-    <div class="nx-screen">
-      <div class="nx-app-bar">
-        <div class="nx-app-logo">🌿 Nextset ワークフロー</div>
-        <div style="margin-left:auto;font-size:12px;opacity:.8">武蔵野美術大学イントラサイト</div>
+    <div class="cb-screen">
+      <div class="cb-app-bar">
+        <div class="cb-app-logo">🟣 Canbus.</div>
+        <div style="margin-left:auto;font-size:12px;opacity:.8">武蔵野美術大学 業務ポータル</div>
       </div>
-      <div class="nx-body">
-        <div class="nx-sidebar">
-          <div class="nx-menu-section">申請する</div>
-          <div class="nx-menu-item sel">📋 休暇申請</div>
-          <div class="nx-menu-item">🛒 物品購入申請</div>
-          <div class="nx-menu-item">📄 稟議書</div>
-          <div class="nx-menu-item">✈️ 出張申請</div>
-          <div class="nx-menu-item">🏢 会議室使用申請</div>
-          <div class="nx-menu-section">確認する</div>
-          <div class="nx-menu-item">📬 自分の申請一覧</div>
-          <div class="nx-menu-item">✅ 承認待ち一覧</div>
-          <div class="nx-menu-section" style="color:#5a8a6a">管理</div>
-          <div class="nx-menu-item">⚙️ フォーム管理</div>
+      <div class="cb-body">
+        <div class="cb-sidebar">
+          <div class="cb-menu-section">申請する</div>
+          <div class="cb-menu-item sel">📋 休暇申請</div>
+          <div class="cb-menu-item">🛒 物品購入申請</div>
+          <div class="cb-menu-item">📄 稟議書</div>
+          <div class="cb-menu-item">✈️ 出張申請</div>
+          <div class="cb-menu-item">🏢 会議室使用申請</div>
+          <div class="cb-menu-section">確認する</div>
+          <div class="cb-menu-item">📬 自分の申請一覧</div>
+          <div class="cb-menu-item">✅ 承認待ち一覧</div>
+          <div class="cb-menu-section" style="color:#a78bfa">管理・分析</div>
+          <div class="cb-menu-item">⚙️ アプリ設定</div>
+          <div class="cb-menu-item">📊 ダッシュボード</div>
         </div>
-        <div class="nx-main">
-          <div class="nx-page-title">休暇申請</div>
-          <!-- 申請書フォーム -->
-          <div class="nx-form">
-            <div class="nx-form-title">休暇申請書</div>
-            <div class="nx-form-grid">
-              <div class="nx-form-row">
-                <div class="nx-form-label">申請者</div>
-                <div class="nx-form-input filled">山田 太郎（事務局総務部）</div>
+        <div class="cb-main">
+          <div class="cb-page-title">休暇申請</div>
+          <div class="cb-form">
+            <div class="cb-form-title">休暇申請書</div>
+            <div class="cb-form-grid">
+              <div class="cb-form-row">
+                <div class="cb-form-label">申請者</div>
+                <div class="cb-form-input filled">山田 太郎（事務局総務部）</div>
               </div>
-              <div class="nx-form-row">
-                <div class="nx-form-label">申請日</div>
-                <div class="nx-form-input filled">2026年6月12日</div>
+              <div class="cb-form-row">
+                <div class="cb-form-label">申請日</div>
+                <div class="cb-form-input filled">2026年6月19日</div>
               </div>
-              <div class="nx-form-row">
-                <div class="nx-form-label" style="border-top:1px solid #c5e0d0">休暇種別 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
-                <div class="nx-form-input" style="border-top:1px solid #c5e0d0">
-                  <select style="width:100%;border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px">
+              <div class="cb-form-row">
+                <div class="cb-form-label">休暇種別 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
+                <div class="cb-form-input">
+                  <select style="width:100%;border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px">
                     <option>年次有給休暇</option>
                     <option>特別休暇</option>
                     <option>慶弔休暇</option>
                   </select>
                 </div>
               </div>
-              <div class="nx-form-row">
-                <div class="nx-form-label" style="border-top:1px solid #c5e0d0">休暇期間 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
-                <div class="nx-form-input" style="border-top:1px solid #c5e0d0;display:flex;gap:8px;align-items:center">
-                  <input type="text" value="2026/06/20" style="border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
+              <div class="cb-form-row">
+                <div class="cb-form-label">休暇期間 <span style="background:#dc2626;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:6px">必須</span></div>
+                <div class="cb-form-input" style="display:flex;gap:8px;align-items:center">
+                  <input type="text" value="2026/06/25" style="border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
                   <span style="font-size:12px">〜</span>
-                  <input type="text" value="2026/06/21" style="border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
+                  <input type="text" value="2026/06/26" style="border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px;width:100px">
                   <span style="font-size:12px;color:#888">（2日間）</span>
                 </div>
               </div>
-              <div class="nx-form-row">
-                <div class="nx-form-label" style="border-top:1px solid #c5e0d0">理由・備考</div>
-                <div class="nx-form-input" style="border-top:1px solid #c5e0d0">
-                  <textarea style="width:100%;border:1px solid #c5e0d0;padding:2px 6px;border-radius:3px;font-size:12px;height:44px">私用のため</textarea>
+              <div class="cb-form-row">
+                <div class="cb-form-label">理由・備考</div>
+                <div class="cb-form-input">
+                  <textarea style="width:100%;border:1px solid #d4c2f9;padding:2px 6px;border-radius:3px;font-size:12px;height:44px">私用のため</textarea>
                 </div>
               </div>
             </div>
           </div>
-          <!-- 承認ルート -->
-          <div class="nx-route">
-            <div class="nx-route-title">承認ルート（設定済み）</div>
-            <div class="nx-route-flow">
-              <div class="nx-route-node">
-                <div class="nx-route-box start">
+          <div class="cb-route">
+            <div class="cb-route-title">承認ルート（自動設定）</div>
+            <div class="cb-route-flow">
+              <div class="cb-route-node">
+                <div class="cb-route-box start">
                   <div class="role">申請者</div>
                   <div class="name">山田 太郎</div>
-                  <div class="status" style="color:var(--pa-blue)">申請中</div>
+                  <div class="status" style="color:var(--cb-purple)">申請中</div>
                 </div>
               </div>
-              <div class="nx-route-arrow">→</div>
-              <div class="nx-route-node">
-                <div class="nx-route-box pending">
+              <div class="cb-route-arrow">→</div>
+              <div class="cb-route-node">
+                <div class="cb-route-box pending">
                   <div class="role">直属上長</div>
                   <div class="name">鈴木 部長</div>
                   <div class="status">承認待ち</div>
                 </div>
-                <div class="nx-badge">第1承認者</div>
               </div>
-              <div class="nx-route-arrow">→</div>
-              <div class="nx-route-node">
-                <div class="nx-route-box">
+              <div class="cb-route-arrow">→</div>
+              <div class="cb-route-node">
+                <div class="cb-route-box">
                   <div class="role">人事担当</div>
                   <div class="name">人事部</div>
                   <div class="status" style="color:#aaa">未</div>
                 </div>
-                <div class="nx-badge">第2承認者</div>
               </div>
-              <div class="nx-route-arrow">→</div>
-              <div class="nx-route-node">
-                <div class="nx-route-box" style="background:#f0f4ff;border-color:#90a0d0">
+              <div class="cb-route-arrow">→</div>
+              <div class="cb-route-node">
+                <div class="cb-route-box" style="background:#f0ebff;border-color:#c4b5fd">
                   <div class="role">完了</div>
                   <div class="name">承認完了後</div>
-                  <div class="status" style="color:#aaa">メール通知</div>
+                  <div class="status" style="color:#aaa">通知送信</div>
                 </div>
               </div>
             </div>
-            <div class="nx-btns">
-              <button class="nx-btn submit">申請する</button>
-              <button class="nx-btn save">下書き保存</button>
+            <div class="cb-btns">
+              <button class="cb-btn submit">申請する</button>
+              <button class="cb-btn save">下書き保存</button>
             </div>
           </div>
         </div>
@@ -687,103 +829,136 @@
     </div>
   </div>
 
+  <h3>料金プラン</h3>
+  <table>
+    <tr>
+      <th></th>
+      <th>Standard <span style="font-size:11px;font-weight:400">（推奨スタート）</span></th>
+      <th>Business</th>
+      <th>Enterprise</th>
+    </tr>
+    <tr>
+      <td><strong>月額（税抜）</strong></td>
+      <td><strong>50,000円</strong></td>
+      <td>200,000円</td>
+      <td>500,000円</td>
+    </tr>
+    <tr>
+      <td><strong>ユーザー数</strong></td>
+      <td colspan="3" style="text-align:center"><strong>無制限（全プラン共通）</strong></td>
+    </tr>
+    <tr>
+      <td><strong>レコード数上限</strong></td>
+      <td>10,000レコード</td>
+      <td>100,000レコード</td>
+      <td>500,000レコード</td>
+    </tr>
+    <tr>
+      <td><strong>添付ファイル容量</strong></td>
+      <td>20 GB</td>
+      <td>100 GB</td>
+      <td>300 GB</td>
+    </tr>
+    <tr>
+      <td><strong>最短契約</strong></td>
+      <td colspan="3" style="text-align:center">3ヶ月</td>
+    </tr>
+  </table>
+
+  <div class="card orange" style="margin-top:12px">
+    <div class="card-title">レコード数の考え方（重要）</div>
+    <p style="font-size:13px">Canbus.の費用はユーザー数ではなく<strong>「現在クラウドに保存されているレコード数・容量」</strong>で決まります。</p>
+    <ul style="padding-left:18px;font-size:13px;margin-top:6px">
+      <li>1申請（1ワークフロー）≈ 1レコード消費</li>
+      <li>Standardプランなら最大10,000レコードまで含まれる</li>
+      <li>古い申請を削除すれば使用レコード数が減少し、枠が戻る</li>
+      <li>レコードが不足した場合はオプションで追加購入（20,000レコード追加：月50,000円）</li>
+    </ul>
+    <p style="font-size:13px;margin-top:8px"><strong>試算例（Standardプラン）：</strong>月50,000円で教職員〜1,400名＋学生〜5,000名すべてが利用可能。Nextsetの場合（最大760万円/年）と比べ圧倒的に安価。</p>
+  </div>
+
   <h3>メリット</h3>
   <ul class="pro-list">
-    <li>Garoonの「申請書 + 承認ルート」の概念と非常に近く、移行時に違和感が少ない</li>
-    <li>現場担当者がフォーム項目・承認ルートを自分で修正できる</li>
-    <li>申請書のデザインが「紙の申請書」に近く、現場ユーザーが直感的に使える</li>
-    <li>国産ツールのため、UIと公式サポートがすべて日本語</li>
-    <li>費用が安価（ワークフローのみなら200円/月/ユーザー）</li>
-    <li>SharePoint上で動作するため、イントラサイトと同じ場所に統合できる</li>
+    <li><strong>ユーザー数無制限</strong>：学生・非常勤・外部関係者も追加費用なしで使える</li>
+    <li>月額5万円〜スタートできるため、小規模検証から始めやすい</li>
+    <li>ノーコードでドラッグ&ドロップによるフォーム・ワークフロー作成</li>
+    <li>Garoonの「申請書→承認ルート」の概念に近く移行しやすい</li>
+    <li>充実したワークフロー機能（複雑な条件分岐・電子印鑑・承認履歴）</li>
+    <li>データ分析・ダッシュボード機能が標準搭載（20種類以上のグラフ）</li>
+    <li>システナがSI伴走支援を提供（情シス専任不在でもサポートあり）</li>
+    <li>国産ツール・完全日本語対応</li>
   </ul>
 
   <h3>デメリット・注意点</h3>
   <ul class="con-list">
-    <li>複雑な条件分岐（金額によって承認者が変わる、など）には対応が限定的</li>
-    <li>Power Automateほど柔軟な自動化（承認以外の処理）はできない</li>
-    <li>追加費用が発生する（ただし安価）</li>
-    <li>シェアや実績がPower Automateより小さい（ベンダー依存リスクが若干ある）</li>
-    <li>高度なAPI連携や外部サービス連携はPower Automateに劣る</li>
+    <li>M365とは別のクラウドサービス（SharePoint/Teamsとのネイティブ統合はなし、API連携が必要）</li>
+    <li>最短契約3ヶ月（1ヶ月単位での試用ができない）</li>
+    <li>ページビュー数上限あり（Standard: 月100,000PV。超過時は別途相談）</li>
+    <li>Power Automateほど他M365ツールとの深い連携はできない</li>
+    <li>トライアル条件はベンダーに確認が必要</li>
   </ul>
 
-  <h3>費用（正式見積：2026-06-18受領）</h3>
+  <h3>Nextsetとの費用比較</h3>
   <table>
-    <tr><th></th><th>民間企業向け（定価）</th><th>教育機関向け（定価）</th><th>武蔵野美術大学（見積）</th></tr>
-    <tr><td><strong>月額/ユーザー</strong></td><td>200円</td><td><strong>100円</strong></td><td><strong>90円</strong></td></tr>
-    <tr><td><strong>年額/ユーザー</strong></td><td>2,400円</td><td><strong>1,200円</strong></td><td><strong>1,080円</strong></td></tr>
+    <tr>
+      <th>ツール</th>
+      <th>課金方式</th>
+      <th>武蔵野美術大学での月額</th>
+      <th>武蔵野美術大学での年額</th>
+    </tr>
+    <tr style="background:#fde8e8">
+      <td><strong>Nextset</strong>（廃案）</td>
+      <td>90円/ユーザー/月 × テナント全体</td>
+      <td style="color:#c0392b"><strong>最大 約57.6万円</strong></td>
+      <td style="color:#c0392b"><strong>最大 約760万円（税込）</strong></td>
+    </tr>
+    <tr style="background:#f3e8ff">
+      <td><strong>Canbus.</strong>（新候補）</td>
+      <td>月額固定（ユーザー数無制限）</td>
+      <td style="color:var(--cb-purple)"><strong>5万円〜</strong></td>
+      <td style="color:var(--cb-purple)"><strong>60万円〜（税抜）</strong></td>
+    </tr>
+    <tr>
+      <td>Power Automate</td>
+      <td>M365ライセンスに含まれる</td>
+      <td><strong>追加費用なし</strong></td>
+      <td><strong>追加費用なし</strong></td>
+    </tr>
   </table>
-  <p style="font-size:12px;color:#555;margin-top:6px">見積前提：教員400名＋学生600名（計1,000名）。教育機関定価（100円）からさらに値引きされた価格。</p>
-  <p style="margin-top:8px">📄 <a href="./見積書(15116579)_学校法人武蔵野美術大学_ご担当者様.pdf" target="_blank">見積書（PDF）を開く</a></p>
-
-  <div class="card red" style="margin-top:12px">
-    <div class="card-title">⚠️ 課金対象の仕組みと対象範囲の確認が必要</div>
-    <p style="font-size:13px;margin-bottom:8px">課金対象は「実際にアドインを使う人数」ではなく、<strong>テナント内でSharePointまたはTeamsを利用できるライセンスを保有しているユーザー数</strong>です。A1（無償）ライセンスもSharePoint/Teamsを含むため、学生も同テナントにいる場合は対象になる可能性があります。</p>
-    <table style="margin:4px 0;font-size:13px">
-      <tr><th>対象者</th><th>ライセンス</th><th>SharePoint/Teams</th><th>課金対象</th></tr>
-      <tr><td>教職員（〜1,400名）</td><td>A3（有償）</td><td>✅</td><td style="color:#c0392b">対象</td></tr>
-      <tr><td>学生</td><td>A1（無償）</td><td>✅（A1も含む）</td><td style="color:#c0392b">同テナントのため対象の可能性が高い</td></tr>
-    </table>
-    <p style="font-size:12px;color:#7f1d1d;margin-top:8px">今後の進め方として、どこまでのユーザーを対象範囲とするかを大学側と確認する必要があります。</p>
-  </div>
-
-  <div class="card orange" style="margin-top:12px">
-    <div class="card-title">費用試算（正式単価 90円/月/ユーザー・税抜ベース）</div>
-    <table style="margin:4px 0">
-      <tr><th>シナリオ</th><th>対象人数</th><th>月額（税抜）</th><th>年額（税抜）</th><th>年額（税込）</th></tr>
-      <tr><td>見積想定（教員400名＋学生600名）</td><td>1,000名</td><td>9万円</td><td>108万円</td><td>約119万円</td></tr>
-      <tr><td>職員のみ（ワークフロー実利用者）</td><td>〜300名</td><td>2.7万円</td><td>32.4万円</td><td>約36万円</td></tr>
-      <tr><td>教職員のみ</td><td>〜1,400名</td><td>〜12.6万円</td><td>〜151万円</td><td>〜166万円</td></tr>
-      <tr style="background:#fde8e8"><td><strong>⚠️ テナント全体（課金リスク）</strong></td><td><strong>教職員〜1,400＋学生〜5,000＝約6,400名</strong></td><td style="color:#c0392b"><strong>〜57.6万円</strong></td><td style="color:#c0392b"><strong>〜691万円</strong></td><td style="color:#c0392b"><strong>約760万円</strong></td></tr>
-    </table>
-    <p style="font-size:12px;color:#856404;margin-top:8px">
-      <strong>6/18定例MTGで確認</strong>：学生のアクティブユーザーは約5,000名近く存在する（大学側井上さんより）。
-      Nextsetの課金がテナント全体（SharePoint/Teams保有者全員）に適用される場合、年間約760万円になるリスクがある。
-      職員のみ（実利用者約300名）で適用できるなら年約36万円と現実的。<strong>課金スコープの正確な確認が最優先。</strong>
-    </p>
-  </div>
-
-  <div class="card" style="margin-top:12px;border-left:4px solid #1a56a0;padding:14px 18px;">
-    <div class="card-title" style="color:#1a56a0;">💡 Power Automateとの費用比較観点</div>
-    <p style="font-size:13px;margin-bottom:8px">6/18定例で出た意見：「人事ID情報と連携した承認ルートの自動化」がM365の理想形。</p>
-    <ul style="font-size:13px;padding-left:18px;">
-      <li>ガルーンでは人事異動のたびにHatanaka氏が手作業でグループを更新している</li>
-      <li>M365のEntra IDグループに正しく所属者が反映されれば、Power Automateで「教務チームの誰が申請しても、教務チームリーダーが承認者になる」という自動化が可能</li>
-      <li>Nextsetはガルーンに近い操作性だが、費用が課題。まず<strong>Nextset無料トライアル（30日）でUX評価</strong>してから判断を推奨</li>
-    </ul>
-  </div>
 
 </div>
 </div>
 
-<!-- ===== Panel 3: 推奨・導入方針 ===== -->
-<div class="tab-panel" id="p3">
+<!-- ===== Panel 4: 推奨・導入方針 ===== -->
+<div class="tab-panel" id="p4">
 <div class="content">
   <div class="panel-title">推奨・導入方針（三井田案）</div>
 
   <div class="rec-box">
-    <h3 style="font-size:17px;margin-bottom:10px">推奨: 段階的な併用アプローチ</h3>
-    <p style="font-size:14px;opacity:.9;margin-bottom:16px">「まずNextsetで移行、将来的にPower Automateを部分併用」を推奨します。<br>一方だけに絞るのではなく、それぞれの強みを活かす構成です。</p>
+    <h3 style="font-size:17px;margin-bottom:10px">推奨：Canbus. をメインに採用し、Power Automateを補完活用</h3>
+    <p style="font-size:14px;opacity:.9;margin-bottom:16px">Nextsetは費用問題（最大760万円/年）により廃案。Canbus.（月5万円〜、ユーザー数無制限）を主軸としてGaroonワークフローを移行し、複雑な連携が必要な場合のみPower Automateを組み合わせます。</p>
     <div class="rec-row">
       <div class="rec-item">
-        <div class="label">第1フェーズ（移行時）</div>
-        <div class="val">🌿 Nextset メイン</div>
-        <div class="sub">Garoonから申請フォームをそのまま移行。現場担当者が自立運用できる体制を作る。</div>
+        <div class="label">メイン（ワークフロー移行）</div>
+        <div class="val">🟣 Canbus.</div>
+        <div class="sub">Garoonの申請書をそのまま電子化。ユーザー数無制限で全教職員・学生が使える。月5万円〜で費用も明確。</div>
       </div>
       <div class="rec-item">
-        <div class="label">第2フェーズ（安定後）</div>
-        <div class="val">⚡ Power Automate 部分活用</div>
-        <div class="sub">複雑な条件が必要な申請や、申請以外の自動化ニーズが出てきたタイミングで導入する。</div>
+        <div class="label">補完（複雑な連携・自動化）</div>
+        <div class="val">⚡ Power Automate</div>
+        <div class="sub">M365内の連携（Teams通知・SharePoint・Excel集計）や複雑な条件分岐が必要な場合に活用。追加費用なし。</div>
       </div>
     </div>
   </div>
 
   <h3>推奨の理由</h3>
-  <div class="card primary">
+  <div class="card purple">
     <ul style="padding-left:18px;font-size:14px">
-      <li style="margin-bottom:6px">武蔵野美術大学には情シス専任担当者がいないため、<strong>現場担当者が自分でメンテできる</strong>Nextsetが適している</li>
-      <li style="margin-bottom:6px">Garoonのワークフローを使っていたユーザーに<strong>最もなじみやすい</strong>UI・概念</li>
-      <li style="margin-bottom:6px">費用対効果が高い（正式見積：90円/月/ユーザー。対象範囲確定後に年間コストを算出予定）</li>
-      <li>将来的にPower Automateも使えるようにしておくことで、複雑なニーズにも対応できる</li>
+      <li style="margin-bottom:6px"><strong>費用が現実的</strong>：Nextset（最大760万円/年）に対し、Canbus.（月5万円〜）は圧倒的にコスト効率が高い</li>
+      <li style="margin-bottom:6px"><strong>ユーザー数無制限</strong>：学生5,000名以上がいる武蔵野美術大学でも課金が増えない</li>
+      <li style="margin-bottom:6px"><strong>情シス専任不在でも運用できる</strong>：ノーコードで現場担当者がフォーム・ルートを管理できる</li>
+      <li style="margin-bottom:6px"><strong>Garoonからの移行しやすさ</strong>：申請書→承認ルートの概念が近く、ユーザーの学習コストが低い</li>
+      <li>システナの伴走支援：ツール導入だけでなく、業務設計まで支援してもらえる</li>
     </ul>
   </div>
 
@@ -792,61 +967,61 @@
     <li>
       <div class="step-num">1</div>
       <div class="step-body">
-        <strong>6/18定例：方針承認 + Nextsetトライアル開始の合意を取り付ける</strong>
-        <span>課金対象はテナント内のSharePoint/Teamsライセンス保有者数。M365管理センターで実数を確認し正確な費用を提示したうえで大学側の意思決定を得る。30日間無料トライアルの開始を提案。</span>
+        <strong>次回定例：Canbus.の概要説明・費用提案</strong>
+        <span>この資料を使ってCanbus.を紹介。月5万円（Standardプラン）でのスタートを提案。Garoonワークフローとの概念の近さを説明し、導入検討の合意を得る。</span>
       </div>
     </li>
     <li>
       <div class="step-num">2</div>
       <div class="step-body">
-        <strong>〜7月末：Garoonのワークフロー棚卸し + Nextset検証</strong>
-        <span>現在使っているGaroonの申請フォーム一覧を大学側から提供してもらい、Nextsetで再現できるか確認。トライアル環境で実際に動かして評価。</span>
+        <strong>〜7月末：Garoonのワークフロー棚卸し + Canbus.検証</strong>
+        <span>現在使っているGaroonの申請フォーム一覧を大学側から提供してもらい、Canbus.で再現できるか確認。ベンダーにトライアル環境の提供を依頼。</span>
       </div>
     </li>
     <li>
       <div class="step-num">3</div>
       <div class="step-body">
         <strong>8月：パイロット申請フォームの本番展開</strong>
-        <span>まず利用頻度の高い申請書2〜3種（休暇申請・物品購入など）をNextsetで本番運用開始。</span>
+        <span>利用頻度の高い申請書2〜3種（休暇申請・物品購入など）をCanbus.で本番運用開始。Standardプラン（月5万円）でスタート。</span>
       </div>
     </li>
     <li>
       <div class="step-num">4</div>
       <div class="step-body">
-        <strong>9月以降：全申請フォームの移行 + Power Automate検討</strong>
-        <span>残りのGaroonワークフローを順次移行。複雑な条件が必要なケースはPower Automateとの組み合わせを検討。</span>
+        <strong>9月以降：全申請フォームの移行</strong>
+        <span>残りのGaroonワークフローを順次Canbus.に移行。レコード数が増えてきたらプランアップグレードを検討。複雑な連携が必要なケースはPower Automateとの組み合わせを検討。</span>
       </div>
     </li>
   </ul>
 
-  <h3>6/18定例で確認したいこと</h3>
+  <h3>次回定例（6/25）で確認したいこと</h3>
   <table>
     <tr><th>#</th><th>確認事項</th><th>理由</th></tr>
     <tr>
       <td>1</td>
-      <td>Nextsetへの費用許容感（年158万円〜）</td>
-      <td>意思決定のボトルネックになりうる。早期に確認が必要。</td>
+      <td>Canbus.の費用感への反応（月5万円〜）</td>
+      <td>Nextset廃案の経緯を説明した上で、Canbus.の費用感が許容範囲か確認。</td>
     </tr>
     <tr>
       <td>2</td>
       <td>現在Garoonで使っている申請フォームの種類・件数</td>
-      <td>移行工数を見積もるため。</td>
+      <td>移行工数の見積もりとレコード数の試算のため。</td>
     </tr>
     <tr>
       <td>3</td>
       <td>現場担当者（フォーム管理を任せられる人）は誰か</td>
-      <td>Nextsetは現場自立運用が前提。担当者を確定する必要あり。</td>
+      <td>Canbus.は現場自立運用が前提。担当者を確定する必要あり。</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>Garoonのワークフロー移行の優先順位（時期）</td>
+      <td>ワークフロー移行の優先順位・希望時期</td>
       <td>SharePointイントラ構築と並行して進めるため、スケジュール調整が必要。</td>
     </tr>
   </table>
 
   <div class="card green" style="margin-top:20px">
     <div class="card-title">もし費用が難しい場合の代替案</div>
-    <p>Nextsetの費用が難しい場合は、<strong>Power Automateを使ったシンプルな承認フロー</strong>を三井田が設計・構築し、IT担当者へ引き継ぐ方法もあります。この場合、追加費用はかかりません（ただし、現場担当者のメンテナンスが難しいことを事前に周知する必要があります）。</p>
+    <p>Canbus.の費用も難しい場合は、<strong>Power Automateを使ったシンプルな承認フロー</strong>を三井田が設計・構築し、IT担当者へ引き継ぐ方法があります。追加費用はかかりません（ただし、現場担当者のメンテナンスが難しいことを事前に周知する必要があります）。</p>
   </div>
 
 </div>
