@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI活用推進 戦略整理 — welbe</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f1fb;
+    --accent: #e67e22;
+    --green: #27ae60;
+    --green-light: #e8f8ee;
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --yellow: #d4a017;
+    --yellow-light: #fef9e7;
+    --purple: #7c3aed;
+    --purple-light: #f3e8ff;
+    --gray: #f5f6f8;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.75;
+  }
+
+  /* ─── ヘッダー ─── */
+  .page-header {
+    background: var(--primary); color: #fff;
+    padding: 0 32px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .sub { font-size: 12px; opacity: .65; margin-top: 2px; }
+  .page-header .badge {
+    font-size: 11px; font-weight: 700; padding: 4px 12px;
+    background: rgba(255,255,255,.15); border-radius: 20px; white-space: nowrap;
+  }
+
+  /* ─── タブバー ─── */
+  .tab-bar {
+    background: #fff; border-bottom: 2px solid var(--border);
+    display: flex; overflow-x: auto; position: sticky; top: 72px; z-index: 100;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0; padding: 0 22px; height: 52px;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    border: none; background: none; cursor: pointer;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: color .15s, border-color .15s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--primary); }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+  /* ─── メインコンテンツ ─── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .content { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  /* ─── セクション ─── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 18px; font-weight: 700; color: var(--primary);
+    padding-bottom: 10px; margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .icon { font-size: 20px; }
+
+  /* ─── カード ─── */
+  .card {
+    background: #fff; border-radius: 12px;
+    border: 1px solid var(--border); padding: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  }
+  .card + .card { margin-top: 16px; }
+
+  /* ─── フェーズステータス ─── */
+  .phase-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .phase-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+  }
+  .phase-badge.done { background: var(--green-light); color: var(--green); }
+  .phase-badge.next { background: var(--yellow-light); color: var(--yellow); }
+  .phase-title { font-size: 16px; font-weight: 700; }
+
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 16px; border-radius: 8px; background: var(--gray);
+    font-size: 14px;
+  }
+  .checklist li.done { background: var(--green-light); }
+  .check-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .check-label { font-weight: 600; }
+  .check-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* ─── 2カラムグリッド ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ─── 目的カード（表向き vs 本音） ─── */
+  .goal-card {
+    border-radius: 12px; padding: 20px 24px;
+    border: 1px solid var(--border);
+  }
+  .goal-card.surface { background: var(--primary-light); border-color: #b3d0f5; }
+  .goal-card.real { background: var(--red-light); border-color: #f5b7b1; }
+  .goal-card .goal-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; margin-bottom: 10px; opacity: .7;
+  }
+  .goal-card .goal-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .goal-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .goal-card ul li { font-size: 14px; display: flex; align-items: flex-start; gap: 8px; }
+  .goal-card ul li::before { content: '→'; font-weight: 700; flex-shrink: 0; }
+
+  /* ─── ギャップカード ─── */
+  .gap-card {
+    background: #fff; border-radius: 12px; border: 1px solid var(--border);
+    padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  }
+  .gap-card + .gap-card { margin-top: 12px; }
+  .gap-num {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: var(--yellow-light); color: var(--yellow);
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gap-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .gap-desc { font-size: 14px; color: var(--muted); }
+
+  /* ─── 優先施策 ─── */
+  .priority-card {
+    background: #fff; border-radius: 12px; border: 1px solid var(--border);
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    margin-bottom: 16px;
+  }
+  .priority-header {
+    display: flex; align-items: center; gap: 14px; padding: 16px 24px;
+  }
+  .priority-header.a { background: #fff5f5; border-bottom: 1px solid #fecaca; }
+  .priority-header.b { background: var(--primary-light); border-bottom: 1px solid #b3d0f5; }
+  .priority-header.c { background: var(--green-light); border-bottom: 1px solid #a7f3d0; }
+  .priority-tag {
+    font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 20px;
+  }
+  .priority-tag.a { background: #fecaca; color: #b91c1c; }
+  .priority-tag.b { background: #bfdbfe; color: #1d4ed8; }
+  .priority-tag.c { background: #a7f3d0; color: #065f46; }
+  .priority-label { font-size: 15px; font-weight: 700; }
+  .priority-body { padding: 16px 24px; }
+  .priority-body p { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+  .action-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .action-list li {
+    font-size: 14px; padding: 10px 14px; border-radius: 8px;
+    background: var(--gray); display: flex; align-items: flex-start; gap: 8px;
+  }
+  .action-list li::before { content: '▸'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+  .note-box {
+    margin-top: 12px; padding: 10px 14px;
+    background: var(--yellow-light); border-left: 3px solid var(--yellow);
+    border-radius: 0 6px 6px 0; font-size: 13px; color: #7c5e00;
+  }
+
+  /* ─── ロードマップ ─── */
+  .roadmap {
+    display: flex; gap: 0; position: relative;
+    overflow-x: auto; padding-bottom: 8px;
+  }
+  .roadmap::before {
+    content: ''; position: absolute; top: 32px; left: 48px; right: 48px;
+    height: 2px; background: var(--border); z-index: 0;
+  }
+  .rm-phase {
+    flex: 1; min-width: 180px; display: flex; flex-direction: column;
+    align-items: center; position: relative; z-index: 1; padding: 0 8px;
+  }
+  .rm-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 3px solid var(--border); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; margin-bottom: 12px; flex-shrink: 0;
+  }
+  .rm-dot.done { background: var(--green); border-color: var(--green); color: #fff; }
+  .rm-dot.now  { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .rm-dot.next { background: #fff; border-color: var(--primary); color: var(--primary); }
+  .rm-year { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .rm-title { font-size: 13px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .rm-items { list-style: none; display: flex; flex-direction: column; gap: 4px; width: 100%; }
+  .rm-items li {
+    font-size: 12px; color: var(--muted); text-align: center;
+    padding: 4px 8px; border-radius: 4px; background: var(--gray);
+  }
+  .rm-items li.highlight { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+  .rm-items li.done-item { background: var(--green-light); color: var(--green); }
+
+  /* ─── ポジション整理 ─── */
+  .position-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 640px) { .position-grid { grid-template-columns: 1fr; } }
+  .pos-card {
+    border-radius: 12px; padding: 20px;
+    border: 1px solid var(--border); background: #fff;
+  }
+  .pos-card .pos-icon { font-size: 28px; margin-bottom: 10px; }
+  .pos-card .pos-title { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+  .pos-card .pos-desc { font-size: 13px; color: var(--muted); }
+
+  /* ─── インサイトボックス ─── */
+  .insight-box {
+    background: #1a1d23; color: #e2e8f0; border-radius: 12px;
+    padding: 24px 28px; margin-bottom: 16px;
+  }
+  .insight-box .insight-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    color: #94a3b8; margin-bottom: 10px;
+  }
+  .insight-box .insight-text {
+    font-size: 16px; font-weight: 700; line-height: 1.6;
+  }
+  .insight-box .insight-text em {
+    font-style: normal; color: #60a5fa;
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div>
+    <h1>AI活用推進 戦略整理</h1>
+    <div class="sub">welbe — 社内AI浸透コンサル 現状・期待・打ち手</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div class="badge">更新: 2026-06-23</div>
+    <a href="https://welbe-weld.vercel.app/admin" target="_blank" rel="noopener"
+       style="font-size:12px; font-weight:700; padding:6px 14px; background:#fff; color:var(--primary);
+              border-radius:20px; text-decoration:none; white-space:nowrap;
+              display:flex; align-items:center; gap:6px;">
+      🔗 プラットフォームを開く
+    </a>
+  </div>
+</header>
+
+<nav class="tab-bar" id="tabBar">
+  <button class="tab-btn active" data-tab="overview">📊 現状整理</button>
+  <button class="tab-btn" data-tab="goals">🎯 期待・目的</button>
+  <button class="tab-btn" data-tab="gaps">⚠️ ギャップ分析</button>
+  <button class="tab-btn" data-tab="actions">🚀 優先施策</button>
+  <button class="tab-btn" data-tab="roadmap">📅 ロードマップ</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- タブ1: 現状整理 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-overview">
+<div class="content">
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🏗️</span> フェーズ1 ─ 基盤構築（完了済み）</div>
+
+    <div class="card">
+      <div class="phase-header">
+        <span class="phase-badge done">✓ COMPLETED</span>
+        <span class="phase-title">「AIを安全に使える状態にする」フェーズ</span>
+      </div>
+      <ul class="checklist">
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">AI利用ルールの策定</div>
+            <div class="check-sub">情報セキュリティ規定改定 / 生成AI利用に関する細則の策定</div>
+          </div>
+        </li>
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">Copilotガイドラインの策定</div>
+            <div class="check-sub">支援現場向け / 本部向けの使い方ガイドを整備</div>
+          </div>
+        </li>
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">全社リスクマネジメント設計</div>
+            <div class="check-sub">規定類以外のリスク対応フレームワーク</div>
+          </div>
+        </li>
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">研修・勉強会の企画・運営</div>
+            <div class="check-sub">全社向けの意識醸成・スキルアップ施策</div>
+          </div>
+        </li>
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">部門横断PJメンバーの拡大</div>
+            <div class="check-sub">推進体制の整備・巻き込み拡大</div>
+          </div>
+        </li>
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">有料版Copilotトライアルの展開</div>
+            <div class="check-sub">マーケ / 人事 / システム / 経営企画 / その他本部系</div>
+          </div>
+        </li>
+        <li class="done">
+          <span class="check-icon">✅</span>
+          <div>
+            <div class="check-label">KPI・ROIの設計</div>
+            <div class="check-sub">効果測定の評価軸・指標体系を策定</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">⏭️</span> フェーズ2 ─ 成果創出（これから）</div>
+    <div class="card" style="border-left: 4px solid var(--accent);">
+      <div class="phase-header">
+        <span class="phase-badge next">▶ IN PROGRESS</span>
+        <span class="phase-title">「使って成果が出ている状態にする」フェーズ</span>
+      </div>
+      <p style="font-size:14px; color:var(--muted);">
+        基盤は整った。次のフェーズは<strong>「使っている」を可視化し、削減数値として積み上げる</strong>こと。
+        ルールがあるだけでは、AIは組織に根付かない。部門別の実績と数字が必要。
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">💻</span> 社内展開プラットフォーム</div>
+    <div class="card" style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:200px;">
+        <div style="font-size:15px; font-weight:700; margin-bottom:6px;">welbe 職場定着支援プラットフォーム</div>
+        <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">
+          社内で開発済みのプラットフォーム。AI分析・離職予兆・組織サマリー・eラーニング等を搭載。
+          社内展開の候補として検討中。
+        </div>
+        <a href="https://welbe-weld.vercel.app/admin" target="_blank" rel="noopener"
+           style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px;
+                  background:var(--primary); color:#fff; border-radius:8px; text-decoration:none;
+                  font-size:14px; font-weight:700;">
+          🔗 管理画面を開く
+          <span style="font-size:11px; opacity:.75;">welbe-weld.vercel.app</span>
+        </a>
+      </div>
+      <div style="flex-shrink:0; text-align:center; padding:16px 24px; background:var(--gray);
+                  border-radius:10px; border:1px solid var(--border);">
+        <div style="font-size:28px; margin-bottom:4px;">🏗️</div>
+        <div style="font-size:11px; font-weight:700; color:var(--muted);">開発済み</div>
+        <div style="font-size:11px; color:var(--muted);">社内展開 検討中</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- タブ2: 期待・目的 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-goals">
+<div class="content">
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🎭</span> 表向きの目的 vs 本音</div>
+    <div class="grid-2">
+      <div class="goal-card surface">
+        <div class="goal-label">公式ナラティブ（全社向け）</div>
+        <div class="goal-title">🌱 AI活用促進・効率化</div>
+        <ul>
+          <li>働き方を変えて業務を楽にしよう</li>
+          <li>生産性を上げてより大きな価値を出そう</li>
+          <li>デジタル人材として競争力を高めよう</li>
+          <li>新しいことに挑戦できる組織になろう</li>
+        </ul>
+      </div>
+      <div class="goal-card real">
+        <div class="goal-label">経営の本音（オーナー・PE向け）</div>
+        <div class="goal-title">🎯 人件費削減・PE売却準備</div>
+        <ul>
+          <li>本部人員を最小化し固定費を圧縮する</li>
+          <li>AI＋非正規化で同業務を少人数で回す</li>
+          <li>2028年PE売却に向けてEBITDAを改善する</li>
+          <li>「AI対応済み組織」として企業価値を上げる</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🔀</span> 2つの施策の掛け算</div>
+    <div class="insight-box">
+      <div class="insight-label">CORE THESIS</div>
+      <div class="insight-text">
+        <em>AI による業務効率化</em> ×
+        <em>人事施策（正社員比率引き下げ）</em><br>
+        ＝ 最小人数で回る組織 → 2028年PE売却時の試算・実績づくり
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-size:13px; font-weight:700; color:var(--primary); margin-bottom:10px;">🤖 AI軸</div>
+        <p style="font-size:14px; color:var(--muted);">
+          本部業務の自動化・AI代替によりFTEを削減。<br>
+          「AI前後での工数比較」データを蓄積し、削減効果を定量化する。
+        </p>
+      </div>
+      <div class="card">
+        <div style="font-size:13px; font-weight:700; color:var(--red); margin-bottom:10px;">👥 人事軸</div>
+        <p style="font-size:14px; color:var(--muted);">
+          正社員比率を下げ非正規化を推進。支援現場は人員基準があるため、
+          管理者1人あたりのケースロード数を増やすアプローチをとる。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">👤</span> 自分に期待されているロール</div>
+    <div class="position-grid">
+      <div class="pos-card">
+        <div class="pos-icon">🧭</div>
+        <div class="pos-title">AI浸透の設計者</div>
+        <div class="pos-desc">「ルールを作る人」から「使わせる仕組みを設計する人」へ。抵抗勢力対策・ユースケース横展開・チャンピオン育成を担う。</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-icon">📊</div>
+        <div class="pos-title">削減試算の設計者</div>
+        <div class="pos-desc">「効率化した」という感覚値ではなく、FTE換算・コスト削減額として数字を積み上げ、PE向けデータを作る人。</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-icon">🔗</div>
+        <div class="pos-title">人事PMとのブリッジ</div>
+        <div class="pos-desc">AI施策と人事施策（非正規化・正社員削減）を連動させ、「どちらが先か」ではなく「組み合わせて効果を最大化」する調整役。</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-icon">📣</div>
+        <div class="pos-title">社内コンサルタント</div>
+        <div class="pos-desc">各部門の業務をヒアリングし、AI代替可能な工数を特定して提案する。外部コンサルを使わず内製で回せる体制を作る。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- タブ3: ギャップ分析 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-gaps">
+<div class="content">
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🔍</span> フェーズ1→2 で何が足りないか</div>
+
+    <div class="gap-card">
+      <div class="gap-num">1</div>
+      <div>
+        <div class="gap-title">「使っている」が可視化されていない</div>
+        <div class="gap-desc">
+          トライアルで使い始めているが、<strong>どこで何時間削減できたか</strong>のデータがまだない。
+          KPI設計は完了しているが実測値が存在しない。
+          「効果がある気がする」のままでは2028年の試算根拠に使えない。
+        </div>
+      </div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">2</div>
+      <div>
+        <div class="gap-title">部門別の削減試算がない</div>
+        <div class="gap-desc">
+          「本部で何FTE分をAIで代替できるか」という積み上げシミュレーションがない。
+          PE向けDD（デューデリジェンス）で最初に問われる数字。
+          <strong>部門×業務×AI代替可能性のマトリクス</strong>がまだ存在しない。
+        </div>
+      </div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">3</div>
+      <div>
+        <div class="gap-title">浸透に濃淡がある</div>
+        <div class="gap-desc">
+          PJメンバー周辺の意識の高い層は動いているが、
+          <strong>全本部員の日常業務レベル</strong>への定着がまだ。
+          特に「怖い・使い方わからない・業務に合わない」という中間管理職の抵抗勢力への対処が未解決。
+        </div>
+      </div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">4</div>
+      <div>
+        <div class="gap-title">支援現場の効率化シナリオが未設計</div>
+        <div class="gap-desc">
+          正社員比率引き下げ（非正規化）とAIは直接連動しにくい（人員基準があるため）。
+          ただし<strong>「1正社員でより多くの非正規を管理できる」</strong>構造を作るアプローチが未整備。
+          記録・報告業務の自動化 → サービス管理責任者のケースロード数増加 という設計が必要。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📈</span> 現状の到達度マップ</div>
+    <div class="card">
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr style="background:var(--gray);">
+            <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border);">項目</th>
+            <th style="padding:10px 14px; text-align:center; border-bottom:2px solid var(--border);">状態</th>
+            <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border);">コメント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; font-weight:600;">ルール・ガイドライン整備</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--green); font-weight:700;">✓ 完了</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">基盤として機能している</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; font-weight:600;">研修・意識醸成</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--green); font-weight:700;">✓ 完了</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">継続運営中</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; font-weight:600;">Copilotトライアル展開</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--yellow); font-weight:700;">▶ 実施中</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">本部系は展開済、定着はこれから</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; font-weight:600;">KPI設計</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--green); font-weight:700;">✓ 完了</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">設計済み、実測値はまだ</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; font-weight:600;">業務棚卸し × AI代替マッピング</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--red); font-weight:700;">✗ 未着手</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">最優先で着手が必要</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; font-weight:600;">FTE削減シミュレーション</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--red); font-weight:700;">✗ 未着手</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">PE向け数字に必須</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px; font-weight:600;">支援現場 効率化シナリオ</td>
+            <td style="padding:10px 14px; text-align:center;"><span style="color:var(--red); font-weight:700;">✗ 未設計</span></td>
+            <td style="padding:10px 14px; color:var(--muted);">人員基準を考慮した別軸が必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- タブ4: 優先施策 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-actions">
+<div class="content">
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🚀</span> 今後の優先施策</div>
+
+    <!-- Priority A -->
+    <div class="priority-card">
+      <div class="priority-header a">
+        <span class="priority-tag a">優先度 A</span>
+        <span class="priority-label">2028年PE売却の試算根拠をつくる</span>
+      </div>
+      <div class="priority-body">
+        <p>これがなければPE向けストーリーが作れない。最初に着手すべき最重要テーマ。</p>
+        <ul class="action-list">
+          <li>本部各部門（マーケ / 人事 / システム / 経営企画）の業務を洗い出す</li>
+          <li>タスク単位でAI代替可能な工数を試算（時間 → % → FTE換算）</li>
+          <li>「AIがあれば〇人分の業務を〇人で回せる」シミュレーションモデルを作成</li>
+          <li>現状のCopilotトライアル実績からベースラインデータを収集</li>
+        </ul>
+        <div class="note-box">💡 アウトプット目標: 部門別FTE削減試算シート（Excelモデル） + PE向けエグゼクティブサマリー</div>
+      </div>
+    </div>
+
+    <!-- Priority B -->
+    <div class="priority-card">
+      <div class="priority-header b">
+        <span class="priority-tag b">優先度 B</span>
+        <span class="priority-label">全本部員の日常定着を加速する</span>
+      </div>
+      <div class="priority-body">
+        <p>「使っている人 / 使っていない人」の二極化を解消する。</p>
+        <ul class="action-list">
+          <li>「使わない理由」の部門別ヒアリング（怖い / 使い方不明 / 業務に合わないの3類型）</li>
+          <li>部門内チャンピオンの選定と権限付与・公式な推進役として可視化</li>
+          <li>A部門で効果の出たユースケースをB部門へ横展開するテンプレート化</li>
+          <li>月1回の「使ってみた事例共有会」（5分×3ケース程度）を定例化</li>
+        </ul>
+        <div class="note-box">💡 KPI: 本部員のCopilot週次アクティブ率（目標: 3ヶ月以内に60%超）</div>
+      </div>
+    </div>
+
+    <!-- Priority C -->
+    <div class="priority-card">
+      <div class="priority-header c">
+        <span class="priority-tag c">優先度 C</span>
+        <span class="priority-label">支援現場の別軸シナリオを設計する</span>
+      </div>
+      <div class="priority-body">
+        <p>人員基準のある支援現場は「削減」ではなく「1人あたり生産性の向上」がゴール。</p>
+        <ul class="action-list">
+          <li>記録・報告業務（支援記録・モニタリング記録等）のAI自動化検討</li>
+          <li>サービス管理責任者の事務工数削減 → ケースロード数増加のシミュレーション</li>
+          <li>「非正規スタッフへの指示・育成」にAIを活用し管理者の負担軽減</li>
+          <li>支援現場のROI指標を「人員削減数」ではなく「管理者1人あたりの担当数」に設定</li>
+        </ul>
+        <div class="note-box">💡 目標: サービス管理責任者1人が担当できる利用者数を現状比+20%</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- タブ5: ロードマップ -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-roadmap">
+<div class="content">
+
+  <div class="section">
+    <div class="section-title"><span class="icon">📅</span> 2028年PE売却逆算ロードマップ</div>
+    <div class="card" style="overflow-x:auto; padding: 32px 24px 40px;">
+      <div class="roadmap">
+
+        <div class="rm-phase">
+          <div class="rm-dot done">✓</div>
+          <div class="rm-year">〜2026上期</div>
+          <div class="rm-title">フェーズ1<br>基盤構築</div>
+          <ul class="rm-items">
+            <li class="done-item">AI利用ルール策定</li>
+            <li class="done-item">Copilotガイドライン</li>
+            <li class="done-item">研修・勉強会</li>
+            <li class="done-item">KPI設計</li>
+            <li class="done-item">トライアル展開</li>
+          </ul>
+        </div>
+
+        <div class="rm-phase">
+          <div class="rm-dot now">▶</div>
+          <div class="rm-year">2026下期</div>
+          <div class="rm-title">フェーズ2<br>成果創出</div>
+          <ul class="rm-items">
+            <li class="highlight">業務棚卸し×AI代替マッピング</li>
+            <li class="highlight">FTE削減試算モデル作成</li>
+            <li>定着支援（チャンピオン育成）</li>
+            <li>ユースケース横展開</li>
+          </ul>
+        </div>
+
+        <div class="rm-phase">
+          <div class="rm-dot next">○</div>
+          <div class="rm-year">2027上期</div>
+          <div class="rm-title">フェーズ3<br>削減実行</div>
+          <ul class="rm-items">
+            <li>本部人員最適化（第1波）</li>
+            <li>支援現場ケースロード増</li>
+            <li>実績データ蓄積</li>
+            <li>PE向けレポート作成開始</li>
+          </ul>
+        </div>
+
+        <div class="rm-phase">
+          <div class="rm-dot next">○</div>
+          <div class="rm-year">2027下期</div>
+          <div class="rm-title">フェーズ4<br>最適化・証明</div>
+          <ul class="rm-items">
+            <li>本部人員最適化（第2波）</li>
+            <li>AI活用率・ROI確定値</li>
+            <li>組織効率化の外部訴求</li>
+            <li>VDR資料準備</li>
+          </ul>
+        </div>
+
+        <div class="rm-phase">
+          <div class="rm-dot next">★</div>
+          <div class="rm-year">2028</div>
+          <div class="rm-title">PE売却<br>タイミング</div>
+          <ul class="rm-items">
+            <li class="highlight">EBITDA改善済み</li>
+            <li class="highlight">AI対応組織として訴求</li>
+            <li>FTE削減実績・試算提出</li>
+            <li>デューデリジェンス対応</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="icon">🧮</span> 最初にやるべきこと（今週〜来月）</div>
+    <div class="card">
+      <ol style="padding-left:20px; display:flex; flex-direction:column; gap:14px;">
+        <li style="font-size:14px;">
+          <strong>本部の業務一覧を部門ごとに書き出す</strong><br>
+          <span style="color:var(--muted);">「何をやっているか」ベースのヒアリングor自己申告シートを配布。工数（時間/週）も合わせて記録。</span>
+        </li>
+        <li style="font-size:14px;">
+          <strong>AI代替可能性の評価基準を決める</strong><br>
+          <span style="color:var(--muted);">「定型・反復・文書生成・調査・要約・データ集計」はAI代替高。基準を統一して評価する。</span>
+        </li>
+        <li style="font-size:14px;">
+          <strong>Copilotトライアルの利用実績を集計する</strong><br>
+          <span style="color:var(--muted);">管理者センター / 利用者アンケートから「使っている業務」「節約できた時間」を収集する。</span>
+        </li>
+        <li style="font-size:14px;">
+          <strong>試算モデルのフォーマットを作成する</strong><br>
+          <span style="color:var(--muted);">部門 × 業務 × AI代替率 × 工数 → FTE換算。Excelで作成し、経営企画と数値合意する。</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+
+tabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
