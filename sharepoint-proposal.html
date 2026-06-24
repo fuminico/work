@@ -247,8 +247,12 @@
     <div class="card-title">「グループの中にグループを入れる」設計（ネスト構造）</div>
     <p style="margin-bottom:10px">Entra IDでは、グループの中に別のグループを入れること（ネスト）ができます。<br>例：「職員全体」グループの中に「専任職員」「派遣職員」「職卓職員」の3グループを入れる。</p>
     <p><strong>これにより何が便利になるか：</strong><br>
-    「全職員向け」のお知らせを出したいとき、専任・派遣・職卓の3グループをバラバラに指定する必要がなく、<code>MAU_職員_全体</code> を一つ指定するだけで全員に届きます。<br>
-    逆に「専任職員だけ」のお知らせは <code>MAU_職員_専任</code> を指定すれば、派遣・職卓には届きません。</p>
+    SharePointサイトのアクセス権限（誰がそのサイトを閲覧できるか）を、グループ単位でまとめて管理できます。<br>
+    例：「職員専用ページ」を作る場合は <code>MAU_職員_全体</code> グループに閲覧権限を付与するだけで、全種別の職員がアクセスできます。</p>
+    <p style="margin-top:8px;padding:8px 10px;background:#fffbe6;border-radius:4px;border-left:3px solid #f59e0b;font-size:13px">
+      <strong>💡 お知らせの宛先制御について（方針確定）：</strong><br>
+      グループを使った細かい受信者指定ではなく、<strong>フラットに全体発信＋タグ付けで対象を示す運用</strong>に決定しました。投稿者が「対象：全教職員」「対象：職員のみ」などのタグを付けて投稿し、閲覧者が自分に関係するお知らせをタグで絞り込みます。Entra IDグループはサイト・ページのアクセス制御（閲覧権限の管理）に活用します。
+    </p>
   </div>
 
   <!-- ビジュアル階層図 -->
@@ -420,7 +424,7 @@
   <table>
     <tr><th>役割</th><th>対象者</th><th>できること</th></tr>
     <tr><td>サイト管理者</td><td>情報管理担当</td><td>サイト全体の管理・設定変更</td></tr>
-    <tr><td>投稿者</td><td>各部署の担当者</td><td>お知らせ・ドキュメントの投稿・編集</td></tr>
+    <tr><td>投稿者</td><td><strong>全教職員</strong>（誰でも投稿可能。Garoonと同様の運用）</td><td>お知らせ・ドキュメントの投稿・編集。投稿時に対象タグを付与する</td></tr>
     <tr><td>閲覧者（教職員）</td><td>全教職員</td><td>閲覧のみ</td></tr>
     <tr><td>（将来）学生</td><td>公開コンテンツのみ対象</td><td>閲覧のみ</td></tr>
   </table>
@@ -436,12 +440,12 @@
     <tr><th>Garoonの機能</th><th>SharePointでの代替方法</th><th>優先度</th></tr>
     <tr>
       <td>掲示板・回覧板（全学向け）</td>
-      <td>SharePointニュース機能（見やすくレイアウトできる）</td>
+      <td>SharePointニュース機能。<strong>誰でも投稿可能</strong>。フラット発信＋投稿時に対象タグ（例：「全教職員」「職員のみ」等）を付与する運用</td>
       <td><span class="badge b-red">優先対応</span></td>
     </tr>
     <tr>
       <td>掲示板（職員向け）</td>
-      <td>SharePointニュース（表示対象を職員グループに限定）</td>
+      <td>SharePointニュースで同一サイトにフラット発信。職員向け投稿は「対象：職員」タグで区別。アクセス制御は<code>MAU_職員_全体</code>グループで対応</td>
       <td><span class="badge b-red">優先対応</span></td>
     </tr>
     <tr>
@@ -700,11 +704,16 @@
       <span>候補部署あり（後日確定・連絡いただく予定）。</span>
     </div>
   </div>
-  <div class="q-item">
-    <div class="q-num">3</div>
+  <div class="q-item" style="border-color:#27ae60">
+    <div class="q-num" style="background:#27ae60">✅</div>
     <div class="q-body">
       <strong>お知らせ・回覧の投稿者と受信者をどのように設定するか</strong>
-      <span>現在のGaroonは誰でも投稿可能。受信者も「特定の部署」「指定した10名」など細かく設定している運用がある。SharePointでの受信者制御の設計（Entra IDグループ設計）について次回以降に具体案をご提示します。</span>
+      <span style="color:#27ae60;font-weight:600">→ 方針確定：</span>
+      <ul style="margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.8">
+        <li><strong>投稿者：</strong>Garoonと同様に<strong>誰でも投稿できる</strong>形にする（投稿権限を特定の担当者に絞らない）</li>
+        <li><strong>受信者（公開対象）：</strong>Entra IDグループでできる範囲で公開先を制御する</li>
+        <li><strong>運用方針：</strong>基本は<strong>フラットに全体発信</strong>し、投稿時に「対象：全教職員」「対象：職員のみ」などの<strong>タグ付けで誰向けのアナウンスかを示す</strong>。閲覧者が自分に関係するお知らせをタグで絞り込める形にする</li>
+      </ul>
     </div>
   </div>
   <div class="q-item" style="border-color:#27ae60">
