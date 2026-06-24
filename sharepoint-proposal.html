@@ -545,17 +545,27 @@
       <td>M365ライセンスに含まれる（追加費用なし）</td>
       <td><span style="color:var(--accent);font-weight:600">△ 複雑なフローの再現が困難</span></td>
     </tr>
-    <tr>
-      <td><strong>ネクストセット・ワークフロー<br>for Microsoft 365</strong></td>
+    <tr style="background:#fde8e8">
+      <td><strong>ネクストセット・ワークフロー<br>for Microsoft 365</strong><br><span style="color:#c0392b;font-weight:700;font-size:12px">【廃案】</span></td>
       <td>Garoonに近い操作感。現場担当者が自分で設定・運用できる</td>
-      <td>別途ライセンス費用（下記参照）</td>
-      <td><span style="color:var(--green);font-weight:600">✅ 申請・承認フロー・Teams通知など機能が充実</span></td>
+      <td style="color:#c0392b"><strong>課金対象がテナント全体（約6,400名）となる可能性があり、最大約760万円/年のリスク。費用面で断念。</strong></td>
+      <td><span style="color:#c0392b;font-weight:600">❌ コスト問題により廃案</span></td>
+    </tr>
+    <tr style="background:#f3e8ff">
+      <td><strong>Canbus.（キャンバス）</strong><br><small>by 株式会社システナ</small><br><span style="color:#7c3aed;font-weight:700;font-size:12px">【新候補】</span></td>
+      <td>ノーコードでフロー図式化。ドラッグ＆ドロップで申請書・承認ルートを作成できる</td>
+      <td><strong>月額5万円〜・ユーザー数無制限</strong>（レコード数・容量に応じた課金）</td>
+      <td><span style="color:#7c3aed;font-weight:600">✅ 申請・承認・電子印鑑・承認履歴が標準搭載。詳細は<a href="./workflow-comparison.html" target="_blank">ワークフロー比較資料</a>を参照</span></td>
     </tr>
   </table>
 
-  <h3 style="margin-top:24px">ネクストセット社 ライセンス費用</h3>
+  <h3 style="margin-top:24px">ネクストセット社 ライセンス費用 <span style="font-size:13px;color:#c0392b;font-weight:700">（参考：廃案理由の根拠）</span></h3>
+  <div class="card" style="margin-bottom:16px;border-left:4px solid #c0392b;background:#fde8e8">
+    <div class="card-title" style="color:#c0392b">廃案の理由</div>
+    <p>メーカーに確認した結果、<strong>課金対象はSharePoint/Teamsライセンスを保有するテナント全体のユーザー</strong>となることが判明。武蔵野美術大学のアクティブユーザーは5,000名以上（学生含む）であり、最大約760万円/年のコストが発生するリスクがあるため断念。以下は参考情報として残しています。</p>
+  </div>
   <div class="card primary" style="margin-bottom:16px">
-    <div class="card-title">ライセンス体系の概要（税抜）</div>
+    <div class="card-title">ライセンス体系の概要（税抜・参考）</div>
     <p>「アドオン」単位でライセンスを購入します。ワークフローのみ導入する場合は <strong>1アドオン = 100円/月/ユーザー（教育機関向け定価）</strong> となります。民間企業向けは200円/月。武蔵野美術大学への正式見積は <strong>90円/月/ユーザー</strong>（1,080円/年）です。</p>
   </div>
   <table>
@@ -644,16 +654,21 @@
   <p style="font-size:12px;color:var(--muted)">※ 課金対象はテナント内のSharePoint/Teamsライセンス保有者数のため、対象範囲（学生を含むか否か）を確定した上でNextset社に最終見積を依頼する必要があります。</p>
 
   <div class="card green" style="margin-top:16px">
-    <div class="card-title">推奨案</div>
-    <p>操作性と現場への定着を重視するなら、ネクストセット・ワークフロー for Microsoft 365 の導入をお勧めします。<br>
-    まず <strong>Garoon上の約100個のワークフローの一覧を大学側で整理</strong> し、対象ユーザー数・優先順位を確認した上で正式見積もりに進む流れが現実的です。</p>
+    <div class="card-title">推奨案（更新：2026-06-23）</div>
+    <p>Nextsetはコスト問題（最大760万円/年）により廃案となりました。代替として<strong>Canbus.（キャンバス）</strong>を新候補として検討中です。</p>
+    <ul style="padding-left:18px;margin-top:8px;font-size:13px">
+      <li><strong>月額5万円〜・ユーザー数無制限</strong>で学生を含むテナント全体に適用可能</li>
+      <li>ノーコードで申請書・承認ルートをフロービルダーで図式化できる</li>
+      <li>電子印鑑・承認履歴が標準搭載（Garoonの操作感に近い）</li>
+    </ul>
+    <p style="margin-top:8px">引き続き <strong>Garoon上の約100個のワークフローの一覧を大学側で整理</strong>し、月間申請件数・履歴保持年数を確認した上でCanbus.の導入規模を試算します。詳細は<a href="./workflow-comparison.html" target="_blank" style="color:#fff;font-weight:700;text-decoration:underline">ワークフロー比較資料</a>を参照してください。</p>
   </div>
 
   <h3 style="margin-top:24px">移行の流れ（段階的）</h3>
   <table>
     <tr><th>ステップ</th><th>内容</th><th>担当</th></tr>
     <tr><td>Step 1</td><td>約100個のワークフローを一覧化。種類・申請頻度・承認者・対象ユーザーを整理する</td><td>大学側</td></tr>
-    <tr><td>Step 2</td><td>ツール選定・正式見積もり依頼（ネクストセット社等）</td><td>三井田</td></tr>
+    <tr><td>Step 2</td><td>ツール選定・正式見積もり依頼（<strong>Canbus.</strong> ／ 月間申請件数・履歴保持年数のヒアリング後に試算）</td><td>三井田</td></tr>
     <tr><td>Step 3</td><td>優先度の高いフローから順にアドオンで実装・テスト</td><td>三井田＋大学側</td></tr>
     <tr><td>Step 4</td><td>全フロー移行完了をもってGaroonのワークフロー機能を停止</td><td>大学側</td></tr>
   </table>
@@ -699,11 +714,12 @@
       <span style="color:#27ae60;font-weight:600">→ 確認済み（2026-06-11）：新しいコンテンツから始め、各部署が責任を持って挙げ直す方針で合意。過去文書の移行は各部署の判断で進める。</span>
     </div>
   </div>
-  <div class="q-item">
-    <div class="q-num">5</div>
+  <div class="q-item" style="border-color:var(--accent)">
+    <div class="q-num" style="background:var(--accent)">更</div>
     <div class="q-body">
       <strong>ワークフロー（申請フロー）の移行をどのように進めるか</strong>
-      <span>アドオン導入に前向きいただいています。次回以降に費用感・導入規模の説明を行います。</span>
+      <span style="color:#c0392b;font-weight:600">【更新 2026-06-23】Nextsetはテナント全体課金（最大約760万円/年）が判明し廃案。</span>
+      <span>代替として<strong>Canbus.（月5万円〜・ユーザー数無制限）</strong>を新候補として提案予定。月間申請件数・履歴保持年数のヒアリング後に試算を行い、次回定例で説明します。詳細は<a href="./workflow-comparison.html" target="_blank">ワークフロー比較資料</a>を参照。</span>
     </div>
   </div>
   <div class="q-item" style="border-color:var(--accent)">
