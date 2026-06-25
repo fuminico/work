@@ -216,6 +216,56 @@
   }
   .action-item::before { content: '□'; position: absolute; left: 0; font-size: 11px; top: 5px; color: #9ca3af; }
 
+  /* ── 決定・その他 ── */
+  .summary {
+    max-width: 860px;
+    margin: 16px auto 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .summary-header {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .summary-header.decided { background: #1a7a3c; }
+  .summary-header.tasks   { background: #1e3a5f; }
+  .summary-header.other   { background: #6b7280; }
+  .summary-body {
+    padding: 14px 20px;
+  }
+  .summary-item {
+    font-size: 13px;
+    padding: 5px 0 5px 18px;
+    position: relative;
+    color: #374151;
+    line-height: 1.5;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .summary-item:last-child { border-bottom: none; }
+  .summary-item.check::before  { content: '✅'; position: absolute; left: 0; font-size: 11px; top: 6px; }
+  .summary-item.task::before   { content: '□'; position: absolute; left: 0; font-size: 11px; top: 6px; color: #9ca3af; }
+  .summary-item.note::before   { content: '▸'; position: absolute; left: 0; font-size: 11px; top: 6px; color: #9ca3af; }
+  .summary-tasks-body {
+    padding: 14px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 540px) { .summary-tasks-body { grid-template-columns: 1fr; } }
+  .summary-col-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: .06em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
   /* ── 参考資料 ── */
   .ref {
     max-width: 860px;
@@ -347,21 +397,37 @@
 
 </div><!-- /blocks -->
 
-<!-- 次回アクション -->
-<div class="actions">
-  <div class="actions-header">📋 次回までのアクション</div>
-  <div class="actions-body">
+<!-- 決定したこと -->
+<div class="summary">
+  <div class="summary-header decided">✅ 本日決定したこと</div>
+  <div class="summary-body">
+    <div class="summary-item check">（文字起こし確認後に記入します）</div>
+  </div>
+</div>
+
+<!-- 次回以降のタスク -->
+<div class="summary">
+  <div class="summary-header tasks">📋 次回以降やるべきこと</div>
+  <div class="summary-tasks-body">
     <div>
-      <div class="action-col-title">大学側</div>
-      <div class="action-item">テストアカウントのログインができるようご対応をお願いします</div>
-      <div class="action-item">Garoonで現在使用しているワークフロー一覧のご共有をお願いします</div>
-      <div class="action-item">対象ユーザーターゲティングの運用方針についてご確認ください</div>
+      <div class="summary-col-title">大学側</div>
+      <div class="summary-item task">テストアカウントのログインができるようご対応をお願いします</div>
+      <div class="summary-item task">Garoonで現在使用しているワークフロー一覧のご共有をお願いします</div>
+      <div class="summary-item task">対象ユーザーターゲティングの運用方針についてご確認ください</div>
     </div>
     <div>
-      <div class="action-col-title">三井田</div>
-      <div class="action-item">M365テナントにログインして現在の利用状況を確認します</div>
-      <div class="action-item">ワークフロー一覧をもとにCanbus. プラン選定・費用試算をご報告します</div>
+      <div class="summary-col-title">三井田</div>
+      <div class="summary-item task">M365テナントにログインして現在の利用状況を確認します</div>
+      <div class="summary-item task">ワークフロー一覧をもとにCanbus. プラン選定・費用試算をご報告します</div>
     </div>
+  </div>
+</div>
+
+<!-- その他 -->
+<div class="summary">
+  <div class="summary-header other">📝 その他</div>
+  <div class="summary-body">
+    <div class="summary-item note">（文字起こし確認後に記入します）</div>
   </div>
 </div>
 
