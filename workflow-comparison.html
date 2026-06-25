@@ -1115,19 +1115,24 @@
     </tr>
   </table>
 
-  <h3>📋 導入前ヒアリング項目（Canbus. 検討に必要）</h3>
+  <h3>📋 試算に必要な情報</h3>
   <div class="card" style="border-left:4px solid var(--cb-purple);background:var(--cb-light)">
-    <p style="font-size:13px;margin-bottom:10px">Standardプラン（月5万円・上限10,000レコード）で継続運用できるかを判断するために、以下2点を大学側（井上さん）に確認が必要です。</p>
-    <ol style="padding-left:18px;font-size:13px;line-height:2">
-      <li>
-        <strong>月間の申請件数（履歴発生数）は何件くらいか？</strong><br>
-        <span style="color:#555;font-size:12px">Garoon上のワークフロー申請件数の実績（直近1年間の月平均）を確認する。</span>
-      </li>
-      <li>
-        <strong>履歴をどのくらいの期間保持したいか？</strong><br>
-        <span style="color:#555;font-size:12px">何年分を常時参照できる状態にしておく必要があるか（監査・法定保存年限の要件も含めて確認）。</span>
-      </li>
-    </ol>
+    <p style="font-size:13px;margin-bottom:10px">Standardプラン（月5万円・上限10,000レコード）で継続運用できるかを判断するための情報収集方法です。</p>
+    <table style="font-size:13px">
+      <tr><th style="width:40%">確認事項</th><th>確認方法</th></tr>
+      <tr>
+        <td><strong>Garoonのワークフロー一覧・月間申請件数</strong></td>
+        <td>Garoonにはテストアカウントでアクセスできないため、<strong>大学側（井上さん）に一覧を提供していただく</strong>（種類・件数・申請頻度）</td>
+      </tr>
+      <tr>
+        <td><strong>履歴をどのくらいの期間保持したいか</strong></td>
+        <td>監査・法定保存年限の要件を踏まえ、<strong>大学側に確認が必要</strong>（何年分を常時参照できる状態にしておくか）</td>
+      </tr>
+      <tr>
+        <td><strong>M365テナントの現在の利用状況</strong></td>
+        <td>テストアカウントを使って<strong>三井田が直接テナント内を確認</strong>する（アカウント問題が解消次第）</td>
+      </tr>
+    </table>
   </div>
 
   <h3>🧮 レコード保持期間 試算表（Standardプラン：上限10,000件）</h3>
