@@ -432,7 +432,16 @@
   <h3 style="margin-top:28px">お知らせのタグ付け方法：3つの選択肢</h3>
   <p style="font-size:13px;color:var(--muted);margin-bottom:12px">投稿はフラットに全体発信し、「誰向けか」を示すタグを付ける運用を予定。SharePoint ニュースでタグに相当する機能は以下の3通りがあります。</p>
 
-  <table>
+  <div style="overflow-x:auto">
+  <table style="min-width:720px">
+    <colgroup>
+      <col style="width:160px">
+      <col>
+      <col style="width:200px">
+      <col style="width:200px">
+      <col style="width:110px">
+      <col style="width:72px">
+    </colgroup>
     <tr>
       <th>方法</th>
       <th>仕組み</th>
@@ -442,37 +451,38 @@
       <th>追加費用</th>
     </tr>
     <tr style="background:#e8f5e9">
-      <td>
-        <strong>① 対象ユーザー<br>ターゲティング</strong><br>
+      <td style="white-space:nowrap">
+        <strong>① 対象ユーザーターゲティング</strong><br>
         <span style="color:#2e7d32;font-size:11px;font-weight:700">★ 推奨</span>
       </td>
       <td style="font-size:12px">SharePoint ニュース Web パーツの組み込み機能。記事に Entra ID グループを「対象」として紐付ける</td>
       <td style="font-size:12px">投稿画面で対象グループを選択（例：<code>MAU_職員_全体</code>）</td>
       <td style="font-size:12px">全員が閲覧可能。対象グループのメンバーには<strong>ニュースフィードの上位に優先表示</strong>される</td>
-      <td style="font-size:12px">低<br>（2ステップで有効化）</td>
+      <td style="font-size:12px">低（2ステップで有効化）</td>
       <td style="font-size:12px;text-align:center">なし</td>
     </tr>
     <tr>
-      <td>
-        <strong>② カスタム列<br>（メタデータ）</strong>
+      <td style="white-space:nowrap">
+        <strong>② カスタム列（メタデータ）</strong>
       </td>
       <td style="font-size:12px">Site Pages ライブラリに「対象」選択肢列を追加。ニュース Web パーツのフィルターと連動させる</td>
       <td style="font-size:12px">投稿作成時に「対象」列から選択（例：全教職員 / 職員のみ / 教員のみ）</td>
       <td style="font-size:12px">ニュース一覧画面で「対象」を選んで絞り込み表示できる</td>
-      <td style="font-size:12px">中<br>（列追加・Web パーツ設定）</td>
+      <td style="font-size:12px">中（列追加・Web パーツ設定）</td>
       <td style="font-size:12px;text-align:center">なし</td>
     </tr>
     <tr>
-      <td>
+      <td style="white-space:nowrap">
         <strong>③ カテゴリ機能</strong>
       </td>
       <td style="font-size:12px">ニュース投稿に標準搭載されているカテゴリフィールドに自由テキストで分類名を入力する</td>
       <td style="font-size:12px">投稿画面のカテゴリ欄に入力（例：「全教職員向け」「事務局」）</td>
       <td style="font-size:12px">カテゴリ名でフィルタリング可能。ただし表記ゆれが起きやすい</td>
-      <td style="font-size:12px">ほぼゼロ<br>（追加設定不要）</td>
+      <td style="font-size:12px">ほぼゼロ（追加設定不要）</td>
       <td style="font-size:12px;text-align:center">なし</td>
     </tr>
   </table>
+  </div>
 
   <div class="card" style="margin-top:14px;border-left:4px solid #2e7d32;background:#e8f5e9">
     <div class="card-title" style="color:#1b5e20">推奨：① 対象ユーザーターゲティング</div>
