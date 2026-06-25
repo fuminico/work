@@ -320,7 +320,7 @@
     <a class="nav-item" onclick="showPage('knowledge')">
       <span class="nav-icon">🗂</span>ナレッジベース
     </a>
-    <div class="nav-section">提案書（6/11〜 作成済み）</div>
+    <div class="nav-section">提案書・資料</div>
     <a class="nav-item" onclick="showPage('sp-draft')">
       <span class="nav-icon">🏗</span>SharePoint設計 概要
     </a>
@@ -340,6 +340,9 @@
     <a class="nav-item" onclick="showPage('meetings')">
       <span class="nav-icon">📋</span>定例記録
     </a>
+    <a class="nav-item" href="agenda.html" target="_blank" style="color:rgba(255,255,255,0.7);font-size:12px;padding-left:26px">
+      <span class="nav-icon" style="opacity:0.7">↗</span>今週のアジェンダ（7/1）
+    </a>
     <div class="nav-section">進捗管理</div>
     <a class="nav-item" onclick="showPage('planning')">
       <span class="nav-icon">✅</span>タスク・プラン
@@ -358,7 +361,7 @@
       <span class="nav-icon">🔐</span>セキュリティポリシー
     </a>
   </nav>
-  <div id="sidebar-footer">最終更新: 2026-06-12</div>
+  <div id="sidebar-footer">最終更新: 2026-06-25</div>
 </div>
 
 <!-- ── メインコンテンツ ── -->
@@ -371,13 +374,13 @@
   <div class="page-header">
     <div class="badge">QUICK START</div>
     <h2>⚡ キャッチアップサマリー</h2>
-    <div class="meta">最終更新: 2026-06-12 ／ 6/11定例（第2回）完了後の現状</div>
+    <div class="meta">最終更新: 2026-06-25 ／ 6/25定例（第4回）完了後の現状</div>
   </div>
 
   <div class="callout success">
-    <strong>6/11定例（第2回）の結果:</strong><br>
-    SharePoint統合イントラサイト方針・Teams利用整備方針の<strong>両ドラフトが承認済み</strong>。<br>
-    6/18定例に向けて ① ワークフローアドイン費用感 ② Entra IDグループ細かい設計案 の2点を資料整備済み。
+    <strong>6/25定例（第4回）の結果:</strong><br>
+    ワークフロー移行先を<strong>Nextset → Canbus.（キャンバス）に変更</strong>（ユーザー数無制限・月5万円〜）。<br>
+    SharePointニュース＋EntraIDグループ紐づけによるお知らせ優先表示方針を確定。テストアカウントでテナントにログイン可と確認。
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0">
@@ -387,20 +390,25 @@
       <div style="font-size:12px;color:var(--text-muted);margin-top:4px">設計方針・Entra IDグループ設計・ワークフロー・費用 ↗ 別タブで開く</div>
     </a>
     <a href="workflow-comparison.html" target="_blank" style="display:block;background:#e8f8f0;border:2px solid var(--confirmed);border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text);margin-bottom:10px">
-      <div style="font-size:11px;font-weight:700;color:var(--confirmed);margin-bottom:4px">比較資料（新規作成）</div>
-      <div style="font-size:14px;font-weight:700">⚡ ワークフロー比較 — Power Automate vs Nextset</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">UIモックアップ付き・費用試算・推奨案 ↗ 別タブで開く</div>
+      <div style="font-size:11px;font-weight:700;color:var(--confirmed);margin-bottom:4px">比較資料（更新済み）</div>
+      <div style="font-size:14px;font-weight:700">⚡ ワークフロー比較 — Canbus.（新候補）vs Power Automate</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Nextset廃案・Canbus.費用試算含む ↗ 別タブで開く</div>
     </a>
     <a href="entra-id-org-design.html" target="_blank" style="display:block;background:#f3eafa;border:2px solid #7b3fa0;border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text)">
-      <div style="font-size:11px;font-weight:700;color:#7b3fa0;margin-bottom:4px">6/18定例 フォローアップ資料（NEW）</div>
+      <div style="font-size:11px;font-weight:700;color:#7b3fa0;margin-bottom:4px">設計資料</div>
       <div style="font-size:14px;font-weight:700">🔄 Entra ID 組織構造設計 — 階層・兼務の実現可否</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:4px">ガルーン比較・兼務設定方法・推奨設計案 ↗ 別タブで開く</div>
     </a>
+    <a href="agenda.html" target="_blank" style="display:block;background:#fff7ed;border:2px solid #c2410c;border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text)">
+      <div style="font-size:11px;font-weight:700;color:#c2410c;margin-bottom:4px">今週の定例（7/1）</div>
+      <div style="font-size:14px;font-weight:700">📄 定例アジェンダ — 2026年7月1日（水）</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">テナント確認結果・Canbus.試算・7/8本部会議準備 ↗ 別タブで開く</div>
+    </a>
   </div>
 
-  <div class="callout danger" style="margin-top:16px">
-    <strong>プロジェクトの現在地（6/12時点）:</strong><br>
-    「方向性合意フェーズ完了。6/18定例でワークフローとEntra IDグループ設計の方針を確定し、7月の実装フェーズへ移行する段階」
+  <div class="callout warn" style="margin-top:16px">
+    <strong>プロジェクトの現在地（6/25時点）:</strong><br>
+    「方向性確定フェーズ完了。7月はテナント実装フェーズへ。Garoonワークフロー一覧を受領次第Canbus.費用試算を確定し、7/8情報化戦略本部会議でSharePoint方針を報告する段階」
   </div>
 
   <div class="section">
@@ -451,7 +459,7 @@ Teams ─────────── 現状維持しつつルール整備</di
   </div>
 
   <div class="section">
-    <h3>確認できていること / まだ答えが出ていないこと（6/12時点）</h3>
+    <h3>確認できていること / まだ答えが出ていないこと（6/25時点）</h3>
     <table>
       <tr><th>項目</th><th>状況</th><th>内容</th></tr>
       <tr><td>ライセンス</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>全員 A3（一部 A1 混在）</td></tr>
@@ -460,12 +468,14 @@ Teams ─────────── 現状維持しつつルール整備</di
       <tr><td>M365テナント名</td><td><span class="badge-confirmed">✅ 確認済</span></td><td><strong>musabiac.onmicrosoft.com</strong></td></tr>
       <tr><td>MFA</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>職員のみ適用。<strong>教員は未適用</strong>。VPN接続はMFA適用済み</td></tr>
       <tr><td>SharePoint 方向性</td><td><span class="badge-confirmed">✅ 6/11 合意済</span></td><td>統合イントラサイト（コミュニケーションサイト）方式で進める。パイロット部署は先方から連絡待ち。</td></tr>
+      <tr><td>お知らせ配信方針</td><td><span class="badge-confirmed">✅ 6/25 確定</span></td><td>SharePointニュース＋EntraIDグループ紐づけで優先表示する方針で確定。</td></tr>
       <tr><td>Teams 方向性</td><td><span class="badge-confirmed">✅ 6/11 合意済</span></td><td>「方向性すごくいい」と評価。Phase1（新規ルール整備）から着手。</td></tr>
       <tr><td>Copilot</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>使用許可済み。ただし機密情報・要配慮個人情報の入力禁止</td></tr>
-      <tr><td>ワークフローアドイン</td><td><span class="badge-pending">🔲 費用提示待ち</span></td><td>Nextset: 1アドオン200円/月/ユーザー（税抜）。職員〜600名で年約158万円。6/18で方針確認予定。</td></tr>
-      <tr><td>Entra IDグループ設計</td><td><span class="badge-pending">🔲 6/18で合意予定</span></td><td>5層設計案（ドラフト）作成済み。6/18定例で大学側に提示・合意取り付け予定。</td></tr>
-      <tr><td>パイロット部署</td><td><span class="badge-pending">🔲 先方から連絡待ち</span></td><td>キャリア系部署が候補。未確定。</td></tr>
-      <tr><td>X-point後継</td><td><span class="badge-info">ℹ️ 方針整理済み</span></td><td>2026年度末で契約終了。GaroonのWF（約100件）移行先としてNextset（年158万円〜）を提案予定。</td></tr>
+      <tr><td>テストアカウント</td><td><span class="badge-confirmed">✅ 6/25 確認</span></td><td>教務システムログイン不要。M365ゲストアカウントで直接テナントにログイン可。</td></tr>
+      <tr><td>ワークフローアドイン</td><td><span class="badge-pending">🔲 試算待ち</span></td><td>Nextset不採用（ユーザー数課金で月50万超）→ <strong>Canbus.（ユーザー数無制限・月5万円〜）</strong>を検討中。Garoon一覧受領後に費用試算予定。</td></tr>
+      <tr><td>Garoonワークフロー一覧</td><td><span class="badge-pending">🔲 受領待ち</span></td><td>ワークフロー名・月間件数の一覧を大学側に依頼中。Canbus.費用試算の前提として必要。</td></tr>
+      <tr><td>Entra IDグループ設計</td><td><span class="badge-pending">🔲 実装待ち</span></td><td>5層設計案（ドラフト）確認済み。テナント実環境を確認の上、実装フェーズへ。</td></tr>
+      <tr><td>X-point後継</td><td><span class="badge-info">ℹ️ 方針整理済み</span></td><td>2026年度末で契約終了。GaroonのWF（約100件）移行先としてCanbus.を検討中（費用試算後に確定）。</td></tr>
     </table>
   </div>
 
@@ -493,72 +503,69 @@ Teams ─────────── 現状維持しつつルール整備</di
   </div>
 
   <div class="section">
-    <h3>6/18 定例MTGの確認・提示事項</h3>
+    <h3>7/1 定例MTGの確認事項（次回）</h3>
     <ul class="checklist">
       <li class="must">
-        <span class="check-icon">🔴</span>
+        <span class="check-icon">🔵</span>
         <div class="check-content">
-          <div class="check-title">ワークフローアドイン費用感の提示 → 導入可否の方針確認 <span class="badge-danger">三井田から提示</span></div>
-          <div class="check-memo">Nextset: 1アドオン200円/月/ユーザー。職員＋常勤教員〜600名で年約158万円（推奨）。比較資料は workflow-comparison.html に整備済み。</div>
+          <div class="check-title">テストアカウントでのテナント確認結果の共有 <span class="badge-info">三井田から報告</span></div>
+          <div class="check-memo">M365ゲストアカウントでテナントにログインし、EntraIDグループ現状・SharePoint設計への影響を確認した結果を報告する。</div>
         </div>
       </li>
       <li class="must">
-        <span class="check-icon">🔴</span>
+        <span class="check-icon">🔵</span>
         <div class="check-content">
-          <div class="check-title">Entra IDグループ細かい設計案の提示 → 合意取り付け <span class="badge-danger">三井田から提示</span></div>
-          <div class="check-memo">5層設計（MAU_全教職員→職員全体/教員全体→部署グループ）。sharepoint-proposal.html の設計方針タブに整備済み。大学側に①職員区分定義・人数 ②部署一覧 ③ユーザーCSV の提供を依頼する。</div>
+          <div class="check-title">Garoonワークフロー一覧の受領確認 <span class="badge-pending">大学側アクション</span></div>
+          <div class="check-memo">ワークフロー名・月間申請件数の一覧を受領できたか確認。受領次第、Canbus.の費用試算を実施。</div>
         </div>
       </li>
       <li class="unchecked">
         <span class="check-icon">🟡</span>
         <div class="check-content">
-          <div class="check-title">パイロット部署の確定（先方から連絡を受ける）</div>
-          <div class="check-memo">6/11定例でキャリア系部署が候補として挙がった。大学側から連絡待ち。</div>
+          <div class="check-title">Canbus.費用試算の報告（Garoon一覧受領後）<span class="badge-info">三井田から報告</span></div>
+          <div class="check-memo">ワークフロー数・種類に応じてCanbus.のプラン・月額費用の見通しを提示する。</div>
         </div>
       </li>
       <li class="unchecked">
         <span class="check-icon">🟡</span>
         <div class="check-content">
-          <div class="check-title">インシデント対応マニュアル レビュー（時田氏から受領後）</div>
-          <div class="check-memo">時田氏が6月中旬までに整備完了予定。定例でレビュー・フィードバックを提供する。</div>
-        </div>
-      </li>
-      <li class="unchecked">
-        <span class="check-icon">🟡</span>
-        <div class="check-content">
-          <div class="check-title">SharePointのオーディエンスターゲティング制約の共有</div>
-          <div class="check-memo">「特定10名への個人指定配信」はSharePointでは対応不可。Teams通知・メールで代替する方針を合意する必要あり。</div>
+          <div class="check-title">情報化戦略本部会議（7/8）の準備・役割分担確認</div>
+          <div class="check-memo">7月8日の本部会議でM365パートの内容・範囲と、時田氏との役割分担を合意する。</div>
         </div>
       </li>
     </ul>
   </div>
 
   <div class="section">
-    <h3>役割分担（6/11定例後・確定状況）</h3>
+    <h3>役割分担（6/25定例後・現在の状況）</h3>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
       <div class="card success">
         <div class="card-title">時田氏（デジタルアーク）</div>
         <ul class="normal">
           <li>セキュリティポリシー全体の策定</li>
-          <li>情報セキュリティ対策基準（6月中旬完成予定）</li>
+          <li>情報セキュリティ対策基準（策定済み・コメントシート送付中）</li>
           <li>インシデント対応マニュアル整備</li>
-          <li>セキュリティ設定の方針決定</li>
+          <li>7/8 本部会議のセキュリティパート担当</li>
         </ul>
       </div>
       <div class="card info">
-        <div class="card-title">三井田が担う（確定）</div>
+        <div class="card-title">三井田が担う（7月〜）</div>
         <ul class="normal">
-          <li>SharePointサイト設計・構築（ゼロから）← <strong>方向性合意済み</strong></li>
-          <li>Teamsガバナンス整備 ← <strong>方向性合意済み</strong></li>
-          <li>Entra IDグループ設計・実装 ← <strong>三井田が主導</strong></li>
-          <li>ワークフローアドイン提案・費用説明 ← <strong>資料整備済み</strong></li>
-          <li>ユーザー向けマニュアル作成（7〜8月）</li>
+          <li>テストアカウントでのテナント確認 ← <strong>7/1報告予定</strong></li>
+          <li>Canbus.費用試算・プラン確定 ← <strong>Garoon一覧受領後</strong></li>
+          <li>Entra IDグループ 実装フェーズ ← <strong>7月着手</strong></li>
+          <li>SharePointサイト設計・構築（本実装）← <strong>7〜8月</strong></li>
+          <li>7/8 本部会議のM365パート担当</li>
         </ul>
       </div>
     </div>
-    <div class="card success" style="margin-top:12px">
-      <div class="card-title">✅ 分担ライン確定（6/11定例）</div>
-      <p>Entra IDグループ設計は三井田が主導。SharePoint設計・Teamsルール整備の方向性も合意済み。時田氏はセキュリティポリシー専任。</p>
+    <div class="card warn" style="margin-top:12px">
+      <div class="card-title">📋 7月の最優先アクション</div>
+      <ul class="normal">
+        <li>大学側：Garoonワークフロー一覧（名称・月間件数）の提供</li>
+        <li>三井田：テナント確認結果の共有 → Canbus.費用試算 → Entra IDグループ実装</li>
+        <li>双方：7/8 情報化戦略本部会議に向けた資料準備・役割分担</li>
+      </ul>
     </div>
   </div>
 </div><!-- /page-catchup -->
@@ -1471,16 +1478,27 @@ Teams ─────────── 現状維持しつつルール整備</di
         <div class="tl-body">ベンダー間MTG（時田氏・畠中氏）。既存資料・セキュリティポリシー・Entra ID設定を確認。</div>
       </div>
 
-      <div class="tl-item now">
-        <div class="tl-date">2026年6月 ← 現在</div>
-        <div class="tl-title">▶ 現状把握・方針確定フェーズ</div>
+      <div class="tl-item done">
+        <div class="tl-date">2026年6月</div>
+        <div class="tl-title">▶ 現状把握・方針確定フェーズ（完了）</div>
         <div class="tl-body">
           ・6/4 初回定例：現状確認・Entra ID3グループ・Garoonワークフロー約100件把握<br>
           ・6/11 第2回定例：SharePoint/Teams両ドラフト発表・方向性合意<br>
-          　→ Garoon受信者制御の複雑さ判明（細かいEntra IDグループ設計が必要）<br>
-          　→ ワークフローアドイン導入に前向き（費用感調査が必要）<br>
-          ・6/18 次回定例：ワークフローアドイン費用感・Entra IDグループ細かい設計案を提示予定<br>
-          ・セキュリティルール：時田氏がインシデント対応マニュアル整備中（6月中旬完成予定）
+          ・6/18 第3回定例：Nextset費用提示・Entra IDグループ設計案合意・テストアカウント発行<br>
+          ・6/25 第4回定例：Nextset廃案→Canbus.提案・お知らせ配信方針確定・テナントログイン可確認<br>
+          ・セキュリティ：時田氏がインシデント対応マニュアル・セキュリティ基準コメントシート整備中
+        </div>
+      </div>
+
+      <div class="tl-item now">
+        <div class="tl-date">2026年7月 ← 現在</div>
+        <div class="tl-title">▶ 実装・構築フェーズ</div>
+        <div class="tl-body">
+          ・7/1 第5回定例：テナント確認結果報告・Canbus.費用試算・7/8本部会議準備確認<br>
+          ・7/8 情報化戦略本部会議：M365方針・メール移行・セキュリティ基準を報告<br>
+          ・Entra IDグループ実装（テスト環境で先行構築）<br>
+          ・SharePoint統合イントラサイト 詳細設計・構築開始<br>
+          ・Teamsガバナンスルール策定（チーム作成基準・命名規則）
         </div>
       </div>
 
@@ -1548,9 +1566,10 @@ Teams ─────────── 現状維持しつつルール整備</di
     <table>
       <tr><th>時期</th><th>タスク</th><th>状況</th></tr>
       <tr style="background:var(--confirmed-bg)"><td>6/4〜6/11</td><td>現状把握・両ドラフト作成・定例2回発表</td><td><span class="badge-confirmed">✅ 完了</span></td></tr>
-      <tr><td>〜6/18</td><td>ワークフローアドイン費用感の調査・資料準備</td><td><span class="badge-danger">🔴 急ぎ</span></td></tr>
-      <tr><td>〜6/18</td><td>Entra IDグループ 細かい設計案の検討（専任・派遣・職卓・非常勤講師）</td><td><span class="badge-danger">🔴 急ぎ</span></td></tr>
-      <tr><td>6月後半</td><td>Entra IDグループ設計・構築（実装）</td><td><span class="badge-pending">これから</span></td></tr>
+      <tr style="background:var(--confirmed-bg)"><td>〜6/18</td><td>ワークフローアドイン費用調査・Entra IDグループ設計案作成・定例提示</td><td><span class="badge-confirmed">✅ 完了</span></td></tr>
+      <tr style="background:var(--confirmed-bg)"><td>〜6/25</td><td>ワークフロー移行先変更（Canbus.提案）・お知らせ配信方針確定</td><td><span class="badge-confirmed">✅ 完了</span></td></tr>
+      <tr><td>〜7/1</td><td>テストアカウントでテナント確認・Canbus.費用試算</td><td><span class="badge-danger">🔴 急ぎ</span></td></tr>
+      <tr><td>7月</td><td>Entra IDグループ設計・構築（実装）</td><td><span class="badge-pending">着手中</span></td></tr>
       <tr><td>6〜7月</td><td>SharePointサイト設計（詳細設計→レビュー→構築）</td><td><span class="badge-pending">これから</span></td></tr>
       <tr><td>6〜7月</td><td>Teamsガバナンスルール策定</td><td><span class="badge-pending">これから</span></td></tr>
       <tr><td>時期未確定</td><td>MFA全教職員展開（メール移行とは切り離して先方と時期を調整）</td><td><span class="badge-pending">調整中</span></td></tr>
@@ -1612,6 +1631,68 @@ Teams ─────────── 現状維持しつつルール整備</di
     .mtg-decision:last-child { border-bottom: none; }
     .mtg-decision .icon { flex-shrink: 0; }
   </style>
+
+  <!-- 2026-06-25 定例 -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0625')">
+      <div class="mtg-date-block"><div class="month">6月</div><div class="day">25</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type weekly">定例MTG</span>
+        <div class="mtg-title">第4回定例 — ワークフロー移行先変更・お知らせ方針確定</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag new">Nextset廃案</span>
+          <span class="mtg-tag new">Canbus.検討開始</span>
+          <span class="mtg-tag new">お知らせ方針確定</span>
+          <span class="mtg-tag new">テストアカウント確認</span>
+          <span class="mtg-tag warn">Garoon一覧受領待ち</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0625">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0625">
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>Nextset不採用</strong>：ユーザー数ライセンス課金（テナント全体5,000名超）により月50万円超となり費用対効果が見合わない。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>Canbus.（キャンバス）を新候補として継続検討</strong>：ユーザー数無制限・月額5万円〜（株式会社システナ製）。Garoon一覧受領後に費用試算・プラン選定予定。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>お知らせ配信方針の確定</strong>：SharePointニュース＋EntraIDグループ紐づけで対象グループへ優先表示する方式で決定。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>テストアカウント確認</strong>：教務システムへのログインは不要。M365ゲストアカウントで直接テナントにログイン可と確認。三井田が引き続きテナント実環境を確認する。</span></div>
+      <h4>大学側のアクションアイテム</h4>
+      <div class="mtg-decision"><span class="icon">📌</span><span>Garoonで現在使用しているワークフロー一覧・月間申請件数リストの共有（Canbus.費用試算に必要）</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>情報セキュリティ基準コメントシートへの記入（6月末目途）</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>Canbus.ベンダーデモへの参加（希望する場合は三井田が調整）</span></div>
+      <h4>三井田のアクションアイテム</h4>
+      <div class="mtg-decision"><span class="icon">📌</span><span>テストアカウントでM365テナントにログインして利用状況・Entra IDグループ現状を確認 → 7/1定例で報告</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>Garoon一覧をもとにCanbus.の費用試算・プラン選定を実施 → 7/1定例で報告</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>資料まとめページ（インデックス：index.html）をグループチャットに共有 ← <strong>本日実施</strong></span></div>
+      <h4>その他</h4>
+      <div class="mtg-decision"><span class="icon">📅</span><span>情報化戦略本部会議が<strong>7月8日（火）</strong>に予定。メール移行・セキュリティ基準・SharePoint方針を説明予定。</span></div>
+    </div>
+  </div>
+
+  <!-- 2026-06-18 定例 -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0618')">
+      <div class="mtg-date-block"><div class="month">6月</div><div class="day">18</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type weekly">定例MTG</span>
+        <div class="mtg-title">第3回定例 — ワークフロー費用・Entra ID設計案提示</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag new">EntraIDグループ設計合意</span>
+          <span class="mtg-tag warn">Nextset費用再調査</span>
+          <span class="mtg-tag new">テストアカウント発行依頼</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0618">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0618">
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>Entra IDグループ5層設計案</strong>：MAU_全教職員→職員全体（専任/派遣/職卓）→教員全体（常勤/非常勤）→部署グループの方向性で大学側と合意。</span></div>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span><strong>Nextsetのライセンス体系を再調査</strong>：「ユーザー数ライセンス課金か、フロー数課金か」確認を継続。6/25定例で結論を提示。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>テストアカウント発行</strong>：大学側がM365テストアカウントを三井田に提供（ゲストアカウント方式）。</span></div>
+      <h4>三井田のアクションアイテム（〜6/25）</h4>
+      <div class="mtg-decision"><span class="icon">📌</span><span>Nextsetのライセンス体系を最終確認 → 6/25定例で廃案/採用の判断を提示</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>テストアカウントでM365テナントにログインし、現状把握</span></div>
+    </div>
+  </div>
 
   <!-- 2026-06-11 定例 -->
   <div class="mtg-card">
@@ -2273,7 +2354,7 @@ Teams ─────────── 現状維持しつつルール整備</di
   <div class="page-header">
     <div class="badge">PLANNING</div>
     <h2>✅ タスク・アクションプラン</h2>
-    <div class="meta">6/11定例完了 — 次回6/18に向けて更新（2026-06-11）</div>
+    <div class="meta">6/25定例完了 — 次回7/1に向けて更新（2026-06-25）</div>
   </div>
 
   <style>
@@ -2360,7 +2441,7 @@ Teams ─────────── 現状維持しつつルール整備</di
   <div class="step-panel active" id="step-panel-1">
 
     <div class="task-group">
-      <div class="task-group-title" style="color:var(--confirmed)">✅ 完了（〜6/11定例）</div>
+      <div class="task-group-title" style="color:var(--confirmed)">✅ 完了（〜6/25定例）</div>
       <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
         <input type="checkbox" class="task-cb" checked>
         <div class="task-content">
@@ -2378,26 +2459,47 @@ Teams ─────────── 現状維持しつつルール整備</di
       <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
         <input type="checkbox" class="task-cb" checked>
         <div class="task-content">
-          <div class="task-name" style="text-decoration:line-through">DMARCについて移行ベンダーへの確認依頼 <span class="task-owner">三井田</span></div>
-          <div class="task-detail">6/11定例当日中にチャットで時田氏経由ベンダーへ依頼済み。musabi.ac.jpのDMARC設定→fs.musabi.ac.jpへの継承確認。</div>
+          <div class="task-name" style="text-decoration:line-through">ワークフローアドイン費用調査・比較資料作成 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">Nextset調査済み。6/18で提示。最終的にNextset廃案（ユーザー数課金で月50万超）→ Canbus.へ切り替え。workflow-comparison.htmlに反映済み。</div>
+        </div>
+      </div>
+      <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
+        <input type="checkbox" class="task-cb" checked>
+        <div class="task-content">
+          <div class="task-name" style="text-decoration:line-through">Entra IDグループ 5層設計案の作成・6/18での説明 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">MAU_全教職員→職員全体（専任・派遣・職卓）→教員全体（常勤・非常勤講師）＋部署グループの5層設計案。6/18定例で提示・大学側と方向性合意済み。</div>
+        </div>
+      </div>
+      <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
+        <input type="checkbox" class="task-cb" checked>
+        <div class="task-content">
+          <div class="task-name" style="text-decoration:line-through">お知らせ配信方針の確定 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">SharePointニュース＋EntraIDグループ紐づけで優先表示する方式。6/25定例で確定。</div>
+        </div>
+      </div>
+      <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
+        <input type="checkbox" class="task-cb" checked>
+        <div class="task-content">
+          <div class="task-name" style="text-decoration:line-through">資料まとめページ（index.html）のグループチャット共有 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">6/25定例で依頼あり。index.htmlを更新しチャットに共有。</div>
         </div>
       </div>
     </div>
 
     <div class="task-group">
-      <div class="task-group-title" style="color:var(--danger)">🔴 急ぎ（〜6/18定例）</div>
+      <div class="task-group-title" style="color:var(--danger)">🔴 急ぎ（〜7/1定例）</div>
       <div class="task-item urgent">
         <input type="checkbox" class="task-cb">
         <div class="task-content">
-          <div class="task-name">ワークフローアドイン費用感の資料作成・6/18定例での説明 <span class="task-owner">三井田</span></div>
-          <div class="task-detail">【調査済み】ネクストセット・ワークフロー for M365 = 1アドオン200円/月/ユーザー（税抜・2024年10月改定）。職員〜600名を対象とすると年額約158万円（税込）。SharePoint提案書のワークフロータブに反映済み。6/18定例で提示・導入判断を促す。</div>
+          <div class="task-name">テストアカウントでのテナント確認・7/1定例で報告 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">M365ゲストアカウントでテナントにログインし、EntraIDグループ現状・SharePointのオーディエンスターゲティング適用可否・設計への影響を確認する。</div>
         </div>
       </div>
       <div class="task-item urgent">
         <input type="checkbox" class="task-cb">
         <div class="task-content">
-          <div class="task-name">Entra IDグループ 細かい設計案の検討・6/18定例での説明 <span class="task-owner">三井田</span></div>
-          <div class="task-detail">【設計案ドラフト作成済み（2026-06-12）】MAU_全教職員→職員全体（専任・派遣・職卓）→教員全体（常勤・非常勤講師）＋部署グループの5層設計。GaroonのSP配信パターンとSharePointオーディエンスターゲティングの対応表も整備。entra-id-group-design.md / SharePoint提案書 設計方針タブに反映済み。6/18定例で大学側に提示・合意取り付け。</div>
+          <div class="task-name">Canbus.費用試算（Garoon一覧受領後） <span class="task-owner">三井田</span></div>
+          <div class="task-detail">大学側からGaroonワークフロー一覧（名称・月間件数）を受領後、Canbus.のプラン・月額費用を試算して7/1定例で報告する。</div>
         </div>
       </div>
     </div>
@@ -2540,54 +2642,74 @@ Teams ─────────── 現状維持しつつルール整備</di
     </div>
 
     <div class="week-block">
-      <div class="week-label warn">次回定例（6/18）</div>
-      <div class="week-items">
+      <div class="week-label" style="background:var(--confirmed)">✅ 6/18定例 完了</div>
+      <div class="week-items" style="opacity:0.75">
         <div class="week-item">
-          <span class="week-item-icon">💰</span>
+          <span class="week-item-icon">✅</span>
           <div class="week-item-body">
-            <div class="week-item-title">ワークフローアドイン 費用感の説明（資料準備済み）</div>
-            <div class="week-item-sub">ネクストセット・ワークフロー for M365：1アドオン200円/月/ユーザー（税抜）。職員〜600名対象で年額約158万円（税込）。SharePoint提案書のワークフロータブに整理済み。大学側の導入可否判断を促す。</div>
+            <div class="week-item-title" style="text-decoration:line-through">ワークフローアドイン 費用感の説明</div>
+            <div class="week-item-sub">Nextset提示済み。ライセンス体系（ユーザー数課金か否か）を再確認することに。</div>
           </div>
         </div>
         <div class="week-item">
-          <span class="week-item-icon">🗂</span>
+          <span class="week-item-icon">✅</span>
           <div class="week-item-body">
-            <div class="week-item-title">Entra IDグループ 細かい設計案の提示（ドラフト作成済み）</div>
-            <div class="week-item-sub">5層構造設計：全教職員→職員全体（専任/派遣/職卓）→教員全体（常勤/非常勤講師）→部署グループ。GaroonのSP配信対応表も整理済み。大学側から①職員区分の定義・人数 ②部署一覧 ③ユーザーCSVの提供を依頼予定。</div>
-          </div>
-        </div>
-        <div class="week-item">
-          <span class="week-item-icon">📋</span>
-          <div class="week-item-body">
-            <div class="week-item-title">インシデント対応マニュアル確認（時田氏）</div>
-            <div class="week-item-sub">時田氏が6月中旬までに整備完了予定。定例でレビュー・フィードバック。</div>
+            <div class="week-item-title" style="text-decoration:line-through">Entra IDグループ 5層設計案の提示・合意</div>
+            <div class="week-item-sub">大学側と方向性合意済み。テストアカウント発行も完了。</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="week-block">
-      <div class="week-label">6月後半（〜6/30）</div>
+      <div class="week-label" style="background:var(--confirmed)">✅ 6/25定例 完了</div>
+      <div class="week-items" style="opacity:0.75">
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">ワークフロー移行先の変更報告（Nextset廃案 → Canbus.提案）</div>
+            <div class="week-item-sub">Nextset不採用確定。Canbus.候補として継続検討に移行。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">お知らせ配信方針の確定</div>
+            <div class="week-item-sub">SharePointニュース＋EntraIDグループ紐づけで優先表示する方針確定。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">テストアカウントでのログイン確認</div>
+            <div class="week-item-sub">M365ゲストアカウントで直接テナントにログイン可と確認。三井田が引き続き実環境確認。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-label warn">次回定例（7/1）</div>
       <div class="week-items">
         <div class="week-item">
-          <span class="week-item-icon">🏗</span>
+          <span class="week-item-icon">🔍</span>
           <div class="week-item-body">
-            <div class="week-item-title">Entra IDグループ設計・構築</div>
-            <div class="week-item-sub">教員・職員・学生の3グループ体系を構築する</div>
+            <div class="week-item-title">テストアカウントでのテナント確認結果を報告</div>
+            <div class="week-item-sub">EntraIDグループ現状・SharePointオーディエンスターゲティング適用可否・設計への影響を報告する。</div>
           </div>
         </div>
         <div class="week-item">
-          <span class="week-item-icon">📊</span>
+          <span class="week-item-icon">💰</span>
           <div class="week-item-body">
-            <div class="week-item-title">情報化戦略本部会議向け資料のレビュー支援</div>
-            <div class="week-item-sub">6月末〜7月上旬の会議に向けて、セキュリティ基準の大枠・メール移行アナウンス資料を確認</div>
+            <div class="week-item-title">Garoonワークフロー一覧受領確認 ＋ Canbus.費用試算</div>
+            <div class="week-item-sub">大学側からの一覧受領を確認し、Canbus.のプラン・費用見通しを提示する。</div>
           </div>
         </div>
         <div class="week-item">
-          <span class="week-item-icon">📋</span>
+          <span class="week-item-icon">📅</span>
           <div class="week-item-body">
-            <div class="week-item-title">メール移行ユーザー向け資料をユーザー視点でチェック</div>
-            <div class="week-item-sub">UPN変更・Authenticator再登録・OneDrive共有リンク無効化などの影響整理</div>
+            <div class="week-item-title">情報化戦略本部会議（7/8）の準備・役割分担確認</div>
+            <div class="week-item-sub">三井田が担当するM365パートの内容・範囲と時田氏との役割分担を合意する。</div>
           </div>
         </div>
       </div>
@@ -2687,25 +2809,30 @@ Teams ─────────── 現状維持しつつルール整備</di
           <td><span class="badge-confirmed">✅ 完了</span> 6/18向け資料整備</td>
           <td>① Nextsetワークフロー費用調査・比較資料作成 ② Entra IDグループ5層設計案・ビジュアル図作成</td>
         </tr>
-        <tr>
-          <td><strong>6/18（来週）</strong></td>
-          <td>第3回定例MTG <span class="badge-danger">急ぎ</span></td>
-          <td>① ワークフローアドイン費用感提示・導入方針確定 ② Entra IDグループ設計案提示・合意 ③ パイロット部署確定</td>
+        <tr style="background:var(--confirmed-bg)">
+          <td><strong>6/18</strong></td>
+          <td><span class="badge-confirmed">✅ 完了</span> 第3回定例MTG</td>
+          <td>① ワークフローアドイン費用感提示 ② Entra IDグループ設計案提示・方向性合意 ③ テストアカウント発行</td>
+        </tr>
+        <tr style="background:var(--confirmed-bg)">
+          <td><strong>6/25</strong></td>
+          <td><span class="badge-confirmed">✅ 完了</span> 第4回定例MTG</td>
+          <td>① Nextset廃案確定・Canbus.検討開始 ② お知らせ配信方針確定 ③ テナントログイン可確認</td>
         </tr>
         <tr>
-          <td><strong>6月末〜7月上旬</strong></td>
+          <td><strong>7/1（今週）</strong></td>
+          <td>第5回定例MTG <span class="badge-danger">急ぎ</span></td>
+          <td>① テナント確認結果報告 ② Canbus.費用試算報告 ③ 7/8本部会議準備確認</td>
+        </tr>
+        <tr>
+          <td><strong>7/8</strong></td>
           <td>情報化戦略本部会議</td>
-          <td>セキュリティ基準大枠・8月移行アナウンス資料のレビュー支援</td>
-        </tr>
-        <tr>
-          <td><strong>6月末</strong></td>
-          <td>Entra IDグループ Phase 1 実装</td>
-          <td>Layer 1〜2（MAU_全教職員・職員全体・教員全体）を先行構築</td>
+          <td>M365方針（SharePoint・ワークフロー）・メール移行・セキュリティ基準を報告</td>
         </tr>
         <tr>
           <td><strong>7月</strong></td>
           <td>統合イントラサイト設計承認・構築開始</td>
-          <td>イントラサイト本設計・Entra IDグループ詳細構築・Teamsルール策定</td>
+          <td>イントラサイト本設計・Entra IDグループ実装・Teamsルール策定</td>
         </tr>
         <tr>
           <td><strong>8月下旬（お盆明け予定）🔴</strong></td>
