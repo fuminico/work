@@ -1,0 +1,2780 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>武蔵野美術大学 M365導入支援 — コンサルティング資料</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f0fc;
+    --confirmed: #1a7a3c;
+    --confirmed-bg: #e6f4ec;
+    --pending: #b45309;
+    --pending-bg: #fef3c7;
+    --danger: #b91c1c;
+    --danger-bg: #fee2e2;
+    --border: #d1d5db;
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --bg: #f9fafb;
+    --white: #ffffff;
+    --sidebar-w: 240px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+  }
+
+  /* ── レイアウト ── */
+  #app { display: flex; min-height: 100vh; }
+
+  #sidebar {
+    width: var(--sidebar-w);
+    background: var(--primary);
+    color: #fff;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  #sidebar-header {
+    padding: 20px 16px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  #sidebar-header .project-label {
+    font-size: 10px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  #sidebar-header h1 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  #sidebar nav { flex: 1; padding: 10px 0; }
+  .nav-section { padding: 14px 16px 6px; font-size: 10px; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.1em; }
+  .nav-item {
+    display: block;
+    padding: 9px 16px;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-item.active { background: rgba(255,255,255,0.15); border-left-color: #fff; color: #fff; font-weight: 600; }
+  .nav-item .nav-icon { margin-right: 8px; opacity: 0.8; }
+  #sidebar-footer {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 11px;
+    opacity: 0.5;
+  }
+
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    max-width: 900px;
+    padding: 0 40px 80px;
+  }
+
+  /* ── ページ ── */
+  .page { display: none; padding-top: 40px; }
+  .page.active { display: block; }
+
+  /* ── ヘッダー ── */
+  .page-header {
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+  .page-header .badge {
+    display: inline-block;
+    font-size: 11px;
+    background: var(--primary);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .page-header h2 { font-size: 22px; font-weight: 700; color: var(--primary); }
+  .page-header .meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── セクション ── */
+  .section { margin-bottom: 36px; }
+  .section h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 8px 12px;
+    background: var(--primary-light);
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .section h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 18px 0 8px;
+    border-left: 3px solid var(--primary);
+    padding-left: 8px;
+  }
+
+  /* ── テーブル ── */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+  th {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--primary-light); }
+  .table-sm td, .table-sm th { padding: 5px 8px; }
+
+  /* ── ステータスバッジ ── */
+  .badge-confirmed {
+    display: inline-block;
+    background: var(--confirmed-bg);
+    color: var(--confirmed);
+    border: 1px solid #a7d7b8;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-pending {
+    display: inline-block;
+    background: var(--pending-bg);
+    color: var(--pending);
+    border: 1px solid #fcd34d;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-danger {
+    display: inline-block;
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid #fca5a5;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-info {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #7dd3fc;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── チェックリスト ── */
+  .checklist { list-style: none; margin: 8px 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .checklist li.checked { background: var(--confirmed-bg); }
+  .checklist li.unchecked { background: var(--pending-bg); }
+  .checklist li.must { background: #fef2f2; border-left: 3px solid var(--danger); }
+  .check-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+  .check-content {}
+  .check-title { font-weight: 600; }
+  .check-memo {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  /* ── カード ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .card-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .card.warn { border-left: 4px solid var(--pending); background: var(--pending-bg); }
+  .card.danger { border-left: 4px solid var(--danger); background: var(--danger-bg); }
+  .card.info { border-left: 4px solid var(--primary); background: var(--primary-light); }
+  .card.success { border-left: 4px solid var(--confirmed); background: var(--confirmed-bg); }
+
+  /* ── コールアウト ── */
+  .callout {
+    border-left: 4px solid var(--primary);
+    background: var(--primary-light);
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+  }
+  .callout.warn { border-left-color: var(--pending); background: var(--pending-bg); }
+  .callout.danger { border-left-color: var(--danger); background: var(--danger-bg); }
+  .callout.success { border-left-color: var(--confirmed); background: var(--confirmed-bg); }
+
+  /* ── 優先度マーク ── */
+  .prio-s { color: var(--danger); font-weight: 700; }
+  .prio-a { color: var(--pending); font-weight: 700; }
+  .prio-b { color: #2563eb; font-weight: 700; }
+
+  /* ── コードブロック ── */
+  .code-block {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 10px 0;
+    white-space: pre;
+  }
+
+  /* ── 印刷 ── */
+  @media print {
+    #sidebar { display: none; }
+    #main { margin-left: 0; max-width: 100%; }
+    .page { display: block !important; page-break-before: always; }
+    .page:first-child { page-break-before: auto; }
+  }
+
+  /* ── スクロールバー ── */
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+  p { margin: 6px 0; font-size: 13px; }
+  ul.normal { margin: 6px 0 6px 20px; }
+  ul.normal li { margin-bottom: 3px; font-size: 13px; }
+  strong { color: var(--text); }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .summary-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .summary-card .num { font-size: 28px; font-weight: 700; color: var(--primary); }
+  .summary-card .label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ── サイドバー ── -->
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="project-label">Consulting Docs</div>
+    <h1>武蔵野美術大学<br>M365 導入支援</h1>
+  </div>
+  <nav>
+    <div class="nav-section">概要</div>
+    <a class="nav-item active" onclick="showPage('catchup')">
+      <span class="nav-icon">⚡</span>キャッチアップ
+    </a>
+    <a class="nav-item" onclick="showPage('brief')">
+      <span class="nav-icon">📋</span>案件概要
+    </a>
+    <div class="nav-section">ヒアリング</div>
+    <a class="nav-item" onclick="showPage('hearing')">
+      <span class="nav-icon">📝</span>ヒアリングシート
+    </a>
+    <a class="nav-item" onclick="showPage('knowledge')">
+      <span class="nav-icon">🗂</span>ナレッジベース
+    </a>
+    <div class="nav-section">提案書（6/11〜 作成済み）</div>
+    <a class="nav-item" onclick="showPage('sp-draft')">
+      <span class="nav-icon">🏗</span>SharePoint設計 概要
+    </a>
+    <a class="nav-item" href="sharepoint-proposal.html" target="_blank" style="color:rgba(255,255,255,0.7);font-size:12px;padding-left:26px">
+      <span class="nav-icon" style="opacity:0.7">↗</span>SharePoint提案書（詳細）
+    </a>
+    <a class="nav-item" onclick="showPage('teams-plan')">
+      <span class="nav-icon">💬</span>Teams利用整備 概要
+    </a>
+    <a class="nav-item" href="workflow-comparison.html" target="_blank" style="color:rgba(255,255,255,0.7);font-size:12px;padding-left:26px">
+      <span class="nav-icon" style="opacity:0.7">↗</span>ワークフロー比較資料
+    </a>
+    <a class="nav-item" href="entra-id-org-design.html" target="_blank" style="color:rgba(255,255,255,0.7);font-size:12px;padding-left:26px">
+      <span class="nav-icon" style="opacity:0.7">↗</span>Entra ID 組織構造設計（兼務対応）
+    </a>
+    <div class="nav-section">週次記録</div>
+    <a class="nav-item" onclick="showPage('meetings')">
+      <span class="nav-icon">📋</span>定例記録
+    </a>
+    <div class="nav-section">進捗管理</div>
+    <a class="nav-item" onclick="showPage('planning')">
+      <span class="nav-icon">✅</span>タスク・プラン
+    </a>
+    <a class="nav-item" onclick="showPage('schedule')">
+      <span class="nav-icon">📅</span>スケジュール
+    </a>
+    <div class="nav-section">分析</div>
+    <a class="nav-item" onclick="showPage('hypothesis')">
+      <span class="nav-icon">🔬</span>仮説フレーム
+    </a>
+    <a class="nav-item" onclick="showPage('teams')">
+      <span class="nav-icon">⚠️</span>Teams問題整理
+    </a>
+    <a class="nav-item" onclick="showPage('security')">
+      <span class="nav-icon">🔐</span>セキュリティポリシー
+    </a>
+  </nav>
+  <div id="sidebar-footer">最終更新: 2026-06-12</div>
+</div>
+
+<!-- ── メインコンテンツ ── -->
+<div id="main">
+
+<!-- ======================================================
+     ページ 1: キャッチアップサマリー
+====================================================== -->
+<div id="page-catchup" class="page active">
+  <div class="page-header">
+    <div class="badge">QUICK START</div>
+    <h2>⚡ キャッチアップサマリー</h2>
+    <div class="meta">最終更新: 2026-06-12 ／ 6/11定例（第2回）完了後の現状</div>
+  </div>
+
+  <div class="callout success">
+    <strong>6/11定例（第2回）の結果:</strong><br>
+    SharePoint統合イントラサイト方針・Teams利用整備方針の<strong>両ドラフトが承認済み</strong>。<br>
+    6/18定例に向けて ① ワークフローアドイン費用感 ② Entra IDグループ細かい設計案 の2点を資料整備済み。
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0">
+    <a href="sharepoint-proposal.html" target="_blank" style="display:block;background:#e8f1fb;border:2px solid var(--primary);border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text)">
+      <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:4px">提案書（詳細版）</div>
+      <div style="font-size:14px;font-weight:700">🏗 SharePoint統合イントラサイト 初期方針案</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">設計方針・Entra IDグループ設計・ワークフロー・費用 ↗ 別タブで開く</div>
+    </a>
+    <a href="workflow-comparison.html" target="_blank" style="display:block;background:#e8f8f0;border:2px solid var(--confirmed);border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text);margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--confirmed);margin-bottom:4px">比較資料（新規作成）</div>
+      <div style="font-size:14px;font-weight:700">⚡ ワークフロー比較 — Power Automate vs Nextset</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">UIモックアップ付き・費用試算・推奨案 ↗ 別タブで開く</div>
+    </a>
+    <a href="entra-id-org-design.html" target="_blank" style="display:block;background:#f3eafa;border:2px solid #7b3fa0;border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text)">
+      <div style="font-size:11px;font-weight:700;color:#7b3fa0;margin-bottom:4px">6/18定例 フォローアップ資料（NEW）</div>
+      <div style="font-size:14px;font-weight:700">🔄 Entra ID 組織構造設計 — 階層・兼務の実現可否</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">ガルーン比較・兼務設定方法・推奨設計案 ↗ 別タブで開く</div>
+    </a>
+  </div>
+
+  <div class="callout danger" style="margin-top:16px">
+    <strong>プロジェクトの現在地（6/12時点）:</strong><br>
+    「方向性合意フェーズ完了。6/18定例でワークフローとEntra IDグループ設計の方針を確定し、7月の実装フェーズへ移行する段階」
+  </div>
+
+  <div class="section">
+    <h3>固有名詞 早見表</h3>
+    <table>
+      <tr><th>名前</th><th>意味</th></tr>
+      <tr><td><strong>maunet.（マウネット）</strong></td><td>Garoon（サイボウズ）を使った学内グループウェアの<strong>学内通称</strong></td></tr>
+      <tr><td><strong>X-point</strong></td><td>決裁・承認ワークフロー専用ツール（Garoonとは別）。<span class="badge-danger">2026年度末で契約終了予定</span></td></tr>
+      <tr><td><strong>DEEPMail</strong></td><td>現在のメール基盤。ドメインは @musabi.ac.jp</td></tr>
+      <tr><td><strong>fsアカウント</strong></td><td>Teams用M365アカウントのドメイン（@fs.musabi.ac.jp）。2020年コロナで全員付与</td></tr>
+      <tr><td><strong>DXチーム</strong></td><td>河野・山越・鳥巣・伊藤の4名（施設管財・情報管理担当）</td></tr>
+      <tr><td><strong>井上氏・前田氏</strong></td><td>情報管理担当。M365の管理者でもある</td></tr>
+      <tr><td><strong>時田氏</strong></td><td>デジタルアーク。2025年12月からセキュリティポリシーを担当</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>現在のシステム全体像</h3>
+    <div class="code-block">【今使っているもの】
+maunet.（Garoon） ─── 掲示板・スケジュール・ファイル・施設予約・軽い申請
+X-point ─────────── 決裁・承認ワークフロー（重いもの。Garoonと連携）
+DEEPMail ──────────── メール（@musabi.ac.jp）
+M365 Teams ──────── 授業・会議（設計なしに9,000チームまで膨れた）
+M365 その他 ────── 各自自由利用（ルールなし）
+
+【移行先として目指すもの】         ↓ 移行状況を見ながら段階的に（時期未確定）
+SharePoint ─────── maunet.（掲示板・文書管理）の代替
+Outlook ───────── DEEPMail（メール）の代替（8月下旬お盆明け予定、別ベンダー）
+Power Automate？── X-pointの代替（※まだ決まっていない）
+Teams ─────────── 現状維持しつつルール整備</div>
+  </div>
+
+  <div class="section">
+    <h3>前回面談（5/13）から変わった重要点</h3>
+    <div class="card warn">
+      <div class="card-title">⚠️ 変更①：ワークフローはGaroonではなくX-point</div>
+      <p>最初はGaroonのワークフローをPower Automateに移行する想定だった。実際には<strong>重い承認フローはX-point（別ツール）が担っている。</strong>GaroonのワークフローはあくまでX-pointを補う「軽い申請」のみ。</p>
+      <p style="margin-top:8px"><span class="badge-danger">重大</span> <strong>X-pointは2026年度末で契約終了予定。後継未定。</strong></p>
+    </div>
+    <div class="card info">
+      <div class="card-title">ℹ️ 変更②：セキュリティポリシーは「ゼロ」ではなかった</div>
+      <p>個人情報保護方針等の基本文書は既に存在する（4つ策定済み）。時田氏が「情報セキュリティ対策基準（案）」を作成中。既に「<strong>デジタルツール運用ルール ver.1</strong>」（Teams使い分けルール）が2026/1に完成・展開済み。</p>
+    </div>
+    <div class="card danger">
+      <div class="card-title">🚨 変更③：過去インシデントが発生済み</div>
+      <p>Teamsのチームを「パブリック」に設定してしまい、学生含む全員がファイルを見られる状態になった事故が過去に発生。現在はデフォルト「プライベート」に変更済み（時田氏対応）。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>確認できていること / まだ答えが出ていないこと（6/12時点）</h3>
+    <table>
+      <tr><th>項目</th><th>状況</th><th>内容</th></tr>
+      <tr><td>ライセンス</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>全員 A3（一部 A1 混在）</td></tr>
+      <tr><td>Garoon廃止予定</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>年度末まで継続利用（廃止時期は未確定）</td></tr>
+      <tr><td>メール移行日</td><td><span class="badge-confirmed">✅ 確認済</span></td><td><strong>2026年8月下旬（お盆明け予定）</strong></td></tr>
+      <tr><td>M365テナント名</td><td><span class="badge-confirmed">✅ 確認済</span></td><td><strong>musabiac.onmicrosoft.com</strong></td></tr>
+      <tr><td>MFA</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>職員のみ適用。<strong>教員は未適用</strong>。VPN接続はMFA適用済み</td></tr>
+      <tr><td>SharePoint 方向性</td><td><span class="badge-confirmed">✅ 6/11 合意済</span></td><td>統合イントラサイト（コミュニケーションサイト）方式で進める。パイロット部署は先方から連絡待ち。</td></tr>
+      <tr><td>Teams 方向性</td><td><span class="badge-confirmed">✅ 6/11 合意済</span></td><td>「方向性すごくいい」と評価。Phase1（新規ルール整備）から着手。</td></tr>
+      <tr><td>Copilot</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>使用許可済み。ただし機密情報・要配慮個人情報の入力禁止</td></tr>
+      <tr><td>ワークフローアドイン</td><td><span class="badge-pending">🔲 費用提示待ち</span></td><td>Nextset: 1アドオン200円/月/ユーザー（税抜）。職員〜600名で年約158万円。6/18で方針確認予定。</td></tr>
+      <tr><td>Entra IDグループ設計</td><td><span class="badge-pending">🔲 6/18で合意予定</span></td><td>5層設計案（ドラフト）作成済み。6/18定例で大学側に提示・合意取り付け予定。</td></tr>
+      <tr><td>パイロット部署</td><td><span class="badge-pending">🔲 先方から連絡待ち</span></td><td>キャリア系部署が候補。未確定。</td></tr>
+      <tr><td>X-point後継</td><td><span class="badge-info">ℹ️ 方針整理済み</span></td><td>2026年度末で契約終了。GaroonのWF（約100件）移行先としてNextset（年158万円〜）を提案予定。</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>⚠️ メール移行キックオフで判明した重要事項</h3>
+    <div class="card danger">
+      <div class="card-title">UPN変更時に全ユーザーのMFA設定がリセットされる</div>
+      <p>お盆明けのメール移行ではUPN（ログインID）が変更されるため、<strong>全ユーザーのMFA設定が強制リセット</strong>される。Authenticatorアプリの削除→再登録が全員に必要。</p>
+      <p style="margin-top:8px">※ MFA展開の時期はメール移行と切り離して別途調整する方針。</p>
+    </div>
+    <div class="card warn">
+      <div class="card-title">OneDriveの共有リンクが全て無効化される</div>
+      <p>UPN変更後はOneDriveのURLが変わり、既存の共有リンクは機能しなくなる。SharePoint設計に事前周知プロセスを組み込む必要あり。</p>
+    </div>
+    <div class="card info">
+      <div class="card-title">その他の決定事項</div>
+      <ul class="normal">
+        <li>メーリングリスト → <strong>配布グループ</strong>で実装（外部アドレス登録不可のため）</li>
+        <li>代表メール（DEEPMail） → <strong>M365共有メールボックス</strong>で実装</li>
+        <li>DEEPMailアドレス帳 → <strong>移行しない</strong>（利用者個人で対応）</li>
+        <li>SMTP容量: 40MB → <strong>25MBに縮小</strong>（アナウンス要）</li>
+        <li>推奨クライアント: <strong>Outlook Web</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>6/18 定例MTGの確認・提示事項</h3>
+    <ul class="checklist">
+      <li class="must">
+        <span class="check-icon">🔴</span>
+        <div class="check-content">
+          <div class="check-title">ワークフローアドイン費用感の提示 → 導入可否の方針確認 <span class="badge-danger">三井田から提示</span></div>
+          <div class="check-memo">Nextset: 1アドオン200円/月/ユーザー。職員＋常勤教員〜600名で年約158万円（推奨）。比較資料は workflow-comparison.html に整備済み。</div>
+        </div>
+      </li>
+      <li class="must">
+        <span class="check-icon">🔴</span>
+        <div class="check-content">
+          <div class="check-title">Entra IDグループ細かい設計案の提示 → 合意取り付け <span class="badge-danger">三井田から提示</span></div>
+          <div class="check-memo">5層設計（MAU_全教職員→職員全体/教員全体→部署グループ）。sharepoint-proposal.html の設計方針タブに整備済み。大学側に①職員区分定義・人数 ②部署一覧 ③ユーザーCSV の提供を依頼する。</div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🟡</span>
+        <div class="check-content">
+          <div class="check-title">パイロット部署の確定（先方から連絡を受ける）</div>
+          <div class="check-memo">6/11定例でキャリア系部署が候補として挙がった。大学側から連絡待ち。</div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🟡</span>
+        <div class="check-content">
+          <div class="check-title">インシデント対応マニュアル レビュー（時田氏から受領後）</div>
+          <div class="check-memo">時田氏が6月中旬までに整備完了予定。定例でレビュー・フィードバックを提供する。</div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🟡</span>
+        <div class="check-content">
+          <div class="check-title">SharePointのオーディエンスターゲティング制約の共有</div>
+          <div class="check-memo">「特定10名への個人指定配信」はSharePointでは対応不可。Teams通知・メールで代替する方針を合意する必要あり。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>役割分担（6/11定例後・確定状況）</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+      <div class="card success">
+        <div class="card-title">時田氏（デジタルアーク）</div>
+        <ul class="normal">
+          <li>セキュリティポリシー全体の策定</li>
+          <li>情報セキュリティ対策基準（6月中旬完成予定）</li>
+          <li>インシデント対応マニュアル整備</li>
+          <li>セキュリティ設定の方針決定</li>
+        </ul>
+      </div>
+      <div class="card info">
+        <div class="card-title">三井田が担う（確定）</div>
+        <ul class="normal">
+          <li>SharePointサイト設計・構築（ゼロから）← <strong>方向性合意済み</strong></li>
+          <li>Teamsガバナンス整備 ← <strong>方向性合意済み</strong></li>
+          <li>Entra IDグループ設計・実装 ← <strong>三井田が主導</strong></li>
+          <li>ワークフローアドイン提案・費用説明 ← <strong>資料整備済み</strong></li>
+          <li>ユーザー向けマニュアル作成（7〜8月）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card success" style="margin-top:12px">
+      <div class="card-title">✅ 分担ライン確定（6/11定例）</div>
+      <p>Entra IDグループ設計は三井田が主導。SharePoint設計・Teamsルール整備の方向性も合意済み。時田氏はセキュリティポリシー専任。</p>
+    </div>
+  </div>
+</div><!-- /page-catchup -->
+
+
+<!-- ======================================================
+     ページ 2: 案件概要
+====================================================== -->
+<div id="page-brief" class="page">
+  <div class="page-header">
+    <div class="badge">PROJECT BRIEF</div>
+    <h2>📋 案件概要</h2>
+    <div class="meta">最終更新: 2026-06-02</div>
+  </div>
+
+  <div class="section">
+    <h3>案件サマリー</h3>
+    <table>
+      <tr><td><strong>案件名</strong></td><td>武蔵野美術大学 Microsoft 365 導入支援コンサルティング</td></tr>
+      <tr><td><strong>契約形態</strong></td><td>準委任契約</td></tr>
+      <tr><td><strong>想定工数</strong></td><td>20時間／月（上限）</td></tr>
+      <tr><td><strong>時間単価</strong></td><td>〜6,500円/時間</td></tr>
+      <tr><td><strong>勤務形態</strong></td><td>フルリモート（平日日中）</td></tr>
+      <tr><td><strong>重要期限①</strong></td><td><strong>2026年8月下旬（お盆明け予定）</strong> メール移行（DEEPMail→Exchange Online）実施。日程は先方と最終調整中。</td></tr>
+      <tr><td><strong>重要期限②</strong></td><td>maunet.（Garoon）廃止時期 — <strong>未確定</strong>。年度末まで継続利用方針。移行状況を見ながら段階的に決定。</td></tr>
+      <tr><td><strong>定例会議</strong></td><td>毎週木曜午前 Google Meet（時田氏リンク）</td></tr>
+      <tr><td><strong>支払サイト</strong></td><td>月末締め翌々月10日（40日）</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>スコープ</h3>
+    <h4>✅ スコープイン</h4>
+    <table class="table-sm">
+      <tr><th>優先度</th><th>カテゴリ</th><th>内容</th></tr>
+      <tr><td><span class="prio-s">S</span></td><td>セキュリティルール策定</td><td>M365移行に伴うポリシー・ガイドラインの方針策定</td></tr>
+      <tr><td><span class="prio-s">S</span></td><td>定例会議参加</td><td>毎週木曜午前のDXプロジェクト定例（6月は時田氏の定例に同席）</td></tr>
+      <tr><td><span class="prio-a">A</span></td><td>SharePoint設計</td><td>サイト構成の設計・サンプル構築、利用ルール策定（ゼロから）</td></tr>
+      <tr><td><span class="prio-a">A</span></td><td>ワークフロー設計</td><td>X-point後継の設計支援（Power Automate等）</td></tr>
+      <tr><td><span class="prio-a">A</span></td><td>Entra IDグループ設計</td><td>権限管理のためのグループ構造設計</td></tr>
+      <tr><td><span class="prio-b">B</span></td><td>Teams運用ルール整備</td><td>ガバナンスポリシー策定</td></tr>
+      <tr><td><span class="prio-b">B</span></td><td>マニュアル作成</td><td>現場向け操作ガイド・研修資料</td></tr>
+    </table>
+    <h4>❌ スコープアウト</h4>
+    <table class="table-sm">
+      <tr><th>業務</th><th>理由</th></tr>
+      <tr><td>メール移行（DepMail→Exchange Online）</td><td>別の委託会社が担当（2026年8月目標）</td></tr>
+      <tr><td>Exchange Online設定</td><td>別委託会社の担当範囲</td></tr>
+      <tr><td>日常インフラ管理・ヘルプデスク</td><td>常駐委託者が担当</td></tr>
+      <tr><td>PowerApps開発</td><td>スコープ外</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>体制</h3>
+    <div class="code-block">学校法人武蔵野美術大学
+    ├─ DXプロジェクト（河野・山越・鳥巣・伊藤）
+    │       ↓ 週次木曜午前定例（Google Meet）
+    ├─ 情報管理担当：井上氏・前田氏（M365管理者）
+    ├─ デジタルアーク／時田氏（セキュリティポリシー担当・12月から）
+    ├─ 常駐委託者（インフラ・ヘルプデスク）
+    └─ 三井田（M365導入支援コンサルタント）
+                    ↕
+        別の委託会社（DepMail→Exchange Online移行担当・2026年8月）
+
+ベンダー間連絡: チャットワーク（三井田・時田・畠中）＋Googleドライブ（資料共有）</div>
+  </div>
+
+  <div class="section">
+    <h3>工数配分（月20H）</h3>
+    <table>
+      <tr><th>用途</th><th>目安時間</th></tr>
+      <tr><td>木曜定例MTG（週1回×4〜5週）</td><td>4〜5H/月</td></tr>
+      <tr><td>成果物作成・設計・調査</td><td>15H/月</td></tr>
+    </table>
+  </div>
+</div><!-- /page-brief -->
+
+
+<!-- ======================================================
+     ページ 3: ヒアリングシート
+====================================================== -->
+<div id="page-hearing" class="page">
+  <div class="page-header">
+    <div class="badge">HEARING SHEET</div>
+    <h2>📝 ヒアリングシート（回答状況付き）</h2>
+    <div class="meta">最終更新: 2026-06-04</div>
+  </div>
+
+  <div class="callout">
+    <strong>凡例:</strong>
+    <span class="badge-confirmed" style="margin-left:8px">✅ 確認済</span>
+    <span class="badge-pending" style="margin-left:6px">🔲 要確認</span>
+    <span class="badge-danger" style="margin-left:6px">🔴 Must（最優先）</span>
+  </div>
+
+  <!-- A. Garoon -->
+  <div class="section">
+    <h3>A. Garoon（maunet.）利用状況</h3>
+    <ul class="checklist">
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">A-1. 使っている機能 <span class="badge-danger">Must</span></div>
+          <div class="check-memo">スケジュール、掲示板・回覧、ファイル管理、ワークフロー（軽い申請）、施設管理。<br>
+          メールはDepMail（@musabi.ac.jp）。ワークフローの重い決裁はX-pointが担当。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">A-2. 利用ユーザー <span class="badge-danger">Must</span></div>
+          <div class="check-memo">専任教員・助教助手・専任職員・嘱託職員・派遣社員。非常勤講師はGaroon対象外（M365は利用可）。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">A-3. 使っていない部署・役職</div>
+          <div class="check-memo">非常勤講師・客員教授はGaroon対象外。研究室独自ツール利用の実態は把握しきれていない。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">A-4. ワークフロー・申請フロー</div>
+          <div class="check-memo">あり（比較的軽い申請）。重い決裁はX-point。<strong>X-pointは2026年度末で契約終了予定。</strong>移行先未決定。</div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🔲</span>
+        <div class="check-content">
+          <div class="check-title">A-5. 過去データの移行要否</div>
+          <div class="check-memo">掲示板→SharePoint移行方針あり。詳細は要確認。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">A-6. Garoon廃止予定時期</div>
+          <div class="check-memo">maunet.（Garoon）は<strong>年度末（2026年度末）まで継続利用</strong>。廃止時期は移行状況を見ながら段階的に決定する方針（✅ 2026-06-04 井上氏確認）。11月廃止は確定ではない。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- B. M365 -->
+  <div class="section">
+    <h3>B. M365の現状確認</h3>
+    <ul class="checklist">
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">B-1. ライセンス種別 <span class="badge-danger">Must</span></div>
+          <div class="check-memo">学生・教職員ともに <strong>A3</strong>。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">B-2. 現在使えているサービス <span class="badge-danger">Must</span></div>
+          <div class="check-memo">
+            Teams：使用中（9,000チーム超・無秩序）<br>
+            SharePoint：デフォルト状態のみ（ゼロから設計必要）<br>
+            OneDrive：各自自由利用<br>
+            Copilot：<strong>使用許可済み</strong>（テナント内。AI学習に使用されない）<br>
+            Outlook：移行予定（2026年8月、別ベンダー）
+          </div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">B-3. M365テナント名</div>
+          <div class="check-memo"><strong>musabiac.onmicrosoft.com</strong>（✅ 2026-06-04確認済み）</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">B-4. M365管理者・MFA設定</div>
+          <div class="check-memo">
+            管理者 = 井上氏・前田氏（情報管理担当）。<br>
+            <strong>MFA（M365）: 職員のみ適用。教員は未適用。</strong>VPN接続はMFA適用済み。<br>
+            条件付きアクセス設定済み（学外アクセスのみMFA必須・学内IP免除）。<br>
+            パスワード保護: Auditモード（Enforced未設定）。パスワード要件は8文字以上・10回失敗でロック。
+          </div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">B-5. Active Directory連携</div>
+          <div class="check-memo"><strong>オンプレADなし（クラウドのみ）。人事システムとの自動同期なし（手動運用）。</strong>Entra IDのセキュリティグループは属性のみ一部利用。グループ機能は未整備。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">B-6. 対象ユーザー</div>
+          <div class="check-memo">教職員全員（専任・非常勤含む）＋学生（通信教育除く、今後全員予定）。<br>
+          ドメイン：教職員 @fs.musabi.ac.jp / 学生 @ct.musabi.ac.jp / DEEPMail @musabi.ac.jp</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- C. メール移行 -->
+  <div class="section">
+    <h3>C. メール移行状況</h3>
+    <ul class="checklist">
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">C-1. 別ベンダーの担当者 <span class="badge-danger">Must</span></div>
+          <div class="check-memo">別の委託会社が担当。情報管理担当・神山氏が窓口。<strong>会社名・担当者連絡先は要確認。</strong></div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">C-2. メール移行スケジュール</div>
+          <div class="check-memo">
+            <strong>移行日: 2026年8月下旬（お盆明け予定）</strong>。日程は先方と最終調整中。<br>
+            移行後の問い合わせ対応を考慮し、お盆休み前の実施は回避する方針。<br>
+            キックオフ（2026-06-02）で決定した主な事項:<br>
+            ・メーリングリスト → 配布グループで実装（外部アドレス登録不可のため）<br>
+            ・代表メール → M365共有メールボックスで実装<br>
+            ・DEEPMailアドレス帳 → <strong>移行しない</strong>（個人対応）<br>
+            ・SMTP容量: 40MB → <strong>25MBに縮小</strong>（要アナウンス）<br>
+            ・<strong>UPN変更で全ユーザーのMFA設定がリセット</strong>される。Authenticator再登録が全員必要。
+          </div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🔲</span>
+        <div class="check-content">
+          <div class="check-title">C-3. Exchange Onlineの分担境界</div>
+          <div class="check-memo">三井田はExchange Onlineに触れない想定。境界を明文化する必要あり。</div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🔲</span>
+        <div class="check-content">
+          <div class="check-title">C-4. 別ベンダーとの連携MTG</div>
+          <div class="check-memo">未確認。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- D. 優先課題 -->
+  <div class="section">
+    <h3>D. 優先課題の確認</h3>
+    <ul class="checklist">
+      <li class="must">
+        <span class="check-icon">🔴</span>
+        <div class="check-content">
+          <div class="check-title">D-1. まず動かしたいサービス Top3 <span class="badge-danger">Must</span></div>
+          <div class="check-memo">公式未確認。推測では ①SharePoint（回覧板・文書管理）②Teams（ルール整備）③Outlook（メール移行）。次回確認必須。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">D-2. 現場で一番困っていること</div>
+          <div class="check-memo">①ツールが乱立し何をどこで使うか不明瞭 ②Teamsチームが無秩序 ③メールアドレスが複数ドメインに分散して検索性が悪い</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">D-3. 懐疑的なユーザー</div>
+          <div class="check-memo">「Teamsが嫌」という専任教員がいる（個別対応の方針）。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">D-4. 成功のゴールイメージ</div>
+          <div class="check-memo">maunet.（Garoon）の廃止時期は移行状況次第で段階的に決定。M365への集約が最終ゴール。Copilot活用の将来展開も視野に。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- G. セキュリティ -->
+  <div class="section">
+    <h3>G. 禁止事項・制約（学校法人特有）</h3>
+    <ul class="checklist">
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">G-1. 学内セキュリティポリシー <span class="badge-danger">Must</span></div>
+          <div class="check-memo">
+            以下の文書が全て策定・原本確認済み（docs/フォルダに格納）:<br>
+            1. 個人情報保護基本方針（策定済み・対外公表）<br>
+            2. 個人情報保護規則（策定済み）<br>
+            3. 情報セキュリティ対策基本規則（策定済み）<br>
+            4. 情報システム管理運営規則（策定済み）<br>
+            5. <strong>情報セキュリティ対策基準 MAU-SEC-001 ← 2026年4月1日 正式施行済み</strong><br>
+            6. <strong>情報セキュリティ一般ルールマニュアル（27スライド・全教職員向け）← 策定済み</strong><br>
+            + デジタルツール運用ルール ver.1（2026/1/13、Teams使い分けルール）<br>
+            <span class="badge-confirmed" style="margin-top:4px;display:inline-block">✅ 原本取得済み</span>
+          </div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">G-2. 学生情報のクラウド保存制約</div>
+          <div class="check-memo">
+            <strong>制約あり（MAU-SEC-001で明記済み）。</strong><br>
+            成績・個人情報・健康診断結果等は「機密情報」に分類。<br>
+            SharePoint等への保存時は「教職員」秘密度ラベルを付与して暗号化必須。<br>
+            <strong>要配慮個人情報はCopilotへの入力禁止。</strong><br>
+            機密情報のクラウド保存は一時的利用に限り、使用後は速やかに削除。
+          </div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">G-3. 外部への共有制限</div>
+          <div class="check-memo">現在はTeamsへのゲストアカウント招待は不可。外部データ授受ルールも未整備。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">G-4. 使用禁止・制限機能</div>
+          <div class="check-memo">Copilotは使用許可済み（テナント内。AI学習に使用されない）。ただし<strong>要配慮個人情報・機密情報のCopilotへの入力は禁止</strong>（MAU-SEC-001・一般ルールマニュアルで明記）。個人契約クラウド（Google Drive等）への業務データ保存禁止。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">G-5. 端末環境</div>
+          <div class="check-memo">学外アクセスはVPN・仮想デスクトップで可能。Mac版OutlookはMAPI非対応で機能制限あり。スマートフォンは必須。Windows/Mac比率・MDMは要確認。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- H. 追加確認事項 -->
+  <div class="section">
+    <h3>H. 追加確認事項（資料確認後に追加）</h3>
+    <ul class="checklist">
+      <li class="must">
+        <span class="check-icon">🔴</span>
+        <div class="check-content">
+          <div class="check-title">H-1. X-point契約終了後のワークフロー基盤</div>
+          <div class="check-memo">X-pointは<strong>2026年度末で契約終了予定</strong>。「Microsoftではないシステムの導入を検討中」とのことだが未決定。</div>
+        </div>
+      </li>
+      <li class="must">
+        <span class="check-icon">🔴</span>
+        <div class="check-content">
+          <div class="check-title">H-2. Entra IDグループ設計の進め方</div>
+          <div class="check-memo"><strong>「Clerk Users」グループが存在確認済み（≈職員グループ）。</strong>ただし教員グループは未整備。SharePoint権限設計の前提としてグループ体系の整備が必要。人事システム連携なしのため手動管理。MFA全教職員展開もグループ設計と連動して検討が必要。</div>
+        </div>
+      </li>
+      <li class="checked">
+        <span class="check-icon">✅</span>
+        <div class="check-content">
+          <div class="check-title">H-3. 共有ファイルサーバーとSharePointの棲み分け</div>
+          <div class="check-memo"><strong>共有ファイルサーバーは廃止されず継続。</strong>一般ルールマニュアルで指定保存先のひとつとして明記済み。暫定方針:「共有ドライブ=正式保存先、SharePoint（Teams）=作業中ファイル」。詳細な用途分離ルールは今後整理。</div>
+        </div>
+      </li>
+      <li class="unchecked">
+        <span class="check-icon">🔲</span>
+        <div class="check-content">
+          <div class="check-title">H-4. Teams/Zoomの使い分けルール</div>
+          <div class="check-memo">両ツールが現在並行利用中。明示的な使い分け方針が未策定。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>確認状況サマリー</h3>
+    <table>
+      <tr><th>セクション</th><th>確認済み</th><th>要確認・未確定</th></tr>
+      <tr><td>A. Garoon利用状況</td><td><span class="badge-confirmed">A-1〜A-4、A-6</span></td><td>A-5（データ移行要否）</td></tr>
+      <tr><td>B. M365現状</td><td><span class="badge-confirmed">B-1〜B-6 全て</span></td><td>B-4（教員MFA展開時期）</td></tr>
+      <tr><td>C. メール移行</td><td><span class="badge-confirmed">C-1（担当）、C-2（お盆明け予定）</span></td><td>C-1（社名）、C-3、C-4</td></tr>
+      <tr><td>D. 優先課題</td><td><span class="badge-confirmed">D-2、D-3、D-4</span></td><td><strong>D-1（Top3）</strong></td></tr>
+      <tr><td>E. 決裁フロー</td><td><span class="badge-confirmed">E-1（DXチームが主体）</span></td><td>最終承認者名、手続き詳細</td></tr>
+      <tr><td>G. 禁止・制約</td><td><span class="badge-confirmed">G-1〜G-5 全て（原本取得済み）</span></td><td>G-5（Mac比率・MDM）</td></tr>
+      <tr><td>H. 追加確認</td><td><span class="badge-confirmed">H-3（ファイルサーバー継続確認）</span></td><td><strong>H-1（X-point後継）、H-2（Entra IDグループ）、H-4（Teams/Zoom）</strong></td></tr>
+    </table>
+  </div>
+</div><!-- /page-hearing -->
+
+
+<!-- ======================================================
+     ページ 4: ナレッジベース
+====================================================== -->
+<div id="page-knowledge" class="page">
+  <div class="page-header">
+    <div class="badge">KNOWLEDGE BASE</div>
+    <h2>🗂 ナレッジベース</h2>
+    <div class="meta">情報源: docs/フォルダ内6ドキュメント（2025年12月〜2026年6月）</div>
+  </div>
+
+  <div class="section">
+    <h3>DXプロジェクトチーム</h3>
+    <table>
+      <tr><th>氏名</th><th>所属・役割</th></tr>
+      <tr><td>河野氏</td><td>DX推進チーム</td></tr>
+      <tr><td>山越氏</td><td>DX推進チーム</td></tr>
+      <tr><td>鳥巣氏</td><td>DX推進チーム</td></tr>
+      <tr><td>伊藤氏</td><td>DX推進チーム / 施設管財</td></tr>
+      <tr><td><strong>井上氏</strong></td><td>情報管理担当（M365管理者）</td></tr>
+      <tr><td><strong>前田氏</strong></td><td>情報管理担当（M365管理者）</td></tr>
+      <tr><td>神山氏</td><td>情報管理担当（メール移行窓口）</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>移行の背景</h3>
+    <div class="card">
+      <div class="card-title">Garoon（maunet.）を廃止する理由</div>
+      <ul class="normal">
+        <li>パッケージ版は<strong>2033年サービス終了予定</strong>。クラウド版切替コストが約300万円/年に対し現在50〜60万円/年</li>
+        <li>類似サービスの重複・乱立による業務効率の低下</li>
+        <li>2023年度以降入職者6人中4人が前職でM365利用経験あり</li>
+        <li>Copilot等AI活用の将来展開</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>ドメイン・アカウント構成</h3>
+    <table>
+      <tr><th>ツール</th><th>ドメイン</th><th>対象</th></tr>
+      <tr><td>DEEPMail（現行）</td><td>@musabi.ac.jp</td><td>専任教員・助教助手・専任職員・嘱託・派遣</td></tr>
+      <tr><td>M365（教職員）</td><td>@fs.musabi.ac.jp</td><td>専任教員・助教助手・専任職員・嘱託・派遣・客員・非常勤講師</td></tr>
+      <tr><td>M365（学生）</td><td>@ct.musabi.ac.jp</td><td>学生（通信教育除く→今後全員予定）</td></tr>
+    </table>
+    <div class="callout warn" style="margin-top:10px">
+      メールアドレス統合（@musabi.ac.jpへの統一）は検討中。現行履歴を維持したまま移行できる可能性あり（神山氏談）。
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Entra ID の状況</h3>
+    <table>
+      <tr><th>項目</th><th>状況</th></tr>
+      <tr><td><strong>テナント名</strong></td><td><span class="badge-confirmed">✅ musabiac.onmicrosoft.com</span></td></tr>
+      <tr><td>セキュリティグループ</td><td><span class="badge-pending">Clerk Users（職員グループ）は存在。教員グループは未整備</span></td></tr>
+      <tr><td>MFA（M365）</td><td><span class="badge-pending">職員のみ適用。<strong>教員は未適用</strong>。VPN接続はMFA適用済み</span></td></tr>
+      <tr><td>条件付きアクセス</td><td>学内IP（133.73.0.0/16）はMFA免除。学外アクセスのみMFA必須</td></tr>
+      <tr><td>人事システム連携</td><td><span class="badge-pending">なし（手動運用）</span></td></tr>
+      <tr><td>統合認証基盤（SSO）</td><td>LiveCampusが現状IDマスターになっている。Entra ID活用を検討中</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>セキュリティポリシー階層</h3>
+    <table>
+      <tr><th>層</th><th>名称</th><th>状態</th></tr>
+      <tr><td>第1層</td><td>個人情報保護基本方針（プライバシーポリシー）</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第2層</td><td>個人情報保護規則</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第1-2層</td><td>情報セキュリティ対策基本規則</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第2層</td><td>情報システム管理運営規則</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第3層</td><td><strong>情報セキュリティ対策基準（案）</strong></td><td><span class="badge-pending">🔲 ひな形段階（時田氏策定中）</span></td></tr>
+      <tr><td>第3層</td><td>デジタルツール運用ルール ver.1</td><td><span class="badge-confirmed">✅ 2026/1/13 策定済み（事務組織向け）</span></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>発生済みインシデント</h3>
+    <div class="card danger">
+      <div class="card-title">🚨 SharePoint内資料の学内漏洩</div>
+      <p><strong>事象:</strong> TeamsチームのプライバシーをPUBLICに誤設定。会議情報・ファイルが学内全Teams利用者に公開された。</p>
+      <p style="margin-top:6px"><strong>対策済み:</strong> デフォルト「プライベート」に変更（時田氏対応）。</p>
+      <p style="margin-top:6px"><strong>残課題:</strong> 既存チームの定期棚卸、SharePoint権限設定ルールの策定。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>移行スケジュール</h3>
+    <table>
+      <tr><th>時期</th><th>内容</th></tr>
+      <tr><td>2025年10〜11月</td><td>移行準備（各部局ヒアリング・データ整理）</td></tr>
+      <tr><td>2025年11月〜2026年10月</td><td>一部機能から段階的移行</td></tr>
+      <tr><td><strong>2026年8月下旬（お盆明け予定）</strong></td><td>DEEPMail → Exchange Online移行（別ベンダー）。日程は先方と最終調整中。UPN変更で全ユーザーのMFAリセット発生。</td></tr>
+      <tr><td><strong>2026年度末（時期未確定）</strong></td><td>maunet.（Garoon）廃止。移行状況を見ながら段階的に決定。11月は確定ではない。</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>優先課題一覧</h3>
+    <h4><span class="prio-s">優先度 S（最優先・移行前に必ず整備）</span></h4>
+    <table class="table-sm">
+      <tr><th>#</th><th>課題</th><th>対策素案</th></tr>
+      <tr><td>1</td><td>M365専任職員向け運用ルール未整備</td><td>「してよい／だめ／原則」の行動ルール化</td></tr>
+      <tr><td>2</td><td>情報分類×保存場所×共有方法が未定義</td><td>Teams/SharePoint/OneDriveの役割明確化</td></tr>
+      <tr><td>3</td><td>Teamsチームの乱立防止ルール</td><td>チーム作成基準・命名規則・所有者ルール策定</td></tr>
+      <tr><td>4</td><td>チーム公開設定ミスによる情報漏洩（発生済み）</td><td>原則「非公開」の徹底・チェックリスト導入</td></tr>
+      <tr><td>5</td><td>SharePoint権限設定ルール未整備</td><td>閲覧/編集/期限ルール策定</td></tr>
+      <tr><td>6</td><td>文書保存場所の分散（ローカル・USB・クラウド）</td><td>正式保存先の統一・USB原則禁止</td></tr>
+      <tr><td>7</td><td>インシデント対応フロー未整備</td><td>初動対応フロー・連絡先の明文化</td></tr>
+    </table>
+    <h4><span class="prio-a">優先度 A（移行後速やかに対応）</span></h4>
+    <table class="table-sm">
+      <tr><th>#</th><th>課題</th></tr>
+      <tr><td>1</td><td>非常勤講師・派遣職員のアカウント管理（停止ルール未整備）</td></tr>
+      <tr><td>2</td><td>個人クラウド（Google Drive等）利用が黙認状態</td></tr>
+      <tr><td>3</td><td>メール利用ルール未整備</td></tr>
+      <tr><td>4</td><td>学外とのデータ授受ルール未整備</td></tr>
+      <tr><td>5</td><td>MFA未導入・パスワードポリシーなし</td></tr>
+      <tr><td>6</td><td>IT・セキュリティ研修の定期実施（現状ほぼなし）</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>SharePoint回覧板 設計要件（2026年4月確認済み）</h3>
+    <table class="table-sm">
+      <tr><th>項目</th><th>確認結果</th></tr>
+      <tr><td>グループ重複</td><td>専任職員と教員で一部重複（兼任者あり）</td></tr>
+      <tr><td>閲覧対象</td><td>①全体 ②専任職員のみ ③教員のみ ⑤専任職員＋教員 ⑥雇用形態別・所属別</td></tr>
+      <tr><td>投稿者</td><td>管理担当者＋各部署担当者の両方</td></tr>
+      <tr><td>承認フロー</td><td>案件によって異なる（未確立）</td></tr>
+      <tr><td>既読管理</td><td>不要</td></tr>
+      <tr><td>通知方法</td><td>Teamsまたはメール通知（要相談）</td></tr>
+      <tr><td>スマートフォン</td><td>必須</td></tr>
+      <tr><td>Entra IDグループ</td><td><span class="badge-danger">未整備 ← 設計前に構築が必要</span></td></tr>
+    </table>
+  </div>
+</div><!-- /page-knowledge -->
+
+
+<!-- ======================================================
+     ページ 5: 仮説フレーム
+====================================================== -->
+<div id="page-hypothesis" class="page">
+  <div class="page-header">
+    <div class="badge">HYPOTHESIS</div>
+    <h2>🔬 仮説フレーム</h2>
+    <div class="meta">最終更新: 2026-06-02</div>
+  </div>
+
+  <div class="section">
+    <h3>仮説の検証状況</h3>
+    <table>
+      <tr><th>ID</th><th>仮説</th><th>状態</th><th>更新日</th></tr>
+      <tr>
+        <td>A-1</td>
+        <td>意思決定に時間がかかる</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>A-2</td>
+        <td>担当者はIT操作が得意ではない</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>A-3</td>
+        <td>別ベンダーとの連携が薄い</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>B-1</td>
+        <td>Mac端末の比率が高い</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>B-2</td>
+        <td>Teamsはほぼ使われていない</td>
+        <td><span class="badge-danger">❌ 否定</span></td>
+        <td>2026-05-20</td>
+      </tr>
+      <tr>
+        <td>B-3</td>
+        <td>SharePoint・OneDriveは手つかず</td>
+        <td><span class="badge-confirmed">✅ 確認</span></td>
+        <td>2026-06-01</td>
+      </tr>
+      <tr>
+        <td>B-4</td>
+        <td>Garoonのワークフローはあまり活用されていない</td>
+        <td><span class="badge-danger">❌ 否定＋修正</span></td>
+        <td>2026-06-01</td>
+      </tr>
+      <tr>
+        <td>B-5</td>
+        <td>Copilot展開は教員から始まる</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>C-1</td>
+        <td>「ガルーンをやめたい」が主な動機</td>
+        <td><span class="badge-confirmed">✅ 確認</span></td>
+        <td>2026-05-13</td>
+      </tr>
+      <tr>
+        <td>C-2</td>
+        <td>Copilotへの期待が高いがイメージはぼんやり</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>C-3</td>
+        <td>マニュアルより一緒にやってもらいたい</td>
+        <td><span class="badge-pending">🔲 未確認</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>主要仮説の詳細</h3>
+    <div class="card danger">
+      <div class="card-title">B-2（否定）: Teamsは「無秩序に使われすぎている」</div>
+      <p>「Teamsはほぼ使われていない」という仮説は完全に否定。COVID-19以降、ルールなしで使い続けた結果<strong>チーム数が9,000超</strong>に膨れ上がった。</p>
+    </div>
+    <div class="card warn">
+      <div class="card-title">B-4（否定＋修正）: ワークフロー主体はX-point</div>
+      <p>Garoonワークフローが複雑という想定は一部正しいが、<strong>重い決裁フローはX-point（別ツール）が担っている</strong>。Power Automate全面移行の前提は崩れた。しかもX-pointは2026年度末で契約終了予定。</p>
+    </div>
+    <div class="card success">
+      <div class="card-title">B-3（確認）: SharePointは本当に手つかず</div>
+      <p>デフォルト状態のみ。ゼロから設計できる = 三井田さんのSharePoint設計経験が最大限に活かせる場面。</p>
+    </div>
+  </div>
+</div><!-- /page-hypothesis -->
+
+
+<!-- ======================================================
+     ページ 6: Teams問題整理
+====================================================== -->
+<div id="page-teams" class="page">
+  <div class="page-header">
+    <div class="badge">TEAMS GOVERNANCE</div>
+    <h2>⚠️ Teamsチーム数問題 — 整理と提案</h2>
+    <div class="meta">コンサルタントのスタンス: 整理の依頼はされていない。放置リスクを説明し選択肢を提示する立場。</div>
+  </div>
+
+  <div class="section">
+    <h3>現状の確認</h3>
+    <table>
+      <tr><th>項目</th><th>状況</th></tr>
+      <tr><td>チーム数</td><td><strong>9,000超</strong>（確認済み）</td></tr>
+      <tr><td>主な原因</td><td>教員が授業単位でチームを作成（1授業1チーム）。教養科目が毎年多数あるため継続的に増加。</td></tr>
+      <tr><td>経過年数</td><td>約5年間この状態が継続</td></tr>
+      <tr><td>直接の依頼</td><td>整理の依頼はなし。ただし「ルールは整備したい」という意向あり</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>放置することで起きる問題</h3>
+    <div class="card danger">
+      <div class="card-title">🤖 Copilot展開への影響（最重要）</div>
+      <p>Copilotは「ユーザーがアクセスできる<strong>すべての情報</strong>」を参照して回答を生成する。SharePoint・Teams・OneDrive・メールにまたがる。</p>
+      <ul class="normal" style="margin-top:8px">
+        <li>整理されていない大量チームがある → Copilotが古い・不正確な情報を拾う</li>
+        <li><strong>学生に見えてはいけない情報がオーバーシェアされている（確認済み）</strong> → Copilotが機密情報を学生向けに引用するリスクが現実的</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>改善の選択肢（段階を選べる）</h3>
+    <table>
+      <tr>
+        <th>オプション</th>
+        <th>工数目安</th>
+        <th>効果</th>
+      </tr>
+      <tr>
+        <td><strong>Option A: 最小限</strong><br>新規作成ルールだけ整備</td>
+        <td>2〜3H</td>
+        <td>今後の増加を止める。既存9,000には手をつけない。</td>
+      </tr>
+      <tr>
+        <td><strong>Option B: 中程度</strong><br>新規ルール＋休眠チームの整理</td>
+        <td>5〜8H</td>
+        <td>AにプラスしてRAされていないチームを整理。</td>
+      </tr>
+      <tr>
+        <td><strong>Option C: 本格的なガバナンス整備</strong></td>
+        <td>別途見積もり</td>
+        <td>B＋ライフサイクルポリシー・ゲスト棚卸し・定期棚卸しサイクル確立</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>推奨アプローチ（コンサルタント所見）</h3>
+    <div class="callout success">
+      <p><strong>まず Option A を今回のスコープ内で実施することを提案。</strong></p>
+      <p>「これ以上増やさない」ルールを先に整備。Copilot展開前の最低限の準備として位置づける。</p>
+      <p style="margin-top:6px">Option B以降は大学側の判断と追加工数の合意が必要。</p>
+    </div>
+  </div>
+</div><!-- /page-teams -->
+
+
+<!-- ======================================================
+     ページ 7: セキュリティポリシー
+====================================================== -->
+<div id="page-security" class="page">
+  <div class="page-header">
+    <div class="badge">SECURITY POLICY</div>
+    <h2>🔐 セキュリティポリシー</h2>
+    <div class="meta">情報源: MAU-SEC-001（2026-06-03 追加）/ 情報セキュリティ一般ルールマニュアル</div>
+  </div>
+
+  <div class="callout success">
+    <strong>認識修正（2026-06-03）:</strong> MAU-SEC-001は「ひな形段階」ではなく <strong>2026年4月1日に正式施行済み</strong>。一般ルールマニュアルも整備完了。セキュリティポリシーはほぼ出揃っている状態。
+  </div>
+
+  <div class="section">
+    <h3>ポリシー文書一覧</h3>
+    <table>
+      <tr><th>層</th><th>文書名</th><th>状態</th></tr>
+      <tr><td>第1層</td><td>個人情報保護基本方針（プライバシーポリシー）</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第2層</td><td>個人情報保護規則</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第1-2層</td><td>情報セキュリティ対策基本規則</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第2層</td><td>情報システム管理運営規則</td><td><span class="badge-confirmed">✅ 策定済み</span></td></tr>
+      <tr><td>第3層</td><td><strong>情報セキュリティ対策基準 MAU-SEC-001</strong></td><td><span class="badge-confirmed">✅ 2026年4月1日 施行済み</span></td></tr>
+      <tr><td>第3層</td><td><strong>情報セキュリティ一般ルールマニュアル</strong></td><td><span class="badge-confirmed">✅ 策定済み（27スライド）</span></td></tr>
+      <tr><td>第3層</td><td>デジタルツール運用ルール ver.1</td><td><span class="badge-confirmed">✅ 2026/1/13 策定済み</span></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>情報の3分類</h3>
+    <table>
+      <tr><th>区分</th><th>定義</th><th>主な例</th><th>取扱い</th></tr>
+      <tr>
+        <td><span class="prio-s">機密情報</span></td>
+        <td>漏洩で法的責任・重大な被害が生じる情報</td>
+        <td>個人情報・成績・入試情報・口座情報・健康診断結果</td>
+        <td>業務従事者のみ。組織外共有禁止</td>
+      </tr>
+      <tr>
+        <td><span class="prio-a">内部情報</span></td>
+        <td>学外公開を予定しない業務情報</td>
+        <td>会議資料・事務連絡・申請書・ドラフト</td>
+        <td>学内構成員に限定。業務上必要な場合のみ組織外可</td>
+      </tr>
+      <tr>
+        <td><span class="prio-b">公開情報</span></td>
+        <td>学内外公開を前提とした情報</td>
+        <td>公式Webサイト・広報資料・シラバス</td>
+        <td>制限なし</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>秘密度ラベル（Sensitivity Labels）— 運用中</h3>
+    <div class="callout info">M365上で既に運用されている機能。新規ファイルには「教職員」ラベルが自動付与される。</div>
+    <table>
+      <tr><th>ラベル</th><th>対応分類</th><th>アクセス範囲</th><th>備考</th></tr>
+      <tr>
+        <td><strong>教職員</strong></td>
+        <td>機密情報・内部情報（教職員向け）</td>
+        <td>教職員のみ</td>
+        <td><span class="badge-info">デフォルト</span> 暗号化あり。組織外アカウントでは開けない</td>
+      </tr>
+      <tr>
+        <td><strong>教職員＋学生</strong></td>
+        <td>内部情報（学生も閲覧可）</td>
+        <td>学内全員</td>
+        <td>学外共有禁止</td>
+      </tr>
+      <tr>
+        <td><strong>制限なし</strong></td>
+        <td>公開情報</td>
+        <td>制限なし</td>
+        <td>学外への共有・送付可</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>ファイル保存の指定場所</h3>
+    <div class="card success">
+      <div class="card-title">大学指定の保存先（以下のいずれかを使用）</div>
+      <ul class="normal">
+        <li><strong>Teams / SharePoint</strong> — チーム・プロジェクト単位の共有・蓄積</li>
+        <li><strong>OneDrive</strong> — 個人作業ファイル</li>
+        <li><strong>共有ファイルサーバー</strong> — 継続利用可（廃止ではない）</li>
+      </ul>
+    </div>
+    <div class="card danger">
+      <div class="card-title">禁止</div>
+      <ul class="normal">
+        <li>私物PCへの業務データ保存</li>
+        <li>個人契約クラウド（Google Drive、Dropbox等）への保存</li>
+        <li>不特定多数がアクセス可能なリンクの作成</li>
+        <li>機密情報のクラウド保存（一時的利用を除く）</li>
+      </ul>
+    </div>
+    <div class="callout warn">
+      <strong>共有ファイルサーバーとSharePointの棲み分け（H-3）:</strong> 一般ルールマニュアルで「共有ドライブ=正式保存先、SharePoint(Teams)=作業中ファイル」という暫定方針が示されている。ただし詳細な用途分離ルールは「今後整理する」段階。
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Copilot（生成AI）の利用ルール</h3>
+    <table>
+      <tr><th>対象情報</th><th>Copilotへの入力</th></tr>
+      <tr><td>公開情報・内部情報</td><td><span class="badge-confirmed">✅ 可（M365ログイン状態・テナント内）</span></td></tr>
+      <tr><td><strong>要配慮個人情報・機密情報</strong></td><td><span class="badge-danger">❌ 入力禁止（MAU-SEC-001・マニュアルで明記）</span></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>主要ルール早見表</h3>
+    <table class="table-sm">
+      <tr><th>項目</th><th>ルール</th></tr>
+      <tr><td>パスワード</td><td>8文字以上・数字記号推奨・10回失敗でロック</td></tr>
+      <tr><td>BYOD（私物端末）</td><td>Teams/Outlook利用は可。業務ファイルの端末保存禁止。機密情報のダウンロード禁止</td></tr>
+      <tr><td>USB</td><td>業務上必要な場合のみ可。業務データ保存時は暗号化推奨。私有USB接続禁止</td></tr>
+      <tr><td>学外持ち出し（貸与端末）</td><td>所属長の承認が必要</td></tr>
+      <tr><td>公衆Wi-Fi</td><td>機密情報・内部情報の取り扱いは非推奨</td></tr>
+      <tr><td>メール・チャットへの記載</td><td>要配慮個人情報はメール・チャット本文に直接書かない。添付ファイル＋秘密度ラベルで</td></tr>
+      <tr><td>インシデント発見時</td><td>自己判断での対処禁止。即MAU-CSIRTへ報告</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>Entra ID 実設定値（✅ 2026-06-03 確認済み）</h3>
+    <h4>アカウントロック設定</h4>
+    <table class="table-sm">
+      <tr><th>項目</th><th>設定値</th><th>備考</th></tr>
+      <tr><td>ロック回数（Lockout threshold）</td><td><strong>10回</strong></td><td>MAU-SEC-001記載と一致</td></tr>
+      <tr><td>ロック時間（Lockout duration）</td><td><strong>60秒</strong></td><td>短め。運用上の影響要確認</td></tr>
+      <tr><td>パスワード保護モード</td><td><span class="badge-pending">Audit（監査）</span></td><td>⚠️ Enforced未設定。技術的なブロックが機能していない状態</td></tr>
+    </table>
+    <h4>条件付きアクセス（Conditional Access）</h4>
+    <p style="margin-bottom:8px"><strong>テナント名（✅ 確認済み）:</strong> musabiac.onmicrosoft.com</p>
+    <table class="table-sm">
+      <tr><th>項目</th><th>設定値</th></tr>
+      <tr><td>学内Named Location名</td><td><strong>Musashino Art University</strong></td></tr>
+      <tr><td>学内IPアドレス範囲</td><td><strong>133.73.0.0/16</strong>（現在の学内NWと一致確認済み）</td></tr>
+      <tr><td>学内からのアクセス</td><td><span class="badge-confirmed">MFA免除</span>（信頼済みIPとして除外）</td></tr>
+      <tr><td>学外からのアクセス</td><td><span class="badge-confirmed">MFA必須</span>（Require MFAポリシー）</td></tr>
+    </table>
+    <h4>MFA適用範囲</h4>
+    <table class="table-sm">
+      <tr><th>対象</th><th>M365 MFA</th><th>VPN MFA</th></tr>
+      <tr><td>職員</td><td><span class="badge-confirmed">✅ 適用済み</span>（Clerk Users グループ）</td><td><span class="badge-confirmed">✅ 適用済み</span></td></tr>
+      <tr><td>教員</td><td><span class="badge-danger">❌ 未適用</span></td><td><span class="badge-confirmed">✅ 適用済み</span></td></tr>
+    </table>
+    <div class="callout warn" style="margin-top:8px">
+      教員へのM365 MFA展開が未完了。MAU-SEC-001との整合性確認と展開計画が今後の課題。パスワード保護もAuditモードのままのため、Enforcedへの切り替えも必要。
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>インシデント連絡先</h3>
+    <div class="card danger">
+      <div class="card-title">🚨 MAU-CSIRT（緊急・インシデント発生時）</div>
+      <p>メール: <strong>iss@fs.musabi.ac.jp</strong>（情報管理担当 / DXチーム兼任）</p>
+      <p>受付: 平日 9:00〜17:00</p>
+      <p style="margin-top:8px">「もしかしたら漏洩したかも」という段階でも即報告。自己判断での解決・隠蔽は厳禁。</p>
+    </div>
+  </div>
+</div><!-- /page-security -->
+
+
+<!-- ======================================================
+     ページ 8: スケジュール
+====================================================== -->
+<div id="page-schedule" class="page">
+  <div class="page-header">
+    <div class="badge">SCHEDULE</div>
+    <h2>📅 プロジェクトスケジュール（概略）</h2>
+    <div class="meta">作成: 2026-06-04 ／ ざっくりとした全体感の整理</div>
+  </div>
+
+  <div class="callout warn">
+    現時点で確定している大きな期限は<strong>メール移行（お盆明け・8月下旬予定）</strong>のみ。maunet.（Garoon）の廃止時期は未確定。各マイルストーンは今後の定例MTGで順次具体化していく。
+  </div>
+
+  <!-- タイムライン -->
+  <div class="section">
+    <h3>マイルストーン</h3>
+
+    <style>
+      .timeline { position: relative; padding-left: 28px; margin: 8px 0; }
+      .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+      .tl-item { position: relative; margin-bottom: 20px; }
+      .tl-item::before { content: ''; position: absolute; left: -22px; top: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--border); background: #fff; }
+      .tl-item.now::before { background: var(--primary); border-color: var(--primary); }
+      .tl-item.warn::before { background: var(--pending); border-color: var(--pending); }
+      .tl-item.danger::before { background: var(--danger); border-color: var(--danger); }
+      .tl-item.done::before { background: var(--confirmed); border-color: var(--confirmed); }
+      .tl-date { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
+      .tl-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+      .tl-body { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+    </style>
+
+    <div class="timeline">
+
+      <div class="tl-item done">
+        <div class="tl-date">2026年5月末</div>
+        <div class="tl-title">▶ 参画開始</div>
+        <div class="tl-body">ベンダー間MTG（時田氏・畠中氏）。既存資料・セキュリティポリシー・Entra ID設定を確認。</div>
+      </div>
+
+      <div class="tl-item now">
+        <div class="tl-date">2026年6月 ← 現在</div>
+        <div class="tl-title">▶ 現状把握・方針確定フェーズ</div>
+        <div class="tl-body">
+          ・6/4 初回定例：現状確認・Entra ID3グループ・Garoonワークフロー約100件把握<br>
+          ・6/11 第2回定例：SharePoint/Teams両ドラフト発表・方向性合意<br>
+          　→ Garoon受信者制御の複雑さ判明（細かいEntra IDグループ設計が必要）<br>
+          　→ ワークフローアドイン導入に前向き（費用感調査が必要）<br>
+          ・6/18 次回定例：ワークフローアドイン費用感・Entra IDグループ細かい設計案を提示予定<br>
+          ・セキュリティルール：時田氏がインシデント対応マニュアル整備中（6月中旬完成予定）
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-date">2026年7月</div>
+        <div class="tl-title">▶ 設計・ルール策定フェーズ</div>
+        <div class="tl-body">
+          ・SharePointサイト設計（ドラフト → レビュー）<br>
+          ・Teamsガバナンスルール策定（チーム作成基準・命名規則）<br>
+          ・Entra IDグループ構築<br>
+          ・MFA全教職員展開の計画策定（8月移行に合わせる）<br>
+          ・ユーザー向けガイドライン整備（SharePoint・Teams利用ルール）
+        </div>
+      </div>
+
+      <div class="tl-item danger">
+        <div class="tl-date">2026年8月下旬（お盆明け予定）🔴 第一の締め切り</div>
+        <div class="tl-title">▶ メール移行</div>
+        <div class="tl-body">
+          ・DEEPMail → Exchange Online移行（別ベンダー実施）<br>
+          ・UPN変更により全ユーザーのMFA設定がリセットされる（Authenticator再登録が全員必要）<br>
+          ・<strong>MFA全員展開の時期はメール移行とは切り離して別途調整</strong>（未確定）<br>
+          ・SharePoint初期構築・公開<br>
+          ・移行前後のユーザー向けアナウンス・マニュアル整備
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-date">2026年9〜10月</div>
+        <div class="tl-title">▶ データ移行・ワークフロー構築フェーズ</div>
+        <div class="tl-body">
+          ・maunet.（Garoon）からSharePointへのデータ移行<br>
+          ・X-point後継ワークフロー設計・構築（Power Automate等）<br>
+          ・maunet.廃止に向けた利用状況の最終確認<br>
+          ・運用ルール・マニュアルの最終整備
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-date">2026年度末（時期未確定）</div>
+        <div class="tl-title">▶ Garoon（maunet.）廃止 → M365完全移行</div>
+        <div class="tl-body">
+          ・Garoonは最低でも今年度末（2026年度）まで継続利用<br>
+          ・廃止時期は移行状況を見ながら段階的に決定<br>
+          ・SharePoint本番稼働・利用者研修・定着支援が完了してから廃止へ
+        </div>
+      </div>
+
+      <div class="tl-item warn">
+        <div class="tl-date">2026年度末（〜2027年3月）</div>
+        <div class="tl-title">▶ X-point後継ワークフロー稼働・定着</div>
+        <div class="tl-body">
+          ・X-point契約終了前に後継システムを稼働させる<br>
+          ・定着支援・運用フロー確立<br>
+          ・Copilot活用展開（教員・職員）
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 三井田さんのタスク一覧 -->
+  <div class="section">
+    <h3>三井田さんの主要タスク（概略）</h3>
+    <table>
+      <tr><th>時期</th><th>タスク</th><th>状況</th></tr>
+      <tr style="background:var(--confirmed-bg)"><td>6/4〜6/11</td><td>現状把握・両ドラフト作成・定例2回発表</td><td><span class="badge-confirmed">✅ 完了</span></td></tr>
+      <tr><td>〜6/18</td><td>ワークフローアドイン費用感の調査・資料準備</td><td><span class="badge-danger">🔴 急ぎ</span></td></tr>
+      <tr><td>〜6/18</td><td>Entra IDグループ 細かい設計案の検討（専任・派遣・職卓・非常勤講師）</td><td><span class="badge-danger">🔴 急ぎ</span></td></tr>
+      <tr><td>6月後半</td><td>Entra IDグループ設計・構築（実装）</td><td><span class="badge-pending">これから</span></td></tr>
+      <tr><td>6〜7月</td><td>SharePointサイト設計（詳細設計→レビュー→構築）</td><td><span class="badge-pending">これから</span></td></tr>
+      <tr><td>6〜7月</td><td>Teamsガバナンスルール策定</td><td><span class="badge-pending">これから</span></td></tr>
+      <tr><td>時期未確定</td><td>MFA全教職員展開（メール移行とは切り離して先方と時期を調整）</td><td><span class="badge-pending">調整中</span></td></tr>
+      <tr><td>7〜8月</td><td>ユーザー向けガイドライン・マニュアル整備</td><td><span class="badge-pending">これから</span></td></tr>
+      <tr><td>9〜10月</td><td>maunet. → SharePoint データ移行支援</td><td><span class="badge-pending">これから</span></td></tr>
+      <tr><td>〜年度末</td><td>Garoonワークフロー（約100件）→ ワークフローアドイン移行</td><td><span class="badge-danger">要費用確認</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 前提条件 -->
+  <div class="section">
+    <h3>スケジュールに影響する未確定事項</h3>
+    <div class="card warn">
+      <div class="card-title">以下が確定しないとスケジュールが固まらない</div>
+      <ul class="normal">
+        <li><strong>X-point後継ワークフローの方針</strong> — 何で作るか・誰がやるかで工数が大きく変わる</li>
+        <li><strong>Entra IDグループ設計の担当</strong> — 三井田が主導するのか、時田氏と分担するのか</li>
+        <li><strong>まず動かしたいサービスTop3</strong> — 優先順位によって7月以降の作業順が変わる</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /page-schedule -->
+
+
+<!-- ======================================================
+     ページ 9: 定例記録
+====================================================== -->
+<div id="page-meetings" class="page">
+  <div class="page-header">
+    <div class="badge">MEETING RECORDS</div>
+    <h2>📋 定例・会議記録</h2>
+    <div class="meta">最新の会議が上に表示されます</div>
+  </div>
+
+  <style>
+    .mtg-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+    .mtg-header { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; cursor: pointer; }
+    .mtg-header:hover { background: var(--primary-light); }
+    .mtg-date-block { text-align: center; min-width: 54px; }
+    .mtg-date-block .month { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    .mtg-date-block .day { font-size: 26px; font-weight: 700; color: var(--primary); line-height: 1; }
+    .mtg-meta { flex: 1; }
+    .mtg-type { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 999px; margin-bottom: 4px; font-weight: 600; }
+    .mtg-type.weekly { background: var(--primary-light); color: var(--primary); }
+    .mtg-type.vendor { background: #fef3c7; color: #92400e; }
+    .mtg-type.kickoff { background: #fee2e2; color: #991b1b; }
+    .mtg-type.interview { background: #f3f4f6; color: #374151; }
+    .mtg-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .mtg-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .mtg-tag { font-size: 11px; background: #f3f4f6; border: 1px solid var(--border); padding: 1px 8px; border-radius: 999px; color: var(--text-muted); }
+    .mtg-tag.new { background: var(--confirmed-bg); border-color: #a7d7b8; color: var(--confirmed); }
+    .mtg-tag.warn { background: var(--pending-bg); border-color: #fcd34d; color: var(--pending); }
+    .mtg-toggle { font-size: 18px; color: var(--text-muted); transition: transform 0.2s; }
+    .mtg-body { display: none; padding: 0 18px 16px; border-top: 1px solid var(--border); }
+    .mtg-body.open { display: block; }
+    .mtg-body h4 { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin: 12px 0 6px; }
+    .mtg-decision { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px; }
+    .mtg-decision:last-child { border-bottom: none; }
+    .mtg-decision .icon { flex-shrink: 0; }
+  </style>
+
+  <!-- 2026-06-11 定例 -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0611')">
+      <div class="mtg-date-block"><div class="month">6月</div><div class="day">11</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type weekly">定例MTG</span>
+        <div class="mtg-title">第2回定例 — 両ドラフト発表・方向性合意</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag new">SharePoint方向性合意</span>
+          <span class="mtg-tag new">Teams「方向性すごくいい」</span>
+          <span class="mtg-tag warn">Entra IDグループ設計要件が拡大</span>
+          <span class="mtg-tag warn">WFアドイン費用感が先決</span>
+          <span class="mtg-tag new">DMARC確認依頼済み</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0611">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0611">
+      <h4>⭐ 先方（大学側）の意向まとめ</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>SharePoint統合イントラサイト方向性</strong> → OK。方向性合意。パイロット部署は後日連絡（キャリア系部署が候補）。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>Garoon文書管理の移行方針</strong> → 過去分の一括移行はなし。新コンテンツから始め、各部署が責任を持って挙げ直す。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>Teams方向性</strong> → 「とてもいい感じ、大きな方向性がすごくいいんじゃないか」と評価。資料URLをチャットで共有済み。</span></div>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span><strong>Garoon受信者制御（重要・新判明）</strong> → 現状は部署単位・個人指定（例：10名のみ）など細かい受信者設定。M365の3大グループだけでは運用を網羅できない。<strong>専任職員・派遣職員・職卓職員・非常勤講師など細かいEntra IDグループ設計が必要。</strong></span></div>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span><strong>ワークフローアドイン</strong> → 導入に前向きだが<strong>費用感の説明が先決</strong>。金額の目安が分からないと大学側の判断ができない。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>クラスチームの実態</strong> → ほとんどがクラスチームで作成。教員が個別作成・強制力なし。一部例外あり。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span><strong>パブリック設定チームの対応</strong> → 対応済み（プライベートに変更済み）。オーナー不在チームは整理継続中。</span></div>
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span>SharePoint統合イントラサイト → <strong>方向性確定</strong>。設計を本格化する。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>DMARC確認 → <strong>本日中にチャットで時田氏経由ベンダーへ依頼済み</strong>。musabi.ac.jp→fs.musabi.ac.jpへの継承確認中。</span></div>
+      <h4>三井田のアクションアイテム（〜6/18）</h4>
+      <div class="mtg-decision"><span class="icon">📌</span><span>ネクストセット社等ワークフローアドインの<strong>費用感調査</strong>（価格帯・ライセンス体系）→ 6/18定例で提示</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span><strong>Entra IDグループ細かい設計案</strong>（専任・派遣・職卓職員・非常勤講師等）を検討 → 6/18定例で提示</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>パイロット部署の確定を大学側に確認（先方から連絡待ち）</span></div>
+    </div>
+  </div>
+
+  <!-- 2026-06-04 定例 -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0604')">
+      <div class="mtg-date-block"><div class="month">6月</div><div class="day">04</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type weekly">定例MTG</span>
+        <div class="mtg-title">初回定例 — DXプロジェクト参加・現状確認</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag new">Top3確定</span>
+          <span class="mtg-tag new">X-point継続確定</span>
+          <span class="mtg-tag warn">Garoon廃止延期の可能性</span>
+          <span class="mtg-tag warn">WF約100件以上と判明</span>
+          <span class="mtg-tag new">Entra ID 3グループ確定</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0604">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0604">
+      <h4>⭐ 先方（井上氏）の意向まとめ</h4>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>Garoon廃止</strong> → 「完全廃止までは時間をかけてM365へ機能移行していく」方針。明確な廃止時期は設定しない。</span></div>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>X-point</strong> → <span class="badge-danger">⚠️ 記録差異あり</span> tldv「オンプレ継続」↔ Geminiメモ「継続契約してクラウド版へ移行する予定」。次回要確認。</span></div>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>Garoonワークフロー（約100個）</strong> → 移行先は未確定。SharePointでの実装を含めて検討。</span></div>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>共有ファイルサーバー</strong> → M365移行後も即廃止しない。SharePointとの併用が続く。データが分散していることへの懸念あり。</span></div>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>非常勤教員（約800名）</strong> → Garoonには参加させていない。今後の運用設計の検討課題。</span></div>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>MFA展開</strong> → メール移行時にUPN変更で全員リセット。そのタイミングで周知するのが効果的という認識で合意。ただし実際の適用は移行後の環境が落ち着いた段階で。</span></div>
+      <div class="mtg-decision"><span class="icon">🏛</span><span><strong>情報化戦略本部会議</strong> → 6月末〜7月上旬。完成版でなくてよい。基準とマニュアルの大枠を提示できる状態を目指す。</span></div>
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span>動かしたいサービスTop3 → <strong>SharePoint・Teams・Outlook</strong></span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>Entra IDグループ → <strong>教員・職員・学生の3グループ</strong>。非常勤教員（約800名）はGaroon未参加。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>Garoonワークフロー → <strong>約100個</strong>。移行先はSharePoint＋アドオン活用を検討中。</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>ライセンス → A3が基本。<strong>A1配布者も存在</strong>（混在状態）</span></div>
+      <h4>三井田のアクションアイテム</h4>
+      <div class="mtg-decision"><span class="icon">📌</span><span>来週定例（6/11）でSharePoint設計・Teams利用ルール整備の進め方を説明する</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>Garoonワークフロー（約100個）のSharePointへの移行可能性を検討する</span></div>
+      <div class="mtg-decision"><span class="icon">📌</span><span>今回の議論内容を整理し、現状まとめ資料を次回定例で共有する</span></div>
+    </div>
+  </div>
+
+  <!-- 2026-06-02 メール移行キックオフ -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0602mail')">
+      <div class="mtg-date-block"><div class="month">6月</div><div class="day">02</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type kickoff">メール移行キックオフ</span>
+        <div class="mtg-title">メール移行キックオフ打合せ（三井田不在・資料のみ受領）</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag new">移行日8/7仮確定</span>
+          <span class="mtg-tag warn">UPN変更でMFA全リセット</span>
+          <span class="mtg-tag new">SMTP容量25MBに縮小</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0602mail">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0602mail">
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span>移行日: <strong>2026年8月下旬（お盆明け予定）</strong>。お盆明けも検討中</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>メーリングリスト → <strong>配布グループ</strong>で実装（外部アドレス登録不可）</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>代表メール → <strong>M365共有メールボックス</strong>で実装</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>DEEPMailアドレス帳 → <strong>移行しない</strong>（個人対応）</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>推奨クライアント: <strong>Outlook Web</strong></span></div>
+      <h4>三井田への影響</h4>
+      <div class="mtg-decision"><span class="icon">🔴</span><span>UPN変更時に<strong>全ユーザーのMFA設定がリセット</strong>→ 教員MFA展開の絶好の機会</span></div>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span>OneDriveの共有リンクが全て無効化される → SharePoint設計に事前周知プロセスを組む</span></div>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span>SMTP容量: 40MB → <strong>25MBに縮小</strong> → 学内アナウンスが必要</span></div>
+    </div>
+  </div>
+
+  <!-- 2026-06-01 ベンダー間MTG -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0601')">
+      <div class="mtg-date-block"><div class="month">6月</div><div class="day">01</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type vendor">ベンダー間MTG</span>
+        <div class="mtg-title">事前打ち合わせ（時田氏・畠中氏）</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag warn">X-point 2026年度末で契約終了判明</span>
+          <span class="mtg-tag new">SharePointはデフォルト状態確認</span>
+          <span class="mtg-tag new">6月体制合意</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0601">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0601">
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span>6月の定例: セキュリティ半分・M365半分（時田氏の定例に同席）</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>ベンダー間連絡: チャットワーク（三井田・時田・畠中）＋Googleドライブ</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>SharePointはデフォルト状態のみ → ゼロから設計が必要</span></div>
+      <h4>重要な新情報</h4>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span>X-pointは<strong>2026年度末で契約終了予定</strong>。後継未決定</span></div>
+      <div class="mtg-decision"><span class="icon">⚠️</span><span>時田氏は一般ユーザー権限のみ（管理画面にアクセス不可）</span></div>
+    </div>
+  </div>
+
+  <!-- 2026-05-13 参画判断面談 -->
+  <div class="mtg-card">
+    <div class="mtg-header" onclick="toggleMtg('mtg0513')">
+      <div class="mtg-date-block"><div class="month">5月</div><div class="day">13</div></div>
+      <div class="mtg-meta">
+        <span class="mtg-type interview">参画判断面談</span>
+        <div class="mtg-title">参画判断面談（前田氏・井上氏）</div>
+        <div class="mtg-tags">
+          <span class="mtg-tag new">Teams 9,000チーム確認</span>
+          <span class="mtg-tag new">A3ライセンス確認</span>
+          <span class="mtg-tag new">8月メール移行目標確認</span>
+        </div>
+      </div>
+      <div class="mtg-toggle" id="toggle-mtg0513">▼</div>
+    </div>
+    <div class="mtg-body" id="mtg0513">
+      <h4>確定事項</h4>
+      <div class="mtg-decision"><span class="icon">✅</span><span>M365集約方針は決定済み。Garoon廃止は既定路線（当時の目標: 2026年11月）</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>Teamsチーム数: 約9,000（1授業1チームが原因）</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>ライセンス: 学生A3・教職員ほぼ全員M365</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>定例: 毎週木曜午前・オンライン・デジタルアーク参加</span></div>
+      <div class="mtg-decision"><span class="icon">✅</span><span>メール移行: 2026年8月目標・別委託会社担当</span></div>
+    </div>
+  </div>
+
+</div><!-- /page-meetings -->
+
+
+<!-- ======================================================
+     ドラフト 1: SharePoint設計 初期方針（統合イントラサイト）
+====================================================== -->
+<div id="page-sp-draft" class="page">
+  <div class="page-header">
+    <div class="badge">PROPOSAL</div>
+    <h2>🏗 SharePoint設計 — 方向性概要</h2>
+    <div class="meta">作成: 2026-06-04 ／ 6/11定例で方向性合意済み ／ 詳細版は別ファイルを参照</div>
+  </div>
+
+  <div style="background:#e8f1fb;border:2px solid var(--primary);border-radius:8px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:flex-start;gap:16px">
+    <div style="font-size:24px;flex-shrink:0">🏗</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:4px">詳細提案書（6/11定例 方向性合意済み）</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:6px">SharePoint 統合イントラサイト構築 初期方針案</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">概要・設計方針・サイト構成・Garoon対応表・フェーズ計画・ワークフロー・Entra IDグループ設計・費用 すべてを収録</div>
+      <a href="sharepoint-proposal.html" target="_blank" style="display:inline-block;background:var(--primary);color:#fff;padding:7px 18px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none">提案書を開く（別タブ）↗</a>
+    </div>
+  </div>
+
+  <!-- 前提整理 -->
+  <div class="section">
+    <h3>前提の整理（概要）</h3>
+    <div class="card danger">
+      <div class="card-title">⚠️ 現在のSharePointの状況</div>
+      <p>TeamsのチームとSharePointのチームサイトは1対1で自動連動する。そのため、Teamsチームが約9,000あれば、SharePointサイトも約9,000存在している状態。</p>
+      <p style="margin-top:8px">これらの既存チームサイトは今回<strong>原則触れない</strong>。全く別の目的で新しいサイトを1つ作る。</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px">
+      <div class="card warn">
+        <div class="card-title">既存（触れない）</div>
+        <p>チームサイト × 約9,000<br>
+        Teamsと連動。各チームの業務ファイル・会議録等が保存されている。乱立・無秩序な状態。</p>
+      </div>
+      <div class="card success">
+        <div class="card-title">今回 新規構築するもの</div>
+        <p><strong>統合イントラサイト</strong>（コミュニケーションサイト）<br>
+        Garoon・Googleに分散している情報発信・掲示板・案内を1か所に集約する。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- コミュニケーションサイトとは -->
+  <div class="section">
+    <h3>コミュニケーションサイト vs チームサイトの違い</h3>
+    <table>
+      <tr><th>項目</th><th>コミュニケーションサイト<br>（今回新規構築）</th><th>チームサイト<br>（既存9,000）</th></tr>
+      <tr><td>目的</td><td><strong>情報を発信する（1対多）</strong></td><td>チームで協働する（多対多）</td></tr>
+      <tr><td>主な使い方</td><td>全員が「閲覧する」</td><td>メンバーが「編集・投稿する」</td></tr>
+      <tr><td>作成方法</td><td>管理者が1つ作成・運営</td><td>Teamsチーム作成時に自動生成</td></tr>
+      <tr><td>向いている用途</td><td>掲示板・お知らせ・規程集・ポータル</td><td>議事録・業務ファイル管理</td></tr>
+      <tr><td>今回の位置づけ</td><td><span class="badge-confirmed">今回構築するもの</span></td><td><span class="badge-pending">今回は触れない</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 統合イントラサイトとは -->
+  <div class="section">
+    <h3>統合イントラサイトが置き換えるもの</h3>
+    <table>
+      <tr><th>現行ツール</th><th>機能</th><th>統合イントラサイトでの代替</th></tr>
+      <tr><td><strong>Garoon（maunet.）</strong></td><td>掲示板・回覧板・全学お知らせ</td><td>SharePointニュース・お知らせページ</td></tr>
+      <tr><td><strong>Garoon（maunet.）</strong></td><td>公開用文書管理（規程集・マニュアル）</td><td>SharePointドキュメントライブラリ</td></tr>
+      <tr><td><strong>Google / 個別サイト</strong></td><td>情報共有・案内集約</td><td>SharePointページ・リンク集</td></tr>
+    </table>
+  </div>
+
+  <!-- サイト構成案 -->
+  <div class="section">
+    <h3>統合イントラサイトの構成案</h3>
+    <div class="code-block">統合イントラサイト（武蔵野美術大学 職員ポータル）
+│
+├─ 🏠 ホーム（トップページ）
+│   ├─ 最新のお知らせ（ニュースフィード）
+│   ├─ 重要なリンク集（X-point / LiveCampus / メール等）
+│   └─ 今週の予定・イベント
+│
+├─ 📢 お知らせ・回覧
+│   ├─ 全学向けお知らせ（全教職員）
+│   ├─ 職員向けお知らせ（職員のみ）
+│   └─ 部署からのお知らせ（部署担当者が投稿）
+│
+├─ 📁 規程・マニュアル
+│   ├─ 学内規程集
+│   ├─ 情報セキュリティポリシー・マニュアル
+│   └─ 各種申請書・様式ダウンロード
+│
+├─ 🔗 リンク集・ポータル
+│   ├─ 業務システムへのリンク（X-point・LiveCampus等）
+│   ├─ Microsoft 365 各サービスへのリンク
+│   └─ よく使うツール一覧
+│
+└─ ℹ️ お役立ち情報（将来）
+    └─ 各種ガイド・FAQ</div>
+
+    <h4>権限設計</h4>
+    <table>
+      <tr><th>役割</th><th>対象</th><th>権限</th></tr>
+      <tr><td>サイト管理者</td><td>情報管理担当（井上氏・前田氏）</td><td>フル管理</td></tr>
+      <tr><td>投稿者（編集者）</td><td>各部署の担当者</td><td>ニュース・ドキュメントの投稿・編集</td></tr>
+      <tr><td>閲覧者</td><td>全教職員</td><td>閲覧のみ</td></tr>
+      <tr><td>（将来）学生</td><td>公開コンテンツのみ</td><td>閲覧のみ</td></tr>
+    </table>
+    <div class="callout warn" style="margin-top:10px">教員グループがEntra ID上に未整備のため、<strong>Entra IDグループ設計と並行して進める</strong>必要がある。</div>
+  </div>
+
+  <!-- Garoon機能対応 -->
+  <div class="section">
+    <h3>maunet.（Garoon）機能との置き換え対応</h3>
+    <table>
+      <tr><th>Garoon機能</th><th>統合イントラサイトでの実現</th><th>優先度</th></tr>
+      <tr><td>掲示板・回覧板（全学）</td><td>SharePointニュース（閲覧者: 全教職員）</td><td><span class="badge-danger">優先</span></td></tr>
+      <tr><td>掲示板（職員向け）</td><td>SharePointニュース（閲覧者: 職員のみ）</td><td><span class="badge-danger">優先</span></td></tr>
+      <tr><td>文書管理（規程・マニュアル）</td><td>SharePointドキュメントライブラリ</td><td><span class="badge-pending">段階的</span></td></tr>
+      <tr><td>リンク集・安否確認リンク</td><td>SharePointページ（リンクカード形式）</td><td><span class="badge-pending">段階的</span></td></tr>
+      <tr><td>スケジュール・施設予約</td><td>Outlookカレンダー（SharePoint外）</td><td>メール移行後</td></tr>
+      <tr><td>ワークフロー（約100件以上）</td><td>SharePoint＋アドオン活用を検討（以下参照）</td><td><span class="badge-pending">年度末に向けて段階的</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ワークフロー移行 -->
+  <div class="section">
+    <h3>ワークフロー移行の方針（調査完了 · 6/12）</h3>
+    <div class="callout success">
+      <strong>調査完了:</strong> ツール比較資料・費用試算を整備済み。6/18定例で大学側に提示し導入可否の方針確定を目指す。
+    </div>
+
+    <div style="background:#e8f8f0;border:2px solid var(--confirmed);border-radius:8px;padding:14px 18px;margin:12px 0;display:flex;align-items:flex-start;gap:14px">
+      <div style="font-size:22px;flex-shrink:0">⚡</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--confirmed);margin-bottom:3px">比較資料（新規作成 · 6/12）</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px">Power Automate vs Nextset ワークフロー — 詳細比較・UIモックアップ・費用試算</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">推奨: まずNextsetで移行・安定後にPower Automateを部分活用する段階的併用案</div>
+        <a href="workflow-comparison.html" target="_blank" style="display:inline-block;background:var(--confirmed);color:#fff;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none">比較資料を開く（別タブ）↗</a>
+      </div>
+    </div>
+
+    <h4>ツール選択肢のサマリー</h4>
+    <table>
+      <tr><th>候補</th><th>現場適合</th><th>コスト</th><th>推奨度</th></tr>
+      <tr>
+        <td><strong>Nextset ワークフロー for M365</strong></td>
+        <td><span class="badge-confirmed">✅ Garoonに近い操作感・現場担当者が管理可</span></td>
+        <td>200円/月/ユーザー〜（職員600名 年158万円）</td>
+        <td><span class="badge-confirmed">★ 第1フェーズとして推奨</span></td>
+      </tr>
+      <tr>
+        <td>Power Automate（Microsoft標準）</td>
+        <td><span class="badge-pending">△ IT担当者向け・現場担当者には難しい</span></td>
+        <td>M365に含まれる（高度機能は追加課金）</td>
+        <td><span class="badge-info">第2フェーズ・複雑な条件フローに活用</span></td>
+      </tr>
+      <tr>
+        <td>SharePoint標準ワークフロー</td>
+        <td><span class="badge-danger">✗ 非常に使いづらい</span></td>
+        <td>M365に含まれる</td>
+        <td><span class="badge-danger">非推奨</span></td>
+      </tr>
+    </table>
+
+    <h4>移行の進め方（段階的）</h4>
+    <table class="table-sm">
+      <tr><th>フェーズ</th><th>時期</th><th>内容</th></tr>
+      <tr><td>Phase 0（調査）</td><td><span class="badge-confirmed">✅ 完了</span></td><td>費用・機能調査・比較資料作成完了（6/12）</td></tr>
+      <tr><td>Phase 1（方針確定）</td><td>6/18 定例</td><td>大学側にNextset費用感を提示し、導入可否を決定する</td></tr>
+      <tr><td>Phase 2（棚卸し）</td><td>〜7月末</td><td>Garoon上の約100件のワークフローを一覧化。申請種別・頻度・承認ルートを整理</td></tr>
+      <tr><td>Phase 3（パイロット）</td><td>8月〜</td><td>利用頻度の高い申請書2〜3種を先行展開。Nextset 30日トライアルを活用</td></tr>
+      <tr><td>Phase 4（全移行）</td><td>〜年度末</td><td>全フロー移行完了→Garoonワークフロー機能停止</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:8px">Garoonは年度末まで継続利用のため、移行は急がず段階的に進める。</p>
+  </div>
+
+  <!-- 実装フェーズ -->
+  <div class="section">
+    <h3>実装フェーズ案</h3>
+    <table>
+      <tr><th>フェーズ</th><th>時期</th><th>内容</th></tr>
+      <tr>
+        <td><strong>Phase 1: コアサイト構築</strong></td>
+        <td>6〜7月</td>
+        <td>
+          ・コミュニケーションサイト1つを作成・ブランディング設定<br>
+          ・ホームページ構築（ニュースフィード・重要リンク）<br>
+          ・お知らせ機能整備・Entra IDグループとの連携確認<br>
+          ・セキュリティポリシー等の優先文書を先行掲載
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Phase 2: コンテンツ移行・拡充</strong></td>
+        <td>8〜9月</td>
+        <td>
+          ・Garoon掲示板コンテンツの移行<br>
+          ・各部署投稿担当者への説明・権限付与<br>
+          ・リンク集（X-point等）の整備<br>
+          ・モバイル動作確認（スマホからの閲覧は必須要件）
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Phase 3: 完全移行</strong></td>
+        <td>2026年度末に向けて</td>
+        <td>
+          ・Garoonの情報発信機能をSharePointに完全一本化<br>
+          ・Garoon停止に合わせた最終整備
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 確認事項 -->
+  <div class="section">
+    <h3>定例MTGで確認したい事項</h3>
+    <ul class="checklist">
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">「統合イントラサイト（1サイトに集約）」という方向性でよいか</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">Garoonのどのコンテンツを優先して移行するか（まず何から着手するか）</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">部署からのお知らせ投稿者を誰にするか（各部署担当者？申請制？）</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">学生向けページ（学生が見られる情報）は必要か</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">デザインのブランディング方針（大学のロゴ・カラーをどこまで使うか）</div></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 未決定事項 -->
+  <div class="section">
+    <h3>未決定事項</h3>
+    <table class="table-sm">
+      <tr><th>課題</th><th>内容</th></tr>
+      <tr><td>Garoonからのデータ移行</td><td>過去の掲示板記事をどこまで移行するか。移行方法（手動 or ツール）</td></tr>
+      <tr><td>Teamsとの連携</td><td>Viva Connectionsを使ってTeamsのホームにサイトを組み込む選択肢がある（将来的）</td></tr>
+      <tr><td>既存チームサイトの整理</td><td>9,000サイトのアーカイブ・整理はTeams利用整備ページで対応（今回スコープ外）</td></tr>
+      <tr><td>外部アクセス</td><td>在宅・モバイルからVPN不要でアクセスできる設計にする</td></tr>
+    </table>
+  </div>
+
+</div><!-- /page-sp-draft -->
+
+
+<!-- ======================================================
+     ドラフト 2: Teams利用整備 進め方
+====================================================== -->
+<div id="page-teams-plan" class="page">
+  <div class="page-header">
+    <div class="badge">DRAFT</div>
+    <h2>💬 Teams利用整備 進め方ドラフト</h2>
+    <div class="meta">作成: 2026-06-04 ／ ステータス: ドラフト</div>
+  </div>
+
+  <!-- 既存チームの方針判断 -->
+  <div class="section">
+    <h3>既存チームの整理 — 2つのアプローチと判断基準</h3>
+
+    <div class="callout danger">
+      数千件の既存チームを「全部整理する」のは現実的でない。<strong>緊急度に応じて3段階に分けて対処する</strong>のが現実解。
+    </div>
+
+    <h4>アプローチ比較</h4>
+    <table>
+      <tr><th></th><th>A: 精査・棚卸し（既存を整理する）</th><th>B: ルール策定・前向き運用（新規に集中）</th></tr>
+      <tr><td>作業量</td><td>非常に大きい（数千件×確認作業）</td><td>小さい（ルールを作るだけ）</td></tr>
+      <tr><td>リスク</td><td>現役チームを誤ってアーカイブする恐れ</td><td>既存の問題が残り続ける</td></tr>
+      <tr><td>効果</td><td>完了すればクリーンな状態になる</td><td>今後の悪化を止める</td></tr>
+      <tr><td>結論</td><td><span class="badge-pending">全件は非現実的。問題箇所のみ対処</span></td><td><span class="badge-confirmed">必須。ただし既存のセキュリティ問題は別途対処</span></td></tr>
+    </table>
+
+    <h4>推奨：3段階アプローチ</h4>
+    <table>
+      <tr><th>段階</th><th>対象</th><th>時期</th><th>工数目安</th></tr>
+      <tr>
+        <td><span class="badge-danger">第1段階</span></td>
+        <td><strong>セキュリティリスクのみ即対処</strong><br>・パブリック設定のチームを全てプライベートに変更<br>・オーナー不在チームのリストアップ</td>
+        <td>今すぐ</td>
+        <td>2〜4時間</td>
+      </tr>
+      <tr>
+        <td><span class="badge-pending">第2段階</span></td>
+        <td><strong>新規作成ルールを策定・展開</strong><br>・チーム作成基準・命名規則を決める<br>・これ以降のチームはルールに従う</td>
+        <td>6月中</td>
+        <td>Teams利用整備ドラフト参照</td>
+      </tr>
+      <tr>
+        <td><span class="badge-info">第3段階</span></td>
+        <td><strong>緩やかな棚卸し（急がない）</strong><br>・1年以上非アクティブなチームをリストアップ<br>・オーナーに確認メール → 返答なしはアーカイブ</td>
+        <td>8月以降<br>継続的に</td>
+        <td>月1〜2時間ペース</td>
+      </tr>
+    </table>
+
+    <h4>判断のポイント：何を今すぐやるべきか</h4>
+    <div class="code-block">今すぐ対処が必要か？
+│
+├─ YES: セキュリティリスク（パブリック設定・オーナー不在）
+│   → 第1段階を即座に実施
+│
+└─ NO: それ以外（非アクティブ・命名が統一されていない等）
+    → 急がない。第3段階で緩やかに対処
+    → ただし「新規作成ルール（第2段階）」は先に整備する</div>
+  </div>
+
+  <div class="section">
+    <h3>棚卸しの具体的プロセス（第3段階の手順）</h3>
+
+    <h4>Step 1: 全チームリストをエクスポートする</h4>
+    <p style="font-size:13px">Teams管理センター → チーム → CSV出力。取得すべき情報: チーム名・オーナー名・最終アクティビティ日・プライバシー設定・メンバー数</p>
+
+    <h4>Step 2: 4つのバケツに仕分ける</h4>
+    <table class="table-sm">
+      <tr><th>分類</th><th>条件</th><th>対処</th></tr>
+      <tr><td><span class="badge-danger">即対処</span></td><td>パブリック設定 / オーナーが退職・異動済み</td><td>管理センターで変更 or 後任オーナーを設定</td></tr>
+      <tr><td><span class="badge-pending">確認対象</span></td><td>最終アクティビティが1年以上前</td><td>オーナーに確認メール送付</td></tr>
+      <tr><td><span class="badge-confirmed">現状維持</span></td><td>上記以外（アクティブ）</td><td>何もしない</td></tr>
+    </table>
+
+    <h4>Step 3: オーナーへの確認メール（テンプレート）</h4>
+    <div class="code-block">件名: [Teams] チームの継続利用確認のお願い
+
+○○さん
+
+情報管理担当です。Teams管理上、以下のチームの継続利用有無をご確認ください。
+
+チーム名: [チーム名]
+
+□ 継続して利用している
+□ 不要なのでアーカイブしてよい
+□ 担当が変わったため、引き継ぎ先を別途連絡する
+
+〇月〇日までにご回答がない場合、アーカイブ予定です。
+（アーカイブ後も過去のファイル・メッセージは閲覧可能です）
+
+情報管理担当</div>
+
+    <h4>「アーカイブ」とは（削除ではない）</h4>
+    <div class="callout success">アーカイブ = 過去のメッセージ・ファイルは引き続き閲覧・検索可能。新しい投稿だけができなくなる状態。削除とは異なり、必要なら元に戻せる。</div>
+  </div>
+
+  <!-- 現状課題 -->
+  <div class="section">
+    <h3>現状の課題（参考）</h3>
+    <table>
+      <tr><th>項目</th><th>状況</th></tr>
+      <tr><td>チーム数</td><td>多数（9,000超との情報あり。実態は要確認）</td></tr>
+      <tr><td>アカウント</td><td>FSアカウントとUPNの2種類が混在</td></tr>
+      <tr><td>ルール</td><td>若手スタッフが使用促進中だが、統一ルールがない</td></tr>
+      <tr><td>チャンネル構成</td><td>部署・チームごとにバラバラ</td></tr>
+      <tr><td>ファイル保存</td><td>TeamsとファイルサーバーとOneDriveに分散</td></tr>
+    </table>
+    <div class="card warn" style="margin-top:12px">
+      <div class="card-title">この案件特有の難しさ</div>
+      <ul class="normal">
+        <li>Teamsはすでに定着しており、ゼロリセットはできない</li>
+        <li>教員文化：強制的なルールを課しにくい環境</li>
+        <li>8月にUPN変更が控えており、今大きなルール変更をすると混乱が重なる</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ゴール -->
+  <div class="section">
+    <h3>整備のゴール — 「全部一気に整理しない」</h3>
+    <table>
+      <tr><th>フェーズ</th><th>ゴール</th></tr>
+      <tr><td><span class="prio-s">短期（〜8月）</span></td><td>新規チーム作成ルールを整備。「何のために作るか」の基準を明文化</td></tr>
+      <tr><td><span class="prio-a">中期（8月〜）</span></td><td>既存チームの棚卸し開始。休眠チームを段階的に整理</td></tr>
+      <tr><td><span class="prio-b">長期（年度末〜）</span></td><td>SharePoint連携を踏まえた本格的なガバナンス体制確立</td></tr>
+    </table>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="section">
+    <h3>Phase 1: 新規作成ルールの整備（優先）</h3>
+
+    <h4>チーム作成の基準</h4>
+    <table>
+      <tr><th>チームの種類</th><th>目的・用途</th><th>作成可能者</th></tr>
+      <tr><td><strong>部署チーム</strong></td><td>部署内の業務連絡・ファイル共有</td><td>各部署の管理者</td></tr>
+      <tr><td><strong>プロジェクトチーム</strong></td><td>特定プロジェクト・タスクフォース</td><td>プロジェクトリーダー（申請制を推奨）</td></tr>
+      <tr><td><strong>授業チーム</strong></td><td>授業・ゼミ（学生との双方向）</td><td>教員（「クラス」として作成）</td></tr>
+      <tr><td><strong>全学・組織横断チーム</strong></td><td>全教職員向けの情報共有</td><td>情報管理担当のみ</td></tr>
+    </table>
+
+    <h4>命名規則（案）</h4>
+    <div class="code-block">[部署名 or プロジェクト名]_[用途]_[年度]
+
+例:
+  事務局_総務チーム_2026
+  入試_出願システム移行PJ_2026
+  授業_デザイン基礎_2026  ← 授業チームは「クラス」機能を使用</div>
+
+    <h4>チームタイプの使い分け</h4>
+    <table>
+      <tr><th>タイプ</th><th>用途</th><th>プライバシー</th></tr>
+      <tr><td><strong>スタッフ</strong></td><td>事務組織からの発信・教職員間の業務チーム</td><td><span class="badge-danger">プライベート（原則）</span></td></tr>
+      <tr><td><strong>クラス</strong></td><td>教員と学生の双方向授業チーム</td><td>プライベート</td></tr>
+    </table>
+    <div class="card danger" style="margin-top:10px">
+      <div class="card-title">🚨 過去インシデントの反省</div>
+      <p>パブリックチームから学内全体に情報が漏れた事故が発生済み。チームは<strong>必ずプライベート</strong>で作成する。</p>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="section">
+    <h3>Phase 2: 既存チームの棚卸し（8月UPN変更後〜）</h3>
+    <div class="callout info">UPN変更（8月）のタイミングで全員が一度サインインし直すことを利用し、棚卸しの機会とする。</div>
+
+    <h4>仕分けの基準</h4>
+    <table>
+      <tr><th>状態</th><th>基準</th><th>対応</th></tr>
+      <tr><td>アクティブ</td><td>過去6ヶ月以内に投稿あり</td><td>現状維持</td></tr>
+      <tr><td>休眠</td><td>6ヶ月以上投稿なし</td><td>オーナーに確認メール → 不要ならアーカイブ</td></tr>
+      <tr><td>オーナー不在</td><td>オーナーが退職・異動</td><td>情報管理担当が確認 → 後任オーナーを設定</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:13px;color:var(--text-muted)">※ アーカイブ = 削除ではなく、過去の情報は参照可能・新しい投稿ができない状態</p>
+  </div>
+
+  <!-- 運用ルール骨格 -->
+  <div class="section">
+    <h3>運用ルール骨格（既存 ver.1 への追加）</h3>
+    <table class="table-sm">
+      <tr><th>カテゴリ</th><th>ルール（案）</th></tr>
+      <tr><td>チーム作成</td><td>部署チームは担当者確認制。授業チームは教員自由作成可（クラスタイプを使用）</td></tr>
+      <tr><td>プライバシー設定</td><td><strong>チームは必ずプライベート</strong>で作成する（パブリック禁止）</td></tr>
+      <tr><td>ファイル保存</td><td>チームのファイルはTeams（SharePoint）に保存。個人OneDriveへの業務ファイル保存は非推奨</td></tr>
+      <tr><td>機微情報</td><td>個人情報・成績・人事情報はチャット・チャンネルのテキストに直接記載しない</td></tr>
+      <tr><td>退職・異動時</td><td>オーナー・メンバーの変更はチームオーナーが対応。退職前に後任への引き継ぎを実施</td></tr>
+      <tr><td>外部ゲスト</td><td>現状は学外ゲストのチーム招待は不可。将来的に申請制での解禁を検討</td></tr>
+    </table>
+  </div>
+
+  <!-- Teams×SharePoint連携 -->
+  <div class="section">
+    <h3>TeamsとSharePointの連携整理</h3>
+    <div class="code-block">Teamsチームを作成
+    └─ 自動的にSharePointチームサイトが生成される
+         └─ チームで共有したファイルがここに保存される
+
+→ 「Teamsチームを整理する = SharePointサイトを整理する」と同じ意味</div>
+    <div class="callout" style="margin-top:10px">
+      <strong>実装上の指針:</strong> 部署の「業務チームサイト」はTeams連携チームサイトとして作成する。ファイルの保存・共有はTeamsのファイルタブ（= SharePoint）に統一する。チャットへのファイル添付（OneDrive保存）は退職時にアクセス不可になる点を周知する。
+    </div>
+  </div>
+
+  <!-- スケジュール -->
+  <div class="section">
+    <h3>スケジュール案</h3>
+    <table>
+      <tr><th>時期</th><th>対応内容</th></tr>
+      <tr><td><strong>6月</strong></td><td>Phase 1の新規作成ルールを定例で合意・周知</td></tr>
+      <tr><td><strong>7月</strong></td><td>命名規則・チームタイプの指針をガイドラインとして整備</td></tr>
+      <tr><td><strong>8月（UPN変更後）</strong></td><td>全チームの棚卸しを開始。オーナー確認メールの送付</td></tr>
+      <tr><td><strong>9〜10月</strong></td><td>休眠チームを順次アーカイブ</td></tr>
+      <tr><td><strong>年度末</strong></td><td>本格的なガバナンス体制（ライフサイクルポリシー）の導入を検討</td></tr>
+    </table>
+  </div>
+
+  <!-- 確認事項 -->
+  <div class="section">
+    <h3>定例MTGで確認したい事項</h3>
+    <ul class="checklist">
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">チーム作成を「申請制」にするか、部署担当者判断で作成可能にするか</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">授業チームの扱い（教員が自由に作成していい範囲はどこまでか）</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">棚卸しの開始タイミング（UPN変更後の8月以降でよいか）</div></div>
+      </li>
+      <li class="unchecked"><span class="check-icon">🔲</span>
+        <div class="check-content"><div class="check-title">オーナー不在チームへの対応手順（情報管理担当が判断するか）</div></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 未決定事項 -->
+  <div class="section">
+    <h3>未決定事項</h3>
+    <table class="table-sm">
+      <tr><th>課題</th><th>内容</th></tr>
+      <tr><td>既存チームの整理方針</td><td>9,000（または1,000）チームへの具体的な対応順序</td></tr>
+      <tr><td>ライフサイクルポリシー</td><td>有効期限・自動アーカイブの設定（Entra IDのポリシー機能）</td></tr>
+      <tr><td>外部ゲスト解禁</td><td>非常勤講師・学外関係者のゲスト参加方針</td></tr>
+      <tr><td>学生とのTeams連携</td><td>授業以外での学生とのTeams利用範囲</td></tr>
+    </table>
+  </div>
+
+</div><!-- /page-teams-plan -->
+
+
+<!-- ======================================================
+     ページ 10: タスク・プラン（ステップUI）
+====================================================== -->
+<div id="page-planning" class="page">
+  <div class="page-header">
+    <div class="badge">PLANNING</div>
+    <h2>✅ タスク・アクションプラン</h2>
+    <div class="meta">6/11定例完了 — 次回6/18に向けて更新（2026-06-11）</div>
+  </div>
+
+  <style>
+    /* ステッパー */
+    .stepper { display: flex; align-items: center; margin-bottom: 32px; }
+    .step-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; min-width: 100px; }
+    .step-circle {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; border: 2px solid var(--border);
+      background: #fff; color: var(--text-muted);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .step-item.active .step-circle { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .step-item.done .step-circle { background: var(--confirmed); border-color: var(--confirmed); color: #fff; }
+    .step-label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 6px; text-align: center; }
+    .step-item.active .step-label { color: var(--primary); }
+    .step-connector { flex: 1; height: 2px; background: var(--border); margin: 0 8px 20px; }
+
+    /* パネル */
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    /* タスクカード */
+    .task-group { margin-bottom: 24px; }
+    .task-group-title {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-muted);
+      padding: 6px 10px; background: var(--bg); border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .task-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 8px 12px; border-radius: 6px; margin-bottom: 4px;
+      border: 1px solid var(--border); background: var(--white);
+    }
+    .task-item.urgent { border-left: 3px solid var(--danger); }
+    .task-item.medium { border-left: 3px solid var(--pending); }
+    .task-item.normal { border-left: 3px solid var(--primary); }
+    .task-item.tbd { border-left: 3px solid #9ca3af; }
+    .task-cb { margin-top: 2px; flex-shrink: 0; accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
+    .task-content { flex: 1; }
+    .task-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .task-detail { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .task-owner { font-size: 11px; background: var(--primary-light); color: var(--primary); padding: 1px 7px; border-radius: 999px; margin-left: 6px; }
+
+    /* アクションプラン */
+    .week-block { margin-bottom: 20px; }
+    .week-label {
+      font-size: 13px; font-weight: 700; color: #fff;
+      background: var(--primary); padding: 6px 14px;
+      border-radius: 6px 6px 0 0; display: inline-block;
+    }
+    .week-label.warn { background: var(--pending); }
+    .week-label.danger { background: var(--danger); }
+    .week-items { border: 1px solid var(--border); border-radius: 0 6px 6px 6px; background: var(--white); }
+    .week-item { display: flex; gap: 12px; padding: 9px 14px; border-bottom: 1px solid var(--border); font-size: 13px; align-items: flex-start; }
+    .week-item:last-child { border-bottom: none; }
+    .week-item-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+    .week-item-body { flex: 1; }
+    .week-item-title { font-weight: 600; margin-bottom: 2px; }
+    .week-item-sub { font-size: 12px; color: var(--text-muted); }
+  </style>
+
+  <!-- ステッパーナビ -->
+  <div class="stepper">
+    <div class="step-item active" id="step-nav-1" onclick="showStep(1)">
+      <div class="step-circle">1</div>
+      <div class="step-label">タスク</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item" id="step-nav-2" onclick="showStep(2)">
+      <div class="step-circle">2</div>
+      <div class="step-label">アクションプラン</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-item" id="step-nav-3" onclick="showStep(3)">
+      <div class="step-circle">3</div>
+      <div class="step-label">スケジュール</div>
+    </div>
+  </div>
+
+  <!-- STEP 1: タスク -->
+  <div class="step-panel active" id="step-panel-1">
+
+    <div class="task-group">
+      <div class="task-group-title" style="color:var(--confirmed)">✅ 完了（〜6/11定例）</div>
+      <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
+        <input type="checkbox" class="task-cb" checked>
+        <div class="task-content">
+          <div class="task-name" style="text-decoration:line-through">SharePoint設計 初期方針ドラフト <span class="task-owner">三井田</span></div>
+          <div class="task-detail">統合イントラサイト方式で作成。6/11定例で発表し方向性合意を得た。</div>
+        </div>
+      </div>
+      <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
+        <input type="checkbox" class="task-cb" checked>
+        <div class="task-content">
+          <div class="task-name" style="text-decoration:line-through">Teams利用整備 進め方ドラフト <span class="task-owner">三井田</span></div>
+          <div class="task-detail">Phase1（新規作成ルール）〜Phase2（棚卸し）の骨格案を作成。6/11定例で「大きな方向性がすごくいい」と評価を受けた。</div>
+        </div>
+      </div>
+      <div class="task-item" style="border-left:3px solid var(--confirmed);opacity:0.7">
+        <input type="checkbox" class="task-cb" checked>
+        <div class="task-content">
+          <div class="task-name" style="text-decoration:line-through">DMARCについて移行ベンダーへの確認依頼 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">6/11定例当日中にチャットで時田氏経由ベンダーへ依頼済み。musabi.ac.jpのDMARC設定→fs.musabi.ac.jpへの継承確認。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-group">
+      <div class="task-group-title" style="color:var(--danger)">🔴 急ぎ（〜6/18定例）</div>
+      <div class="task-item urgent">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">ワークフローアドイン費用感の資料作成・6/18定例での説明 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">【調査済み】ネクストセット・ワークフロー for M365 = 1アドオン200円/月/ユーザー（税抜・2024年10月改定）。職員〜600名を対象とすると年額約158万円（税込）。SharePoint提案書のワークフロータブに反映済み。6/18定例で提示・導入判断を促す。</div>
+        </div>
+      </div>
+      <div class="task-item urgent">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">Entra IDグループ 細かい設計案の検討・6/18定例での説明 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">【設計案ドラフト作成済み（2026-06-12）】MAU_全教職員→職員全体（専任・派遣・職卓）→教員全体（常勤・非常勤講師）＋部署グループの5層設計。GaroonのSP配信パターンとSharePointオーディエンスターゲティングの対応表も整備。entra-id-group-design.md / SharePoint提案書 設計方針タブに反映済み。6/18定例で大学側に提示・合意取り付け。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-group">
+      <div class="task-group-title" style="color:var(--pending)">🟡 6月中に対応</div>
+      <div class="task-item medium">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">Entra IDグループ設計（詳細実装） <span class="task-owner">三井田</span></div>
+          <div class="task-detail">6/18で方針合意後に実装へ。統合イントラサイトの権限設計の前提として先行構築が必要</div>
+        </div>
+      </div>
+      <div class="task-item medium">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">セキュリティ対策基準のレビュー（第9条・第10条） <span class="task-owner">三井田 / 時田氏</span></div>
+          <div class="task-detail">メール・チャットのルールが未完成。時田氏の作成に対してレビューと意見出しで支援</div>
+        </div>
+      </div>
+      <div class="task-item medium">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">情報化戦略本部会議向けの資料支援 <span class="task-owner">三井田 / 時田氏</span></div>
+          <div class="task-detail">6月末〜7月上旬の会議でメール移行（8月）とセキュリティ対策基準の大枠をアナウンス。資料レビューを支援</div>
+        </div>
+      </div>
+      <div class="task-item medium">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">8月メール移行のユーザー向け資料チェック <span class="task-owner">三井田</span></div>
+          <div class="task-detail">UPN変更・Authenticator再登録・OneDrive共有リンク無効化などのユーザー影響をユーザー視点で整理・確認</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-group">
+      <div class="task-group-title" style="color:var(--primary)">🔵 7〜8月対応</div>
+      <div class="task-item normal">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">統合イントラサイト構築（本実装） <span class="task-owner">三井田</span></div>
+          <div class="task-detail">ドラフト承認後に構築開始。全学ポータル（お知らせ・回覧板・規程集）の実装。Garoon掲示板の代替として機能させる。</div>
+        </div>
+      </div>
+      <div class="task-item normal">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">MFA全教職員展開（時期は先方と別途調整） <span class="task-owner">三井田 / 時田氏</span></div>
+          <div class="task-detail">8月メール移行とは切り離して進める方針。展開時期・段取りは先方と調整して決定する。アナウンス文・手順書の準備は進めておく。</div>
+        </div>
+      </div>
+      <div class="task-item normal">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">ユーザー向けガイドライン・マニュアル整備 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">統合イントラサイト・Teams・Outlookの利用ガイド。7月下旬〜8月に整備</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-group">
+      <div class="task-group-title" style="color:#9ca3af">⬜ 要方針確認（年度末に向けて）</div>
+      <div class="task-item tbd">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">Garoon申請ワークフロー（約100件以上）の移行先設計 <span class="task-owner">三井田</span></div>
+          <div class="task-detail">X-pointはオンプレ継続のため対象外。Garoon上の軽い申請フローが対象。SharePoint標準は使いづらいため、ネクストセット社M365向けワークフローアドオン等の活用を提案予定。Garoon継続中は不急。</div>
+        </div>
+      </div>
+      <div class="task-item tbd">
+        <input type="checkbox" class="task-cb">
+        <div class="task-content">
+          <div class="task-name">共有ファイルサーバーの今後の方針策定 <span class="task-owner">三井田 / 大学側</span></div>
+          <div class="task-detail">事務局職員のみ使用中。教員研究室への展開有無・段階的な廃止時期は大学側と協議</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+      <button onclick="showStep(2)" style="background:var(--primary);color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;">次へ: アクションプラン →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: アクションプラン -->
+  <div class="step-panel" id="step-panel-2">
+
+    <div class="week-block">
+      <div class="week-label" style="background:var(--confirmed)">✅ 今週完了（6/4〜6/10）</div>
+      <div class="week-items" style="opacity:0.75">
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">SharePoint統合イントラサイト 初期方針ドラフト作成</div>
+            <div class="week-item-sub">完了。来週定例で発表する。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">Teams利用整備 進め方ドラフト作成</div>
+            <div class="week-item-sub">完了。Phase1（新規作成ルール）〜Phase2（棚卸し）の骨格案。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">💬</span>
+          <div class="week-item-body">
+            <div class="week-item-title">チャットワークで両ドラフトを時田氏・畠中氏に共有する</div>
+            <div class="week-item-sub">来週定例（6/11）の議題・説明内容を事前共有</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-label" style="background:var(--confirmed)">✅ 6/11定例完了</div>
+      <div class="week-items" style="opacity:0.75">
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">統合イントラサイト 初期方針を発表・フィードバック取得</div>
+            <div class="week-item-sub">方向性合意。パイロット部署は後日連絡。Garoon受信者制御の複雑さが判明→Entra IDグループ設計要件が拡大。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">Teams利用ルール整備の進め方を確認する</div>
+            <div class="week-item-sub">「大きな方向性がすごくいい」と評価。クラスチームの実態・パブリック対応済みを確認。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">✅</span>
+          <div class="week-item-body">
+            <div class="week-item-title" style="text-decoration:line-through">DMARC確認依頼をチャットで送信</div>
+            <div class="week-item-sub">時田氏経由でメール移行ベンダーへ確認依頼。fs.musabi.ac.jpへのDMARC継承を確認中。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-label warn">次回定例（6/18）</div>
+      <div class="week-items">
+        <div class="week-item">
+          <span class="week-item-icon">💰</span>
+          <div class="week-item-body">
+            <div class="week-item-title">ワークフローアドイン 費用感の説明（資料準備済み）</div>
+            <div class="week-item-sub">ネクストセット・ワークフロー for M365：1アドオン200円/月/ユーザー（税抜）。職員〜600名対象で年額約158万円（税込）。SharePoint提案書のワークフロータブに整理済み。大学側の導入可否判断を促す。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">🗂</span>
+          <div class="week-item-body">
+            <div class="week-item-title">Entra IDグループ 細かい設計案の提示（ドラフト作成済み）</div>
+            <div class="week-item-sub">5層構造設計：全教職員→職員全体（専任/派遣/職卓）→教員全体（常勤/非常勤講師）→部署グループ。GaroonのSP配信対応表も整理済み。大学側から①職員区分の定義・人数 ②部署一覧 ③ユーザーCSVの提供を依頼予定。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">📋</span>
+          <div class="week-item-body">
+            <div class="week-item-title">インシデント対応マニュアル確認（時田氏）</div>
+            <div class="week-item-sub">時田氏が6月中旬までに整備完了予定。定例でレビュー・フィードバック。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-label">6月後半（〜6/30）</div>
+      <div class="week-items">
+        <div class="week-item">
+          <span class="week-item-icon">🏗</span>
+          <div class="week-item-body">
+            <div class="week-item-title">Entra IDグループ設計・構築</div>
+            <div class="week-item-sub">教員・職員・学生の3グループ体系を構築する</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">📊</span>
+          <div class="week-item-body">
+            <div class="week-item-title">情報化戦略本部会議向け資料のレビュー支援</div>
+            <div class="week-item-sub">6月末〜7月上旬の会議に向けて、セキュリティ基準の大枠・メール移行アナウンス資料を確認</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">📋</span>
+          <div class="week-item-body">
+            <div class="week-item-title">メール移行ユーザー向け資料をユーザー視点でチェック</div>
+            <div class="week-item-sub">UPN変更・Authenticator再登録・OneDrive共有リンク無効化などの影響整理</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-label">7月</div>
+      <div class="week-items">
+        <div class="week-item">
+          <span class="week-item-icon">🏗</span>
+          <div class="week-item-body">
+            <div class="week-item-title">統合イントラサイト 詳細設計・レビュー → 構築開始</div>
+            <div class="week-item-sub">初期方針への承認を受けて本格設計・構築へ。全学ポータル・お知らせ・規程集を実装</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">📋</span>
+          <div class="week-item-body">
+            <div class="week-item-title">Teamsガバナンスルール策定・承認</div>
+            <div class="week-item-sub">チーム作成基準・命名規則の確定。デジタルツール運用ルール ver.1 に追加する</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">📢</span>
+          <div class="week-item-body">
+            <div class="week-item-title">MFA展開計画の策定（職員: 8月移行時に合わせる）</div>
+            <div class="week-item-sub">アナウンス文・Authenticator再登録手順書を用意して8月移行に備える</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-label danger">8月下旬（お盆明け予定）🔴</div>
+      <div class="week-items">
+        <div class="week-item">
+          <span class="week-item-icon">📧</span>
+          <div class="week-item-body">
+            <div class="week-item-title">メール移行実施（別ベンダー）</div>
+            <div class="week-item-sub">UPN変更 → 全ユーザーのMFAリセット発生</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">🔐</span>
+          <div class="week-item-body">
+            <div class="week-item-title">MFA展開の準備（アナウンス文・手順書の整備）</div>
+            <div class="week-item-sub">8月移行とは切り離して進める方針。実施時期は先方と別途調整する。</div>
+          </div>
+        </div>
+        <div class="week-item">
+          <span class="week-item-icon">🏗</span>
+          <div class="week-item-body">
+            <div class="week-item-title">統合イントラサイト 初期公開</div>
+            <div class="week-item-sub">メール移行後の新環境での運用開始に合わせてサイトを公開</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:16px;">
+      <button onclick="showStep(1)" style="background:#f3f4f6;color:var(--text);border:1px solid var(--border);padding:10px 24px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;">← 戻る: タスク</button>
+      <button onclick="showStep(3)" style="background:var(--primary);color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;">次へ: スケジュール →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: スケジュール（サマリー） -->
+  <div class="step-panel" id="step-panel-3">
+    <div class="callout info">全体のスケジュールは <a href="#" onclick="showPage('schedule'); return false;" style="color:var(--primary);font-weight:600;">📅 スケジュールページ</a> で詳細を確認できます。以下は重要マイルストーンのサマリーです。</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 16px">
+      <a href="sharepoint-proposal.html" target="_blank" style="display:block;background:var(--primary-light);border:1.5px solid var(--primary);border-radius:6px;padding:10px 14px;text-decoration:none;color:var(--text)">
+        <div style="font-size:11px;font-weight:700;color:var(--primary)">提案書（6/11方向性合意）</div>
+        <div style="font-size:13px;font-weight:700;margin-top:2px">🏗 SharePoint統合イントラサイト ↗</div>
+      </a>
+      <a href="workflow-comparison.html" target="_blank" style="display:block;background:var(--confirmed-bg);border:1.5px solid var(--confirmed);border-radius:6px;padding:10px 14px;text-decoration:none;color:var(--text)">
+        <div style="font-size:11px;font-weight:700;color:var(--confirmed)">比較資料（6/12作成済み）</div>
+        <div style="font-size:13px;font-weight:700;margin-top:2px">⚡ ワークフロー比較 PA vs Nextset ↗</div>
+      </a>
+    </div>
+
+    <div class="section">
+      <h3>マイルストーン早見表</h3>
+      <table>
+        <tr><th>時期</th><th>マイルストーン</th><th>三井田の対応</th></tr>
+        <tr style="background:var(--confirmed-bg)">
+          <td><strong>6/4〜6/10</strong></td>
+          <td><span class="badge-confirmed">✅ 完了</span> 両ドラフト作成</td>
+          <td>SharePoint統合イントラ初期方針・Teams利用整備ドラフト作成済み</td>
+        </tr>
+        <tr style="background:var(--confirmed-bg)">
+          <td><strong>6/11</strong></td>
+          <td><span class="badge-confirmed">✅ 完了</span> 第2回定例 — 両ドラフト方向性合意</td>
+          <td>SharePoint・Teams方向性合意。Entra IDグループ設計要件拡大判明。DMARC確認依頼送信。</td>
+        </tr>
+        <tr style="background:var(--confirmed-bg)">
+          <td><strong>6/12</strong></td>
+          <td><span class="badge-confirmed">✅ 完了</span> 6/18向け資料整備</td>
+          <td>① Nextsetワークフロー費用調査・比較資料作成 ② Entra IDグループ5層設計案・ビジュアル図作成</td>
+        </tr>
+        <tr>
+          <td><strong>6/18（来週）</strong></td>
+          <td>第3回定例MTG <span class="badge-danger">急ぎ</span></td>
+          <td>① ワークフローアドイン費用感提示・導入方針確定 ② Entra IDグループ設計案提示・合意 ③ パイロット部署確定</td>
+        </tr>
+        <tr>
+          <td><strong>6月末〜7月上旬</strong></td>
+          <td>情報化戦略本部会議</td>
+          <td>セキュリティ基準大枠・8月移行アナウンス資料のレビュー支援</td>
+        </tr>
+        <tr>
+          <td><strong>6月末</strong></td>
+          <td>Entra IDグループ Phase 1 実装</td>
+          <td>Layer 1〜2（MAU_全教職員・職員全体・教員全体）を先行構築</td>
+        </tr>
+        <tr>
+          <td><strong>7月</strong></td>
+          <td>統合イントラサイト設計承認・構築開始</td>
+          <td>イントラサイト本設計・Entra IDグループ詳細構築・Teamsルール策定</td>
+        </tr>
+        <tr>
+          <td><strong>8月下旬（お盆明け予定）🔴</strong></td>
+          <td>メール移行（日程は先方と調整中）</td>
+          <td>統合イントラサイト初期公開・ユーザーサポート。MFA展開は別途時期を調整。</td>
+        </tr>
+        <tr>
+          <td><strong>8月〜</strong></td>
+          <td>Nextsetワークフロー パイロット展開</td>
+          <td>休暇申請・物品購入など利用頻度の高い申請書から先行実装（30日トライアルを活用）</td>
+        </tr>
+        <tr>
+          <td><strong>9〜10月</strong></td>
+          <td>Garoon→統合イントラサイト コンテンツ移行</td>
+          <td>掲示板・文書管理のコンテンツ移行。Garoonは並行稼働中</td>
+        </tr>
+        <tr>
+          <td><strong>2026年度末（時期未確定）</strong></td>
+          <td>Garoon廃止（移行完了後・段階的に）</td>
+          <td>全移行完了後にGaroon停止。時期は移行状況次第。</td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:16px; align-items:center;">
+      <button onclick="showStep(2)" style="background:#f3f4f6;color:var(--text);border:1px solid var(--border);padding:10px 24px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;">← 戻る: アクションプラン</button>
+      <a href="#" onclick="showPage('schedule'); return false;" style="background:var(--confirmed);color:#fff;text-decoration:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:600;">詳細スケジュールを見る →</a>
+    </div>
+  </div>
+
+</div><!-- /page-planning -->
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (event && event.currentTarget && event.currentTarget.classList.contains('nav-item')) {
+    event.currentTarget.classList.add('active');
+  }
+  window.scrollTo(0, 0);
+}
+
+function toggleMtg(id) {
+  const body = document.getElementById(id);
+  const toggle = document.getElementById('toggle-' + id);
+  if (body.classList.contains('open')) {
+    body.classList.remove('open');
+    toggle.textContent = '▼';
+  } else {
+    body.classList.add('open');
+    toggle.textContent = '▲';
+  }
+}
+
+function showStep(n) {
+  [1,2,3].forEach(i => {
+    document.getElementById('step-panel-' + i).classList.remove('active');
+    const nav = document.getElementById('step-nav-' + i);
+    nav.classList.remove('active', 'done');
+    if (i < n) nav.classList.add('done');
+  });
+  document.getElementById('step-panel-' + n).classList.add('active');
+  document.getElementById('step-nav-' + n).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
