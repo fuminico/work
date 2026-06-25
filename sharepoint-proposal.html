@@ -798,6 +798,10 @@ function show(n) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === n));
   window.scrollTo(0, 0);
 }
+window.addEventListener('DOMContentLoaded', () => {
+  const m = location.hash.match(/^#tab(\d+)$/);
+  if (m) show(parseInt(m[1]));
+});
 </script>
 </body>
 </html>
