@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テナント現状レポート — 武蔵野美術大学 M365導入支援</title>
+<style>
+  :root {
+    --primary:    #1a56a0;
+    --primary-bg: #e8f0fc;
+    --green:      #16a34a;
+    --green-bg:   #dcfce7;
+    --orange:     #c2410c;
+    --orange-bg:  #ffedd5;
+    --red:        #b91c1c;
+    --red-bg:     #fee2e2;
+    --gray:       #6b7280;
+    --border:     #e5e7eb;
+    --text:       #111827;
+    --bg:         #f3f4f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 32px 20px 64px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* ── ヘッダー ── */
+  .header { text-align: center; margin-bottom: 36px; }
+  .header-label {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 24px; font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: var(--gray); }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: none;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── セクション ── */
+  .section { margin-bottom: 28px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e3a5f;
+    border-left: 4px solid var(--primary);
+    padding-left: 10px;
+    margin-bottom: 14px;
+  }
+
+  /* ── カード ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  /* ── 基本情報 ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 6px 16px;
+  }
+  .info-label { color: var(--gray); font-size: 12px; padding-top: 2px; }
+  .info-value { font-size: 13px; font-weight: 600; word-break: break-all; }
+  .info-value.mono { font-family: 'Consolas', monospace; font-weight: 400; font-size: 12px; color: #374151; }
+
+  /* ── ドメインバッジ ── */
+  .domain-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .domain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--primary-bg);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'Consolas', monospace;
+  }
+  .domain-badge.default { background: #1e3a5f; color: #fff; }
+  .domain-badge.inactive { background: #f3f4f6; color: var(--gray); border: 1px solid var(--border); }
+  .badge-tag {
+    font-size: 10px;
+    background: rgba(255,255,255,0.3);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .domain-badge.default .badge-tag { background: rgba(255,255,255,0.25); }
+
+  /* ── 統計カード ── */
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .stat-number { font-size: 28px; font-weight: 800; color: #1e3a5f; line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--gray); margin-top: 4px; }
+  .stat-sub { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+
+  /* ── ライセンスバー ── */
+  .license-item { margin-bottom: 16px; }
+  .license-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .license-name { font-size: 13px; font-weight: 600; }
+  .license-count { font-size: 12px; color: var(--gray); }
+  .license-bar-bg {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .license-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    background: var(--primary);
+    transition: width 0.3s;
+  }
+  .license-bar-fill.full { background: var(--red); }
+  .license-bar-fill.high { background: var(--orange); }
+  .license-bar-fill.low { background: #9ca3af; }
+  .license-note { font-size: 11px; color: var(--gray); margin-top: 3px; }
+
+  /* ── グループ表 ── */
+  .group-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .group-stat {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .group-stat .num { font-size: 24px; font-weight: 800; color: #1e3a5f; }
+  .group-stat .lbl { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+  /* ── SharePoint ── */
+  .sp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .sp-stat {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .sp-stat .num { font-size: 22px; font-weight: 800; color: #1e3a5f; }
+  .sp-stat .lbl { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .sp-stat .sub { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+
+  /* ストレージバー */
+  .storage-bar-wrap { margin-top: 12px; }
+  .storage-bar-bg { height: 14px; background: #e5e7eb; border-radius: 7px; overflow: hidden; }
+  .storage-bar-fill { height: 100%; background: var(--primary); border-radius: 7px; width: 27.4%; }
+  .storage-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray); margin-top: 4px; }
+
+  /* ── 気づき・観察事項 ── */
+  .finding-list { list-style: none; }
+  .finding-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .finding-item:last-child { border-bottom: none; }
+  .finding-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .finding-icon.warn { background: var(--orange-bg); }
+  .finding-icon.info { background: var(--primary-bg); }
+  .finding-icon.ok   { background: var(--green-bg); }
+  .finding-body { flex: 1; }
+  .finding-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .finding-desc { font-size: 12px; color: #374151; }
+
+  /* ── 未取得項目 ── */
+  .na-list { list-style: none; }
+  .na-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+  }
+  .na-item:last-child { border-bottom: none; }
+  .na-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    color: var(--gray);
+  }
+  .na-reason { font-size: 11px; color: #9ca3af; margin-left: auto; }
+
+  /* ── フッター ── */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--gray);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← コンサルティング資料トップへ戻る</a>
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <div class="header-label">TENANT STATUS REPORT</div>
+    <h1>武蔵野美術大学<br>M365 テナント現状レポート</h1>
+    <div class="meta">調査日：2026年6月30日&emsp;|&emsp;調査者：三井田史親（コンサルタント）&emsp;|&emsp;アカウント：miida2026@fs.musabi.ac.jp（グローバル閲覧者）</div>
+  </div>
+
+  <!-- 1. テナント基本情報 -->
+  <div class="section">
+    <div class="section-title">テナント基本情報</div>
+    <div class="card">
+      <div class="info-grid">
+        <span class="info-label">組織名</span>
+        <span class="info-value">武蔵野美術大学（Musashino Art University）</span>
+
+        <span class="info-label">テナントID</span>
+        <span class="info-value mono">db09a551-6554-419e-8fc5-5dd6ed4500d8</span>
+
+        <span class="info-label">onmicrosoft ドメイン</span>
+        <span class="info-value mono">musabiac.onmicrosoft.com</span>
+
+        <span class="info-label">テナント作成日</span>
+        <span class="info-value">2013年1月18日（約13年前）</span>
+
+        <span class="info-label">既定ドメイン</span>
+        <span class="info-value mono">ct.musabi.ac.jp</span>
+
+        <span class="info-label">技術連絡先</span>
+        <span class="info-value mono">iss@musabi.ac.jp</span>
+
+        <span class="info-label">国・地域</span>
+        <span class="info-value">Japan</span>
+
+        <span class="info-label">優先言語</span>
+        <span class="info-value">日本語</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ドメイン -->
+  <div class="section">
+    <div class="section-title">登録ドメイン（5件）</div>
+    <div class="card">
+      <div class="domain-list">
+        <span class="domain-badge default">ct.musabi.ac.jp <span class="badge-tag">既定</span></span>
+        <span class="domain-badge">cc.musabi.ac.jp</span>
+        <span class="domain-badge">fs.musabi.ac.jp</span>
+        <span class="domain-badge inactive">musabi.ac.jp <span class="badge-tag">サービス未選択</span></span>
+        <span class="domain-badge inactive">musabiac.onmicrosoft.com</span>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:var(--gray);">
+        ※ <strong>musabi.ac.jp</strong> 本体ドメインはサービス未割り当て。メール・Teams は <strong>ct / cc / fs</strong> のサブドメインで運用。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. ユーザー概要 -->
+  <div class="section">
+    <div class="section-title">ユーザー概要</div>
+    <div class="card-grid" style="margin-bottom:12px;">
+      <div class="stat-card">
+        <div class="stat-number">1,677</div>
+        <div class="stat-label">教職員ユーザー数（推計）</div>
+        <div class="stat-sub">M365 A3 faculty 1,262 + A1 教職員 415</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6,881</div>
+        <div class="stat-label">学生ユーザー数（推計）</div>
+        <div class="stat-sub">M365 A3 学生特典 6,852 + A1 students 29</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">8,558</div>
+        <div class="stat-label">ライセンス割当済み合計</div>
+        <div class="stat-sub">アクティブユーザー総数</div>
+      </div>
+    </div>
+    <div style="font-size:12px; color:var(--gray); background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px;">
+      ※ ユーザー一覧の総数表示はグローバル閲覧者権限では確認できず、ライセンス割当数から推計。実際のアクティブユーザー数はこの数値と一致する。
+    </div>
+  </div>
+
+  <!-- 4. ライセンス状況 -->
+  <div class="section">
+    <div class="section-title">ライセンス割当状況</div>
+    <div class="card">
+
+      <!-- M365 A3 faculty -->
+      <div class="license-item">
+        <div class="license-header">
+          <span class="license-name">Microsoft 365 A3 for faculty（教職員向け主力）</span>
+          <span class="license-count">1,262 / 1,307 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill high" style="width:96.6%;"></div>
+        </div>
+        <div class="license-note" style="color:var(--orange);">⚠ 残45枠（96.6%使用）— 新規着任・採用時に枠不足のリスクあり</div>
+      </div>
+
+      <!-- M365 A3 学生 -->
+      <div class="license-item">
+        <div class="license-header">
+          <span class="license-name">Microsoft 365 A3 学生使用特典（学生向け主力）</span>
+          <span class="license-count">6,852 / 13,000 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill" style="width:52.7%;"></div>
+        </div>
+        <div class="license-note">残6,148枠（52.7%使用）— 余裕あり</div>
+      </div>
+
+      <!-- Copilot Education -->
+      <div class="license-item">
+        <div class="license-header">
+          <span class="license-name">Microsoft 365 Copilot Education</span>
+          <span class="license-count">35 / 35 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill full" style="width:100%;"></div>
+        </div>
+        <div class="license-note" style="color:var(--red);">満枠使用中（100%）— 追加希望者がいる場合は購入が必要</div>
+      </div>
+
+      <!-- Office 365 A1 教職員 -->
+      <div class="license-item">
+        <div class="license-header">
+          <span class="license-name">Office 365 A1 教職員用</span>
+          <span class="license-count">415 / 500,000 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill low" style="width:0.1%;"></div>
+        </div>
+        <div class="license-note">500,000枠に対し415のみ使用（0.08%）— 大量未使用枠</div>
+      </div>
+
+      <!-- Office 365 A1 for students -->
+      <div class="license-item">
+        <div class="license-header">
+          <span class="license-name">Office 365 A1 for students</span>
+          <span class="license-count">29 / 8,895 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill low" style="width:0.3%;"></div>
+        </div>
+        <div class="license-note">ほぼ未使用（M365 A3 学生特典に移行済みと推測）</div>
+      </div>
+
+      <!-- Exchange Online -->
+      <div class="license-item">
+        <div class="license-header">
+          <span class="license-name">Exchange Online (Plan 1) for students</span>
+          <span class="license-count">0 / 8,895 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill low" style="width:0%;"></div>
+        </div>
+        <div class="license-note">割当ゼロ — M365 A3 にExchange含まれるため未使用か、未移行</div>
+      </div>
+
+      <!-- Visio Plan 2 -->
+      <div class="license-item" style="margin-bottom:0;">
+        <div class="license-header">
+          <span class="license-name">Visio Plan 2 教職員用</span>
+          <span class="license-count">1 / 1 使用中</span>
+        </div>
+        <div class="license-bar-bg">
+          <div class="license-bar-fill full" style="width:100%;"></div>
+        </div>
+        <div class="license-note">1枠のみ — 特定の管理者が使用</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 5. グループ構成 -->
+  <div class="section">
+    <div class="section-title">グループ構成（合計 10,769）</div>
+    <div class="group-grid">
+      <div class="group-stat">
+        <div class="num">10,678</div>
+        <div class="lbl">Teams / Microsoft 365 グループ</div>
+      </div>
+      <div class="group-stat">
+        <div class="num">89</div>
+        <div class="lbl">セキュリティグループ</div>
+      </div>
+      <div class="group-stat">
+        <div class="num">2</div>
+        <div class="lbl">配布リスト<br><small style="color:#9ca3af;">（テスト用のみ）</small></div>
+      </div>
+    </div>
+    <div style="margin-top:12px; font-size:12px; color:var(--gray); background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px;">
+      ※ 10,678件のM365グループはほぼすべてが<strong>授業・ゼミ単位で作成されたチームサイト</strong>に対応（HiddenMembership設定）。2020年から年度ごとに累積。配布リストは情シス担当者が作成したテスト用2件のみで、正式なメール配信グループは未整備の状態。
+    </div>
+  </div>
+
+  <!-- 6. SharePoint 利用状況 -->
+  <div class="section">
+    <div class="section-title">SharePoint 利用状況（2026-06-28 時点）</div>
+    <div class="sp-grid">
+      <div class="sp-stat">
+        <div class="num">16,501</div>
+        <div class="lbl">総サイト数</div>
+        <div class="sub">うちアクティブ（30日）: 691件（4.2%）</div>
+      </div>
+      <div class="sp-stat">
+        <div class="num">4,017,003</div>
+        <div class="lbl">総ファイル数</div>
+        <div class="sub">うちアクティブ（30日）: 4,566件（0.1%）</div>
+      </div>
+    </div>
+
+    <!-- ストレージ -->
+    <div class="card">
+      <div style="font-size:13px; font-weight:700; margin-bottom:10px;">ストレージ使用状況</div>
+      <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;">
+        <span>使用中: <strong>44.94 TB</strong></span>
+        <span>合計: <strong>163.82 TB</strong>（残 118.88 TB）</span>
+      </div>
+      <div class="storage-bar-bg">
+        <div class="storage-bar-fill"></div>
+      </div>
+      <div class="storage-labels">
+        <span>0 TB</span>
+        <span style="color:var(--primary); font-weight:600;">44.94 TB 使用中（27.4%）</span>
+        <span>163.82 TB</span>
+      </div>
+    </div>
+
+    <div style="font-size:12px; color:var(--gray); background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-top:12px;">
+      ※ サイトの大多数は授業単位で作成・累積されており、直近30日のアクティブ率は4.2%に留まる。これはM365移行前から継続する設計起因であり、ガバナンスポリシーの整備が今後の課題。
+    </div>
+  </div>
+
+  <!-- 7. 確認できなかった項目 -->
+  <div class="section">
+    <div class="section-title">確認できなかった項目</div>
+    <div class="card">
+      <ul class="na-list">
+        <li class="na-item">
+          <span class="na-tag">権限不足</span>
+          条件付きアクセス（CA）ポリシー詳細
+          <span class="na-reason">Entra 管理センターへのアクセス不可</span>
+        </li>
+        <li class="na-item">
+          <span class="na-tag">権限不足</span>
+          Teams チーム一覧・総数
+          <span class="na-reason">Teams 管理センター INVALID_PRIVILEGE</span>
+        </li>
+        <li class="na-item">
+          <span class="na-tag">権限不足</span>
+          管理者ロール割当状況（グローバル管理者の人数等）
+          <span class="na-reason">Entra 管理センターへのアクセス不可</span>
+        </li>
+        <li class="na-item">
+          <span class="na-tag">権限不足</span>
+          セキュリティスコア・脅威防御設定
+          <span class="na-reason">Security 管理センターへのアクセス不可</span>
+        </li>
+        <li class="na-item">
+          <span class="na-tag">PowerShell不可</span>
+          動的グループの詳細・メンバーシップルール
+          <span class="na-reason">CAポリシーにより PowerShell 接続をブロック（AADSTS53003）</span>
+        </li>
+      </ul>
+      <div style="margin-top:12px; font-size:12px; color:var(--gray);">
+        ※ 上記項目は今後、管理者アカウント（情シス担当）との共同作業で確認予定。特に<strong>CAポリシーの全体像</strong>はセキュリティ設計の核心であり、7/8 情報化戦略本部会議前に把握したい。
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. 現状分析・気づき -->
+  <div class="section">
+    <div class="section-title">現状分析・コンサルタントからの気づき</div>
+    <div class="card">
+      <ul class="finding-list">
+
+        <li class="finding-item">
+          <div class="finding-icon warn">⚠</div>
+          <div class="finding-body">
+            <div class="finding-title">教職員ライセンスが枯渇寸前（残45枠・96.6%）</div>
+            <div class="finding-desc">M365 A3 for faculty は1,307枠に対し1,262名が使用中。新規採用・着任のタイミングで枠不足が発生するリスクがある。次回の購入更新タイミングを確認し、予備枠の確保を提案すべき。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon warn">⚠</div>
+          <div class="finding-body">
+            <div class="finding-title">16,501サイトの大半が非アクティブ（累積放置）</div>
+            <div class="finding-desc">授業ごとにサイトを新規作成し削除しない運用が2020年から続いており、2026年6月時点で16,501サイトまで膨張。直近30日のアクティブ率は4.2%。ライフサイクルポリシー（有効期限設定・アーカイブルール）の導入が必要。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon warn">⚠</div>
+          <div class="finding-body">
+            <div class="finding-title">メール配布リストが実質未整備</div>
+            <div class="finding-desc">配布リストは情シスのテスト用2件のみ。全学・学部・学科等の正式な配信グループが存在しない状態。M365移行に伴いメール配信の体制整備（SharePointニュース or メール配布グループ）が必要。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon info">i</div>
+          <div class="finding-body">
+            <div class="finding-title">Copilot Education が全枠利用中（35/35）</div>
+            <div class="finding-desc">Copilot Education ライセンスを試験的に35名へ付与済みで満枠。効果測定の状況・利用者の評価を確認し、拡大するか判断する材料とする。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon info">i</div>
+          <div class="finding-body">
+            <div class="finding-title">本体ドメイン musabi.ac.jp が未使用</div>
+            <div class="finding-desc">musabi.ac.jp はEntraに登録されているがサービスに割り当てられていない。ct / cc / fs のサブドメインが機能別に使われている状況。なぜ本体ドメインを使わないか、経緯を確認することが望ましい。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon ok">✓</div>
+          <div class="finding-body">
+            <div class="finding-title">ストレージには十分な余裕がある（27.4%使用）</div>
+            <div class="finding-desc">163.82 TB 中 44.94 TB の使用で、残 118.88 TB。当面ストレージ容量を理由とした追加購入は不要。ファイル活用・教材デジタル化を推進できる余地がある。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon ok">✓</div>
+          <div class="finding-body">
+            <div class="finding-title">テナントは2013年から長期運用（安定基盤）</div>
+            <div class="finding-desc">テナント開設から約13年経過。既存グループ・サイト群は蓄積されたが、サービス基盤自体は安定している。ガバナンス整備を進めることで既存資産を活用できる。</div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <div class="footer">
+    <p>本レポートは 2026年6月30日 時点の情報に基づく。グローバル閲覧者権限（miida2026@fs.musabi.ac.jp）で取得可能な範囲での調査結果。</p>
+    <p style="margin-top:6px;"><a href="index.html" style="color:var(--primary);">← コンサルティング資料トップへ戻る</a></p>
+  </div>
+
+</div>
+</body>
+</html>
