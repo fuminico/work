@@ -279,6 +279,14 @@
         </div>
 
         <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,.08); border-radius:8px; padding:12px 16px;">
+          <div style="font-size:20px; flex-shrink:0; margin-top:1px;">🔓</div>
+          <div>
+            <div style="font-size:14px; font-weight:700; margin-bottom:3px;">外部共有が「すべてのユーザー」——匿名リンクが発行できる状態</div>
+            <div style="font-size:12px; opacity:.8;">SharePoint・OneDrive ともに外部共有レベルが最も制限の少ない「すべてのユーザー」に設定されており、サインイン不要の匿名リンク発行が可能。イントラサイト設計時には「自分の組織内のユーザーのみ」への変更を提案予定。</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,.08); border-radius:8px; padding:12px 16px;">
           <div style="font-size:20px; flex-shrink:0; margin-top:1px;">🔑</div>
           <div>
             <div style="font-size:14px; font-weight:700; margin-bottom:3px;">設計推進には追加のアクセス権が必要</div>
@@ -477,6 +485,15 @@
     <div style="margin-top:12px; font-size:12px; color:var(--gray); background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px;">
       ※ 10,678件のM365グループはほぼすべてが<strong>授業・ゼミ単位で作成されたチームサイト</strong>に対応（HiddenMembership設定）。2020年から年度ごとに累積。配布リストは情シス担当者が作成したテスト用2件のみで、正式なメール配信グループは未整備の状態。
     </div>
+    <div style="margin-top:12px; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+      <div style="font-size:13px; font-weight:700; margin-bottom:8px;">M365 グループ設定（6/30 確認済み）</div>
+      <table style="font-size:12px;">
+        <tr><th>設定項目</th><th>現在の状態</th><th>所見</th></tr>
+        <tr><td>グループ所有者による外部ゲスト追加</td><td><strong style="color:var(--orange);">オン（許可）</strong></td><td>所有者が任意で学外ゲストをグループに招待できる</td></tr>
+        <tr><td>ゲストによるグループコンテンツへのアクセス</td><td><strong style="color:var(--orange);">オン（許可）</strong></td><td>招待されたゲストがグループのファイル等を閲覧可能</td></tr>
+        <tr><td>所有者なしグループへの自動昇格促進</td><td>オフ（未設定）</td><td>放置グループに所有者が割り当てられず累積する一因</td></tr>
+      </table>
+    </div>
   </div>
 
   <!-- 6. SharePoint 利用状況 -->
@@ -515,6 +532,69 @@
     <div style="font-size:12px; color:var(--gray); background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-top:12px;">
       ※ サイトの大多数は授業単位で作成・累積されており、直近30日のアクティブ率は4.2%に留まる。これはM365移行前から継続する設計起因であり、ガバナンスポリシーの整備が今後の課題。
     </div>
+
+    <!-- 共有・アクセス制御ポリシー -->
+    <div class="card" style="margin-top:14px;">
+      <div style="font-size:13px; font-weight:700; margin-bottom:10px;">共有・アクセス制御ポリシー（6/30 確認済み）</div>
+      <table style="font-size:12px;">
+        <tr><th>項目</th><th>現在の設定</th><th>所見</th></tr>
+        <tr>
+          <td>外部共有レベル（SharePoint）</td>
+          <td><strong style="color:var(--red);">すべてのユーザー</strong></td>
+          <td>匿名リンク発行が可能な最も開放的な設定。イントラ設計時に変更を提案</td>
+        </tr>
+        <tr>
+          <td>外部共有レベル（OneDrive）</td>
+          <td><strong style="color:var(--red);">すべてのユーザー</strong></td>
+          <td>同上</td>
+        </tr>
+        <tr>
+          <td>デフォルトリンク種別</td>
+          <td>自分の組織内のユーザーのみ</td>
+          <td>リンク作成時のデフォルトは内部向け。一定の歯止めとして機能している</td>
+        </tr>
+        <tr>
+          <td>デフォルトアクセス許可</td>
+          <td>表示</td>
+          <td>閲覧のみがデフォルト（編集権限は手動付与が必要）</td>
+        </tr>
+        <tr>
+          <td>管理されていないデバイス</td>
+          <td>フルアクセス許可</td>
+          <td>個人端末・未登録端末からの制限なし。セキュリティポリシー整備と連動して見直し検討</td>
+        </tr>
+        <tr>
+          <td>アイドルセッション自動サインアウト</td>
+          <td>オフ</td>
+          <td>長時間放置後もセッション維持。公共端末利用リスクは低いが設定確認は推奨</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ルートサイト・ハブサイト -->
+    <div class="card" style="margin-top:14px;">
+      <div style="font-size:13px; font-weight:700; margin-bottom:10px;">サイト構成（6/30 確認済み）</div>
+      <table style="font-size:12px;">
+        <tr><th>項目</th><th>確認結果</th></tr>
+        <tr>
+          <td>ルートサイト（musabiac.sharepoint.com）</td>
+          <td><strong style="color:var(--green);">存在確認</strong>（0.01 TB / 1 TB、0.62%使用）— ほぼ未使用</td>
+        </tr>
+        <tr>
+          <td>ハブサイト</td>
+          <td><strong>存在しない</strong>（アクティブサイト一覧で未登録）</td>
+        </tr>
+        <tr>
+          <td>コミュニケーションサイト</td>
+          <td><strong>存在しない</strong>（テンプレート一覧はチームサイトのみ）</td>
+        </tr>
+        <tr>
+          <td>アプリカタログサイト</td>
+          <td>存在（../sites/appcatalog、0.00 TB）— 管理用</td>
+        </tr>
+      </table>
+      <div style="font-size:11px; color:var(--gray); margin-top:8px;">※ ルートサイトがほぼ未使用の状態は、コミュニケーションサイトに変換してホームサイト（全学の起点）として設計するうえで有利な条件。ハブサイト・コミュニケーションサイトともにゼロから設計できる。</div>
+    </div>
   </div>
 
   <!-- 7. 確認できなかった項目 -->
@@ -552,9 +632,19 @@
           動的グループの詳細・メンバーシップルール
           <span class="na-reason">CAポリシーにより PowerShell 接続をブロック（AADSTS53003）</span>
         </li>
+        <li class="na-item">
+          <span class="na-tag">権限不足</span>
+          M365グループ作成権限の設定（全員が作れる状態か）
+          <span class="na-reason">Entra 管理センター → グループ → 全般設定にアクセス不可</span>
+        </li>
+        <li class="na-item">
+          <span class="na-tag">権限不足</span>
+          Teams チーム新規作成の制限設定
+          <span class="na-reason">Teams 管理センター INVALID_PRIVILEGE（チーム爆増の根本設定）</span>
+        </li>
       </ul>
       <div style="margin-top:12px; font-size:12px; color:var(--gray);">
-        ※ 上記項目は今後、管理者アカウント（情シス担当）との共同作業で確認予定。特に<strong>CAポリシーの全体像</strong>はセキュリティ設計の核心であり、7/8 情報化戦略本部会議前に把握したい。
+        ※ 上記項目は今後、管理者アカウント（情シス担当）との共同作業で確認予定。特に<strong>CAポリシーの全体像・グループ作成権限</strong>はセキュリティ設計とガバナンス設計の核心であり、7/8 情報化戦略本部会議前に把握したい。
       </div>
     </div>
   </div>
@@ -613,6 +703,30 @@
           </div>
         </li>
 
+        <li class="finding-item">
+          <div class="finding-icon warn">⚠</div>
+          <div class="finding-body">
+            <div class="finding-title">外部共有レベルが最開放設定——イントラ運用前に変更が必要</div>
+            <div class="finding-desc">SharePoint・OneDrive ともに外部共有が「すべてのユーザー」に設定されており、URLさえ知っていればサインインなしでファイルにアクセスできる匿名リンクを誰でも発行できる状態。デフォルトリンクは内部向けに設定されているため意図せぬ外部公開の頻度は低いが、設定自体を「自分の組織内のユーザーのみ」へ変更することをイントラ設計の第一条件として提案する。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon warn">⚠</div>
+          <div class="finding-body">
+            <div class="finding-title">所有者なしグループへの自動対応がオフ——放置グループ累積の温床</div>
+            <div class="finding-desc">M365グループ設定で「所有者がいない場合にアクティブメンバーへ所有者昇格を依頼する」機能がオフになっている。授業終了後に教員がチームを放置しても誰にも通知がいかず、10,000超のグループが誰も管理しない状態で累積し続けている構造的要因の一つ。グループ有効期限ポリシーと合わせて設定見直しを提案する。</div>
+          </div>
+        </li>
+
+        <li class="finding-item">
+          <div class="finding-icon ok">✓</div>
+          <div class="finding-body">
+            <div class="finding-title">ルートサイトがほぼ未使用——ホームサイト設計に転用できる</div>
+            <div class="finding-desc">ルートサイト（musabiac.sharepoint.com）は0.62%の使用率でほぼ空の状態。ハブサイト・コミュニケーションサイトも存在しない。これは「全学の起点となるホームサイト」をゼロから設計するうえで、既存のサイト構成に縛られない設計自由度が高い状態を意味する。</div>
+          </div>
+        </li>
+
       </ul>
     </div>
   </div>
@@ -643,31 +757,31 @@
       <table style="font-size:12px;">
         <tr>
           <th style="width:40%;">確認事項</th>
-          <th>確認先・方法</th>
+          <th>状況</th>
         </tr>
-        <tr>
+        <tr style="background:#f0fdf4;">
           <td>ルートサイト（/）が何になっているか</td>
-          <td>SharePoint 管理センター → 設定 → ホームサイト</td>
+          <td><strong style="color:var(--green);">✅ 確認済（6/30）</strong> — musabiac.sharepoint.com に存在、ほぼ未使用（0.62%）</td>
         </tr>
-        <tr>
+        <tr style="background:#f0fdf4;">
           <td>コミュニケーションサイトが既存するか</td>
-          <td>アクティブサイト一覧でテンプレート列を「コミュニケーション」でフィルタ</td>
+          <td><strong style="color:var(--green);">✅ 確認済（6/30）</strong> — 存在しない（チームサイトのみ）</td>
         </tr>
-        <tr>
+        <tr style="background:#f0fdf4;">
           <td>ハブサイトとして登録されているサイトの有無</td>
-          <td>SharePoint 管理センター → アクティブサイト → ハブ列を確認</td>
+          <td><strong style="color:var(--green);">✅ 確認済（6/30）</strong> — 存在しない</td>
         </tr>
-        <tr>
+        <tr style="background:#f0fdf4;">
           <td>外部共有の設定レベル（学外公開の可否）</td>
-          <td>SharePoint 管理センター → ポリシー → 共有</td>
+          <td><strong style="color:var(--green);">✅ 確認済（6/30）</strong> — 「すべてのユーザー」（最も開放的）⚠ 変更を提案予定</td>
         </tr>
         <tr>
           <td>Garoon から移行されるコンテンツ種別（掲示板・お知らせ等）</td>
-          <td>次回 MTG で担当者ヒアリング</td>
+          <td>7/1 MTG で担当者ヒアリング予定</td>
         </tr>
         <tr>
           <td>サイトの命名規則・テンプレート方針の有無</td>
-          <td>次回 MTG で担当者ヒアリング</td>
+          <td>7/1 MTG で担当者ヒアリング予定</td>
         </tr>
       </table>
     </div>
@@ -728,7 +842,7 @@
 
   <!-- フッター -->
   <div class="footer">
-    <p>本レポートは 2026年6月30日 時点の情報に基づく。グローバル閲覧者権限（miida2026@fs.musabi.ac.jp）で取得可能な範囲での調査結果。</p>
+    <p>本レポートは 2026年6月30日 時点の情報に基づく。グローバル閲覧者権限（miida2026@fs.musabi.ac.jp）で取得可能な範囲での調査結果。SharePoint ポリシー・サイト構成は同日の管理センター確認で追補。</p>
     <p style="margin-top:6px;"><a href="index.html" style="color:var(--primary);">← コンサルティング資料トップへ戻る</a></p>
   </div>
 
