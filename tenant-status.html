@@ -558,14 +558,6 @@
         </li>
 
         <li class="finding-item">
-          <div class="finding-icon info">i</div>
-          <div class="finding-body">
-            <div class="finding-title">本体ドメイン musabi.ac.jp が未使用</div>
-            <div class="finding-desc">musabi.ac.jp はEntraに登録されているがサービスに割り当てられていない。ct / cc / fs のサブドメインが機能別に使われている状況。なぜ本体ドメインを使わないか、経緯を確認することが望ましい。</div>
-          </div>
-        </li>
-
-        <li class="finding-item">
           <div class="finding-icon ok">✓</div>
           <div class="finding-body">
             <div class="finding-title">ストレージには十分な余裕がある（27.4%使用）</div>
@@ -582,6 +574,115 @@
         </li>
 
       </ul>
+    </div>
+  </div>
+
+  <!-- 9. 今後の推進軸への示唆 -->
+  <div class="section">
+    <div class="section-title">今後の推進軸への示唆</div>
+    <div style="font-size:12px; color:var(--gray); background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+      三井田コンサルタントが今後主導する「SharePoint イントラサイト構築設計」および「Teams 運用設計」の2軸について、本テナント調査で判明した現状から読み取れる論点と、次に確認すべき事項を整理する。
+    </div>
+
+    <!-- SharePoint -->
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <div style="background:#0078d4; color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px;">SharePoint</div>
+        <div style="font-size:15px; font-weight:700; color:#1e3a5f;">イントラサイト構築設計</div>
+      </div>
+
+      <div style="font-size:13px; font-weight:700; color:#374151; margin-bottom:8px; border-left:3px solid #0078d4; padding-left:8px;">現状から読み取れること</div>
+      <ul style="font-size:13px; list-style:none; margin-bottom:16px;">
+        <li style="padding:6px 0; border-bottom:1px solid #f3f4f6; display:flex; gap:8px;"><span style="color:#0078d4; flex-shrink:0;">▸</span><span><strong>授業サイト起点の設計になっており、全学的な「入口」となるサイトが見当たらない。</strong> 16,501サイトのほぼすべてが授業単位のチームサイト（HiddenMembership）であり、職員・教員が横断的に情報を得るためのイントラ的な場所が現状では存在しないか、あっても埋もれている可能性がある。</span></li>
+        <li style="padding:6px 0; border-bottom:1px solid #f3f4f6; display:flex; gap:8px;"><span style="color:#0078d4; flex-shrink:0;">▸</span><span><strong>ハブサイト・ルートサイトの整備状況が不明。</strong> アクティブサイト一覧ではコミュニケーションサイト（ニュース・お知らせ型）の存在を確認できず、全学・学部単位でのイントラ発信基盤が未整備である蓋然性が高い。</span></li>
+        <li style="padding:6px 0; border-bottom:1px solid #f3f4f6; display:flex; gap:8px;"><span style="color:#0078d4; flex-shrink:0;">▸</span><span><strong>ストレージ・ライセンスともに余力がある。</strong> 44.94 TB / 163.82 TB（27.4%使用）、M365 A3 で SharePoint フル機能が使える。追加コストなしでイントラ構築を開始できる状態。</span></li>
+        <li style="padding:6px 0; display:flex; gap:8px;"><span style="color:#0078d4; flex-shrink:0;">▸</span><span><strong>サイトのライフサイクル管理が未整備。</strong> 授業サイトが削除されずに累積している現状は、イントラ設計時の「ガバナンスポリシー（サイト有効期限・アーカイブルール）」を同時に整備しなければ、再び同じ問題が起きることを示している。</span></li>
+      </ul>
+
+      <div style="font-size:13px; font-weight:700; color:#374151; margin-bottom:8px; border-left:3px solid #0078d4; padding-left:8px;">確認・設計が必要な事項</div>
+      <table style="font-size:12px;">
+        <tr>
+          <th style="width:40%;">確認事項</th>
+          <th>確認先・方法</th>
+        </tr>
+        <tr>
+          <td>ルートサイト（/）が何になっているか</td>
+          <td>SharePoint 管理センター → 設定 → ホームサイト</td>
+        </tr>
+        <tr>
+          <td>コミュニケーションサイトが既存するか</td>
+          <td>アクティブサイト一覧でテンプレート列を「コミュニケーション」でフィルタ</td>
+        </tr>
+        <tr>
+          <td>ハブサイトとして登録されているサイトの有無</td>
+          <td>SharePoint 管理センター → アクティブサイト → ハブ列を確認</td>
+        </tr>
+        <tr>
+          <td>外部共有の設定レベル（学外公開の可否）</td>
+          <td>SharePoint 管理センター → ポリシー → 共有</td>
+        </tr>
+        <tr>
+          <td>Garoon から移行されるコンテンツ種別（掲示板・お知らせ等）</td>
+          <td>次回 MTG で担当者ヒアリング</td>
+        </tr>
+        <tr>
+          <td>サイトの命名規則・テンプレート方針の有無</td>
+          <td>次回 MTG で担当者ヒアリング</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Teams -->
+    <div class="card">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <div style="background:#5b5ea6; color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px;">Teams</div>
+        <div style="font-size:15px; font-weight:700; color:#1e3a5f;">運用設計</div>
+      </div>
+
+      <div style="font-size:13px; font-weight:700; color:#374151; margin-bottom:8px; border-left:3px solid #5b5ea6; padding-left:8px;">現状から読み取れること</div>
+      <ul style="font-size:13px; list-style:none; margin-bottom:16px;">
+        <li style="padding:6px 0; border-bottom:1px solid #f3f4f6; display:flex; gap:8px;"><span style="color:#5b5ea6; flex-shrink:0;">▸</span><span><strong>Teams の使われ方が「授業単位のクローズドチーム」に集中している。</strong> 10,678チームのほぼすべてが授業・ゼミ単位で HiddenMembership 設定。職員間の業務連絡、委員会、学部横断の運用チームとしての使い方はされていない（または少ない）可能性がある。</span></li>
+        <li style="padding:6px 0; border-bottom:1px solid #f3f4f6; display:flex; gap:8px;"><span style="color:#5b5ea6; flex-shrink:0;">▸</span><span><strong>全学・部署単位のチームが存在するかどうか不明。</strong> Teams 管理センターにアクセスできないため確認できていないが、グループ一覧の命名規則（年度_科目_クラス）からは業務系チームの存在が確認しにくい。</span></li>
+        <li style="padding:6px 0; border-bottom:1px solid #f3f4f6; display:flex; gap:8px;"><span style="color:#5b5ea6; flex-shrink:0;">▸</span><span><strong>メール配信基盤が実質ない。</strong> 配布リストはテスト用2件のみ。Teams を使った全体アナウンス（アナウンスチャネル等）か、SharePoint ニュースでの代替が必要になる。</span></li>
+        <li style="padding:6px 0; display:flex; gap:8px;"><span style="color:#5b5ea6; flex-shrink:0;">▸</span><span><strong>チームのライフサイクルも未管理。</strong> 過去年度のチームが残り続けており、メンバーから見た Teams のチーム一覧が非常に長くなっている可能性がある。アーカイブポリシーと合わせて運用設計が必要。</span></li>
+      </ul>
+
+      <div style="font-size:13px; font-weight:700; color:#374151; margin-bottom:8px; border-left:3px solid #5b5ea6; padding-left:8px;">確認・設計が必要な事項</div>
+      <table style="font-size:12px;">
+        <tr>
+          <th style="width:40%;">確認事項</th>
+          <th>確認先・方法</th>
+        </tr>
+        <tr>
+          <td>業務系チーム（部署・委員会等）が存在するか</td>
+          <td>Teams 管理センターのアクセス権確保後に確認（井上氏・前田氏へ依頼）</td>
+        </tr>
+        <tr>
+          <td>Teams の外部ゲスト招待の許可状況</td>
+          <td>Entra 管理センター → 外部コラボレーション設定（要権限拡充）</td>
+        </tr>
+        <tr>
+          <td>チームの自動作成設定（ユーザーが自由に作れるか）</td>
+          <td>Teams 管理センター → Teams 設定（要権限拡充）</td>
+        </tr>
+        <tr>
+          <td>現在の Garoon における「掲示板」「回覧板」等の代替手段</td>
+          <td>次回 MTG で担当者ヒアリング（Teams アナウンス or SharePoint ニュース）</td>
+        </tr>
+        <tr>
+          <td>チームのアーカイブルール・有効期限ポリシーの有無</td>
+          <td>Teams 管理センター → Teams ポリシー（要権限拡充）</td>
+        </tr>
+        <tr>
+          <td>Copilot Education 35名の Teams 連携活用状況</td>
+          <td>利用者へのヒアリングまたは使用状況レポート</td>
+        </tr>
+      </table>
+
+      <div style="margin-top:14px; background:#ede9fe; border-radius:6px; padding:10px 14px; font-size:12px; color:#5b5ea6;">
+        <strong>補足：Teams 管理センターへのアクセス権確保が先決。</strong><br>
+        現在のグローバル閲覧者権限では Teams 管理センターに入れない（INVALID_PRIVILEGE）。上記の確認事項の多くはアクセス権なしでは調査できないため、<strong>「Teams 管理者」または「グローバル管理者」権限のあるアカウントでの確認セッション</strong>を井上氏・前田氏に依頼することが次のアクションとなる。
+      </div>
     </div>
   </div>
 
