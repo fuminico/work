@@ -364,7 +364,7 @@
       <span class="nav-icon">🔐</span>セキュリティポリシー
     </a>
   </nav>
-  <div id="sidebar-footer">最終更新: 2026-06-25</div>
+  <div id="sidebar-footer">最終更新: 2026-06-30</div>
 </div>
 
 <!-- ── メインコンテンツ ── -->
@@ -377,13 +377,20 @@
   <div class="page-header">
     <div class="badge">QUICK START</div>
     <h2>⚡ キャッチアップサマリー</h2>
-    <div class="meta">最終更新: 2026-06-25 ／ 6/25定例（第4回）完了後の現状</div>
+    <div class="meta">最終更新: 2026-06-30 ／ テナント調査完了・7/1定例（第5回）直前の現状</div>
   </div>
 
   <div class="callout success">
     <strong>6/25定例（第4回）の結果:</strong><br>
     ワークフロー移行先を<strong>Nextset → Canbus.（キャンバス）に変更</strong>（ユーザー数無制限・月5万円〜）。<br>
     SharePointニュース＋EntraIDグループ紐づけによるお知らせ優先表示方針を確定。テストアカウントでテナントにログイン可と確認。
+  </div>
+
+  <div class="callout success" style="margin-top:10px">
+    <strong>6/30 テナント調査完了:</strong><br>
+    テストアカウント（グローバル閲覧者）でM365テナントを精査し、ライセンス・ユーザー・グループ・SharePoint・ドメインの現状レポートを作成。
+    <strong>⚠ A3教員ライセンス残45枠</strong>、全学横断イントラ未整備、Teams管理センター未アクセス（権限不足）の3点を要点として整理。<br>
+    Canbus.デモは<strong>井上氏より時期尚早との意向</strong>。ユーザー階層設計の議論を先行させる。
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0">
@@ -405,7 +412,7 @@
     <a href="agenda.html" target="_blank" style="display:block;background:#fff7ed;border:2px solid #c2410c;border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text)">
       <div style="font-size:11px;font-weight:700;color:#c2410c;margin-bottom:4px">今週の定例（7/1）</div>
       <div style="font-size:14px;font-weight:700">📄 定例アジェンダ — 2026年7月1日（水）</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">テナント確認結果・Canbus.試算・7/8本部会議準備 ↗ 別タブで開く</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">テナント調査結果・SharePoint/Teams設計確認事項・大学側への依頼事項 ↗ 別タブで開く</div>
     </a>
     <a href="tenant-status.html" target="_blank" style="display:block;background:#e8f0fc;border:2px solid #1a56a0;border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--text)">
       <div style="font-size:11px;font-weight:700;color:#1a56a0;margin-bottom:4px">調査レポート（6/30作成）</div>
@@ -415,8 +422,8 @@
   </div>
 
   <div class="callout warn" style="margin-top:16px">
-    <strong>プロジェクトの現在地（6/25時点）:</strong><br>
-    「方向性確定フェーズ完了。7月はテナント実装フェーズへ。Garoonワークフロー一覧を受領次第Canbus.費用試算を確定し、7/8情報化戦略本部会議でSharePoint方針を報告する段階」
+    <strong>プロジェクトの現在地（6/30時点）:</strong><br>
+    「テナント調査完了・設計実装フェーズへ移行中。7/1定例でSharePoint/Teams設計の確認事項を提示し、Teams管理センターおよびEntra IDへの追加権限付与を大学側に依頼する段階。Garoonワークフロー一覧受領後にCanbus.費用試算を実施し、7/8情報化戦略本部会議でSharePoint方針を報告する。」
   </div>
 
   <div class="section">
@@ -480,7 +487,9 @@ Teams ─────────── 現状維持しつつルール整備</di
       <tr><td>Teams 方向性</td><td><span class="badge-confirmed">✅ 6/11 合意済</span></td><td>「方向性すごくいい」と評価。Phase1（新規ルール整備）から着手。</td></tr>
       <tr><td>Copilot</td><td><span class="badge-confirmed">✅ 確認済</span></td><td>使用許可済み。ただし機密情報・要配慮個人情報の入力禁止</td></tr>
       <tr><td>テストアカウント</td><td><span class="badge-confirmed">✅ 6/25 確認</span></td><td>教務システムログイン不要。M365ゲストアカウントで直接テナントにログイン可。</td></tr>
+      <tr><td>テナント全体調査</td><td><span class="badge-confirmed">✅ 6/30 完了</span></td><td>ライセンス・ユーザー・グループ・SharePoint・ドメイン構成を確認。レポート作成済み（<a href="tenant-status.html" target="_blank">↗詳細</a>）。Teams管理センターは権限不足で未アクセス。</td></tr>
       <tr><td>ワークフローアドイン</td><td><span class="badge-pending">🔲 試算待ち</span></td><td>Nextset不採用（ユーザー数課金で月50万超）→ <strong>Canbus.（ユーザー数無制限・月5万円〜）</strong>を検討中。Garoon一覧受領後に費用試算予定。</td></tr>
+      <tr><td>Canbus.デモ</td><td><span class="badge-pending">🔲 保留</span></td><td>井上氏より「時期尚早。ユーザー階層設計の議論を先行させたい」との意向。デモ依頼は保留。</td></tr>
       <tr><td>Garoonワークフロー一覧</td><td><span class="badge-pending">🔲 受領待ち</span></td><td>ワークフロー名・月間件数の一覧を大学側に依頼中。Canbus.費用試算の前提として必要。</td></tr>
       <tr><td>Entra IDグループ設計</td><td><span class="badge-pending">🔲 実装待ち</span></td><td>5層設計案（ドラフト）確認済み。テナント実環境を確認の上、実装フェーズへ。</td></tr>
       <tr><td>X-point後継</td><td><span class="badge-info">ℹ️ 方針整理済み</span></td><td>2026年度末で契約終了。GaroonのWF（約100件）移行先としてCanbus.を検討中（費用試算後に確定）。</td></tr>
@@ -511,34 +520,34 @@ Teams ─────────── 現状維持しつつルール整備</di
   </div>
 
   <div class="section">
-    <h3>7/1 定例MTGの確認事項（次回）</h3>
+    <h3>7/1 定例MTGの議題（本日）</h3>
     <ul class="checklist">
       <li class="must">
         <span class="check-icon">🔵</span>
         <div class="check-content">
-          <div class="check-title">テストアカウントでのテナント確認結果の共有 <span class="badge-info">三井田から報告</span></div>
-          <div class="check-memo">M365ゲストアカウントでテナントにログインし、EntraIDグループ現状・SharePoint設計への影響を確認した結果を報告する。</div>
+          <div class="check-title">テナント調査結果の報告 <span class="badge-info">三井田から報告（10分）</span></div>
+          <div class="check-memo">ライセンス残45枠・全学横断イントラ未整備・Teams未アクセスの3点を要点報告。詳細は <a href="tenant-status.html" target="_blank">テナント現状レポート</a> を画面共有。</div>
         </div>
       </li>
       <li class="must">
         <span class="check-icon">🔵</span>
         <div class="check-content">
-          <div class="check-title">Garoonワークフロー一覧の受領確認 <span class="badge-pending">大学側アクション</span></div>
-          <div class="check-memo">ワークフロー名・月間申請件数の一覧を受領できたか確認。受領次第、Canbus.の費用試算を実施。</div>
+          <div class="check-title">設計推進に向けた確認事項 <span class="badge-info">議論（8分）</span></div>
+          <div class="check-memo">SharePoint：ルートサイト構成・ハブサイト設計・外部共有ポリシー・Garoonコンテンツ移行方針。Teams：業務系チームの現状・新規作成制限・アーカイブポリシー。</div>
+        </div>
+      </li>
+      <li class="must">
+        <span class="check-icon">🔵</span>
+        <div class="check-content">
+          <div class="check-title">大学側への依頼事項 <span class="badge-pending">大学側アクション（5分）</span></div>
+          <div class="check-memo">📌 Teams管理センター・Entra ID閲覧権限の付与。📌 Garoonワークフロー一覧（名称・月間件数）の提供。📌 Garoon掲示板カテゴリ一覧の確認。</div>
         </div>
       </li>
       <li class="unchecked">
         <span class="check-icon">🟡</span>
         <div class="check-content">
-          <div class="check-title">Canbus.費用試算の報告（Garoon一覧受領後）<span class="badge-info">三井田から報告</span></div>
-          <div class="check-memo">ワークフロー数・種類に応じてCanbus.のプラン・月額費用の見通しを提示する。</div>
-        </div>
-      </li>
-      <li class="unchecked">
-        <span class="check-icon">🟡</span>
-        <div class="check-content">
-          <div class="check-title">情報化戦略本部会議（7/8）の準備・役割分担確認</div>
-          <div class="check-memo">7月8日の本部会議でM365パートの内容・範囲と、時田氏との役割分担を合意する。</div>
+          <div class="check-title">7/8 情報化戦略本部会議に向けた準備・役割分担（8分）</div>
+          <div class="check-memo">Garoonワークフロー現状とCanbus.保留状況の共有。7/8本部会議でのM365パート内容・範囲と時田氏との役割分担を合意。</div>
         </div>
       </li>
     </ul>
@@ -559,8 +568,9 @@ Teams ─────────── 現状維持しつつルール整備</di
       <div class="card info">
         <div class="card-title">三井田が担う（7月〜）</div>
         <ul class="normal">
-          <li>テストアカウントでのテナント確認 ← <strong>7/1報告予定</strong></li>
+          <li>テナント調査完了 → <strong>本日（7/1）報告</strong> ✅</li>
           <li>Canbus.費用試算・プラン確定 ← <strong>Garoon一覧受領後</strong></li>
+          <li>Teams/Entra ID 追加権限の確認・設計 ← <strong>権限付与後</strong></li>
           <li>Entra IDグループ 実装フェーズ ← <strong>7月着手</strong></li>
           <li>SharePointサイト設計・構築（本実装）← <strong>7〜8月</strong></li>
           <li>7/8 本部会議のM365パート担当</li>
@@ -570,8 +580,10 @@ Teams ─────────── 現状維持しつつルール整備</di
     <div class="card warn" style="margin-top:12px">
       <div class="card-title">📋 7月の最優先アクション</div>
       <ul class="normal">
-        <li>大学側：Garoonワークフロー一覧（名称・月間件数）の提供</li>
-        <li>三井田：テナント確認結果の共有 → Canbus.費用試算 → Entra IDグループ実装</li>
+        <li>✅ 三井田：テナント調査完了・本日7/1報告</li>
+        <li>大学側：Teams管理センター・Entra ID閲覧権限の付与（本日依頼）</li>
+        <li>大学側：Garoonワークフロー一覧（名称・月間件数）の提供（本日依頼）</li>
+        <li>三井田：権限付与後 → Teams/Entra ID追加調査 → Canbus.費用試算 → Entra IDグループ実装</li>
         <li>双方：7/8 情報化戦略本部会議に向けた資料準備・役割分担</li>
       </ul>
     </div>
