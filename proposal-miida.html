@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI活用推進 伴走支援 提案書</title>
+<title>生成AI活用推進 伴走支援 提案書 — Aid Person</title>
 <style>
   :root {
     --primary: #1a56a0;
@@ -69,7 +69,7 @@
   .tab-panel.active { display: block; }
   .content { max-width: 860px; margin: 0 auto; padding: 32px 28px 16px; }
 
-  /* ─── 汎用 ─── */
+  /* ─── 汎用カード ─── */
   .panel-title {
     font-size: 20px; font-weight: 800; color: var(--primary);
     margin-bottom: 24px; padding-bottom: 12px;
@@ -79,8 +79,17 @@
   .card.primary { background: var(--primary-light); border-left: 4px solid var(--primary); }
   .card.green   { background: #e8f8f0; border-left: 4px solid var(--green); }
   .card.orange  { background: #fef5ec; border-left: 4px solid var(--accent); }
+  .card.red     { background: #fef2f2; border-left: 4px solid var(--red); }
   .card-title   { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
   p { margin: 8px 0; font-size: 14px; }
+
+  /* ─── 引用ボックス ─── */
+  .quote-box {
+    background: #fff; border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 12px 0;
+    font-size: 13px; font-style: italic; color: #334155;
+  }
+  .quote-box cite { display: block; font-style: normal; font-size: 11px; color: var(--muted); margin-top: 6px; }
 
   /* ─── サマリーボックス ─── */
   .summary-box {
@@ -88,11 +97,26 @@
     border-radius: 14px; padding: 26px 30px; margin-bottom: 24px;
   }
   .summary-box .label { font-size: 11px; font-weight: 700; letter-spacing: .1em; opacity: .6; margin-bottom: 8px; }
-  .summary-box .body  { font-size: 16px; font-weight: 600; line-height: 1.8; }
+  .summary-box .body  { font-size: 15px; font-weight: 600; line-height: 1.9; }
   .summary-box em     { font-style: normal; color: #93c5fd; }
 
-  /* ─── ロールカード（概要） ─── */
-  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  /* ─── 現状認識カード ─── */
+  .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 600px) { .status-grid { grid-template-columns: 1fr; } }
+  .status-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  }
+  .status-tag {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    letter-spacing: .08em; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+  }
+  .status-tag.done { background: #d1fae5; color: #065f46; }
+  .status-tag.next { background: #dbeafe; color: #1e40af; }
+  .status-card p   { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* ─── ロールカード ─── */
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
   @media (max-width: 600px) { .role-grid { grid-template-columns: 1fr; } }
   .role-card {
     background: #fff; border: 1px solid var(--border);
@@ -111,57 +135,39 @@
     overflow: hidden; margin-bottom: 28px;
     box-shadow: 0 2px 12px rgba(0,0,0,.07);
   }
-
-  /* ヘッダー行 */
   .svc-head {
     display: flex; align-items: center; gap: 14px;
-    padding: 18px 24px; background: var(--primary);
-    color: #fff;
+    padding: 18px 24px; background: var(--primary); color: #fff;
   }
-  .svc-head-icon { font-size: 34px; line-height: 1; }
-  .svc-head-text { flex: 1; }
+  .svc-head-icon  { font-size: 34px; line-height: 1; }
+  .svc-head-text  { flex: 1; }
   .svc-head-title { font-size: 17px; font-weight: 800; }
   .svc-head-sub   { font-size: 12px; opacity: .7; margin-top: 2px; }
   .svc-head-tag {
     font-size: 11px; font-weight: 700; padding: 4px 12px;
-    border-radius: 20px; background: rgba(255,255,255,.2);
-    white-space: nowrap;
+    border-radius: 20px; background: rgba(255,255,255,.2); white-space: nowrap;
   }
-
-  /* 3列フロー */
   .svc-flow {
     display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
-    align-items: stretch; padding: 20px 24px; gap: 0;
-    background: #fff;
+    align-items: stretch; padding: 20px 24px;
   }
   @media (max-width: 680px) {
     .svc-flow { grid-template-columns: 1fr; }
     .flow-arrow { display: none; }
   }
-
-  .flow-col { display: flex; flex-direction: column; }
-  .flow-arrow {
-    display: flex; align-items: center; justify-content: center;
-    color: #c0cde0; font-size: 24px; padding-top: 32px;
-  }
-
-  .flow-label {
-    font-size: 10px; font-weight: 800; letter-spacing: .1em;
-    text-align: center; padding: 5px 8px; border-radius: 6px 6px 0 0;
-  }
+  .flow-col    { display: flex; flex-direction: column; }
+  .flow-arrow  { display: flex; align-items: center; justify-content: center; color: #c0cde0; font-size: 24px; padding-top: 32px; }
+  .flow-label  { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-align: center; padding: 5px 8px; border-radius: 6px 6px 0 0; }
   .flow-label.prob { background: #f5a0a0; color: #7b1c1c; }
   .flow-label.svc  { background: var(--primary); color: #fff; }
   .flow-label.eff  { background: #52c47e; color: #fff; }
-
   .flow-box {
-    flex: 1; border-radius: 0 0 8px 8px;
-    padding: 14px 16px; font-size: 13px;
+    flex: 1; border-radius: 0 0 8px 8px; padding: 14px 16px; font-size: 13px;
   }
   .flow-box.prob { background: #fef2f2; border: 1.5px solid #f5a0a0; border-top: none; color: #5a1c1c; }
   .flow-box.svc  { background: var(--primary-light); border: 1.5px solid #93c5fd; border-top: none; }
   .flow-box.eff  { background: #e8f8f0; border: 1.5px solid #7dcea0; border-top: none; }
-
-  .flow-box ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .flow-box ul   { list-style: none; display: flex; flex-direction: column; gap: 6px; }
   .flow-box ul li { display: flex; align-items: flex-start; gap: 6px; line-height: 1.5; }
   .flow-box.prob ul li::before { content: '✗'; color: #c0392b; font-weight: 700; flex-shrink: 0; }
   .flow-box.svc  ul li::before { content: '▶'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
@@ -174,18 +180,44 @@
     background: var(--green); color: #fff;
     border-radius: 8px; padding: 6px 14px;
   }
-  .kpi-num  { font-size: 22px; font-weight: 800; line-height: 1; }
+  .kpi-num  { font-size: 20px; font-weight: 800; line-height: 1; }
   .kpi-unit { font-size: 11px; font-weight: 700; opacity: .85; }
 
   /* 成果物タグ */
   .deliv-row { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--gray); flex-wrap: wrap; border-top: 1px solid var(--border); }
   .deliv-head { font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: .06em; white-space: nowrap; }
-  .deliv-tag {
-    font-size: 12px; font-weight: 600; padding: 4px 12px;
-    border-radius: 20px; background: #fff;
-    border: 1px solid var(--border); color: var(--text);
-  }
+  .deliv-tag  { font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; background: #fff; border: 1px solid var(--border); color: var(--text); }
   .deliv-tag::before { content: '📄 '; font-size: 11px; }
+
+  /* ─── KPI表 ─── */
+  .kpi-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .kpi-table th { background: var(--primary); color: #fff; padding: 9px 12px; text-align: left; font-size: 12px; }
+  .kpi-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .kpi-table tr:last-child td { border-bottom: none; }
+  .kpi-table tr:nth-child(even) td { background: var(--gray); }
+  .layer-badge {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+  }
+  .layer-1 { background: #dbeafe; color: #1e40af; }
+  .layer-2 { background: #d1fae5; color: #065f46; }
+  .layer-3 { background: #fef9c3; color: #78350f; }
+  .layer-4 { background: #ffe4e6; color: #9f1239; }
+
+  /* ─── 部門別マトリクス ─── */
+  .dept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  @media (max-width: 600px) { .dept-grid { grid-template-columns: 1fr; } }
+  .dept-card { background: var(--gray); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border); }
+  .dept-name  { font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 6px; }
+  .dept-cases { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .dept-eff   { font-size: 12px; font-weight: 700; color: var(--green); margin-top: 5px; }
+
+  /* ─── 運用体制 ─── */
+  .role-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .role-table th { background: var(--gray); color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .06em; padding: 8px 14px; text-align: left; }
+  .role-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .role-table tr:last-child td { border-bottom: none; }
+  .aid-badge { display: inline-block; font-size: 10px; font-weight: 800; background: var(--primary); color: #fff; padding: 2px 8px; border-radius: 20px; margin-left: 6px; }
 
   /* ─── 強みカード ─── */
   .str-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
@@ -202,28 +234,20 @@
   .step-flow { display: flex; flex-direction: column; }
   .step-item { display: flex; gap: 18px; }
   .step-left { display: flex; flex-direction: column; align-items: center; width: 44px; flex-shrink: 0; }
-  .step-circle {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--primary); color: #fff;
-    font-size: 15px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .step-line { flex: 1; width: 2px; background: var(--border); margin: 4px 0; }
+  .step-circle { width: 38px; height: 38px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .step-line   { flex: 1; width: 2px; background: var(--border); margin: 4px 0; }
   .step-item:last-child .step-line { display: none; }
-  .step-body    { padding-bottom: 26px; flex: 1; padding-top: 5px; }
-  .step-period  { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 3px; }
-  .step-title   { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
-  .step-desc    { font-size: 13px; color: var(--muted); }
+  .step-body   { padding-bottom: 26px; flex: 1; padding-top: 5px; }
+  .step-period { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 3px; }
+  .step-title  { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+  .step-desc   { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .step-gate   { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #fef5ec; color: var(--accent); border: 1px solid #f5cba7; margin-top: 6px; }
 
   /* ─── 稼働条件 ─── */
   .cond-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .cond-table tr { border-bottom: 1px solid var(--border); }
   .cond-table tr:last-child { border-bottom: none; }
-  .cond-table th {
-    width: 130px; padding: 12px 16px; text-align: left;
-    font-weight: 700; color: var(--muted); font-size: 12px;
-    letter-spacing: .04em; vertical-align: top; background: var(--gray);
-  }
+  .cond-table th { width: 130px; padding: 12px 16px; text-align: left; font-weight: 700; color: var(--muted); font-size: 12px; letter-spacing: .04em; vertical-align: top; background: var(--gray); }
   .cond-table td { padding: 12px 16px; }
 
   /* ─── ナビゲーション ─── */
@@ -232,28 +256,19 @@
     padding: 16px 28px 48px;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .nav-btn {
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 20px; border-radius: 8px; border: 1.5px solid var(--border);
-    background: #fff; color: var(--text); font-size: 14px; font-weight: 600;
-    cursor: pointer; transition: all .15s;
-  }
+  .nav-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; border: 1.5px solid var(--border); background: #fff; color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; }
   .nav-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
   .nav-btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
   .nav-btn.next { background: var(--primary); color: #fff; border-color: var(--primary); }
   .nav-btn.next:hover { background: #1648a0; }
   .page-indicator { font-size: 13px; color: var(--muted); font-weight: 600; }
   .page-dots { display: flex; gap: 6px; margin-bottom: 6px; justify-content: center; }
-  .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--border); transition: background .15s; cursor: pointer;
-  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background .15s; cursor: pointer; }
   .dot.active { background: var(--primary); }
 </style>
 </head>
 <body>
 
-<!-- ─── ヘッダー ─── -->
 <div class="page-header">
   <div>
     <h1>生成AI活用推進 伴走支援 提案書</h1>
@@ -262,70 +277,129 @@
   <div class="badge">CONFIDENTIAL</div>
 </div>
 
-<!-- ─── タブバー ─── -->
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>概要</button>
+  <button class="tab-btn active" onclick="show(0)"><span class="num">1</span>現状と役割</button>
   <button class="tab-btn" onclick="show(1)"><span class="num">2</span>研修・浸透施策</button>
-  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>業務分析・効果測定</button>
-  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>PJ推進</button>
+  <button class="tab-btn" onclick="show(2)"><span class="num">3</span>効果設計・KPI</button>
+  <button class="tab-btn" onclick="show(3)"><span class="num">4</span>PJ推進・体制</button>
   <button class="tab-btn" onclick="show(4)"><span class="num">5</span>強み・実績</button>
-  <button class="tab-btn" onclick="show(5)"><span class="num">6</span>進め方</button>
+  <button class="tab-btn" onclick="show(5)"><span class="num">6</span>ロードマップ</button>
   <button class="tab-btn" onclick="show(6)"><span class="num">7</span>稼働条件</button>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 1: 概要 -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- ══════════════════════ PAGE 1: 現状と役割 ══════════════════════ -->
 <div class="tab-panel active" id="p0">
 <div class="content">
-  <div class="panel-title">概要</div>
+  <div class="panel-title">現状認識と支援の役割</div>
+
   <div class="summary-box">
-    <div class="label">EXECUTIVE SUMMARY</div>
+    <div class="label">SITUATION</div>
     <div class="body">
-      welbeグループにおける<em>生成AI（Microsoft 365 Copilot）の全社展開</em>にあたり、<br>
-      「ツールを導入する」フェーズから<em>「組織に使わせる」フェーズへの移行</em>を支援します。<br>
-      研修・浸透施策の設計から効果測定・経営報告まで、社内コンサルタントとして伴走します。
+      welbeグループはすでに<em>利用細則・情報セキュリティ規程を整備済み</em>。<br>
+      「導入前の統制」は整っており、次に必要なのは<em>業務価値の設計と定着運用</em>です。<br>
+      約2,000名・全国展開・拠点ビジネスが前提では、真に狙うべきは<br>
+      本部の知的生産性向上 × 拠点支援ノウハウの再利用性 × 情報流通コストの圧縮です。
     </div>
   </div>
 
-  <p style="font-size:13px; font-weight:700; color:var(--muted); letter-spacing:.06em; margin-bottom:12px;">支援の2本柱</p>
+  <div class="status-grid">
+    <div class="status-card">
+      <span class="status-tag done">✔ 整備済み</span>
+      <p style="font-weight:700; margin-bottom:8px;">導入前の統制基盤</p>
+      <p>・生成AI利用細則（利用可・条件付き・禁止の区分）<br>
+      ・情報セキュリティ規程改定（所管：システム企画部）<br>
+      ・最終判断責任の明確化（利用者・部門責任者）<br>
+      ・事故報告ルートの設定</p>
+    </div>
+    <div class="status-card">
+      <span class="status-tag next">→ 次フェーズの課題</span>
+      <p style="font-weight:700; margin-bottom:8px;">導入後フェーズの設計</p>
+      <p>・「誰が何に使うか」の業務価値設計がまだない<br>
+      ・部門別ユースケース・テンプレートが未整備<br>
+      ・効果測定のベースラインデータがない<br>
+      ・推進・伴走できるリソースが不在</p>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    「御社は導入前の統制は既に整っており、次に必要なのは<strong>業務価値の設計と定着運用</strong>です。短期は全社FAQ・研修・部門別ユースケース・週次モニタリングを整備し、文章作成・要約・会議整理・社内説明資料作成に集中させる。」
+    <cite>— ウェルビーグループ生成AI導入後フェーズの設計提案（ディープリサーチ）</cite>
+  </div>
+
+  <div style="background:#fff; border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:20px 0;">
+    <p style="font-size:12px; font-weight:800; color:var(--muted); letter-spacing:.08em; margin-bottom:12px;">🗓 なぜ今、外部伴走が必要か</p>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--text);">
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="color:var(--muted); flex-shrink:0; font-size:11px; font-weight:700; padding-top:2px;">約1年前〜</span>
+        <span>AI導入の議論がスタートするも、プロジェクトとしてまとめ切れる人材がいない状態が続く</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="color:var(--muted); flex-shrink:0; font-size:11px; font-weight:700; padding-top:2px;">約1ヶ月前</span>
+        <span>「0→1で人を巻き込んでやってきた」本間さんがPJオーナーに。プロジェクトが本格始動</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="color:var(--primary); flex-shrink:0; font-size:11px; font-weight:700; padding-top:2px;">2026年7月〜</span>
+        <span style="font-weight:700;">全社解禁と同時に、<span style="color:var(--primary);">「課題を見つけ・解決策を作り・実行まで伴走できるリソース」</span>が必要な局面へ</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:13px; font-weight:700; color:var(--muted); letter-spacing:.06em; margin: 20px 0 12px;">Aid Person が担う2本柱</p>
   <div class="role-grid">
     <div class="role-card">
       <div class="role-icon">🧭</div>
       <div class="role-title">AI浸透の設計者</div>
-      <div class="role-desc">「ツールを入れた」から「使わせる仕組みを作る」フェーズを主導。研修・ユースケース発掘・チャンピオン育成・横展開・効果測定まで一気通貫で担います。</div>
+      <div class="role-desc">「ツールを入れた」から「使わせる仕組みを作る」フェーズを主導。部門別ユースケース定義・研修設計・チャンピオン育成・効果測定まで一気通貫で担います。Microsoft の Plan→Implement→Adopt→Manage サイクルを実務に落とします。</div>
     </div>
     <div class="role-card">
       <div class="role-icon">📣</div>
       <div class="role-title">社内コンサルタント</div>
-      <div class="role-desc">経営企画・システム企画・各事業部門の橋渡し役。部門ヒアリングを通じてAI活用施策を提案し、企画から運営補助まで伴走する推進結節点として機能します。</div>
+      <div class="role-desc">経営企画・システム企画・各事業部門の橋渡し役。部門ヒアリングを通じてAI活用施策を提案し、KPI管理・月次経営報告まで伴走します。「何が必要かを一緒に整理してトライアル稼働できれば」というご期待に応えます。</div>
     </div>
   </div>
 
-  <div class="card primary" style="margin-top:20px;">
-    <div class="card-title">本資料について</div>
-    <p>スライド2〜4では具体的にご支援できる内容（5メニュー）を、スライド5〜7では強み・進め方・稼働条件をご説明します。ご要望に応じてスコープは柔軟に対応可能です。</p>
+  <p style="font-size:13px; font-weight:700; color:var(--muted); letter-spacing:.06em; margin: 24px 0 12px;">支援がもたらすインパクト ── 3つの時間軸</p>
+  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;">
+    <div style="background:#fff; border-radius:12px; border:1px solid var(--border); overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.05);">
+      <div style="background:var(--primary); color:#fff; padding:10px 16px; font-size:12px; font-weight:800;">⚡ 短期（〜3ヶ月）</div>
+      <div style="padding:14px 16px; font-size:13px; line-height:1.7;">
+        <p style="font-weight:700; margin-bottom:6px;">特定業務の課題解決</p>
+        <p style="color:var(--muted);">部署の業務を観察・ヒアリングして課題を特定し、解決策を立案。「どう実行して完了まで持っていくか」まで具体化して伴走する。</p>
+      </div>
+    </div>
+    <div style="background:#fff; border-radius:12px; border:1px solid var(--border); overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.05);">
+      <div style="background:var(--accent); color:#fff; padding:10px 16px; font-size:12px; font-weight:800;">📈 中期（3〜9ヶ月）</div>
+      <div style="padding:14px 16px; font-size:13px; line-height:1.7;">
+        <p style="font-weight:700; margin-bottom:6px;">組織全体へのインパクト可視化</p>
+        <p style="color:var(--muted);">各部門の効率化がどれだけ会社全体に効いているかを数値で示し、経営判断の材料を作る。有料版・自動化への投資根拠も提供。</p>
+      </div>
+    </div>
+    <div style="background:#fff; border-radius:12px; border:1px solid var(--border); overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.05);">
+      <div style="background:var(--green); color:#fff; padding:10px 16px; font-size:12px; font-weight:800;">🏗️ 長期（9ヶ月〜）</div>
+      <div style="padding:14px 16px; font-size:13px; line-height:1.7;">
+        <p style="font-weight:700; margin-bottom:6px;">本部の恒常的な運営基盤の構築</p>
+        <p style="color:var(--muted);">業務の型化・自動化により、本部が少ない工数で高密度な業務を実現できる仕組みを作る。とくに本部機能の標準化・省力化が最終目標。</p>
+      </div>
+    </div>
   </div>
+  <p style="font-size:11px; color:var(--muted); margin-top:8px; text-align:right;">※現場支援職員の配置は制度上の定員があるため、本部業務の効率化を最優先に設計します</p>
 
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 2: 研修・浸透施策 -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- ══════════════════════ PAGE 2: 研修・浸透施策 ══════════════════════ -->
 <div class="tab-panel" id="p1">
 <div class="content">
-  <div class="panel-title">ご支援できること ─ 研修・浸透施策</div>
+  <div class="panel-title">ご支援① 研修・浸透施策</div>
 
-  <!-- サービス1 -->
   <div class="svc-card">
     <div class="svc-head">
       <div class="svc-head-icon">🎓</div>
       <div class="svc-head-text">
-        <div class="svc-head-title">研修・勉強会の企画・運営</div>
-        <div class="svc-head-sub">「使い方がわからない」を解消する実践型研修</div>
+        <div class="svc-head-title">役割別研修の企画・運営</div>
+        <div class="svc-head-sub">「1回の全社研修では足りない」── 役割別・部門別に分けて定着させる</div>
       </div>
-      <span class="svc-head-tag">現場 / 本部</span>
+      <span class="svc-head-tag">全社・本部</span>
     </div>
     <div class="svc-flow">
       <div class="flow-col">
@@ -333,8 +407,8 @@
         <div class="flow-box prob">
           <ul>
             <li>使い方がわからない・難しそう</li>
-            <li>ルール文書が難解で読まれない</li>
-            <li>導入したのに誰も使わない形骸化リスク</li>
+            <li>ルール文書が難解で誰も読まない</li>
+            <li>全社一律では効果が出ない</li>
           </ul>
         </div>
       </div>
@@ -343,10 +417,10 @@
         <div class="flow-label svc">🛠️ ご支援内容</div>
         <div class="flow-box svc">
           <ul>
-            <li>Copilot入門・部門別ユースケース実演</li>
-            <li>ハンズオンワーク形式の実践研修</li>
-            <li>動画コンテンツ制作（繰り返し参照可）</li>
-            <li>役職・部門別にカスタマイズ対応</li>
+            <li>導入初月：45〜60分の全社基礎研修</li>
+            <li>2〜3週目：部門別ミニ研修（業務に即したユースケース実演）</li>
+            <li>管理職向け・現場向けに分けたメッセージ設計</li>
+            <li>繰り返し参照できる動画・テンプレート集の整備</li>
           </ul>
         </div>
       </div>
@@ -355,13 +429,13 @@
         <div class="flow-label eff">✨ 期待効果</div>
         <div class="flow-box eff">
           <ul>
-            <li>「明日から使える」実感が得られる</li>
-            <li>現場・本部ともに初動ハードルを解消</li>
+            <li>「明日から使える」実感を全社に広げる</li>
+            <li>職種ごとの文脈に合わせた受容性向上</li>
           </ul>
           <div class="kpi-row">
             <div class="kpi-badge">
-              <span class="kpi-num">60%</span>
-              <span class="kpi-unit">超<br>週次アクティブ率<br>（3ヶ月以内目標）</span>
+              <span class="kpi-num">35〜50%</span>
+              <span class="kpi-unit">月間<br>アクティブ率<br>（初年度目標）</span>
             </div>
           </div>
         </div>
@@ -370,18 +444,17 @@
     <div class="deliv-row">
       <span class="deliv-head">成果物</span>
       <span class="deliv-tag">研修設計書・進行台本</span>
-      <span class="deliv-tag">部門別ユースケース事例集</span>
-      <span class="deliv-tag">研修後アンケート設計</span>
+      <span class="deliv-tag">役割別プロンプト集 v1</span>
+      <span class="deliv-tag">管理職・現場向けメッセージ例</span>
     </div>
   </div>
 
-  <!-- サービス2 -->
   <div class="svc-card">
     <div class="svc-head">
       <div class="svc-head-icon">🌱</div>
       <div class="svc-head-text">
         <div class="svc-head-title">AI浸透施策の設計・推進</div>
-        <div class="svc-head-sub">研修だけでは定着しない。「使い続ける仕組み」を作る</div>
+        <div class="svc-head-sub">抵抗の4類型を見極め、「組織が自走する状態」まで伴走する</div>
       </div>
       <span class="svc-head-tag">主軸</span>
     </div>
@@ -390,10 +463,15 @@
         <div class="flow-label prob">📍 現状の課題</div>
         <div class="flow-box prob">
           <ul>
-            <li>意識の高い層だけが使う二極化</li>
+            <li>意識の高い層だけが使う二極化リスク</li>
             <li>A部門のノウハウがB部門に届かない</li>
-            <li>中間管理職の「怖い・合わない」が壁になっている</li>
+            <li>抵抗には4類型あり対応が異なる</li>
           </ul>
+          <div style="margin-top:10px; padding:8px 10px; background:rgba(192,57,43,.08); border-radius:6px; font-size:11px; color:#7b1c1c;">
+            <strong>抵抗の4類型：</strong><br>
+            不安型（漏えい怖い）／無関係型（自分には関係ない）<br>
+            面倒型（学ぶコストが高い）／懐疑型（役に立たない）
+          </div>
         </div>
       </div>
       <div class="flow-arrow">→</div>
@@ -401,10 +479,10 @@
         <div class="flow-label svc">🛠️ ご支援内容</div>
         <div class="flow-box svc">
           <ul>
-            <li>各部門のチャンピオン（推進役）を選定・育成</li>
-            <li>A部門の成功事例をB部門へテンプレート展開</li>
-            <li>月1回・5分×3ケースの事例共有会を定例化</li>
-            <li>「怖い / 使い方不明 / 合わない」3類型別に対処</li>
+            <li>部門AI推進サポーターの選定・育成（現場支援・プロンプト改善役）</li>
+            <li>月1回・15分の成功事例共有会を定例化</li>
+            <li>今月の推奨プロンプト配信（FAQ更新と連動）</li>
+            <li>4類型別のコミュニケーション設計</li>
           </ul>
         </div>
       </div>
@@ -413,10 +491,15 @@
         <div class="flow-label eff">✨ 期待効果</div>
         <div class="flow-box eff">
           <ul>
-            <li>組織が自走する浸透状態へ</li>
+            <li>部門間のナレッジ循環が機能する</li>
             <li>使う人・使わない人の二極化を解消</li>
-            <li>各部門に推進の芽が育つ</li>
           </ul>
+          <div class="kpi-row">
+            <div class="kpi-badge" style="font-size:12px; padding:7px 14px;">
+              <span style="font-size:13px; font-weight:800;">週2〜3回利用者比率</span>
+              <span style="font-size:11px; opacity:.85; margin-left:4px;">25〜35%目標</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -424,26 +507,23 @@
       <span class="deliv-head">成果物</span>
       <span class="deliv-tag">浸透施策ロードマップ</span>
       <span class="deliv-tag">チャンピオン育成プログラム設計書</span>
-      <span class="deliv-tag">部門別ユースケースカタログ</span>
+      <span class="deliv-tag">4類型別コミュニケーション設計書</span>
     </div>
   </div>
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 3: 業務分析・効果測定 -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- ══════════════════════ PAGE 3: 効果設計・KPI ══════════════════════ -->
 <div class="tab-panel" id="p2">
 <div class="content">
-  <div class="panel-title">ご支援できること ─ 業務分析・効果測定</div>
+  <div class="panel-title">ご支援② 業務価値の設計・効果測定</div>
 
-  <!-- サービス3 -->
   <div class="svc-card">
     <div class="svc-head">
       <div class="svc-head-icon">🗂️</div>
       <div class="svc-head-text">
-        <div class="svc-head-title">業務棚卸し × AI代替可能性マッピング</div>
-        <div class="svc-head-sub">「どこをどれだけ効率化できるか」を見える化する</div>
+        <div class="svc-head-title">部門別ユースケース設計 × 業務棚卸し</div>
+        <div class="svc-head-sub">「誰が何に使うか」を部門単位で明確化し、標準テンプレートとして整備する</div>
       </div>
       <span class="svc-head-tag">本部向け</span>
     </div>
@@ -452,9 +532,9 @@
         <div class="flow-label prob">📍 現状の課題</div>
         <div class="flow-box prob">
           <ul>
-            <li>どの業務がAIで効率化できるか不明</li>
-            <li>「なんとなく使っている」状態で終わっている</li>
-            <li>効果測定のベースラインデータがない</li>
+            <li>「何に使えるか」の具体像がない</li>
+            <li>部門ごとに活用状況がバラバラ</li>
+            <li>ベースラインデータがなく効果比較できない</li>
           </ul>
         </div>
       </div>
@@ -463,51 +543,139 @@
         <div class="flow-label svc">🛠️ ご支援内容</div>
         <div class="flow-box svc">
           <ul>
-            <li>本部各部門の業務ヒアリング・タスクリスト化</li>
-            <li>AI代替可能性（定型・反復・文書生成 等）を評価</li>
-            <li>部門 × 業務 × 代替率 × 工数のマトリクス作成</li>
-            <li>優先着手業務の提案</li>
+            <li>本部5パターンを最初に標準化（要約・会議メモ→アクション整理・言い換え・トーン修正・比較表/FAQ下書き）</li>
+            <li>部門ヒアリング → ユースケースマトリクス作成</li>
+            <li>AI代替可能性・実装負荷・優先度で施策ポートフォリオを整理</li>
           </ul>
         </div>
       </div>
       <div class="flow-arrow">→</div>
       <div class="flow-col">
-        <div class="flow-label eff">✨ 期待効果</div>
+        <div class="flow-label eff">✨ 期待効果（部門別）</div>
         <div class="flow-box eff">
           <ul>
-            <li>「どこから手をつけるか」が明確になる</li>
-            <li>効果測定のビフォーアフター比較が可能になる</li>
-            <li>AI活用の優先順位を経営・現場で共有できる</li>
+            <li>経営企画：ドラフト時間 <strong>30〜50%削減</strong></li>
+            <li>人事・労務：説明資料作成 <strong>20〜40%削減</strong></li>
+            <li>財務・法務：問い合わせ一次回答の高速化</li>
+            <li>各事業本部：週報・研修資料作成の標準化</li>
           </ul>
         </div>
       </div>
     </div>
     <div class="deliv-row">
       <span class="deliv-head">成果物</span>
-      <span class="deliv-tag">業務棚卸しシート（部門別）</span>
-      <span class="deliv-tag">AI代替可能性マトリクス</span>
-      <span class="deliv-tag">優先着手提案レポート</span>
+      <span class="deliv-tag">部門別ユースケースカタログ</span>
+      <span class="deliv-tag">優先施策ポートフォリオ表</span>
+      <span class="deliv-tag">本部5パターン・テンプレート集</span>
     </div>
   </div>
 
-  <!-- サービス4 -->
   <div class="svc-card">
     <div class="svc-head">
       <div class="svc-head-icon">📊</div>
       <div class="svc-head-text">
-        <div class="svc-head-title">効果測定・KPI実装・経営報告</div>
-        <div class="svc-head-sub">「気がする」を「数字」に変えて経営に届ける</div>
+        <div class="svc-head-title">KPI体系の設計・効果測定・経営報告</div>
+        <div class="svc-head-sub">「気がする」を「数字」に変えて経営に届け、有料版・自動化投資の判断材料にする</div>
       </div>
       <span class="svc-head-tag">経営企画 連携</span>
+    </div>
+    <div style="padding: 20px 24px;">
+      <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">以下4層のKPI体系を設計・運用します。数値は初年度の現実的なレンジを設定しており、最初の4〜6週間でベースラインを取得してから実測値で補正します。</p>
+      <div style="overflow-x:auto;">
+        <table class="kpi-table">
+          <tr>
+            <th>層</th><th>目的</th><th>KGI/KPI（初年度目標）</th><th>測定</th>
+          </tr>
+          <tr>
+            <td><span class="layer-badge layer-1">普及</span></td>
+            <td>安全に使う習慣を作る</td>
+            <td>月間アクティブ率 <strong>35〜50%</strong>、週2回以上利用者 25〜35%</td>
+            <td>月次</td>
+          </tr>
+          <tr>
+            <td><span class="layer-badge layer-2">効果</span></td>
+            <td>高頻度業務の時間短縮</td>
+            <td>対象業務で <strong>週1.0〜2.5時間/人削減</strong></td>
+            <td>四半期</td>
+          </tr>
+          <tr>
+            <td><span class="layer-badge layer-3">品質</span></td>
+            <td>文書・会議整理の質向上</td>
+            <td>再修正回数 <strong>15〜30%減</strong>、一次ドラフト作成時間 30〜50%減</td>
+            <td>月次</td>
+          </tr>
+          <tr>
+            <td><span class="layer-badge layer-4">ガバナンス</span></td>
+            <td>安全運用の継続</td>
+            <td>重大事故ゼロ、問い合わせSLA遵守率 <strong>95%以上</strong></td>
+            <td>月次</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card primary" style="margin-top:16px;">
+        <div class="card-title">ROI計算式（有料Copilot投資判断に使用）</div>
+        <p style="font-size:13px; font-family:monospace; background:#fff; padding:10px 14px; border-radius:6px; margin-top:8px; line-height:1.8; word-break:break-all;">
+          ROI = （削減時間 × 対象者数 × 実人件費単価 × 実現率）<br>
+          　　　−（追加ライセンス費 + 教育/運用費 + 自動化導入費）
+        </p>
+        <p style="font-size:12px; color:var(--muted); margin-top:8px;">重点3業務の事前/事後サンプル測定を必須化。有料版ROI目標: <strong>1.5倍以上</strong></p>
+      </div>
+    </div>
+    <div class="deliv-row">
+      <span class="deliv-head">成果物</span>
+      <span class="deliv-tag">KPIダッシュボード（Excel/Teams）</span>
+      <span class="deliv-tag">利用状況アンケート設計</span>
+      <span class="deliv-tag">四半期効果検証レポート</span>
+      <span class="deliv-tag">経営向けAI活用サマリー</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ PAGE 4: PJ推進・体制 ══════════════════════ -->
+<div class="tab-panel" id="p3">
+<div class="content">
+  <div class="panel-title">ご支援③ プロジェクト推進・運用体制の確立</div>
+
+  <div class="card primary" style="margin-bottom:20px;">
+    <div class="card-title">🎯 Aid Person の「提案型」アプローチ</div>
+    <p style="font-size:13px;">「頼まれてから動く」ではなく、<strong>部署の業務を観察・ヒアリングして課題を自ら見つけ、解決策を立案し、実行から完了まで見通して伴走する</strong>のが Aid Person のスタイルです。取締役のご期待である「提案型で課題を見つけ、解決策の立案と実装に向けた伴走」を担います。</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:12px;">
+      <div style="background:#fff; border-radius:8px; padding:12px 14px; border:1px solid var(--border); font-size:12px; text-align:center;">
+        <div style="font-size:20px; margin-bottom:6px;">🔍</div>
+        <strong>課題発見</strong><br>
+        <span style="color:var(--muted);">ヒアリング・観察で部門の問題を特定</span>
+      </div>
+      <div style="background:#fff; border-radius:8px; padding:12px 14px; border:1px solid var(--border); font-size:12px; text-align:center;">
+        <div style="font-size:20px; margin-bottom:6px;">💡</div>
+        <strong>解決策立案</strong><br>
+        <span style="color:var(--muted);">具体的な実行計画まで落とし込んで提案</span>
+      </div>
+      <div style="background:#fff; border-radius:8px; padding:12px 14px; border:1px solid var(--border); font-size:12px; text-align:center;">
+        <div style="font-size:20px; margin-bottom:6px;">🏁</div>
+        <strong>実行〜完了まで伴走</strong><br>
+        <span style="color:var(--muted);">「どう完了まで持っていくか」まで担当</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="svc-card">
+    <div class="svc-head">
+      <div class="svc-head-icon">🔗</div>
+      <div class="svc-head-text">
+        <div class="svc-head-title">FAQ窓口運用 × 問い合わせ対応の標準手順整備</div>
+        <div class="svc-head-sub">「導入したのに誰も使えない」を防ぐ、初期運用の要</div>
+      </div>
+      <span class="svc-head-tag">最優先・Quick Win</span>
     </div>
     <div class="svc-flow">
       <div class="flow-col">
         <div class="flow-label prob">📍 現状の課題</div>
         <div class="flow-box prob">
           <ul>
-            <li>「効率化できた気がする」のままでは報告できない</li>
-            <li>利用状況の把握方法・KPI設計がない</li>
-            <li>PDCAが回っておらずツールが陳腐化するリスク</li>
+            <li>使い始め直後の問い合わせが集中する</li>
+            <li>システム企画はヘルプデスク対応で余力ゼロ</li>
+            <li>問い合わせ窓口がないと混乱が広がる</li>
           </ul>
         </div>
       </div>
@@ -516,10 +684,9 @@
         <div class="flow-label svc">🛠️ ご支援内容</div>
         <div class="flow-box svc">
           <ul>
-            <li>利用状況アンケートの設計・定期実施</li>
-            <li>管理センターデータ × アンケートでKPI集計</li>
-            <li>ビフォーアフター比較・節約工数の可視化</li>
-            <li>月次・四半期の経営向けサマリー作成</li>
+            <li>Forms受付 → FAQ確認 → 振り分け → 回答 → FAQ転記の手順を設計・運用</li>
+            <li>Teamsにおける社内AIポータルページ構成の提案</li>
+            <li>月次で問い合わせ件数・傾向・未解決を報告</li>
           </ul>
         </div>
       </div>
@@ -528,12 +695,13 @@
         <div class="flow-label eff">✨ 期待効果</div>
         <div class="flow-box eff">
           <ul>
-            <li>AI活用の効果が経営に伝わる</li>
-            <li>データに基づいた施策改善が回る</li>
+            <li>問い合わせ混乱を初期に吸収</li>
+            <li>FAQが蓄積され自己解決率が上がる</li>
           </ul>
           <div class="kpi-row">
-            <div class="kpi-badge" style="background:var(--primary); font-size:13px; padding: 7px 14px;">
-              <span style="font-size:13px; font-weight:700;">PDCA サイクル確立</span>
+            <div class="kpi-badge">
+              <span class="kpi-num">月10件+</span>
+              <span class="kpi-unit">FAQ<br>蓄積目標</span>
             </div>
           </div>
         </div>
@@ -541,85 +709,69 @@
     </div>
     <div class="deliv-row">
       <span class="deliv-head">成果物</span>
-      <span class="deliv-tag">利用状況モニタリング設計書</span>
-      <span class="deliv-tag">効果検証レポート（定期）</span>
-      <span class="deliv-tag">経営向けAI活用サマリー</span>
+      <span class="deliv-tag">問い合わせ対応 標準手順書</span>
+      <span class="deliv-tag">FAQ初期ストック（30〜50件）</span>
+      <span class="deliv-tag">月次問い合わせレポート</span>
+    </div>
+  </div>
+
+  <p style="font-size:13px; font-weight:700; color:var(--muted); letter-spacing:.06em; margin: 4px 0 12px;">推奨する運用体制 × Aid Person が担う役割</p>
+  <div class="card" style="padding:0; overflow:hidden; background:#fff;">
+    <table class="role-table">
+      <tr>
+        <th>役割</th><th>主責任</th><th>担当</th>
+      </tr>
+      <tr>
+        <td>全体方針・KPI管理・役員報告</td>
+        <td>経営企画</td>
+        <td>welbe側<span class="aid-badge">Aid Person 補佐</span></td>
+      </tr>
+      <tr>
+        <td>運用所管・問い合わせ窓口・FAQ・設定</td>
+        <td>システム企画</td>
+        <td>welbe側<span class="aid-badge">Aid Person 補佐</span></td>
+      </tr>
+      <tr>
+        <td>事故対応・監査連携</td>
+        <td>情報資産管理責任者</td>
+        <td>welbe側</td>
+      </tr>
+      <tr>
+        <td>部門ユースケース選定・成功事例収集・教育</td>
+        <td>各部門AIオーナー</td>
+        <td>welbe側<span class="aid-badge">Aid Person 設計</span></td>
+      </tr>
+      <tr>
+        <td>現場支援・使い方相談・プロンプト改善</td>
+        <td>AI推進サポーター（各部門）</td>
+        <td><span class="aid-person-badge" style="font-size:11px; font-weight:800; background:var(--green); color:#fff; padding:2px 8px; border-radius:20px;">Aid Person 主導で育成</span></td>
+      </tr>
+      <tr>
+        <td>研修企画・受講管理</td>
+        <td>人事/研修担当</td>
+        <td>welbe側<span class="aid-badge">Aid Person 主導</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card green" style="margin-top:16px;">
+    <div class="card-title">有料Copilot・Power Automate の申請判断基準</div>
+    <p style="font-size:13px;">Aid PersonはKPI計測結果をもとに、有料版への移行判断を客観的に提案します。</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+      <div style="background:#fff; border-radius:8px; padding:12px 14px; border:1px solid var(--border); font-size:12px;">
+        <strong style="color:var(--primary);">有料Copilot申請の条件</strong><br>
+        対象部門が4週間以上連続で週2時間以上削減を実測 / Outlook・Teams横断ニーズが高い / 週次アクティブ率70%以上
+      </div>
+      <div style="background:#fff; border-radius:8px; padding:12px 14px; border:1px solid var(--border); font-size:12px;">
+        <strong style="color:var(--accent);">Power Automate申請の条件</strong><br>
+        問い合わせ月20件以上・手動振り分けが週2時間超 / SLA逸脱が月2回以上 / 年間でライセンスコストを上回る削減が見込める
+      </div>
     </div>
   </div>
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 4: PJ推進 -->
-<!-- ══════════════════════════════════════════════ -->
-<div class="tab-panel" id="p3">
-<div class="content">
-  <div class="panel-title">ご支援できること ─ プロジェクト推進</div>
-
-  <!-- サービス5 -->
-  <div class="svc-card">
-    <div class="svc-head">
-      <div class="svc-head-icon">🔗</div>
-      <div class="svc-head-text">
-        <div class="svc-head-title">プロジェクト推進 / 部門間調整</div>
-        <div class="svc-head-sub">施策を止めない「推進結節点」として機能する</div>
-      </div>
-      <span class="svc-head-tag">全部門横断</span>
-    </div>
-    <div class="svc-flow">
-      <div class="flow-col">
-        <div class="flow-label prob">📍 現状の課題</div>
-        <div class="flow-box prob">
-          <ul>
-            <li>システム企画部はヘルプデスク対応で余力ゼロ</li>
-            <li>経営企画・現場・システム企画の調整役が不在</li>
-            <li>前向きなプロジェクトが後回しにされ続ける</li>
-            <li>M365が十分に活用されないまま費用だけかかる</li>
-          </ul>
-        </div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-col">
-        <div class="flow-label svc">🛠️ ご支援内容</div>
-        <div class="flow-box svc">
-          <ul>
-            <li>経営企画 × システム企画 × 各部門の橋渡し</li>
-            <li>タスク・スケジュール・進捗の管理（週次定例）</li>
-            <li>「こう使うともっと良くなる」提案型アプローチ</li>
-            <li>Teams / SharePoint 等M365全体の活用促進も対応</li>
-          </ul>
-        </div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-col">
-        <div class="flow-label eff">✨ 期待効果</div>
-        <div class="flow-box eff">
-          <ul>
-            <li>前向きプロジェクトが止まらず前進する</li>
-            <li>経営企画・現場・ITの三者連携が機能する</li>
-            <li>M365投資が業務に還元される</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="deliv-row">
-      <span class="deliv-head">成果物</span>
-      <span class="deliv-tag">週次進捗レポート</span>
-      <span class="deliv-tag">施策提案書（随時）</span>
-      <span class="deliv-tag">M365活用ロードマップ（オプション）</span>
-    </div>
-  </div>
-
-  <div class="card green">
-    <div class="card-title">ご支援メニュー全体について</div>
-    <p>上記5メニューのうち、まずはご要望のあるものからスコープを決めてスタートできます。全てを同時に進める必要はなく、トライアル期間中に優先度を一緒に整理します。</p>
-  </div>
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 5: 強み・実績 -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- ══════════════════════ PAGE 5: 強み・実績 ══════════════════════ -->
 <div class="tab-panel" id="p4">
 <div class="content">
   <div class="panel-title">対応実績・強み</div>
@@ -641,7 +793,7 @@
     </div>
     <div class="str-card">
       <div class="str-icon">🔗</div>
-      <div class="str-title">welbeとの関係性</div>
+      <div class="str-title">welbeとの関係性・理解</div>
       <div class="str-desc">職場定着支援プラットフォームの開発でご縁があり、welbeの事業・組織を理解している。立ち上がりが早い。</div>
     </div>
   </div>
@@ -649,57 +801,83 @@
     <div class="card-title">Aid Person について</div>
     <p>Aid Person が welbe ホールディングス様へ業務委託の形でご支援を提供します。担当者を組織としてアサインし、品質管理・継続性を担保した体制でお届けします。</p>
   </div>
+  <div class="card primary" style="margin-top:12px;">
+    <div class="card-title">本提案の根拠</div>
+    <p style="font-size:13px;">本提案の各支援内容・KPI目標値・ロードマップは、welbeグループに特化したディープリサーチ（生成AI導入後フェーズ設計提案）の知見を踏まえています。Microsoft公式導入ガイド・Barclays/Accentureの大規模展開事例・カスタマーサポートでの生産性15%向上実証研究を参照した上で、御社規模（約2,000名・全国展開・拠点ビジネス）に適したアプローチとして設計しています。</p>
+  </div>
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 6: 進め方 -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- ══════════════════════ PAGE 6: ロードマップ ══════════════════════ -->
 <div class="tab-panel" id="p5">
 <div class="content">
-  <div class="panel-title">進め方のイメージ</div>
+  <div class="panel-title">進め方・ロードマップ</div>
   <div class="card" style="background:#fff; border:1px solid var(--border); padding:24px 28px;">
     <div class="step-flow">
       <div class="step-item">
+        <div class="step-left"><div class="step-circle">0</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-period">〜7月中旬（現在・準備フェーズ）</div>
+          <div class="step-title">社内稟議・契約手続き</div>
+          <div class="step-desc">社内での提案内容の確認・検討。決済が下りた時点で業務委託契約を締結し、実作業を開始します。</div>
+          <span class="step-gate">🔑 判断ポイント：稟議承認・契約締結</span>
+        </div>
+      </div>
+      <div class="step-item">
         <div class="step-left"><div class="step-circle">1</div><div class="step-line"></div></div>
         <div class="step-body">
-          <div class="step-period">7月（トライアル開始）</div>
-          <div class="step-title">現状把握・優先施策の合意</div>
-          <div class="step-desc">Copilot利用開始直後の状況ヒアリング。本部各部門への簡易ヒアリング実施。優先して着手する施策（研修 / 棚卸し / 効果測定）を伴走担当・経営企画で合意。</div>
+          <div class="step-period">7月中旬〜8月（トライアル開始・最優先）</div>
+          <div class="step-title">FAQ窓口・基礎研修・プロンプト集の整備</div>
+          <div class="step-desc">開始直後：問い合わせ対応の標準手順・FAQ運用開始。開始2〜3週目：全社基礎研修（45〜60分）実施。第1ヶ月末：役割別プロンプト集 v1 配布・重点5部門のQuick Win選定。</div>
+          <span class="step-gate">🔑 判断ポイント：全社運用継続可否の確認</span>
         </div>
       </div>
       <div class="step-item">
         <div class="step-left"><div class="step-circle">2</div><div class="step-line"></div></div>
         <div class="step-body">
-          <div class="step-period">7〜8月</div>
-          <div class="step-title">研修・勉強会の初回実施 + 業務棚卸し</div>
-          <div class="step-desc">第1回研修（Copilot入門）の設計・実施。並行して本部各部門の業務棚卸しを実施し、AI代替可能性マトリクスを作成。</div>
+          <div class="step-period">8〜10月</div>
+          <div class="step-title">本部重点部門でのユースケース定着</div>
+          <div class="step-desc">部門別ミニ研修の実施。月次成功事例共有会（15分×毎月）開始。部門別KPIダッシュボード仮運用。部門別事例・月次KPI・改善要望一覧を集計。</div>
+          <span class="step-gate">🔑 判断ポイント：有料Copilotパイロット候補部門の選定</span>
         </div>
       </div>
       <div class="step-item">
         <div class="step-left"><div class="step-circle">3</div><div class="step-line"></div></div>
         <div class="step-body">
-          <div class="step-period">9月〜</div>
-          <div class="step-title">効果測定 + 施策サイクルの確立</div>
-          <div class="step-desc">利用状況アンケート実施・分析。ビフォーアフターデータ収集。効果検証レポートを経営企画に提出。次フェーズの施策を議論・実施。</div>
+          <div class="step-period">10〜12月</div>
+          <div class="step-title">効果測定 × 権限棚卸し</div>
+          <div class="step-desc">重点3業務の工数削減を事前/事後でサンプル測定。SharePoint/Teamsの過剰共有リスク棚卸し・権限是正。ROI試算を経営会議へ提出。</div>
+          <span class="step-gate">🔑 判断ポイント：有料Copilot・Power Automate 申請稟議の要否</span>
         </div>
       </div>
       <div class="step-item">
         <div class="step-left"><div class="step-circle">4</div></div>
         <div class="step-body">
-          <div class="step-period">随時</div>
-          <div class="step-title">継続的な伴走・改善</div>
-          <div class="step-desc">月次定例MTG（経営企画・システム企画）への参加。施策提案・進捗確認・課題解決を継続。契約期間・範囲はトライアル後に相談。</div>
+          <div class="step-period">2027年〜</div>
+          <div class="step-title">重点投資と高度化</div>
+          <div class="step-desc">効果測定で「閾値到達済み」の部門に有料Copilot・Power Automateを限定展開。部門別高度化計画の策定。ルール改定要否の半年レビュー。横展開の是非を経営会議で判断。</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px; padding:0; overflow:hidden; background:#fff;">
+    <div style="padding:14px 20px; background:var(--gray); font-size:12px; font-weight:800; color:var(--muted); letter-spacing:.06em;">スケール前チェックリスト（全項目達成で次フェーズへ移行）</div>
+    <div style="padding:16px 20px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
+      <div>☐ 利用ルール・FAQ・問い合わせ窓口が機能している</div>
+      <div>☐ 重点部門で週次利用が定着している</div>
+      <div>☐ 3業務以上で工数削減実測がある</div>
+      <div>☐ 事故・ヒヤリハットの報告経路が回っている</div>
+      <div>☐ Teams/SharePoint の過剰共有見直しに着手している</div>
+      <div>☐ 役員・管理職のメッセージが統一されている</div>
+      <div>☐ 有料版/自動化の候補が「業務名」で説明できる</div>
+      <div>☐ 稟議時にROI試算が提出できる</div>
     </div>
   </div>
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- スライド 7: 稼働条件 -->
-<!-- ══════════════════════════════════════════════ -->
+<!-- ══════════════════════ PAGE 7: 稼働条件 ══════════════════════ -->
 <div class="tab-panel" id="p6">
 <div class="content">
   <div class="panel-title">稼働条件（案）</div>
@@ -709,14 +887,13 @@
       <tr><th>稼働量</th><td>月10〜20時間程度（内容・フェーズにより変動。まずはトライアル期間で調整）</td></tr>
       <tr><th>報酬</th><td>月額10万円未満を基本想定（具体的な金額は別途ご相談）</td></tr>
       <tr><th>コミュニケーション</th><td>Teams / チャット非同期 + 週次または隔週での定例MTG（30〜60分）</td></tr>
-      <tr><th>開始時期</th><td>2026年7月〜（トライアル期間3ヶ月程度を想定）</td></tr>
-      <tr><th>対応可能範囲</th><td>ご支援メニュー1〜5のうち、ご要望に応じてスコープを決定</td></tr>
+      <tr><th>開始時期</th><td>2026年7月中旬以降（社内稟議・契約締結後）。トライアル期間3ヶ月程度を想定</td></tr>
+      <tr><th>対応スコープ</th><td>ご要望・フェーズに応じてスコープを都度調整。最初から全メニューを進める必要はなし</td></tr>
     </table>
   </div>
   <div class="card orange">
-    💡 まずは小さく始めて、成果・進捗を確認しながらスコープを広げていく進め方を想定しています。「まずこの部分だけお願いしたい」という形でも対応可能です。
+    💡 まずは小さく始めて、成果・進捗を確認しながらスコープを広げていく進め方を想定しています。「まずFAQ整備と基礎研修だけ」という形でも対応可能です。
   </div>
-
   <div style="margin-top:20px; padding:16px 20px; background:#fff; border-radius:10px; border:1px solid var(--border); font-size:13px; color:var(--muted); text-align:center;">
     本資料に関するご質問・ご相談はお気軽にどうぞ。<br>
     提案日: 2026年7月1日 ／ Aid Person
@@ -737,7 +914,6 @@
 <script>
 const TOTAL = 7;
 let cur = 0;
-
 const dotsEl = document.getElementById('dots');
 for (let i = 0; i < TOTAL; i++) {
   const d = document.createElement('div');
@@ -745,7 +921,6 @@ for (let i = 0; i < TOTAL; i++) {
   d.onclick = () => show(i);
   dotsEl.appendChild(d);
 }
-
 function show(n) {
   cur = n;
   document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === n));
@@ -756,15 +931,12 @@ function show(n) {
   document.getElementById('btn-next').disabled = (n === TOTAL - 1);
   window.scrollTo(0, 0);
 }
-
 function prev() { if (cur > 0) show(cur - 1); }
 function next() { if (cur < TOTAL - 1) show(cur + 1); }
-
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') next();
   if (e.key === 'ArrowLeft')  prev();
 });
-
 show(0);
 </script>
 </body>
