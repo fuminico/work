@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>議事録 — AI活用推進 キックオフMTG 2026-06-29</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f1fb;
+    --green: #27ae60;
+    --green-light: #e8f8ee;
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --yellow: #d4a017;
+    --yellow-light: #fef9e7;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+    --gray: #f5f6f8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.8;
+  }
+  .page-header {
+    background: var(--primary); color: #fff;
+    padding: 0 32px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .sub { font-size: 12px; opacity: .65; margin-top: 2px; }
+  .page-header .meta { font-size: 12px; opacity: .8; white-space: nowrap; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .meta-card {
+    background: #fff; border-radius: 12px; border: 1px solid var(--border);
+    padding: 20px 24px; margin-bottom: 28px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px;
+  }
+  .meta-item { font-size: 14px; }
+  .meta-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 2px; }
+  .meta-value { font-weight: 600; }
+
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 17px; font-weight: 700; color: var(--primary);
+    padding-bottom: 10px; margin-bottom: 18px;
+    border-bottom: 2px solid var(--primary-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .card {
+    background: #fff; border-radius: 12px; border: 1px solid var(--border);
+    padding: 20px 24px; margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  }
+  .card-title {
+    font-size: 14px; font-weight: 700; color: var(--primary);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--primary-light);
+  }
+
+  ul.dot { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  ul.dot li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; }
+  ul.dot li::before { content: '・'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+  .highlight-box {
+    background: var(--primary-light); border-left: 4px solid var(--primary);
+    border-radius: 0 8px 8px 0; padding: 12px 16px; margin-top: 12px;
+    font-size: 14px;
+  }
+  .caution-box {
+    background: var(--red-light); border-left: 4px solid var(--red);
+    border-radius: 0 8px 8px 0; padding: 12px 16px; margin-top: 12px;
+    font-size: 14px;
+  }
+  .note-box {
+    background: var(--yellow-light); border-left: 4px solid var(--yellow);
+    border-radius: 0 8px 8px 0; padding: 12px 16px; margin-top: 12px;
+    font-size: 14px;
+  }
+
+  .speaker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .speaker-card {
+    background: #fff; border-radius: 10px; border: 1px solid var(--border);
+    padding: 16px 18px;
+  }
+  .speaker-role { font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 4px; letter-spacing: .06em; }
+  .speaker-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .speaker-dept { font-size: 13px; color: var(--muted); }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item { display: flex; gap: 16px; }
+  .tl-left { display: flex; flex-direction: column; align-items: center; width: 80px; flex-shrink: 0; }
+  .tl-date {
+    font-size: 12px; font-weight: 700; color: var(--primary);
+    background: var(--primary-light); border-radius: 6px;
+    padding: 3px 8px; text-align: center; white-space: nowrap;
+  }
+  .tl-line { flex: 1; width: 2px; background: var(--border); margin: 4px 0; }
+  .tl-item:last-child .tl-line { display: none; }
+  .tl-body { padding-bottom: 20px; flex: 1; padding-top: 2px; font-size: 14px; }
+  .tl-body strong { display: block; margin-bottom: 2px; }
+
+  .decision-card {
+    background: var(--green-light); border: 1px solid #a8ddb9;
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 12px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .decision-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .decision-text { font-size: 14px; }
+
+  .na-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .na-table thead tr { background: var(--gray); }
+  .na-table th { padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .04em; border-bottom: 2px solid var(--border); }
+  .na-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .na-table tr:last-child td { border-bottom: none; }
+  .badge-owner {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+    background: var(--primary-light); color: var(--primary);
+  }
+  .badge-deadline {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+    background: var(--red-light); color: var(--red);
+  }
+
+  @media (max-width: 600px) {
+    .meta-card { grid-template-columns: 1fr; }
+    .speaker-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div>
+    <div class="page-header h1" style="font-size:17px; font-weight:700;">AI活用推進 キックオフMTG 議事録</div>
+    <div class="sub">welbe ホールディングス × 三井田史親</div>
+  </div>
+  <div class="meta">2026-06-29</div>
+</header>
+
+<div class="content">
+
+  <!-- 基本情報 -->
+  <div class="meta-card">
+    <div class="meta-item">
+      <div class="meta-label">日時</div>
+      <div class="meta-value">2026年6月29日（月） 17:04〜</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">形式</div>
+      <div class="meta-value">オンライン（画面共有あり）</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">目的</div>
+      <div class="meta-value">AI活用推進の背景・要望共有 / 役割合意</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">次回アクション締切</div>
+      <div class="meta-value" style="color:var(--red);">7月1日（水）— 役割提案資料提出</div>
+    </div>
+  </div>
+
+  <!-- 話者 -->
+  <div class="section">
+    <div class="section-title">👥 参加者</div>
+    <div class="speaker-grid">
+      <div class="speaker-card">
+        <div class="speaker-role">SPEAKER A（三井田）</div>
+        <div class="speaker-name">三井田 史親</div>
+        <div class="speaker-dept">外部 AIコンサルタント / 業務委託</div>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-role">SPEAKER B（本間さん）</div>
+        <div class="speaker-name">本間さん</div>
+        <div class="speaker-dept">welbe ホールディングス 経営企画<br>生成AI全社導入PJオーナー</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 背景・経緯 -->
+  <div class="section">
+    <div class="section-title">📋 背景・経緯</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">2026-05-01</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <strong>welbe分社化・ホールディングス体制へ移行</strong>
+          以前の「welbe株式会社」としての相談（職場定着支援プラットフォーム）とは別軸。今回はホールディングス全体のAI浸透・活用促進の文脈。
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">〜2026-06</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <strong>AI活用ガイドライン整備・経営会議承認</strong>
+          情報セキュリティ規定・生成AI利用細則（利用可能業務・条件付き業務・禁止業務の区分）を整備。代表取締役社長の承認を取得。
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">2026-06-30</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <strong>システム企画部長が退職</strong>
+          AI活用推進を担うべきシステム企画部が、ヘルプデスク業務（デバイス・ネットワーク対応）で余力なし。リーダーシップを発揮できる人材が不在の状態に。
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">2026-07-01</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-body">
+          <strong>全社AI利用解禁（予定）</strong>
+          無償版Copilot（全社2,300名）+ 有償版Copilot（本部10〜20名）を正式展開。「使い始め」はできるが、定着・効果測定は未整備。
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">2026-07-末（予定）</div>
+        </div>
+        <div class="tl-body">
+          <strong>本間さん（PJオーナー）が退職予定</strong>
+          本MTGのPJオーナーである本間さんが7月末をもって退職予定。稟議・契約手続きおよび後任への引継ぎを退職前に完了させる必要がある。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 決定事項 -->
+  <div class="section">
+    <div class="section-title">✅ 決定・確認事項</div>
+    <div class="decision-card">
+      <div class="decision-icon">✅</div>
+      <div class="decision-text">
+        <strong>7月1日から全社AI利用を正式解禁する</strong><br>
+        無償版Copilotを全社員（約2,300名）に展開。有償版M365 Copilotは本部管理職・専門職10〜20名に段階付与。
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-icon">✅</div>
+      <div class="decision-text">
+        <strong>三井田に伴走支援を依頼する方向で進める</strong><br>
+        研修・利用促進・効果測定設計・社内調整の役割。稟議上は月10万円未満であれば上長の決裁権の範囲内で処理可能（社長の臨機決裁が不要）。
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-icon">✅</div>
+      <div class="decision-text">
+        <strong>期待するロールは「AI浸透の設計者」と「社内コンサルタント」の2軸</strong><br>
+        MTG内で本間さんが明示。研修・効果測定・部門間調整・ユースケース展開を担う。
+      </div>
+    </div>
+  </div>
+
+  <!-- AI活用の想定業務 -->
+  <div class="section">
+    <div class="section-title">🤖 AI活用の想定業務（経営会議資料より）</div>
+    <div class="card">
+      <div class="card-title">支援現場（無償版Copilot）</div>
+      <ul class="dot">
+        <li>個別支援計画の作成補助・議事録整理</li>
+        <li>就活支援（求人整理・企業調査・外部対応メール）</li>
+        <li>支援記録・モニタリング記録等の事務補助</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">本部（有償版Copilot 優先対象: マーケ・人事・システム企画・経営企画）</div>
+      <ul class="dot">
+        <li>コンテンツ生成・資料作成・社内文書の自動化</li>
+        <li>Teams/Officeとの統合で会議録・メール・分析業務を効率化</li>
+        <li>M365全体の利活用促進（Copilot以外のサービスも含む）</li>
+      </ul>
+      <div class="note-box">
+        ※ マーケ業務（大量コンテンツ生成等）はCopilotより他の生成AIツールが適する可能性もあり、柔軟に対応。
+      </div>
+    </div>
+  </div>
+
+  <!-- 課題・懸念点 -->
+  <div class="section">
+    <div class="section-title">⚠️ 課題・懸念点</div>
+    <div class="card">
+      <div class="card-title">① 形骸化リスク</div>
+      <ul class="dot">
+        <li>ガイドライン・規定は整備されたが「難しいルール文書」で終わる可能性が高い</li>
+        <li>「どう使ったらいいかわからない」「結局使わない」という定着失敗パターンを回避したい</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">② 推進できる人材が不在</div>
+      <ul class="dot">
+        <li>システム企画部長が6月末退職。後任採用は検討中だが空白期間が発生</li>
+        <li>システム企画部はヘルプデスク対応（デバイス・ネット障害）で余力なく、前向きプロジェクトへの工数ゼロ</li>
+        <li>他部門からも「システム企画に頼んでも進まない」という不満が蓄積している状態</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">③ 効果測定設計が未整備</div>
+      <ul class="dot">
+        <li>利用状況の把握方法・効果検証の指標設計がまだない</li>
+        <li>「生産性が上がった気がする」という定性感だけでは経営に報告できない</li>
+        <li>支援現場のヒアリング結果（6〜9拠点分）は存在するが全拠点分ではなく、ベースラインとして活用可能か未整理</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">④ PJオーナーである本間さんが7月末退職予定</div>
+      <ul class="dot">
+        <li>本MTGで伴走支援の方向性を確認した本間さんが、7月末をもって現職を退職する予定</li>
+        <li>稟議・契約手続きを退職前（7月中）に完了させないと、意思決定者が不在となりプロジェクトが止まるリスクがある</li>
+        <li>退職前に後任担当者・引継ぎ体制を合意しておく必要あり</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 期待 -->
+  <div class="section">
+    <div class="section-title">🎯 三井田への期待（本間さん確認済み）</div>
+    <div class="card">
+      <ul class="dot">
+        <li><strong>AI浸透の設計者</strong>：「ツールを入れた」から「使わせる仕組みを作る」フェーズを主導する</li>
+        <li><strong>社内コンサルタント</strong>：経営企画・システム企画・各事業部門の橋渡しをしながら、提案型で施策を推進する</li>
+        <li>研修企画・運営（支援現場・本部向け）/ ユースケースの発掘・横展開 / 効果測定設計 を担う</li>
+        <li>「何が必要かを一緒に整理してトライアル稼働できれば嬉しい」（本間さん）</li>
+      </ul>
+      <div class="highlight-box">
+        定着支援プラットフォーム（welbe-weld）の開発実績があり、立ち上がりが早い点も評価されている。
+      </div>
+    </div>
+  </div>
+
+  <!-- 費用感 -->
+  <div class="section">
+    <div class="section-title">💴 費用感</div>
+    <div class="card">
+      <ul class="dot">
+        <li>他社AI研修サービスの資料（本間さんが社内から回覧を受けた）と比較して三井田に相談</li>
+        <li>月10万円未満であれば上長の決裁権の範囲で稟議を回せる（10万〜100万円は本部社長決裁が必要）</li>
+        <li>Aid Person からの業務委託対応のため、同等の外部サービスより低コストで対応可能</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ネクストアクション -->
+  <div class="section">
+    <div class="section-title">📌 ネクストアクション</div>
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <table class="na-table">
+        <thead>
+          <tr>
+            <th style="width:40px;">#</th>
+            <th>タスク</th>
+            <th>担当</th>
+            <th>期限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <strong>役割提案資料の作成・提出</strong><br>
+              「何ができるか」「どういうことをやれるか」をまとめた別紙提案書を本間さんに共有する
+            </td>
+            <td><span class="badge-owner">三井田</span></td>
+            <td><span class="badge-deadline">7月1日（水）</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <strong>稟議書類の確認・準備</strong><br>
+              提案内容に基づき、稟議フォーマット・金額・スコープを確認する
+            </td>
+            <td><span class="badge-owner">本間さん</span></td>
+            <td>提案受領後</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <strong>7月1日の全社AI解禁対応</strong><br>
+              全社員へのアナウンス・ガイドライン周知を実施
+            </td>
+            <td><span class="badge-owner">本間さん</span></td>
+            <td><span class="badge-deadline">7月1日（水）</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <strong>稟議・契約手続きの完了および後任引継ぎ</strong><br>
+              本間さんが7月末退職予定のため、稟議決裁・業務委託契約締結・後任担当者との引継ぎを退職前に完了させる
+            </td>
+            <td><span class="badge-owner">本間さん</span></td>
+            <td><span class="badge-deadline" style="background:#c0392b;">7月末まで（最優先）</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
