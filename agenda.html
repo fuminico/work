@@ -369,21 +369,31 @@
       <div class="block-time">8分</div>
     </div>
     <div class="block-body">
-      <p style="font-size:12px; color:var(--gray); margin-bottom:10px;">テナント調査の結果、以下の点が設計方針に影響するため、本日担当者に確認させてください。</p>
+      <p style="font-size:12px; color:var(--gray); margin-bottom:10px;">調査済み項目は認識合わせ・報告のみ。本日の実質的な確認事項はGaroonコンテンツの種別整理のみ。Teams関連は権限付与待ち。</p>
 
       <p style="font-size:12px; font-weight:700; color:#92400e; margin-bottom:6px;">【SharePoint イントラ設計 関連】</p>
       <ul class="check-list">
-        <li>現在、ルートサイト（ /）やコミュニケーションサイトは存在するか？　全学向けの「お知らせ・掲示板」として使っているサイトはあるか？</li>
-        <li>ハブサイトとして登録されているサイトはあるか？（管理センターで一緒に確認できると助かります）</li>
-        <li>SharePointの外部共有設定はどうなっているか？（学外ゲストに共有可能か）</li>
-        <li>Garoonから移行するコンテンツの種別を整理したい：掲示板・回覧板・お知らせ・各部署ページ等、それぞれ何があるか</li>
+        <li style="color:#6b7280;">
+          <span style="text-decoration:line-through;">ルートサイト（/）やコミュニケーションサイトは存在するか？</span><br>
+          <span style="font-size:11px; color:#16a34a; font-weight:600;">✅ 調査済み・認識合わせのみ</span>
+          <span style="font-size:11px; color:#6b7280;"> — ルートサイトは存在するが全く整備されていない。コミュニケーションサイト・ハブサイトは未設置。この状態から三井田が設計・構築していくことを確認するのみ。</span>
+        </li>
+        <li style="color:#6b7280;">
+          <span style="text-decoration:line-through;">SharePointの外部共有設定はどうなっているか？</span><br>
+          <span style="font-size:11px; color:#16a34a; font-weight:600;">✅ 調査済み・確認不要</span>
+          <span style="font-size:11px; color:#6b7280;"> — テナントレポートにて既に共有済み（「すべてのユーザー」設定）。イントラ設計フェーズで変更提案予定のため、本日は議題不要。</span>
+        </li>
+        <li><strong>Garoonから移行するコンテンツの種別を整理したい：</strong>掲示板・回覧板・お知らせ・各部署ページ等、それぞれ何があるか</li>
       </ul>
 
       <p style="font-size:12px; font-weight:700; color:#92400e; margin-bottom:6px; margin-top:10px;">【Teams 運用設計 関連】</p>
+      <div style="font-size:11px; background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:7px 10px; margin-bottom:8px; color:#92400e;">
+        ⚠ 以下の確認事項は Teams管理センターへのアクセス権限が必要です。本日の③ 依頼事項にて権限付与を要請し、付与後に調査します。
+      </div>
       <ul class="check-list">
-        <li>現在、業務系のTeamsチーム（部署・委員会・全学連絡等）は存在するか？　授業チーム以外の使い方はされているか？</li>
-        <li>Teamsチームはユーザーが自由に作成できる設定になっているか？（作成制限の有無）</li>
-        <li>過去年度のチームは自動的にアーカイブされているか、それとも放置されているか？</li>
+        <li style="color:#6b7280;">現在、業務系のTeamsチーム（部署・委員会・全学連絡等）は存在するか？<span style="font-size:11px;"> — Teams管理センターアクセス後に確認</span></li>
+        <li style="color:#6b7280;">Teamsチームはユーザーが自由に作成できる設定になっているか？<span style="font-size:11px;"> — Entra ID グループ設定・Teams管理センターで確認（要権限付与）</span></li>
+        <li style="color:#6b7280;">過去年度のチームは自動的にアーカイブされているか、それとも放置されているか？<span style="font-size:11px;"> — Teams管理センターアクセス後に確認</span></li>
       </ul>
     </div>
   </div>
