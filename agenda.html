@@ -30,10 +30,7 @@
   }
 
   /* ── ヘッダー ── */
-  .header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
+  .header { text-align: center; margin-bottom: 32px; }
   .header-label {
     display: inline-block;
     background: #1e3a5f;
@@ -45,16 +42,8 @@
     border-radius: 20px;
     margin-bottom: 10px;
   }
-  .header h1 {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1e3a5f;
-    margin-bottom: 6px;
-  }
-  .header .meta {
-    font-size: 13px;
-    color: var(--gray);
-  }
+  .header h1 { font-size: 22px; font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: var(--gray); }
   .total-time {
     display: inline-block;
     background: #1e3a5f;
@@ -67,12 +56,7 @@
   }
 
   /* ── ブロック ── */
-  .blocks {
-    display: grid;
-    gap: 16px;
-    max-width: 860px;
-    margin: 0 auto;
-  }
+  .blocks { display: grid; gap: 16px; max-width: 860px; margin: 0 auto; }
   .block {
     background: #fff;
     border-radius: 12px;
@@ -94,24 +78,11 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .block-title {
-    flex: 1;
-    font-size: 16px;
-    font-weight: 800;
-  }
-  .block-time {
-    font-size: 22px;
-    font-weight: 800;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .block-body {
-    padding: 0 20px 18px;
-  }
-  .point-list {
-    list-style: none;
-    margin-bottom: 14px;
-  }
+  .block-title { flex: 1; font-size: 16px; font-weight: 800; }
+  .block-time  { font-size: 22px; font-weight: 800; white-space: nowrap; flex-shrink: 0; }
+  .block-body  { padding: 0 20px 18px; }
+
+  .point-list { list-style: none; margin-bottom: 14px; }
   .point-list li {
     font-size: 13px;
     padding: 5px 0 5px 18px;
@@ -121,20 +92,85 @@
     line-height: 1.5;
   }
   .point-list li:last-child { border-bottom: none; }
-  .point-list li::before {
-    content: '▸';
+  .point-list li::before { content: '▸'; position: absolute; left: 0; font-size: 11px; top: 6px; }
+
+  /* サブリスト（インデント） */
+  .sub-list { list-style: none; margin: 4px 0 4px 14px; }
+  .sub-list li {
+    font-size: 12px;
+    padding: 3px 0 3px 14px;
+    position: relative;
+    color: #6b7280;
+    border-bottom: none;
+    line-height: 1.4;
+  }
+  .sub-list li::before { content: '–'; position: absolute; left: 0; top: 3px; }
+
+  /* 調査結果サマリー */
+  .finding-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .finding-card {
+    background: #f8faff;
+    border: 1px solid #c7d8f5;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .finding-card .fc-label { font-size: 11px; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
+  .finding-card .fc-value { font-size: 18px; font-weight: 800; color: #1e3a5f; line-height: 1; }
+  .finding-card .fc-sub   { font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .finding-card.warn { background: #fff7ed; border-color: #fdba74; }
+  .finding-card.warn .fc-label { color: var(--orange); }
+  .finding-card.warn .fc-value { color: var(--orange); }
+
+  /* 依頼事項リスト */
+  .request-list { list-style: none; margin-bottom: 14px; }
+  .request-list li {
+    font-size: 13px;
+    padding: 7px 0 7px 26px;
+    position: relative;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    line-height: 1.5;
+  }
+  .request-list li:last-child { border-bottom: none; }
+  .request-list li::before {
+    content: '📌';
     position: absolute;
     left: 0;
-    font-size: 11px;
-    top: 6px;
+    font-size: 13px;
+    top: 7px;
   }
+  .request-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag-perm { background: #fee2e2; color: #b91c1c; }
+  .tag-info { background: #ffedd5; color: #c2410c; }
+
+  /* 確認事項リスト */
+  .check-list { list-style: none; margin-bottom: 14px; }
+  .check-list li {
+    font-size: 13px;
+    padding: 7px 0 7px 26px;
+    position: relative;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    line-height: 1.5;
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before { content: '?'; position: absolute; left: 6px; font-size: 12px; top: 7px; font-weight: 800; color: var(--orange); }
 
   /* ── リンクボタン ── */
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; }
   .link-btn {
     display: inline-flex;
     align-items: center;
@@ -167,7 +203,13 @@
   .orange .block-badge  { background: var(--orange); color: #fff; }
   .orange .block-time   { color: var(--orange); }
   .orange .point-list li::before { color: var(--orange); }
+  .orange .check-list li::before { color: var(--orange); }
   .orange .link-btn { background: var(--orange-bg); color: var(--orange); border-color: #fdba74; }
+
+  .red    .block-header { background: var(--red-bg); }
+  .red    .block-badge  { background: var(--red); color: #fff; }
+  .red    .block-time   { color: var(--red); }
+  .red    .link-btn { background: var(--red-bg); color: var(--red); border-color: #fca5a5; }
 
   .purple .block-header { background: var(--purple-bg); }
   .purple .block-badge  { background: var(--purple); color: #fff; }
@@ -177,131 +219,61 @@
 
   /* ── 次回アクション ── */
   .actions {
-    max-width: 860px;
-    margin: 16px auto 0;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
+    max-width: 860px; margin: 16px auto 0;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
     box-shadow: 0 1px 4px rgba(0,0,0,.06);
   }
-  .actions-header {
-    background: #1e3a5f;
-    color: #fff;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 800;
-  }
+  .actions-header { background: #1e3a5f; color: #fff; padding: 12px 20px; font-size: 14px; font-weight: 800; }
   .actions-body {
     padding: 14px 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
   }
   @media (max-width: 540px) { .actions-body { grid-template-columns: 1fr; } }
-  .action-col-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gray);
-    letter-spacing: .06em;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-  .action-item {
-    font-size: 13px;
-    padding: 4px 0 4px 16px;
-    position: relative;
-    color: #374151;
-    line-height: 1.5;
-  }
+  .action-col-title { font-size: 11px; font-weight: 700; color: var(--gray); letter-spacing: .06em; margin-bottom: 6px; text-transform: uppercase; }
+  .action-item { font-size: 13px; padding: 4px 0 4px 16px; position: relative; color: #374151; line-height: 1.5; }
   .action-item::before { content: '□'; position: absolute; left: 0; font-size: 11px; top: 5px; color: #9ca3af; }
 
   /* ── 決定・その他 ── */
   .summary {
-    max-width: 860px;
-    margin: 16px auto 0;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
+    max-width: 860px; margin: 16px auto 0;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
     box-shadow: 0 1px 4px rgba(0,0,0,.06);
   }
-  .summary-header {
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 800;
-    color: #fff;
-  }
+  .summary-header { padding: 12px 20px; font-size: 14px; font-weight: 800; color: #fff; }
   .summary-header.decided { background: #1a7a3c; }
   .summary-header.tasks   { background: #1e3a5f; }
   .summary-header.other   { background: #6b7280; }
-  .summary-body {
+  .summary-body { padding: 14px 20px; }
+  .summary-tasks-body {
     padding: 14px 20px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
   }
-  .summary-item {
-    font-size: 13px;
-    padding: 5px 0 5px 18px;
-    position: relative;
-    color: #374151;
-    line-height: 1.5;
-    border-bottom: 1px solid #f3f4f6;
-  }
+  @media (max-width: 540px) { .summary-tasks-body { grid-template-columns: 1fr; } }
+  .summary-col-title { font-size: 11px; font-weight: 700; color: var(--gray); letter-spacing: .06em; margin-bottom: 6px; text-transform: uppercase; }
+  .summary-item { font-size: 13px; padding: 5px 0 5px 18px; position: relative; color: #374151; line-height: 1.5; border-bottom: 1px solid #f3f4f6; }
   .summary-item:last-child { border-bottom: none; }
   .summary-item.check::before  { content: '✅'; position: absolute; left: 0; font-size: 11px; top: 6px; }
   .summary-item.task::before   { content: '□'; position: absolute; left: 0; font-size: 11px; top: 6px; color: #9ca3af; }
   .summary-item.note::before   { content: '▸'; position: absolute; left: 0; font-size: 11px; top: 6px; color: #9ca3af; }
-  .summary-tasks-body {
-    padding: 14px 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  @media (max-width: 540px) { .summary-tasks-body { grid-template-columns: 1fr; } }
-  .summary-col-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gray);
-    letter-spacing: .06em;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
 
   /* ── 参考資料 ── */
   .ref {
-    max-width: 860px;
-    margin: 12px auto 0;
-    background: #f9fafb;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 20px;
+    max-width: 860px; margin: 12px auto 0;
+    background: #f9fafb; border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 20px;
   }
-  .ref-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gray);
-    letter-spacing: .06em;
-    margin-bottom: 10px;
-  }
-  .ref-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  .ref-title { font-size: 11px; font-weight: 700; color: var(--gray); letter-spacing: .06em; margin-bottom: 10px; }
+  .ref-links { display: flex; flex-wrap: wrap; gap: 8px; }
   .ref-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px 12px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    background: #fff;
-    color: #374151;
-    border: 1px solid var(--border);
-    transition: background .15s;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: 600;
+    text-decoration: none; background: #fff; color: #374151;
+    border: 1px solid var(--border); transition: background .15s;
   }
   .ref-link:hover { background: #e5e7eb; }
+  .ref-link.primary { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
 </style>
 </head>
 <body>
@@ -310,7 +282,7 @@
   <div class="header-label">武蔵野美術大学 M365導入支援コンサルティング</div>
   <h1>定例 アジェンダ</h1>
   <div class="meta">2026年7月1日（水）　担当：三井田</div>
-  <div class="total-time">⏱ 合計 約23分</div>
+  <div class="total-time">⏱ 合計 約33分</div>
 </div>
 
 <div class="blocks">
@@ -324,9 +296,9 @@
     </div>
     <div class="block-body">
       <ul class="point-list">
-        <li>Nextset廃案・Canbus.候補として継続検討</li>
-        <li>SharePointニュース＋EntraIDグループ紐づけで優先表示する方針で決定</li>
-        <li>テストアカウント：教務システムログイン不要、M365ゲストアカウントで直接テナントにログイン可と確認</li>
+        <li>Nextset廃案・Canbus.候補として継続検討で合意済み</li>
+        <li>SharePointニュース＋Entra IDグループ紐づけで優先表示する方針で合意済み</li>
+        <li>テストアカウント（グローバル閲覧者）にてM365テナントにアクセス可能となったため、6/30に調査を実施 → 本日報告</li>
       </ul>
     </div>
   </div>
@@ -335,16 +307,50 @@
   <div class="block blue">
     <div class="block-header">
       <div class="block-badge">① 報告</div>
-      <div class="block-title">テストアカウントでのテナント確認結果</div>
-      <div class="block-time">8分</div>
+      <div class="block-title">テナント調査結果の共有（6/30実施）</div>
+      <div class="block-time">10分</div>
     </div>
     <div class="block-body">
+
+      <!-- 調査結果サマリー -->
+      <div class="finding-grid">
+        <div class="finding-card">
+          <div class="fc-label">アクティブユーザー（推計）</div>
+          <div class="fc-value">8,558 名</div>
+          <div class="fc-sub">教職員 1,677 名 ／ 学生 6,881 名</div>
+        </div>
+        <div class="finding-card warn">
+          <div class="fc-label">教職員ライセンス残枠</div>
+          <div class="fc-value">残 45 枠</div>
+          <div class="fc-sub">M365 A3 for faculty 使用率 96.6%</div>
+        </div>
+        <div class="finding-card">
+          <div class="fc-label">グループ総数</div>
+          <div class="fc-value">10,769 件</div>
+          <div class="fc-sub">ほぼ授業単位のチーム（2020年〜累積）</div>
+        </div>
+        <div class="finding-card">
+          <div class="fc-label">SharePointサイト総数</div>
+          <div class="fc-value">16,501 件</div>
+          <div class="fc-sub">うち直近30日アクティブ 691件（4.2%）</div>
+        </div>
+      </div>
+
       <ul class="point-list">
-        <li><strong>M365テナントへのログイン結果</strong>：ゲストアカウントでテナントにアクセスし、確認できた内容を共有します</li>
-        <li><strong>EntraIDグループの現状</strong>：現在構成されているグループの状況と、SharePointのオーディエンスターゲティングへの適用可否</li>
-        <li><strong>SharePoint設計への影響</strong>：実環境を確認した上での設計方針の確認・調整点</li>
+        <li><strong>現状把握のポイント</strong>：グループ・サイトの大多数が授業単位で累積しており、全学的なイントラ起点となるサイト・コミュニケーションサイトが確認できない状態
+          <ul class="sub-list">
+            <li>ストレージは163.82TB中44.94TB（27.4%）で余裕あり</li>
+            <li>M365 Copilot Education は35枠すべて割当済み（満枠）</li>
+          </ul>
+        </li>
+        <li><strong>調査の制限事項</strong>：グローバル閲覧者権限では Teams管理センター・Entra管理センター・CAポリシーへのアクセスが不可 → 詳細は別途確認が必要（③ 依頼事項参照）</li>
+        <li><strong>SharePoint・Teams設計への含意</strong>：授業単位に閉じた現状から、全学横断的なイントラ・業務Teams設計をゼロから構築できる余地がある一方、ガバナンスポリシー（サイト・チームのライフサイクル管理）の整備が必須</li>
       </ul>
+
       <div class="links">
+        <a class="link-btn" href="tenant-status.html" target="_blank">
+          📊 テナント現状レポート（詳細） <span class="arrow">→</span>
+        </a>
         <a class="link-btn" href="sharepoint-proposal.html" target="_blank">
           SharePoint提案資料 <span class="arrow">→</span>
         </a>
@@ -358,37 +364,92 @@
   <!-- ブロック② -->
   <div class="block orange">
     <div class="block-header">
-      <div class="block-badge">② 確認・共有</div>
-      <div class="block-title">Garoonワークフロー一覧の受領状況＋Canbus.費用試算</div>
+      <div class="block-badge">② 確認</div>
+      <div class="block-title">設計推進のための確認事項</div>
       <div class="block-time">8分</div>
     </div>
     <div class="block-body">
-      <ul class="point-list">
-        <li><strong>Garoonワークフロー一覧の受領確認</strong>：前回お願いしたワークフロー名・月間申請件数の一覧はご準備いただけましたでしょうか</li>
-        <li><strong>Canbus.費用試算のご報告</strong>：一覧を受領できた場合、ワークフロー数に応じたCanbus.のプラン・費用見通しを共有します</li>
-        <li>未受領の場合は提供いただける目処をご確認させてください（試算の前提として必要です）</li>
+      <p style="font-size:12px; color:var(--gray); margin-bottom:10px;">調査済み項目は認識合わせ・報告のみ。本日の実質的な確認事項はGaroonコンテンツの種別整理のみ。Teams関連は権限付与待ち。</p>
+
+      <p style="font-size:12px; font-weight:700; color:#92400e; margin-bottom:6px;">【SharePoint イントラ設計 関連】</p>
+      <ul class="check-list">
+        <li style="color:#6b7280;">
+          <span style="text-decoration:line-through;">ルートサイト（/）やコミュニケーションサイトは存在するか？</span><br>
+          <span style="font-size:11px; color:#16a34a; font-weight:600;">✅ 調査済み・認識合わせのみ</span>
+          <span style="font-size:11px; color:#6b7280;"> — ルートサイトは存在するが全く整備されていない。コミュニケーションサイト・ハブサイトは未設置。この状態から三井田が設計・構築していくことを確認するのみ。</span>
+        </li>
+        <li style="color:#6b7280;">
+          <span style="text-decoration:line-through;">SharePointの外部共有設定はどうなっているか？</span><br>
+          <span style="font-size:11px; color:#16a34a; font-weight:600;">✅ 調査済み・確認不要</span>
+          <span style="font-size:11px; color:#6b7280;"> — テナントレポートにて既に共有済み（「すべてのユーザー」設定）。イントラ設計フェーズで変更提案予定のため、本日は議題不要。</span>
+        </li>
+        <li><strong>Garoonから移行するコンテンツの種別を整理したい：</strong>掲示板・回覧板・お知らせ・各部署ページ等、それぞれ何があるか</li>
       </ul>
-      <div class="links">
-        <a class="link-btn" href="workflow-comparison.html#tab3" target="_blank">
-          ワークフロー比較 <span class="arrow">→</span> 「Canbus.（新候補）」タブ
-        </a>
+
+      <p style="font-size:12px; font-weight:700; color:#92400e; margin-bottom:6px; margin-top:10px;">【Teams 運用設計 関連】</p>
+      <div style="font-size:11px; background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:7px 10px; margin-bottom:8px; color:#92400e;">
+        ⚠ 以下の確認事項は Teams管理センターへのアクセス権限が必要です。本日の③ 依頼事項にて権限付与を要請し、付与後に調査します。
       </div>
+      <ul class="check-list">
+        <li style="color:#6b7280;">現在、業務系のTeamsチーム（部署・委員会・全学連絡等）は存在するか？<span style="font-size:11px;"> — Teams管理センターアクセス後に確認</span></li>
+        <li style="color:#6b7280;">Teamsチームはユーザーが自由に作成できる設定になっているか？<span style="font-size:11px;"> — Entra ID グループ設定・Teams管理センターで確認（要権限付与）</span></li>
+        <li style="color:#6b7280;">過去年度のチームは自動的にアーカイブされているか、それとも放置されているか？<span style="font-size:11px;"> — Teams管理センターアクセス後に確認</span></li>
+      </ul>
     </div>
   </div>
 
   <!-- ブロック③ -->
-  <div class="block purple">
+  <div class="block red">
     <div class="block-header">
-      <div class="block-badge">③ 共有</div>
-      <div class="block-title">情報化戦略本部会議（7/8）の準備確認</div>
+      <div class="block-badge">③ 依頼</div>
+      <div class="block-title">大学側への依頼事項</div>
       <div class="block-time">5分</div>
     </div>
     <div class="block-body">
-      <ul class="point-list">
-        <li><strong>7月8日の本部会議</strong>でM365の現状・今後の方針について説明予定</li>
-        <li>三井田が説明するM365パート（SharePoint・ワークフロー方針）の内容・範囲を合意させてください</li>
-        <li>時田氏（セキュリティパート）との役割分担・資料共有の段取りを確認します</li>
+      <p style="font-size:12px; color:#7f1d1d; margin-bottom:10px;">設計・提案を具体化するにあたり、以下の対応をお願いできますでしょうか。</p>
+      <ul class="request-list">
+        <li>
+          <span class="request-tag tag-perm">権限</span>
+          <strong>三井田アカウントへのTeams管理者・Entra管理者相当の閲覧権限付与、またはオンラインセッションでの画面共有による確認</strong><br>
+          <span style="font-size:12px; color:var(--gray);">現状のグローバル閲覧者権限ではTeams管理センター・条件付きアクセスポリシーにアクセス不可。設計に必要な情報が取得できていません。</span>
+        </li>
+        <li>
+          <span class="request-tag tag-perm">権限</span>
+          <strong>SharePointルートサイト（musabiac.sharepoint.com）への閲覧アクセス付与</strong><br>
+          <span style="font-size:12px; color:var(--gray);">現状のアカウントではルートサイトにアクセスできない状態です。設計を進めるにあたり現状の確認と方針のすり合わせが必要なため、閲覧権限の付与をお願いします。</span>
+        </li>
+        <li>
+          <span class="request-tag tag-info">情報</span>
+          <strong>Garoonワークフロー一覧の提供（前回依頼の継続）</strong><br>
+          <span style="font-size:12px; color:var(--gray);">ワークフロー名・月間申請件数の一覧。ワークフロー移行の検討に必要な基礎情報として把握したいです。</span>
+        </li>
+        <li>
+          <span class="request-tag tag-info">情報</span>
+          <strong>現行のGaroon掲示板・回覧板・部署ページの一覧または画面共有での確認</strong><br>
+          <span style="font-size:12px; color:var(--gray);">SharePointイントラの情報設計に必要です。何を移行し、何を廃止するかの整理に使います。</span>
+        </li>
       </ul>
+    </div>
+  </div>
+
+  <!-- ブロック④ -->
+  <div class="block purple">
+    <div class="block-header">
+      <div class="block-badge">④ 共有</div>
+      <div class="block-title">Garoonワークフロー状況 ＋ 情報化戦略本部会議（7/8）準備</div>
+      <div class="block-time">8分</div>
+    </div>
+    <div class="block-body">
+      <ul class="point-list">
+        <li><strong>Garoonワークフロー一覧の受領確認</strong>：前回・本日と依頼しているワークフロー名・月間申請件数の一覧はご準備いただけましたでしょうか</li>
+        <li><strong>Canbus. メーカーデモについて</strong>：井上さんより「時期尚早」とのご意見をいただいています。まずはユーザーの階層設定などを定例で議論してから検討したいとのことですので、デモは当面保留とし、議論の進捗に合わせて改めてタイミングを検討します</li>
+        <li><strong>情報化戦略本部会議（7月8日・火）</strong>：大学側で実施予定。三井田側からの資料作成・登壇等の対応は現時点で予定していませんが、会議の準備にあたり必要な情報提供があれば対応しますので、その際はお知らせください。</li>
+      </ul>
+      <div class="links">
+        <a class="link-btn" href="workflow-comparison.html#tab3" target="_blank">
+          ワークフロー比較 — Canbus.タブ <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -421,8 +482,9 @@
 <div class="summary">
   <div class="summary-header other">📝 その他</div>
   <div class="summary-body">
-    <div class="summary-item note">情報化戦略本部会議：7月8日（火）予定。メール移行・セキュリティ基準・SharePoint方針を紹介予定</div>
-    <div class="summary-item note">Canbus.のページビュー上限（月10万PV）は実運用上ほぼ問題ない見通し（6/25確認済み）</div>
+    <div class="summary-item note">情報化戦略本部会議：7月8日（火）予定（大学側主体）。三井田からの対応タスクは現時点でなし。情報提供が必要な場合は都度依頼いただく形で対応。</div>
+    <div class="summary-item note">次回以降の設計フェーズでは Teams管理者権限が必要（ゲストアクセス設定・チーム作成制限・ポリシー確認）</div>
+    <div class="summary-item note"><strong>Canbus. メーカーデモは保留</strong>：井上さんより「ユーザーの階層設定などを定例で議論してから」とのご意見あり。デモ実施は議論の進捗を見て改めて判断する</div>
   </div>
 </div>
 
@@ -430,10 +492,11 @@
 <div class="ref">
   <div class="ref-title">参考資料</div>
   <div class="ref-links">
+    <a class="ref-link primary" href="tenant-status.html" target="_blank">📊 テナント現状レポート（6/30）</a>
     <a class="ref-link" href="entra-id-org-design.html" target="_blank">📐 Entra ID 組織設計</a>
     <a class="ref-link" href="sharepoint-proposal.html" target="_blank">🏢 SharePoint 提案（全体）</a>
     <a class="ref-link" href="workflow-comparison.html" target="_blank">🔀 ワークフロー比較（全体）</a>
-    <a class="ref-link" href="index.html" target="_blank">📚 資料まとめページ（インデックス）</a>
+    <a class="ref-link" href="index.html" target="_blank">📚 資料まとめページ</a>
   </div>
 </div>
 
