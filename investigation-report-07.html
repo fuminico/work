@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M365・Garoon 調査レポート（2026年7月）— 武蔵野美術大学</title>
+<style>
+  :root {
+    --primary:    #1a56a0;
+    --primary-bg: #e8f0fc;
+    --green:      #16a34a;
+    --green-bg:   #dcfce7;
+    --orange:     #c2410c;
+    --orange-bg:  #ffedd5;
+    --red:        #b91c1c;
+    --red-bg:     #fee2e2;
+    --blue:       #1d4ed8;
+    --blue-bg:    #dbeafe;
+    --gray:       #6b7280;
+    --border:     #e5e7eb;
+    --text:       #111827;
+    --bg:         #f3f4f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 32px 20px 64px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* ヘッダー */
+  .header { text-align: center; margin-bottom: 36px; }
+  .header-label {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 24px; font-weight: 800; color: #1e3a5f; margin-bottom: 6px; }
+  .header .meta { font-size: 13px; color: var(--gray); }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: none;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* セクション */
+  .section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e3a5f;
+    border-left: 4px solid var(--primary);
+    padding-left: 10px;
+    margin-bottom: 14px;
+  }
+  .section-note {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 12px;
+  }
+
+  /* カード */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* メトリクスグリッド */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .metric-card {
+    background: var(--primary-bg);
+    border: 1px solid #b8d0f5;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .metric-card.warn {
+    background: var(--orange-bg);
+    border-color: #fdba74;
+  }
+  .metric-card.ok {
+    background: var(--green-bg);
+    border-color: #86efac;
+  }
+  .metric-label { font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+  .metric-card.warn .metric-label { color: var(--orange); }
+  .metric-card.ok .metric-label { color: var(--green); }
+  .metric-value { font-size: 20px; font-weight: 800; color: #1e3a5f; line-height: 1.1; }
+  .metric-card.warn .metric-value { color: var(--orange); }
+  .metric-card.ok .metric-value { color: var(--green); }
+  .metric-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  /* 詳細テーブル */
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .detail-table th {
+    background: #f3f4f6;
+    color: #374151;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+  .detail-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: top;
+    color: #374151;
+  }
+  .detail-table tr:last-child td { border-bottom: none; }
+  .detail-table .label-col { font-weight: 600; color: #1e3a5f; width: 200px; white-space: nowrap; }
+
+  /* ステータスバッジ */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .badge-ok    { background: var(--green-bg);  color: var(--green); }
+  .badge-warn  { background: var(--orange-bg); color: var(--orange); }
+  .badge-alert { background: var(--red-bg);    color: var(--red); }
+  .badge-info  { background: var(--blue-bg);   color: var(--blue); }
+  .badge-gray  { background: #f3f4f6;          color: var(--gray); }
+
+  /* Garoon テーブル */
+  .garoon-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .garoon-table th {
+    background: #1e3a5f;
+    color: #fff;
+    padding: 7px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .garoon-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: top;
+    color: #374151;
+  }
+  .garoon-table tr:last-child td { border-bottom: none; }
+  .garoon-table tr:nth-child(even) td { background: #f8faff; }
+  .garoon-table .total-row td { font-weight: 800; background: var(--blue-bg); color: #1e3a5f; }
+  .garoon-num { font-weight: 700; text-align: right; width: 80px; }
+
+  /* サマリーセクション */
+  .summary-section {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .summary-section-header {
+    background: #1e3a5f;
+    color: #fff;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .summary-section-body { padding: 20px 24px; }
+  .summary-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 640px) { .summary-cols { grid-template-columns: 1fr; } }
+  .summary-col {
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .summary-col.ok    { background: var(--green-bg);  border: 1px solid #86efac; }
+  .summary-col.warn  { background: var(--orange-bg); border: 1px solid #fdba74; }
+  .summary-col.alert { background: var(--red-bg);    border: 1px solid #fca5a5; }
+  .summary-col .sc-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .summary-col.ok    .sc-label { color: var(--green); }
+  .summary-col.warn  .sc-label { color: var(--orange); }
+  .summary-col.alert .sc-label { color: var(--red); }
+  .summary-col ul { list-style: none; }
+  .summary-col ul li {
+    font-size: 12px;
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.5;
+    color: #374151;
+  }
+  .summary-col ul li::before { content: '▸'; position: absolute; left: 0; top: 4px; font-size: 10px; color: var(--gray); }
+  .summary-overview {
+    background: #f8faff;
+    border: 1px solid #c7d8f5;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #1e3a5f;
+  }
+  .summary-overview strong { color: #1e3a5f; }
+
+  /* 所見・インサイト */
+  .insight-list { list-style: none; }
+  .insight-list li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #374151;
+  }
+  .insight-list li:last-child { border-bottom: none; }
+  .insight-list li.alert::before  { content: '⚠'; position: absolute; left: 0; top: 8px; }
+  .insight-list li.note::before   { content: '▸'; position: absolute; left: 4px; top: 9px; font-size: 11px; color: var(--gray); }
+  .insight-list li.ok::before     { content: '✅'; position: absolute; left: 0; top: 8px; font-size: 12px; }
+
+  /* 警告ボックス */
+  .alert-box {
+    background: var(--orange-bg);
+    border: 1px solid #fdba74;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--orange);
+    margin-top: 8px;
+  }
+  .ok-box {
+    background: var(--green-bg);
+    border: 1px solid #86efac;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--green);
+    margin-top: 8px;
+  }
+  .info-box {
+    background: var(--blue-bg);
+    border: 1px solid #93c5fd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--blue);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back-link" href="agenda.html">← アジェンダに戻る</a>
+
+  <div class="header">
+    <div class="header-label">武蔵野美術大学 M365導入支援コンサルティング</div>
+    <h1>M365・Garoon 調査レポート</h1>
+    <div class="meta">調査実施日：2026年7月7日〜8日　担当：三井田</div>
+  </div>
+
+  <!-- ─── サマリー ─── -->
+  <div class="summary-section">
+    <div class="summary-section-header">調査サマリー</div>
+    <div class="summary-section-body">
+
+      <div class="summary-overview" style="margin-bottom:16px;">
+        Entra ID・Teams・Garoon の3システムを調査した結果、<strong>基本的なM365テナントは稼働しており、ユーザー同期も機能している</strong>。一方で、グループ管理のポリシーが未整備でチームが無秩序に累積しており、<strong>ガバナンス設計の整備が最優先課題</strong>となる。外部連携は現状完全にブロックされており、解禁する場合は設定の矛盾解消を含む方針決定が必要。Garoonは全75フォームを確認済みだが、X-pointは別途確認が必要。
+      </div>
+
+      <div class="summary-cols">
+        <div class="summary-col ok">
+          <div class="sc-label">✓ 確認済み・問題なし</div>
+          <ul>
+            <li>Entra Connect 稼働中（ユーザー同期OK）</li>
+            <li>Canbus. エクスポート対応可能・月5万円プランで継続運用可能と確認（2年ごとリフレッシュ運用が条件）</li>
+            <li>ゲスト招待は管理者のみに制限済み</li>
+            <li>Garoon 全7カテゴリー75フォームを確認</li>
+          </ul>
+        </div>
+        <div class="summary-col warn">
+          <div class="sc-label">△ 要対応・設計が必要</div>
+          <ul>
+            <li>全学MFA未整備（教職員・学生に未適用）</li>
+            <li>グループ管理ポリシーなし（命名規則・有効期限未設定）</li>
+            <li>チームが10,685件と過多・未整理</li>
+            <li>外部アクセスOFFとTeamsポリシーが矛盾</li>
+            <li>属性管理はオンプレAD側で整備が必要</li>
+          </ul>
+        </div>
+        <div class="summary-col alert">
+          <div class="sc-label">✗ 未確認・保留</div>
+          <ul>
+            <li>X-point（Garoonとは独立したWFシステム — 独自フォーム・フローの有無を要確認）</li>
+            <li>X-pointを含めた総ワークフロー件数（アクセス確認後に判明）</li>
+            <li>Canbus. 正式プラン確定（Garoon一覧受領後に実施）</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Entra ID ─── -->
+  <div class="section" id="entra">
+    <div class="section-title">1. Entra ID（Azure Active Directory）</div>
+    <div class="section-note">テストアカウントへの閲覧権限付与後、Entra管理センターに直接アクセスして確認した情報です。</div>
+
+    <!-- グループ管理 -->
+    <div class="card">
+      <div class="card-title">1-1. グループ管理</div>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-label">グループ総数</div>
+          <div class="metric-value">10,862</div>
+          <div class="metric-sub">M365グループ: 10,771 / セキュリティ: 89</div>
+        </div>
+        <div class="metric-card warn">
+          <div class="metric-label">有効期限ポリシー</div>
+          <div class="metric-value">なし</div>
+          <div class="metric-sub">未使用グループが無期限に残存</div>
+        </div>
+        <div class="metric-card warn">
+          <div class="metric-label">名前付けポリシー</div>
+          <div class="metric-value">なし</div>
+          <div class="metric-sub">グループ名の命名規則が未設定</div>
+        </div>
+      </div>
+      <table class="detail-table">
+        <thead><tr><th>設定項目</th><th>現在の値</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">グループ種別</td>
+            <td>M365グループ・セキュリティグループの2種類のみ</td>
+            <td>配布グループ・動的グループは未使用</td>
+          </tr>
+          <tr>
+            <td class="label-col">セルフサービスグループ管理</td>
+            <td><span class="badge badge-gray">すべてOFF</span></td>
+            <td>全般設定のトグルがすべて「いいえ」</td>
+          </tr>
+          <tr>
+            <td class="label-col">有効期限ポリシー</td>
+            <td><span class="badge badge-warn">未設定（なし）</span></td>
+            <td>グループが削除されずに累積するリスクあり</td>
+          </tr>
+          <tr>
+            <td class="label-col">名前付けポリシー</td>
+            <td><span class="badge badge-warn">未設定</span></td>
+            <td>プレフィックス・サフィックス・禁止ワードなし</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ユーザー・同期 -->
+    <div class="card">
+      <div class="card-title">1-2. ユーザー・オンプレミス同期</div>
+      <div class="metric-grid">
+        <div class="metric-card ok">
+          <div class="metric-label">同期方式</div>
+          <div class="metric-value">Entra Connect</div>
+          <div class="metric-sub">オンプレAD稼働中</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">OU構造</div>
+          <div class="metric-value">2OU</div>
+          <div class="metric-sub">OU=staff / OU=student</div>
+        </div>
+      </div>
+      <table class="detail-table">
+        <thead><tr><th>確認項目</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">オンプレミスの同期</td>
+            <td>はい（Entra Connect 稼働中）</td>
+          </tr>
+          <tr>
+            <td class="label-col">同期対象OU</td>
+            <td>OU=staff（教職員）、OU=student（学生）の2OU構造</td>
+          </tr>
+          <tr>
+            <td class="label-col">部署属性の入力状況</td>
+            <td>管理担当者のみ入力あり、一般職員・教員は未入力が多い</td>
+          </tr>
+          <tr>
+            <td class="label-col">動的グループの利用可否</td>
+            <td>OU属性（staff/student）を使った動的グループ作成は技術的に可能</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="info-box">ℹ Entra Connect 経由のため、ユーザー属性（部署・役職等）の管理はオンプレAD側で行う必要があります。Entra ID 管理センターから直接編集しても、次の同期で上書きされます。</div>
+    </div>
+
+    <!-- 条件付きアクセス -->
+    <div class="card">
+      <div class="card-title">1-3. 条件付きアクセス（CA）ポリシー</div>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-label">ポリシー総数</div>
+          <div class="metric-value">5本</div>
+          <div class="metric-sub">有効: 3本 / 無効: 2本</div>
+        </div>
+        <div class="metric-card warn">
+          <div class="metric-label">全学MFA</div>
+          <div class="metric-value">未整備</div>
+          <div class="metric-sub">全ユーザーへのMFA強制なし</div>
+        </div>
+      </div>
+      <table class="detail-table">
+        <thead><tr><th>ポリシー名</th><th>状態</th><th>対象</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Block device code flow</td>
+            <td><span class="badge badge-ok">有効</span></td>
+            <td>（全体）</td>
+            <td>デバイスコードフローをブロック</td>
+          </tr>
+          <tr>
+            <td class="label-col">MFA for admins</td>
+            <td><span class="badge badge-ok">有効</span></td>
+            <td>管理者ロール</td>
+            <td>管理者へのMFA要求</td>
+          </tr>
+          <tr>
+            <td class="label-col">Require MFA</td>
+            <td><span class="badge badge-ok">有効</span></td>
+            <td>2ユーザー ＋ 1グループ</td>
+            <td>MFA要求（特定対象のみ・2021年作成2025年更新）</td>
+          </tr>
+          <tr>
+            <td class="label-col">CA-MFA-Test</td>
+            <td><span class="badge badge-gray">無効</span></td>
+            <td>—</td>
+            <td>テストポリシー</td>
+          </tr>
+          <tr>
+            <td class="label-col">SharePoint Policy</td>
+            <td><span class="badge badge-gray">無効</span></td>
+            <td>1ユーザー</td>
+            <td>アクセスのブロック（2021年作成・無効化中）</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">⚠ MFAが強制されているのは管理者ロールと特定の2ユーザー＋1グループのみ。一般教職員・学生へのMFA適用なし。M365本格運用に向けて全学MFAポリシーの整備が必要です。</div>
+    </div>
+
+    <!-- 外部コラボレーション -->
+    <div class="card">
+      <div class="card-title">1-4. 外部コラボレーション設定</div>
+      <table class="detail-table">
+        <thead><tr><th>設定項目</th><th>現在の値</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">ゲストユーザーアクセス</td>
+            <td>中間制限</td>
+            <td>メンバーと同じ権限ではない</td>
+          </tr>
+          <tr>
+            <td class="label-col">ゲスト招待者</td>
+            <td><span class="badge badge-warn">管理者ロールのみ</span></td>
+            <td>一般ユーザーからのゲスト招待は禁止</td>
+          </tr>
+          <tr>
+            <td class="label-col">セルフサービスサインアップ</td>
+            <td>いいえ</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="label-col">ドメイン制限</td>
+            <td><span class="badge badge-warn">制限なし</span></td>
+            <td>任意のドメインへの招待を許可（許可・拒否リストなし）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─── Teams ─── -->
+  <div class="section" id="teams">
+    <div class="section-title">2. Microsoft Teams 管理センター</div>
+    <div class="section-note">Teams管理センター（英語UI）に直接アクセスして確認した情報です。</div>
+
+    <!-- テナント概要 -->
+    <div class="card">
+      <div class="card-title">2-1. テナント概要</div>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-label">ユーザー数</div>
+          <div class="metric-value">8,083</div>
+          <div class="metric-sub">アクティブユーザー</div>
+        </div>
+        <div class="metric-card ok">
+          <div class="metric-label">ゲスト数</div>
+          <div class="metric-value">0</div>
+          <div class="metric-sub">外部ゲストなし</div>
+        </div>
+        <div class="metric-card warn">
+          <div class="metric-label">Teamsチーム数</div>
+          <div class="metric-value">10,685</div>
+          <div class="metric-sub">ユーザー数より多いチームが存在</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- アクセス設定 -->
+    <div class="card">
+      <div class="card-title">2-2. 外部アクセス・ゲストアクセス</div>
+      <table class="detail-table">
+        <thead><tr><th>設定項目</th><th>現在の値</th><th>影響</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">ゲストアクセス</td>
+            <td><span class="badge badge-alert">OFF</span></td>
+            <td>外部ゲストはTeamsに参加できない（ゲスト数0名の要因）</td>
+          </tr>
+          <tr>
+            <td class="label-col">外部ドメイン管理</td>
+            <td><span class="badge badge-alert">OFF（完全ブロック）</span></td>
+            <td>他Teamsテナントとのフェデレーション（チャット・通話等）が完全不可</td>
+          </tr>
+          <tr>
+            <td class="label-col">管理されていないMicrosoftアカウント</td>
+            <td><span class="badge badge-warn">ON</span></td>
+            <td>個人Microsoft アカウントからの連絡は受け付ける状態</td>
+          </tr>
+          <tr>
+            <td class="label-col">その他外部アクセス</td>
+            <td><span class="badge badge-gray">OFF</span></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">⚠ Teamsポリシー（Global）では「共有チャネル作成ON・外部ユーザー招待ON」が設定されているが、外部アクセス（フェデレーション）がOFFのため実際には機能しない矛盾が生じています。外部連携を解禁する場合は両方の設定変更が必要です。</div>
+    </div>
+
+    <!-- Teamsポリシー -->
+    <div class="card">
+      <div class="card-title">2-3. Teamsポリシー</div>
+      <table class="detail-table">
+        <thead><tr><th>設定項目</th><th>値</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">カスタムポリシー数</td>
+            <td>0本（Globalのみ）</td>
+            <td>全ユーザーに同一ポリシーが適用</td>
+          </tr>
+          <tr>
+            <td class="label-col">プライベートチームの検索</td>
+            <td><span class="badge badge-gray">OFF</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="label-col">プライベートチャネル作成</td>
+            <td><span class="badge badge-ok">ON</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="label-col">共有チャネル作成</td>
+            <td><span class="badge badge-ok">ON</span></td>
+            <td>ただし外部アクセスOFFにより外部共有は実質不可</td>
+          </tr>
+          <tr>
+            <td class="label-col">外部ユーザーの招待（ポリシー）</td>
+            <td><span class="badge badge-ok">ON</span></td>
+            <td>同上・外部アクセス設定が優先され無効化</td>
+          </tr>
+          <tr>
+            <td class="label-col">外部共有チャネルへの参加</td>
+            <td><span class="badge badge-ok">ON</span></td>
+            <td>同上</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Teams アプリ設定 -->
+    <div class="card">
+      <div class="card-title">2-4. その他設定</div>
+      <table class="detail-table">
+        <thead><tr><th>設定項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">クラウドストレージ（ファイルタブ）</td>
+            <td>各種ON（SharePoint以外のストレージ連携も有効）</td>
+          </tr>
+          <tr>
+            <td class="label-col">組織タブ</td>
+            <td><span class="badge badge-ok">ON</span></td>
+          </tr>
+          <tr>
+            <td class="label-col">名前で検索</td>
+            <td><span class="badge badge-gray">OFF</span></td>
+          </tr>
+          <tr>
+            <td class="label-col">共有チャネル（アプリ設定）</td>
+            <td><span class="badge badge-gray">OFF</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─── Garoon ─── -->
+  <div class="section" id="garoon">
+    <div class="section-title">3. Garoon ワークフロー（全カテゴリー調査）</div>
+    <div class="section-note">VPN接続後、Garoon管理センターに直接アクセスしてワークフロー申請書を全カテゴリー確認しました（2026年7月8日時点）。</div>
+
+    <!-- サマリー -->
+    <div class="card">
+      <div class="card-title">3-1. ワークフロー全体サマリー</div>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-label">カテゴリー数</div>
+          <div class="metric-value">7</div>
+          <div class="metric-sub">確認済み</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">フォーム総数</div>
+          <div class="metric-value">75</div>
+          <div class="metric-sub">（サブカテゴリー合計）</div>
+        </div>
+        <div class="metric-card warn">
+          <div class="metric-label">X-point</div>
+          <div class="metric-value">確認不可</div>
+          <div class="metric-sub">Garoonからの連携設定エラー</div>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;margin-top:8px;">
+        <table class="garoon-table">
+          <thead>
+            <tr>
+              <th>カテゴリー</th>
+              <th style="text-align:right;width:80px;">フォーム数</th>
+              <th>主な申請書</th>
+              <th>対象者・備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>総務関連</td>
+              <td class="garoon-num">2</td>
+              <td>総務チーム申請、公印押印簿</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>施設管財関連</td>
+              <td class="garoon-num">13</td>
+              <td>消耗品（4種）、業務用PC、物品等購入申請書、調達承認申請書、備品借用・修理・廃棄、鍵借用、トラック借用、見積依頼書</td>
+              <td>事務室用サブカテゴリーのみ確認</td>
+            </tr>
+            <tr>
+              <td>ネットワーク関連</td>
+              <td class="garoon-num">45</td>
+              <td>学内ネットワーク接続申請/廃止（クライアント・プリンター・サーバー・持ち込みPC）、ファイアーウォール設定、代表メールアドレス・メーリングリスト・サブドメイン・ウェブホスティングの利用/廃止申請、サーバー証明書発行、サーバールーム入室、ソフトウェア貸出、メール容量増加、無線LAN利用申請（各種）</td>
+              <td>研究室用サブカテゴリー（22）＋事務室用サブカテゴリー（23）の2構成。多くのフォームが重複</td>
+            </tr>
+            <tr>
+              <td>入試関連</td>
+              <td class="garoon-num">1</td>
+              <td>入構許可申請</td>
+              <td>入試による入構禁止期間中の入構申請</td>
+            </tr>
+            <tr>
+              <td>広報関連</td>
+              <td class="garoon-num">1</td>
+              <td>取材申請</td>
+              <td>大学関連の取材申し込み</td>
+            </tr>
+            <tr>
+              <td>アルバイト・SA・TA・指導補助員・モデル・特別講師・通信臨時講師関連</td>
+              <td class="garoon-num">12</td>
+              <td>アルバイト使用許可願（研究室用・事務局用・共同研究用）、実績報告（同3種）、授業補助員採用届、SA・TA・指導補助員実績報告書、モデル使用申請・実績報告書、特別講師招へい願及び謝金支給願、通信臨時講師実績報告</td>
+              <td>5サブカテゴリー</td>
+            </tr>
+            <tr>
+              <td>市ヶ谷／連携共創関連</td>
+              <td class="garoon-num">1</td>
+              <td>調達承認申請書（市ヶ谷）</td>
+              <td>市ヶ谷キャンパス向け</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>合計</strong></td>
+              <td class="garoon-num">75</td>
+              <td colspan="2">7カテゴリー（X-point除く）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- X-point -->
+    <div class="card">
+      <div class="card-title">3-2. X-point（別ワークフローシステム）</div>
+      <table class="detail-table">
+        <thead><tr><th>確認項目</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="label-col">Garoonホームからの確認</td>
+            <td><span class="badge badge-alert">連携設定エラー</span>　「X-pointとの連携設定が不完全です。X-pointにログインできません。」</td>
+          </tr>
+          <tr>
+            <td class="label-col">エラー原因（候補）</td>
+            <td>①連携動作に必要なシステム設定が誤っている ②連携動作時に指定するパラメータが誤っている ③ユーザー情報の同期が取れていない</td>
+          </tr>
+          <tr>
+            <td class="label-col">今後の対応</td>
+            <td>X-pointはGaroonとは独立したワークフローシステム（同社Cybozu製）であり、Garoon上には存在しない独自のフォーム・申請フローを別途運用している可能性がある。移行スコープの全体把握のため、大学側に直接参照・確認できるURL・アクセス権限の提供を依頼する</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert-box">⚠ X-pointはGaroonとは別のシステムとして独自のフォーム・フローを持っている可能性があります。別途確認ができるまで、Garoon調査（75フォーム）はX-pointを含まない暫定値です。</div>
+    </div>
+  </div>
+
+  <!-- ─── 所見 ─── -->
+  <div class="section">
+    <div class="section-title">4. 主要所見と設計への影響</div>
+    <div class="card">
+      <ul class="insight-list">
+        <li class="alert">
+          <strong>全学MFA未整備：</strong>一般教職員・学生へのMFA強制がないため、M365本格展開前にCAポリシーの見直しが必要。全学MFAポリシーの設計を早期に提案する。
+        </li>
+        <li class="alert">
+          <strong>グループ管理ポリシーなし：</strong>有効期限・名前付けポリシーが未設定のため、10,771件のM365グループが無制限に累積する構造。ガバナンス設計において命名規則と有効期限ポリシーの導入を提案する。
+        </li>
+        <li class="alert">
+          <strong>外部アクセス完全ブロックとTeamsポリシーの矛盾：</strong>Teamsポリシー（Global）で共有チャネル作成・外部ユーザー招待がONだが、外部アクセス設定がOFFのため実際には機能しない。方針決定後に整合させる必要がある。
+        </li>
+        <li class="note">
+          <strong>Entra Connect稼働中のため属性管理はオンプレAD側で行う必要がある：</strong>動的グループの設計に活用できるが、属性の充実化（部署・役職等の整備）はAD管理者との連携が前提。
+        </li>
+        <li class="note">
+          <strong>Garoonネットワーク関連フォームが最多（45件）：</strong>研究室用・事務室用で同種のフォームが重複している構造。M365移行後も情シスが対応する業務フローが多いため、移行優先度を確認する必要がある。
+        </li>
+        <li class="note">
+          <strong>アルバイト・SA・TA関連（12フォーム）は人事・労務業務：</strong>Power Automateによる電子ワークフロー化と承認フロー設計が有効。教員・事務双方が使うフォームであり優先度が高い可能性がある。
+        </li>
+        <li class="note">
+          <strong>X-pointの調査が未完了：</strong>別途アクセス手段の確認後に追加調査が必要。X-pointのフォーム数によっては移行全体のスコープが大きく変わる可能性がある。
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
