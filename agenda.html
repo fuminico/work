@@ -19,6 +19,8 @@
     --purple-bg:#ede9fe;
     --red:     #b91c1c;
     --red-bg:  #fee2e2;
+    --teams:   #5558af;
+    --teams-bg:#eeeeff;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -29,7 +31,6 @@
     padding: 32px 20px 48px;
   }
 
-  /* ── ヘッダー ── */
   .header { text-align: center; margin-bottom: 32px; }
   .header-label {
     display: inline-block;
@@ -55,7 +56,6 @@
     margin-top: 10px;
   }
 
-  /* ── ブロック ── */
   .blocks { display: grid; gap: 16px; max-width: 860px; margin: 0 auto; }
   .block {
     background: #fff;
@@ -94,7 +94,6 @@
   .point-list li:last-child { border-bottom: none; }
   .point-list li::before { content: '▸'; position: absolute; left: 0; font-size: 11px; top: 6px; }
 
-  /* サブリスト */
   .sub-list { list-style: none; margin: 4px 0 4px 14px; }
   .sub-list li {
     font-size: 12px;
@@ -106,27 +105,60 @@
   }
   .sub-list li::before { content: '–'; position: absolute; left: 0; top: 3px; }
 
-  /* 調査結果カード */
-  .finding-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 14px;
+  .check-list { list-style: none; margin-bottom: 14px; }
+  .check-list li {
+    font-size: 13px;
+    padding: 7px 0 7px 26px;
+    position: relative;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    line-height: 1.5;
   }
-  .finding-card {
-    background: #f8faff;
-    border: 1px solid #c7d8f5;
-    border-radius: 8px;
-    padding: 10px 14px;
-  }
-  .finding-card .fc-label { font-size: 11px; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
-  .finding-card .fc-value { font-size: 18px; font-weight: 800; color: #1e3a5f; line-height: 1; }
-  .finding-card .fc-sub   { font-size: 11px; color: var(--gray); margin-top: 2px; }
-  .finding-card.warn { background: #fff7ed; border-color: #fdba74; }
-  .finding-card.warn .fc-label { color: var(--orange); }
-  .finding-card.warn .fc-value { color: var(--orange); }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before { content: '?'; position: absolute; left: 6px; font-size: 12px; top: 7px; font-weight: 800; color: var(--orange); }
 
-  /* Garoon テーブル */
+  .request-list { list-style: none; margin-bottom: 14px; }
+  .request-list li {
+    font-size: 13px;
+    padding: 7px 0 7px 26px;
+    position: relative;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    line-height: 1.5;
+  }
+  .request-list li:last-child { border-bottom: none; }
+  .request-list li::before { content: '📌'; position: absolute; left: 0; font-size: 13px; top: 7px; }
+  .request-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag-conf { background: #dbeafe; color: #1d4ed8; }
+
+  /* Teams テーマカード */
+  .teams-agenda-card {
+    background: var(--teams-bg);
+    border: 1px solid #c7caed;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .tac-title { font-size: 13px; font-weight: 800; color: var(--teams); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .tac-point { font-size: 12px; padding: 3px 0 3px 16px; position: relative; color: #374151; line-height: 1.5; }
+  .tac-point::before { content: '・'; position: absolute; left: 0; top: 3px; color: var(--teams); }
+
+  /* データカード */
+  .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+  .data-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; }
+  .data-num { font-size: 24px; font-weight: 800; color: #1e3a5f; }
+  .data-label { font-size: 11px; color: var(--gray); margin-top: 4px; }
+  .data-sub { font-size: 10px; color: #9ca3af; margin-top: 2px; }
+
+  /* カテゴリーテーブル */
   .garoon-table {
     width: 100%;
     border-collapse: collapse;
@@ -150,125 +182,8 @@
   .garoon-table tr:last-child td { border-bottom: none; }
   .garoon-table tr:nth-child(even) td { background: #f8faff; }
   .garoon-table .total-row td { font-weight: 800; background: #dbeafe; color: #1e3a5f; }
-  .garoon-num { font-weight: 700; text-align: right; width: 64px; }
-
-  /* 依頼事項リスト */
-  .request-list { list-style: none; margin-bottom: 14px; }
-  .request-list li {
-    font-size: 13px;
-    padding: 7px 0 7px 26px;
-    position: relative;
-    color: #374151;
-    border-bottom: 1px solid #f3f4f6;
-    line-height: 1.5;
-  }
-  .request-list li:last-child { border-bottom: none; }
-  .request-list li::before {
-    content: '📌';
-    position: absolute;
-    left: 0;
-    font-size: 13px;
-    top: 7px;
-  }
-  .request-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 4px;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-  .tag-perm { background: #fee2e2; color: #b91c1c; }
-  .tag-info { background: #ffedd5; color: #c2410c; }
-
-  /* 確認事項リスト */
-  .check-list { list-style: none; margin-bottom: 14px; }
-  .check-list li {
-    font-size: 13px;
-    padding: 7px 0 7px 26px;
-    position: relative;
-    color: #374151;
-    border-bottom: 1px solid #f3f4f6;
-    line-height: 1.5;
-  }
-  .check-list li:last-child { border-bottom: none; }
-  .check-list li::before { content: '?'; position: absolute; left: 6px; font-size: 12px; top: 7px; font-weight: 800; color: var(--orange); }
-
-  /* 報告カード */
-  .report-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-  .rc-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 8px 14px;
-    background: #f0f4ff;
-    border-bottom: 1px solid #dde6f9;
-  }
-  .rc-system { font-size: 12px; font-weight: 800; color: #1e3a5f; }
-  .rc-badge {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
-  .rc-badge.warn  { background: var(--orange-bg); color: var(--orange); }
-  .rc-badge.ok    { background: var(--green-bg);  color: var(--green); }
-  .rc-badge.info  { background: var(--blue-bg);   color: var(--blue); }
-  .rc-body { padding: 6px 14px 2px; }
-  .rc-row {
-    font-size: 12px;
-    padding: 6px 0 6px 24px;
-    position: relative;
-    border-bottom: 1px solid #f3f4f6;
-    line-height: 1.5;
-    color: #374151;
-  }
-  .rc-row:last-child { border-bottom: none; }
-  .rc-row.warn  { color: #92400e; }
-  .rc-row.alert { color: #991b1b; }
-  .rc-row.ok    { color: #166534; }
-  .rc-row::before { position: absolute; left: 0; top: 6px; font-size: 13px; line-height: 1; }
-  .rc-row.warn::before  { content: '⚠'; }
-  .rc-row.ok::before    { content: '✅'; font-size: 11px; top: 7px; }
-  .rc-row.alert::before { content: '❌'; font-size: 11px; top: 7px; }
-  .rc-row.note::before  { content: '▸'; color: var(--gray); font-size: 11px; top: 7px; }
-  .rc-footer {
-    padding: 6px 14px 8px;
-    border-top: 1px solid #f3f4f6;
-    background: #fafbff;
-  }
-  .rc-footer a {
-    font-size: 12px;
-    color: var(--blue);
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .rc-footer a:hover { text-decoration: underline; }
-
-  /* リンクボタン */
-  .links { display: flex; flex-wrap: wrap; gap: 8px; }
-  .link-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    border: 1.5px solid transparent;
-    transition: opacity .15s;
-  }
-  .link-btn:hover { opacity: .75; }
+  .garoon-num { font-weight: 700; text-align: right; width: 70px; }
+  .garoon-pct { text-align: right; width: 54px; color: var(--gray); }
 
   /* 色テーマ別 */
   .green  .block-header { background: var(--green-bg); }
@@ -285,18 +200,15 @@
   .orange .block-badge  { background: var(--orange); color: #fff; }
   .orange .block-time   { color: var(--orange); }
   .orange .point-list li::before { color: var(--orange); }
-  .orange .check-list li::before { color: var(--orange); }
 
   .red    .block-header { background: var(--red-bg); }
   .red    .block-badge  { background: var(--red); color: #fff; }
   .red    .block-time   { color: var(--red); }
 
-  .purple .block-header { background: var(--purple-bg); }
-  .purple .block-badge  { background: var(--purple); color: #fff; }
-  .purple .block-time   { color: var(--purple); }
-  .purple .point-list li::before { color: var(--purple); }
+  .teams-theme .block-header { background: var(--teams-bg); }
+  .teams-theme .block-badge  { background: var(--teams); color: #fff; }
+  .teams-theme .block-time   { color: var(--teams); }
 
-  /* 決定・その他 */
   .summary {
     max-width: 860px; margin: 16px auto 0;
     background: #fff; border: 1px solid var(--border);
@@ -320,7 +232,6 @@
   .summary-item.task::before   { content: '□'; position: absolute; left: 0; font-size: 11px; top: 6px; color: #9ca3af; }
   .summary-item.note::before   { content: '▸'; position: absolute; left: 0; font-size: 11px; top: 6px; color: #9ca3af; }
 
-  /* 参考資料 */
   .ref {
     max-width: 860px; margin: 12px auto 0;
     background: #f9fafb; border: 1px solid var(--border);
@@ -335,16 +246,20 @@
     border: 1px solid var(--border); transition: background .15s;
   }
   .ref-link:hover { background: #e5e7eb; }
-  .ref-link.primary { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+  .ref-link.primary { background: var(--teams-bg); color: var(--teams); border-color: #c7caed; }
+
+  @media (max-width: 600px) {
+    .data-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-label">武蔵野美術大学 M365導入支援コンサルティング</div>
-  <h1>定例 アジェンダ — 第7回</h1>
-  <div class="meta">2026年7月9日（木）　担当：三井田</div>
-  <div class="total-time">⏱ 合計 約35分</div>
+  <h1>定例 アジェンダ — 第8回</h1>
+  <div class="meta">2026年7月16日（木）　担当：三井田</div>
+  <div class="total-time">⏱ 合計 約30分（冒頭5 ＋ ①15 ＋ ②7 ＋ ③3）</div>
 </div>
 
 <div class="blocks">
@@ -353,74 +268,129 @@
   <div class="block green">
     <div class="block-header">
       <div class="block-badge">冒頭</div>
-      <div class="block-title">前回（7/2）確認事項 ＆ 本部会議フィードバック</div>
-      <div class="block-time">3分</div>
+      <div class="block-title">前回（7/9）フォローアップ</div>
+      <div class="block-time">5分</div>
     </div>
     <div class="block-body">
       <ul class="point-list">
-        <li><strong>情報化戦略本部会議（7/8・火）の結果共有：</strong>決定事項・M365移行に関係する方針変更・追加要件があれば本日の議論に反映します</li>
         <li>
-          <span style="display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-right:6px;background:#dcfce7;color:#166534;">回答済み</span>
-          <strong>Canbus. メーカー問合せ（エクスポート処理可否）→ 対応可能と確認</strong><br>
-          <span style="font-size:12px;color:var(--gray);">アプリ単位・レコード単位でのエクスポートが可能。問題発生時はインポートで元に戻すことも可能。CSV形式でのエクスポートにも対応。移行・バックアップ手段として活用できると判断します</span><br>
-          <span style="font-size:11px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:3px 10px;display:inline-block;margin-top:5px;">💡 費用試算：年間4,500件（1万レコードプランまで約2年）→ <strong>2年ごとにエクスポート＋レコードリフレッシュする運用で、1万レコードプラン（月5万円）の継続使用が可能</strong>（条件付き確認）</span>
+          <strong>✅ Canbus. 費用・プランの回答：</strong>
+          Garoonワークフロー年間5,391件（月平均449件）の規模では、<strong>約2年ごとにレコードをエクスポート＋リフレッシュする運用で、月5万円プランを継続使用できる</strong>と確認済み。正式なプラン選定は移行準備フェーズで進める。
+        </li>
+        <li>
+          <strong>✅ Entra ID・Teams管理センター 調査完了：</strong>
+          権限を付与いただき、管理センターの現状を確認済み。
+          <ul class="sub-list">
+            <li>Entra ID：既存グループ構成・ライセンス割当・UPN体系を確認</li>
+            <li>Teams管理センター：チーム一覧（10,685件）・ゲストアクセス設定・ポリシー状態を確認</li>
+          </ul>
+        </li>
+        <li>
+          <strong>✅ Garoon 組織情報の確認完了：</strong>
+          Garoonのアドレス帳から組織構造を直接確認し、Entra IDグループ設計に反映しました（<a href="entra-id-org-design.html" style="color:var(--blue);">→ Entra ID 組織設計資料</a>）。<br>
+          <strong>確認できた全体構成：</strong>事務組織（5グループ・16チーム）／教学組織（22ユニット）／カテゴリー（雇用形態別9区分）の<strong>3軸構造</strong>。
+
+          <!-- 差分ビュー -->
+          <div style="margin-top:14px;">
+            <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px;">📋 確認で修正が必要だった差分（想定 → 実態）</div>
+            <table style="font-size:12px;width:100%;border-collapse:collapse;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden;">
+              <tr>
+                <th style="padding:6px 10px;background:#fee2e2;color:#991b1b;text-align:left;width:38%;">修正前（仮の想定）</th>
+                <th style="padding:6px 10px;background:#dcfce7;color:#166534;text-align:left;width:44%;">修正後（Garoon確認値）</th>
+                <th style="padding:6px 10px;background:#f3f4f6;color:#6b7280;text-align:left;">区分</th>
+              </tr>
+              <tr style="border-top:1px solid #e5e7eb;">
+                <td style="padding:6px 10px;color:#b91c1c;">事務組織：2階層（グループ→チーム）</td>
+                <td style="padding:6px 10px;color:#15803d;font-weight:600;">3階層（グループ→チーム→担当）</td>
+                <td style="padding:6px 10px;color:#6b7280;">階層構造</td>
+              </tr>
+              <tr style="border-top:1px solid #e5e7eb;background:#fafafa;">
+                <td style="padding:6px 10px;color:#b91c1c;">国際交流チーム</td>
+                <td style="padding:6px 10px;color:#15803d;font-weight:600;">連携共創チーム</td>
+                <td style="padding:6px 10px;color:#6b7280;">チーム名</td>
+              </tr>
+              <tr style="border-top:1px solid #e5e7eb;">
+                <td style="padding:6px 10px;color:#b91c1c;">工業デザイン学科</td>
+                <td style="padding:6px 10px;color:#15803d;font-weight:600;">工芸工業デザイン</td>
+                <td style="padding:6px 10px;color:#6b7280;">学科名</td>
+              </tr>
+              <tr style="border-top:1px solid #e5e7eb;background:#fafafa;">
+                <td style="padding:6px 10px;color:#b91c1c;">教学：学部→学科の2階層想定</td>
+                <td style="padding:6px 10px;color:#15803d;font-weight:600;">22ユニット フラット構造（学部くくりなし）</td>
+                <td style="padding:6px 10px;color:#6b7280;">教学構造</td>
+              </tr>
+              <tr style="border-top:1px solid #e5e7eb;">
+                <td style="padding:6px 10px;color:#b91c1c;">雇用形態は事務組織内で管理と想定</td>
+                <td style="padding:6px 10px;color:#15803d;font-weight:600;">カテゴリーが独立した第3の軸として存在</td>
+                <td style="padding:6px 10px;color:#6b7280;">カテゴリー</td>
+              </tr>
+            </table>
+            <div style="font-size:11px;color:var(--gray);margin-top:6px;">これらはすべて Entra ID 組織設計資料（Tab3〜Tab5）に反映済みです。</div>
+          </div>
+
+          <!-- 設計の核心メッセージ -->
+          <div style="margin-top:14px;background:#eff6ff;border-left:4px solid #3b82f6;border-radius:0 6px 6px 0;padding:12px 14px;">
+            <div style="font-size:12px;font-weight:700;color:#1e40af;margin-bottom:8px;">💡 今回の設計で最も伝えたいポイント：兼務がそのまま反映できる</div>
+            <div style="font-size:12px;color:#1e3a8a;line-height:1.8;">
+              Garoonでは組織ツリーの制約上、1人が複数組織に属する兼務を表現しきれない場面があります。<br>
+              Entra IDの設計では、<strong>複数のセキュリティグループに同時所属する</strong>という形で兼務を自然に表現できます。
+            </div>
+            <div style="margin-top:10px;background:#fff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;font-size:12px;color:#1e3a8a;font-family:monospace;">
+              例）工芸工業デザインの教員が情報教育センターも兼担する場合<br>
+              　<span style="color:#15803d;font-weight:700;">MAU_教学_工芸工業デザイン</span>　← 主担当<br>
+              　<span style="color:#15803d;font-weight:700;">MAU_教学_情報教育センター　</span>　← 兼担<br>
+              <span style="color:#6b7280;font-size:11px;">→ 2つのグループに同時所属するだけ。追加設定・重複管理は不要。</span>
+            </div>
+            <div style="font-size:11px;color:#3b82f6;margin-top:8px;">大学の実態（兼務が多い）をシステムに合わせて妥協する必要がなくなるのが、この設計の核心です。</div>
+          </div>
+        </li>
+        <li>
+          <strong>✅ Teamsガバナンス方針案 作成完了：</strong>
+          7/9定例での3テーマ（アーカイブ運用・業務系/授業系管理分離・外部ゲストアクセス）の方針案を資料にまとめました。<strong>本日①ブロックで提示します。</strong>
         </li>
       </ul>
     </div>
   </div>
 
   <!-- ブロック① -->
-  <div class="block blue">
+  <div class="block teams-theme">
     <div class="block-header">
-      <div class="block-badge">① 報告</div>
-      <div class="block-title">M365・Garoon 調査結果の共有</div>
-      <div class="block-time">7分</div>
+      <div class="block-badge">① 提示</div>
+      <div class="block-title">Teams ガバナンス方針案の提示（3テーマ）</div>
+      <div class="block-time">15分</div>
     </div>
     <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:12px;">テストアカウントへの閲覧権限付与後、Entra ID・Teams・Garoonを直接調査しました。⚠ は今後の設計で対処が必要な点です。</p>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:14px;">7/9定例での宿題「チームのガバナンス方針を整理する」に対して、3つのテーマで方針案をまとめました。今日はこれをスライド形式でご覧いただきながら説明します。<br>
+      <a href="teams-governance.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:#eeeeff;border:1px solid #c7caed;border-radius:6px;color:#5558af;font-weight:700;font-size:12px;text-decoration:none;">🏛 詳細説明資料：Teams ガバナンス方針案 ↗</a></p>
 
-      <!-- Entra ID -->
-      <div class="report-card">
-        <div class="rc-header">
-          <span class="rc-system">Entra ID（Azure AD）</span>
-          <span class="rc-badge warn">グループ 10,771件 ／ ポリシー未設定</span>
-        </div>
-        <div class="rc-body">
-          <div class="rc-row warn">グループの命名規則・有効期限ポリシーが未設定。10,000件超のグループが無秩序に累積している</div>
-          <div class="rc-row warn">全学MFAが未整備。教職員・学生への適用はなし（管理者と一部ユーザーのみ）</div>
-          <div class="rc-row ok">オンプレADと同期済み（Entra Connect 稼働）。OU構造を活用した動的グループ設計が可能</div>
-        </div>
-        <div class="rc-footer"><a href="investigation-report-07.html#entra" target="_blank">→ Entra ID 詳細データを確認する</a></div>
+      <div class="teams-agenda-card">
+        <div class="tac-title">🗂 テーマ① 既存チームの整理（アーカイブ運用）</div>
+        <div class="tac-point">現在10,685チームのうち、アクティブなのは<strong>4%未満</strong>。残り96%が放置状態となっており、検索ノイズ・Copilotの精度低下・管理コスト増加の原因になっています。</div>
+        <div class="tac-point">アーカイブは<strong>削除ではありません</strong>。読み取り専用に変えるだけで、データは保持され、オーナー自身がいつでも復元できます。</div>
+        <div class="tac-point">推奨フロー（M365標準機能）：<strong>有効期限ポリシーを設定 → 期限30日前にオーナーへ自動メール → 未更新で自動ソフト削除</strong>（スクリプト不要）</div>
+        <div class="tac-point">初回クリーンアップ：既存の約10,000件を対象に<strong>事前告知（2週間）→ 一括アーカイブ</strong>。以後は有効期限ポリシーで自動管理します。</div>
       </div>
 
-      <!-- Teams -->
-      <div class="report-card">
-        <div class="rc-header">
-          <span class="rc-system">Microsoft Teams</span>
-          <span class="rc-badge warn">チーム 10,685件 ／ 外部連携 完全OFF</span>
-        </div>
-        <div class="rc-body">
-          <div class="rc-row warn">ゲストアクセス・外部アクセスともにOFF。現時点で外部との連携は一切できない</div>
-          <div class="rc-row warn">Teamsポリシーには「外部共有ON」が残っており実態と矛盾。方針決定後に整合が必要</div>
-          <div class="rc-row note">チームが10,685件（ユーザー8,083名）。過去チームが整理されていない状態</div>
-        </div>
-        <div class="rc-footer"><a href="investigation-report-07.html#teams" target="_blank">→ Teams 詳細データを確認する</a></div>
+      <div class="teams-agenda-card">
+        <div class="tac-title">💼 テーマ② 新規チームのルール整備（業務系・授業系の分離）</div>
+        <div class="tac-point">現状は誰でも自由にチームを作れる状態です。ルールなしでは今後も同じペースでチームが増え続けます。</div>
+        <div class="tac-point">チームを<strong>「業務系」（部署・委員会・プロジェクト）</strong>と<strong>「授業系」（授業・ゼミ）</strong>の2種類に分け、それぞれ別のルールで管理します。</div>
+        <div class="tac-point">命名規則：業務系 <code style="background:#f3f4f6;padding:1px 5px;border-radius:3px;">[部署略称]_[チーム名]</code> ／ 授業系 <code style="background:#f3f4f6;padding:1px 5px;border-radius:3px;">[年度][期]_[科目名]_[担当者]</code></div>
+        <div class="tac-point">作成権限：<strong>授業系は教員が自由に作成可（申請不要）</strong>／ 業務系は部署長承認後にIT管理者が作成</div>
+        <div class="tac-point">有効期限：業務系は12ヶ月ごとに更新確認 ／ 授業系は<strong>学期末に自動アーカイブ</strong>（有効期限ポリシーで管理）</div>
       </div>
 
-      <!-- Garoon -->
-      <div class="report-card">
-        <div class="rc-header">
-          <span class="rc-system">Garoon ワークフロー</span>
-          <span class="rc-badge info">全7カテゴリー ／ 75フォーム 確認済み</span>
-        </div>
-        <div class="rc-body">
-          <div class="rc-row ok">全7カテゴリー・75フォームを確認済み（VPN経由で直接閲覧）</div>
-          <div class="rc-row note">最多はネットワーク関連（45件）で情シス専用フローが中心。アルバイト・SA・TA関連（12件）は教員・事務双方が使い移行優先度が高い可能性がある</div>
-          <div class="rc-row alert">X-pointはGaroon上からは連携エラーで確認不可。X-pointはGaroonとは別のワークフローシステム（同社Cybozu製）であり、Garoon上に存在しない独自のフォーム・申請フローを別途運用している可能性がある。直接アクセスして確認する必要がある</div>
-        </div>
-        <div class="rc-footer"><a href="investigation-report-07.html#garoon" target="_blank">→ Garoon フォーム一覧を確認する</a></div>
+      <div class="teams-agenda-card">
+        <div class="tac-title">🚪 テーマ③ 外部との連携（ゲストアクセスの限定開放）</div>
+        <div class="tac-point">現在は外部アクセス・ゲストアクセスともに<strong>OFF</strong>の状態です。</div>
+        <div class="tac-point">産学連携・外部講師・共同研究など、大学外の方と Teams 上で協働するニーズが存在しています。</div>
+        <div class="tac-point"><strong>ゲストアクセスのみ有効化</strong>を提案します。外部アクセス（外部ユーザーとのチャット）は引き続き無効のままにします。</div>
+        <div class="tac-point">セキュリティは5つのコントロールで担保：招待権限はオーナーのみ ／ 情シス承認制 ／ 90日で自動失効 ／ 個人メールアドレスへの招待禁止 ／ 秘密度ラベル「教職員」チームへの招待禁止</div>
       </div>
 
+      <div style="font-size:11px;background:#eeeeff;border-radius:6px;padding:7px 10px;color:#3730a3;margin-top:8px;">
+        📄 各テーマの詳細（画面イメージ・比較表・推奨フロー）は <strong>teams-governance.html</strong> に掲載しています。本日の説明資料として画面共有しながら進めます。
+      </div>
     </div>
   </div>
 
@@ -428,113 +398,80 @@
   <div class="block orange">
     <div class="block-header">
       <div class="block-badge">② 議論</div>
-      <div class="block-title">Teams・SharePoint のガバナンス方針を決める</div>
-      <div class="block-time">10分</div>
+      <div class="block-title">フィードバック ＆ 各テーマの方針合意</div>
+      <div class="block-time">7分</div>
     </div>
     <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">①の調査で <strong>Teamsチームが10,685件・グループが10,862件</strong> 存在することが確認されました（ゲスト0名・外部アクセス完全OFF）。設計着手前に以下4論点の方針を合意します。</p>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">提示した3テーマについて、武蔵美の実情に合う・合わない点のフィードバックをいただきます。</p>
 
-      <p style="font-size:12px;font-weight:700;color:#c2410c;margin-bottom:6px;">【論点1】Teamsチームは誰でも作れる状態にするか？</p>
       <ul class="check-list">
-        <li><strong>自由作成（現状維持）：</strong>教職員・学生が自由にチームを作れる。手軽だが管理不能なチームが今後も累積する</li>
-        <li><strong>申請制：</strong>所定フォームで申請→IT側が作成。乱立を防げるが、大学側の運用負荷が増える</li>
-        <li><strong>ハイブリッド：</strong>授業系は自由作成を継続、業務系（部署・委員会）は申請制に限定する</li>
-      </ul>
-
-      <p style="font-size:12px;font-weight:700;color:#c2410c;margin-bottom:6px;margin-top:12px;">【論点2】過年度チームのアーカイブ・削除ポリシー</p>
-      <ul class="check-list">
-        <li>授業終了後（年度末など）に自動でアーカイブする期間をどう設定するか</li>
-        <li>アーカイブ前の通知・猶予期間をどう設けるか（担当教員への確認フロー）</li>
-      </ul>
-
-      <p style="font-size:12px;font-weight:700;color:#c2410c;margin-bottom:6px;margin-top:12px;">【論点3】業務系 Teams と授業系 Teams の分離管理</p>
-      <ul class="check-list">
-        <li>部署・委員会・全学連絡用の業務Teamsを、授業チームとは別のガバナンス（命名規則・所有者管理）で運用するか</li>
-        <li>業務系はEntra IDのセキュリティグループと紐づけて管理する方針でよいか</li>
-      </ul>
-
-      <p style="font-size:12px;font-weight:700;color:#c2410c;margin-bottom:6px;margin-top:12px;">【論点4】外部アクセス・ゲストアクセスの解禁方針</p>
-      <ul class="check-list">
-        <li>現状はゲスト・外部アクセスともに完全OFFだが、今後解禁が必要な場面（研究室の外部連携・非常勤講師・産学連携等）は想定されるか</li>
-        <li>解禁する場合は招待対象ドメインの制限・Entra IDの承認フローとセットで設計する必要がある</li>
+        <li>
+          <strong>アーカイブ運用：</strong>有効期限ポリシー（M365標準機能）で自動管理するフローで進めてよいか？<br>
+          <span style="font-size:12px;color:var(--gray);">初回クリーンアップの時期・事前告知の方法（全教職員への周知手段）の検討</span>
+        </li>
+        <li>
+          <strong>業務系/授業系 分類：</strong>命名規則の部署略称テーブルを情シスで管理する方針でよいか？<br>
+          <span style="font-size:12px;color:var(--gray);">既存チーム名の変更範囲（アクティブ約400件のリネーム vs 新規作成分から適用）</span>
+        </li>
+        <li>
+          <strong>チーム作成権限：</strong>授業系は申請不要・教員が自由作成＋有効期限管理の方針でよいか？<br>
+          <span style="font-size:12px;color:var(--gray);">命名規則ガイドラインの周知方法（テンプレート提供・マニュアル整備など）の検討</span>
+        </li>
+        <li>
+          <strong>ゲストアクセス：</strong>産学連携・非常勤講師での実需はどの程度あるか？<br>
+          <span style="font-size:12px;color:var(--gray);">情シス承認フローの運用負荷（週に何件程度の申請が想定されるか）</span>
+        </li>
       </ul>
     </div>
   </div>
 
   <!-- ブロック③ -->
-  <div class="block green">
+  <div class="block blue">
     <div class="block-header">
-      <div class="block-badge">③ ヒアリング</div>
-      <div class="block-title">Garoon 移行優先度のヒアリング</div>
-      <div class="block-time">7分</div>
-    </div>
-    <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">①の調査でGaroonワークフロー <strong>7カテゴリー75フォーム</strong> を確認済みです。移行優先度・代替設計の方針決定に向けて以下をヒアリングします。</p>
-
-      <p style="font-size:12px;font-weight:700;color:#1a5c2e;margin-bottom:6px;">確認したいこと</p>
-      <ul class="point-list">
-        <li><strong>「Garoonでよく使うワークフローはどれですか？」</strong><br>
-          <span style="font-size:12px;color:var(--gray);">→ 最頻出フォームを優先してM365（Power Automate / SharePointリスト）に移行します。ネットワーク関連は利用頻度が高いか、情シス専用かを確認します</span>
-        </li>
-        <li><strong>「なくなったら一番困るワークフローはどれですか？」</strong><br>
-          <span style="font-size:12px;color:var(--gray);">→ 代替必須（Must）と移行を機に見直してもいい機能（Nice to have）を分けます</span>
-        </li>
-        <li><strong>「X-pointはGaroonとは別のシステムとして独自のワークフローを運用していますか？」</strong><br>
-          <span style="font-size:12px;color:var(--gray);">→ X-pointはGaroonとは独立したワークフローシステムのため、Garoon上には存在しない申請フォームが別途存在する可能性があります。どのような用途で使用しているか、またはGaroonのフォーム一覧と重複がないかを確認したく、直接アクセスできるURL・権限をご提供いただけますか</span>
-        </li>
-        <li><strong>「部署をまたいで共有している情報・ファイルはありますか？」</strong><br>
-          <span style="font-size:12px;color:var(--gray);">→ SharePointのサイト構成・権限設計に直結します</span>
-        </li>
-      </ul>
-
-      <div style="font-size:11px;background:#dcfce7;border-radius:6px;padding:7px 10px;color:#166534;margin-top:8px;">
-        ✅ ここで出た内容をもとに、三井田側でSharePointイントラのコンテンツ設計とワークフロー移行方針の検討を先行着手します。
-      </div>
-    </div>
-  </div>
-
-  <!-- ブロック④ -->
-  <div class="block purple">
-    <div class="block-header">
-      <div class="block-badge">④ 確認</div>
-      <div class="block-title">前回共有した設計方針への質問・懸念点の確認</div>
-      <div class="block-time">5分</div>
-    </div>
-    <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">前回ご説明済みの内容（Entra IDグループ設計・SharePointイントラ構成・命名規則）について、ご確認いただいた上での疑問点・懸念点をお聞きします。②③の議論で浮かんだ設計への影響も合わせて確認します。</p>
-      <ul class="check-list">
-        <li>
-          <strong>Entra IDグループ設計について：</strong>大学の組織構造（学部・学科・委員会等）への当てはめで不明な点はありますか？<br>
-          <span style="font-size:12px;color:var(--gray);">オンプレAD（Entra Connect）経由での属性同期を前提とした設計になります。「異動・兼任」が多い場合の対応方針についてご意見があればお聞きします</span>
-        </li>
-        <li>
-          <strong>SharePointイントラ構成について：</strong>③のヒアリングを踏まえ、機能のマッピング（掲示板→ニュース、回覧→承認フロー等）に追加・修正が必要な箇所の確認
-        </li>
-        <li>
-          <strong>②で合意したガバナンス方針と設計の整合：</strong>チーム作成ルール・アーカイブポリシーの方針が固まった場合、命名規則との整合を確認します
-        </li>
-      </ul>
-      <div style="font-size:11px;background:#ede9fe;border-radius:6px;padding:7px 10px;color:#5b21b6;margin-top:8px;">
-        ℹ 設計内容の再説明は行いません。資料は事前にご確認いただき、疑問・懸念点をこの場でまとめてお聞きします。
-      </div>
-    </div>
-  </div>
-
-  <!-- ブロック⑤ -->
-  <div class="block red">
-    <div class="block-header">
-      <div class="block-badge">⑤ 依頼</div>
-      <div class="block-title">継続依頼事項の確認・期日設定</div>
+      <div class="block-badge">③ 情報共有</div>
+      <div class="block-title">ワークフロー 2025年実績データの共有と Canbus. プラン確認</div>
       <div class="block-time">3分</div>
     </div>
     <div class="block-body">
-      <ul class="request-list">
-        <li>
-          <span class="request-tag tag-info">情報</span>
-          <strong>X-point への直接アクセス方法のご確認</strong><br>
-          <span style="font-size:12px;color:var(--gray);">X-pointはGaroonとは別の独立したワークフローシステムであるため、Garoonには存在しない独自のフォーム・申請フローが別途運用されている可能性があります。GaroonからはX-pointへの連携エラーで内容が確認できない状態のため、直接参照・確認できるURL・アクセス権限をご提供いただけますでしょうか。ワークフロー移行の全体像を把握するうえで重要です</span>
-        </li>
-      </ul>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:12px;">ご提供いただいた「ワークフロー件数・申請頻度まとめ（2025年）」をもとに実績を確認します。</p>
+
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="data-num">5,391</div>
+          <div class="data-label">年間件数（2025年実績）</div>
+          <div class="data-sub">月平均 449件</div>
+        </div>
+        <div class="data-card">
+          <div class="data-num">50.5%</div>
+          <div class="data-label">施設管財関連が最多</div>
+          <div class="data-sub">2,723件/年（物品購入・公印等）</div>
+        </div>
+        <div class="data-card">
+          <div class="data-num">663</div>
+          <div class="data-label">ピーク月（4月）</div>
+          <div class="data-sub">9月481件、6月557件も多い</div>
+        </div>
+      </div>
+
+      <table class="garoon-table">
+        <tr>
+          <th>カテゴリー</th>
+          <th class="garoon-num">年間件数</th>
+          <th class="garoon-pct">構成比</th>
+        </tr>
+        <tr><td>施設管財関連</td><td class="garoon-num">2,723件</td><td class="garoon-pct">50.5%</td></tr>
+        <tr><td>アルバイト・SA・TA・モデル・特別講師等</td><td class="garoon-num">834件</td><td class="garoon-pct">15.5%</td></tr>
+        <tr><td>総務関連</td><td class="garoon-num">809件</td><td class="garoon-pct">15.0%</td></tr>
+        <tr><td>人事関連</td><td class="garoon-num">373件</td><td class="garoon-pct">6.9%</td></tr>
+        <tr><td>ネットワーク関連</td><td class="garoon-num">211件</td><td class="garoon-pct">3.9%</td></tr>
+        <tr><td>教務関連</td><td class="garoon-num">155件</td><td class="garoon-pct">2.9%</td></tr>
+        <tr><td>アカウント・入試・その他</td><td class="garoon-num">286件</td><td class="garoon-pct">5.3%</td></tr>
+        <tr class="total-row"><td>合計</td><td class="garoon-num">5,391件</td><td class="garoon-pct">100%</td></tr>
+      </table>
+
+      <div style="font-size:11px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:8px 12px;color:#075985;margin-top:4px;line-height:1.8;">
+        💡 <strong>Canbus. プラン確認：</strong>年間5,391件（月平均449件）の場合、1万レコードプランは <strong>約22ヶ月</strong>（≒1年10ヶ月）で上限到達。<strong>約2年ごとにエクスポート＋レコードリフレッシュを行う運用で、月5万円プランの継続使用が可能</strong>です（条件付き確認済み）。
+      </div>
     </div>
   </div>
 
@@ -554,32 +491,26 @@
   <div class="summary-tasks-body">
     <div>
       <div class="summary-col-title">大学側</div>
-      <div class="summary-item task">X-pointへのアクセス方法・利用フォーム概要の提供</div>
-      <div class="summary-item task">Canbus.メーカー回答の共有（回答受領次第）</div>
-      <div class="summary-item task">7/8情報化戦略本部会議での決定事項のフィードバック（あれば）</div>
+      <div class="summary-item task">Teamsガバナンス方針 — 情シス内での確認・フィードバック</div>
+      <div class="summary-item task">チーム作成権限の運用負荷（申請制導入時の体制）確認</div>
     </div>
     <div>
       <div class="summary-col-title">三井田</div>
-      <div class="summary-item check">Entra ID・Teams管理センター 現状調査（完了）</div>
-      <div class="summary-item check">Garoonワークフロー全カテゴリー確認（完了・75フォーム）</div>
-      <div class="summary-item task">③ヒアリング結果をもとに：SharePointイントラ コンテンツ設計着手</div>
-      <div class="summary-item task">③ヒアリング結果をもとに：Garoonワークフロー移行優先度マッピング</div>
-      <div class="summary-item check">Canbus. エクスポート可否確認：アプリ/レコード単位・CSV形式での対応可能と確認済み</div>
-      <div class="summary-item check">Canbus. 費用試算（条件付き確認）：年間4,500件規模なら2年ごとのエクスポート＋リフレッシュ運用で月5万円プランを継続使用可能</div>
-      <div class="summary-item task">X-pointアクセス確認後：追加フォーム・フロー調査</div>
+      <div class="summary-item task">②フィードバックを反映：Teamsガバナンス方針の確定版作成</div>
+      <div class="summary-item task">Entra ID 有効期限ポリシー設定案の策定（業務系 365日・授業系 学期末）</div>
+      <div class="summary-item task">Garoon WF 移行優先度マッピング（実績データ5,391件の内訳をもとに）</div>
     </div>
   </div>
 </div>
 
 <!-- その他 -->
 <div class="summary">
-  <div class="summary-header other">📝 その他・前提情報</div>
+  <div class="summary-header other">📝 前提情報・背景</div>
   <div class="summary-body">
-    <div class="summary-item note"><strong>Garoon調査完了（2026/7/7-8）：</strong>VPN経由でワークフロー7カテゴリー75フォームを確認。ネットワーク関連が最多（45フォーム・研究室用+事務室用）。X-pointはGaroonから連携エラーで確認不可。</div>
-    <div class="summary-item note"><strong>Garoon年間ワークフロー件数：</strong>前回（7/2）ヒアリングにて4,500件/年と判明（2025年実績・月375件相当）。</div>
-    <div class="summary-item note"><strong>Canbus. エクスポート対応＆費用確認済み（2026/7/8）：</strong>メーカー回答により、アプリ単位・レコード単位でのエクスポートが可能、問題発生時のインポート復元にも対応、CSV形式にも対応と確認。年間4,500件規模では1万レコードプランで約2年稼働 → 2年ごとにエクスポートしてレコードをリフレッシュする運用で<strong>月5万円プランの継続使用が可能</strong>（条件付き）。</div>
-    <div class="summary-item note"><strong>Canbus.メーカーデモは引き続き保留：</strong>ユーザーの階層設定などを定例で議論してから検討する方針（前回合意）。</div>
-    <div class="summary-item note"><strong>マニュアルコメント期限：</strong>7月15日（火）。時田さんの「利用の手引き」へのレビュー・コメントがある場合は期限内に。</div>
+    <div class="summary-item note"><strong>7/9定例 主要決定：</strong>① X-Point は継続運用・M365移行対象外（移行スコープ外）、② Teamsガバナンス方針の検討開始、③ 秘密度ラベルは3種類（教職員／教職員＋学生／公開）に決定。</div>
+    <div class="summary-item note"><strong>ワークフロー実績（2025年）：</strong>ご提供資料より5,391件/年（月平均449件）。施設管財関連が50.5%と最多。4月・9月がピーク（新学期・入学期）。</div>
+    <div class="summary-item note"><strong>Canbus. 費用（確認済み）：</strong>年間5,391件規模では約22ヶ月で1万レコード到達 → 約2年ごとのエクスポート＋リフレッシュ運用で月5万円プランの継続使用が可能（条件付き確認済み）。</div>
+    <div class="summary-item note"><strong>秘密度ラベル設計（時田さん方針）：</strong>「教職員」（デフォルト・暗号化）/ 「教職員＋学生」（学内全員・学外ブロック）/ 「公開」（制限なし）の3種類に再設計済み。</div>
   </div>
 </div>
 
@@ -587,11 +518,10 @@
 <div class="ref">
   <div class="ref-title">参考資料</div>
   <div class="ref-links">
-    <a class="ref-link primary" href="investigation-report-07.html" target="_blank">🔍 M365・Garoon 調査レポート（7/7-8）</a>
-    <a class="ref-link" href="tenant-status.html" target="_blank">📊 テナント現状レポート（6/30）</a>
+    <a class="ref-link primary" href="teams-governance.html" target="_blank">🏛 Teams ガバナンス方針案（詳細・画面イメージ付き）</a>
+    <a class="ref-link" href="investigation-report-07.html" target="_blank">🔍 M365・Garoon 調査レポート（7/7-8）</a>
+    <a class="ref-link" href="tenant-status.html" target="_blank">📊 テナント現状レポート</a>
     <a class="ref-link" href="entra-id-org-design.html" target="_blank">📐 Entra ID 組織設計</a>
-    <a class="ref-link" href="sharepoint-proposal.html" target="_blank">🏢 SharePoint 提案（全体）</a>
-    <a class="ref-link" href="workflow-comparison.html" target="_blank">🔀 ワークフロー比較（全体）</a>
   </div>
 </div>
 

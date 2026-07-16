@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams ガバナンス方針案 — 武蔵野美術大学 M365</title>
+<style>
+  :root {
+    --primary: #1a56a0;
+    --primary-light: #e8f1fb;
+    --teams: #5558af;
+    --teams-light: #eeeeff;
+    --green: #166534;
+    --green-bg: #dcfce7;
+    --orange: #92400e;
+    --orange-bg: #fef3c7;
+    --red: #991b1b;
+    --red-bg: #fee2e2;
+    --blue: #1e40af;
+    --blue-bg: #dbeafe;
+    --gray: #f5f6f8;
+    --border: #dde1e9;
+    --text: #1a1d23;
+    --muted: #667085;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: #f0f2f5; line-height: 1.75;
+  }
+
+  .page-header {
+    background: var(--teams); color: #fff;
+    padding: 0 32px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 200;
+  }
+  .page-header h1 { font-size: 17px; font-weight: 700; }
+  .page-header .sub { font-size: 12px; opacity: .65; margin-top: 2px; }
+
+  .tab-bar {
+    background: #fff; border-bottom: 2px solid var(--border);
+    display: flex; overflow-x: auto; position: sticky; top: 72px; z-index: 100;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0; padding: 0 22px; height: 52px;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    border: none; background: none; cursor: pointer;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: color .15s, border-color .15s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--teams); }
+  .tab-btn.active { color: var(--teams); border-bottom-color: var(--teams); }
+  .tab-btn .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--teams-light); color: var(--teams);
+    font-size: 11px; margin-right: 7px;
+  }
+  .tab-btn.active .num { background: var(--teams); color: #fff; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .content { max-width: 900px; margin: 0 auto; padding: 36px 28px 80px; }
+
+  .panel-title {
+    font-size: 20px; font-weight: 800; color: var(--teams);
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--teams-light);
+  }
+  h3 { font-size: 15px; font-weight: 700; margin: 28px 0 10px; color: var(--text); }
+  h4 { font-size: 14px; font-weight: 700; margin: 18px 0 8px; color: #374151; }
+  p { margin: 8px 0; font-size: 14px; line-height: 1.8; }
+
+  /* カード */
+  .card {
+    background: #fff; border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 24px; margin: 16px 0;
+  }
+  .card-title {
+    font-size: 14px; font-weight: 700; color: var(--teams);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--teams-light);
+  }
+
+  /* ステータスバッジ */
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; margin-right: 6px;
+  }
+  .badge-ok  { background: var(--green-bg); color: var(--green); }
+  .badge-warn { background: var(--orange-bg); color: var(--orange); }
+  .badge-alert { background: var(--red-bg); color: var(--red); }
+  .badge-info { background: var(--blue-bg); color: var(--blue); }
+  .badge-teams { background: var(--teams-light); color: var(--teams); }
+
+  /* テーブル */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th {
+    background: var(--teams-light); color: var(--teams);
+    padding: 10px 12px; text-align: left; font-weight: 700;
+    border: 1px solid #c7d7f5;
+  }
+  td { padding: 10px 12px; border: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: #fafbfd; }
+
+  /* callout */
+  .callout {
+    border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: 13px; line-height: 1.8;
+  }
+  .callout.green { background: #f0fdf4; border-left: 4px solid #22c55e; }
+  .callout.orange { background: #fffbeb; border-left: 4px solid #f59e0b; }
+  .callout.blue  { background: #eff6ff; border-left: 4px solid #3b82f6; }
+  .callout.red   { background: #fef2f2; border-left: 4px solid #ef4444; }
+
+  /* 現状スナップショット */
+  .metric-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0;
+  }
+  .metric {
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; text-align: center;
+  }
+  .metric-num { font-size: 28px; font-weight: 800; color: var(--teams); }
+  .metric-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .metric-sub { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+
+  /* フロー図 */
+  .flow {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+    margin: 12px 0; font-size: 13px;
+  }
+  .flow-step {
+    background: #fff; border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 14px; font-weight: 600; white-space: nowrap;
+  }
+  .flow-step.ok { border-color: #22c55e; color: var(--green); background: var(--green-bg); }
+  .flow-step.warn { border-color: #f59e0b; color: var(--orange); background: var(--orange-bg); }
+  .flow-step.alert { border-color: #ef4444; color: var(--red); background: var(--red-bg); }
+  .flow-step.info { border-color: #3b82f6; color: var(--blue); background: var(--blue-bg); }
+  .flow-arrow { color: #9ca3af; font-size: 16px; }
+
+  /* 提案ポイント */
+  .proposal-list { list-style: none; margin: 10px 0; }
+  .proposal-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid var(--gray); font-size: 13px;
+  }
+  .proposal-list li:last-child { border-bottom: none; }
+  .pl-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* 比較カード */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .compare-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px;
+  }
+  .compare-card .ct { font-size: 13px; font-weight: 700; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid; }
+  .compare-card ul { padding-left: 18px; font-size: 13px; }
+  .compare-card ul li { margin-bottom: 5px; }
+
+  /* 推奨ラベル */
+  .recommend-badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px;
+    background: var(--green-bg); color: var(--green);
+  }
+
+  @media (max-width: 600px) {
+    .metric-row { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Teams UI モックアップ */
+  .mock-wrap { display: flex; gap: 16px; margin: 16px 0; align-items: flex-start; flex-wrap: wrap; }
+  .mock-panel { background: #fff; border: 1px solid #dde1e9; border-radius: 10px; overflow: hidden; flex: 1; min-width: 200px; }
+  .mock-panel-title { background: #f0f2f5; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #374151; border-bottom: 1px solid #dde1e9; }
+  .t-sidebar { background: #464775; width: 100%; padding: 12px 8px; }
+  .t-sidebar-header { color: rgba(255,255,255,0.6); font-size: 10px; font-weight: 700; padding: 0 8px 6px; letter-spacing: 0.5px; }
+  .t-team-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 4px; cursor: pointer; margin-bottom: 2px; }
+  .t-team-item.active-item { background: rgba(255,255,255,0.15); }
+  .t-team-avatar { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; color: #fff; }
+  .t-team-name { color: #fff; font-size: 12px; font-weight: 600; flex: 1; }
+  .t-team-name.archived-name { color: rgba(255,255,255,0.45); }
+  .t-active-dot { width: 6px; height: 6px; background: #6dce97; border-radius: 50%; flex-shrink: 0; }
+  .t-lock-icon { color: rgba(255,255,255,0.35); font-size: 10px; flex-shrink: 0; }
+  .t-section-divider { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 6px 4px; }
+  .t-section-label { color: rgba(255,255,255,0.45); font-size: 10px; padding: 4px 8px; font-weight: 600; letter-spacing: 0.4px; }
+  .t-channel-header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
+  .t-channel-title { font-size: 13px; font-weight: 700; color: #111827; }
+  .t-channel-sub { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  .t-archived-banner { background: #fef9c3; border-bottom: 2px solid #fbbf24; padding: 8px 16px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: #92400e; font-weight: 600; }
+  .t-messages { padding: 12px 16px; }
+  .t-message { display: flex; gap: 8px; margin-bottom: 12px; }
+  .t-avatar { width: 28px; height: 28px; border-radius: 50%; background: #8b5cf6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+  .t-msg-body { flex: 1; }
+  .t-msg-name { font-size: 11px; font-weight: 700; color: #374151; }
+  .t-msg-name span { font-size: 10px; color: #9ca3af; font-weight: 400; margin-left: 6px; }
+  .t-msg-text { font-size: 12px; color: #374151; margin-top: 2px; }
+  .t-input-bar { border-top: 1px solid #e5e7eb; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+  .t-input-box { flex: 1; border: 1px solid #d1d5db; border-radius: 6px; padding: 6px 10px; font-size: 12px; color: #9ca3af; background: #fff; }
+  .t-input-box.t-disabled { background: #f3f4f6; color: #d1d5db; cursor: not-allowed; }
+  .t-send-btn { background: #5558af; color: #fff; border: none; border-radius: 4px; padding: 6px 12px; font-size: 11px; cursor: pointer; }
+  .t-send-btn.t-disabled { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; }
+  .ctx-menu { background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,.12); min-width: 170px; }
+  .ctx-item { padding: 7px 14px; font-size: 12px; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .ctx-item.ctx-danger { color: #dc2626; }
+  .ctx-item.ctx-safe { color: #166534; font-weight: 700; }
+  .ctx-separator { border: none; border-top: 1px solid #f3f4f6; margin: 2px 0; }
+  .mock-steps { display: flex; flex-direction: column; gap: 14px; margin: 12px 0; }
+  .mock-step { display: flex; gap: 12px; align-items: flex-start; }
+  .mock-step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--teams); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .mock-step-body { flex: 1; }
+  .mock-step-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+  .mock-step-desc { font-size: 12px; color: #6b7280; }
+  .admin-header { background: #0078d4; color: #fff; padding: 8px 14px; font-size: 12px; font-weight: 700; }
+  .admin-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #f3f4f6; font-size: 12px; }
+  .a-team-icon { width: 24px; height: 24px; border-radius: 4px; background: #6366f1; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+  .a-team-info { flex: 1; }
+  .a-team-name { font-weight: 600; color: #111827; font-size: 12px; }
+  .a-team-meta { font-size: 10px; color: #9ca3af; }
+  .a-restore-link { color: #0078d4; font-size: 11px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+  .admin-filter { background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 6px 14px; font-size: 11px; color: #9ca3af; display: flex; gap: 12px; }
+  .admin-filter .f-active { color: #0078d4; font-weight: 700; border-bottom: 2px solid #0078d4; padding-bottom: 2px; }
+  .role-label-blue { font-size: 13px; font-weight: 700; color: #5558af; margin-bottom: 10px; padding: 6px 10px; background: #eeeeff; border-radius: 6px; display: block; }
+  .role-label-navy { font-size: 13px; font-weight: 700; color: #1a56a0; margin-bottom: 10px; padding: 6px 10px; background: #e8f1fb; border-radius: 6px; display: block; }
+
+  /* リスク分析セクション */
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .risk-col { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .risk-col-hd { padding: 10px 16px; font-size: 13px; font-weight: 800; }
+  .risk-col-hd.user { background: #eff6ff; color: #1e40af; border-bottom: 2px solid #93c5fd; }
+  .risk-col-hd.mgmt { background: #fef2f2; color: #991b1b; border-bottom: 2px solid #fca5a5; }
+  .risk-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #f3f4f6; }
+  .risk-item:last-child { border-bottom: none; }
+  .risk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .risk-content { flex: 1; }
+  .risk-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+  .risk-desc { font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .sev { display: inline-block; font-size: 10px; font-weight: 800; padding: 1px 7px; border-radius: 99px; flex-shrink: 0; }
+  .sev-h  { background: #fee2e2; color: #991b1b; }
+  .sev-m  { background: #fef3c7; color: #92400e; }
+  .sev-l  { background: #dcfce7; color: #166534; }
+  .risk-summary-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 12px 0; }
+  .risk-summary-table th { background: #1a1d23; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; }
+  .risk-summary-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .risk-summary-table tr:last-child td { border-bottom: none; }
+  .risk-summary-table tr:nth-child(even) td { background: #fafbfd; }
+  @media (max-width: 600px) { .risk-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>🏛 Teams ガバナンス方針案 — 武蔵野美術大学 M365</h1>
+    <div class="sub">作成: 三井田 ／ 2026-07-09 ／ 第7回定例 フォローアップ資料</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(0)">
+    <span class="num">1</span>アーカイブ運用
+  </button>
+  <button class="tab-btn" onclick="switchTab(1)">
+    <span class="num">2</span>チーム種別 管理分離
+  </button>
+  <button class="tab-btn" onclick="switchTab(2)">
+    <span class="num">3</span>外部・ゲストアクセス
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 1: アーカイブ運用                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab0">
+<div class="content">
+  <div class="panel-title">① Teamsアーカイブ運用 — 仕組みと武蔵美での推奨フロー</div>
+
+  <div class="callout orange">
+    <strong>現状の課題：</strong>Teamsのチーム数が <strong>10,685件</strong> に達しており、そのうち <strong>過去30日にアクティブなチームは4%未満</strong> と推定。放置チームの累積がリソース・セキュリティリスクになっています。
+  </div>
+
+  <div class="metric-row">
+    <div class="metric">
+      <div class="metric-num">10,685</div>
+      <div class="metric-label">チーム総数</div>
+      <div class="metric-sub">M365管理センター確認値</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">&lt; 4%</div>
+      <div class="metric-label">アクティブ率（30日）</div>
+      <div class="metric-sub">約400チームのみ稼働中と推定</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">96%</div>
+      <div class="metric-label">非アクティブ率</div>
+      <div class="metric-sub">整理が急務</div>
+    </div>
+  </div>
+
+  <h3>⚠️ 放置が招くリスク — 利用・管理の両面から</h3>
+
+  <p style="font-size:13px;color:#374151;margin-bottom:14px;line-height:1.8;">
+    現在 <strong>約10,200件（全体の96%）</strong> が非アクティブと推定されます。チームを放置し続けると「使う側」と「管理する側」の双方で以下のリスクが拡大します。
+  </p>
+
+  <div class="risk-grid">
+
+    <!-- 利用リスク -->
+    <div class="risk-col">
+      <div class="risk-col-hd user">👤 利用リスク — ユーザー・業務への影響</div>
+
+      <div class="risk-item">
+        <div class="risk-icon">🔍</div>
+        <div class="risk-content">
+          <div class="risk-title">情報の「迷子」化 <span class="sev sev-m">中</span></div>
+          <div class="risk-desc">チームが多すぎて目的のチームを検索・発見できない。正しい場所への投稿・参照が困難になり、同じ内容のチームを新規作成する悪循環が生まれる。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">🔄</div>
+        <div class="risk-content">
+          <div class="risk-title">重複チームの乱立 <span class="sev sev-m">中</span></div>
+          <div class="risk-desc">同じ目的のチームが複数作られ、会話・ファイルが分散。「どこに投稿すればよいか」が不明確になり、コミュニケーションが断絶する。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">📂</div>
+        <div class="risk-content">
+          <div class="risk-title">古いファイル・情報の誤参照 <span class="sev sev-m">中</span></div>
+          <div class="risk-desc">活動停止したチームの古い手順書・様式・ガイドラインが残存し、教職員・学生が最新版と誤認して参照するリスク。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">🔔</div>
+        <div class="risk-content">
+          <div class="risk-title">通知過多・重要連絡の見逃し <span class="sev sev-m">中</span></div>
+          <div class="risk-desc">多数のチームに所属しているとノイズが増大し、本当に重要な通知を見逃す。メール離れと同様の「Teams疲れ」が生じて利用率が低下する。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">👻</div>
+        <div class="risk-content">
+          <div class="risk-title">「誰も使っていない」公式チャンネルの形骸化 <span class="sev sev-l">低</span></div>
+          <div class="risk-desc">正式に設けた部署チームへの投稿がゼロになり、代わりに非公式グループが増殖。ガバナンスの空洞化が起きる。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 管理・セキュリティリスク -->
+    <div class="risk-col">
+      <div class="risk-col-hd mgmt">🛡 管理リスク — セキュリティ・組織への影響</div>
+
+      <div class="risk-item">
+        <div class="risk-icon">🚪</div>
+        <div class="risk-content">
+          <div class="risk-title">退職者・異動者のアクセス残存 <span class="sev sev-h">高</span></div>
+          <div class="risk-desc">オーナーが退職・異動してもチームが継続し、退職済みアカウントが内部チャット・ファイルにアクセスできる状態が残る。「孤立チーム（オーナー不在）」は情シスしか修正できない。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">🔐</div>
+        <div class="risk-content">
+          <div class="risk-title">機密情報の管理外放置 <span class="sev sev-h">高</span></div>
+          <div class="risk-desc">成績・人事評価・入試情報・財務データが誰も管理していないチームに残存し続ける。どのチームにどんな情報があるかの把握が不可能な状態。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">⚖️</div>
+        <div class="risk-content">
+          <div class="risk-title">個人情報保護法の管理義務違反リスク <span class="sev sev-h">高</span></div>
+          <div class="risk-desc">個人情報の保管場所・保持期間の管理が不能になり、開示請求・削除要求・インシデント報告の際に法的義務を果たせない状況になる。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">🕵️</div>
+        <div class="risk-content">
+          <div class="risk-title">インシデント対応の困難化 <span class="sev sev-h">高</span></div>
+          <div class="risk-desc">情報漏洩・不正アクセスが発生した場合、「どのチームに何があったか」の特定に膨大な調査工数が必要。被害範囲の特定が遅れ、報告・対応が後手に回る。</div>
+        </div>
+      </div>
+
+      <div class="risk-item">
+        <div class="risk-icon">💾</div>
+        <div class="risk-content">
+          <div class="risk-title">ストレージの無秩序な蓄積 <span class="sev sev-m">中</span></div>
+          <div class="risk-desc">
+            <strong>【実測値】</strong> テナントの SharePoint ストレージ使用量：<strong>163.82 TB 中 45.51 TB（使用率 27.8%）</strong>。<br>
+            10,685 チームの逆算では、1チームあたり平均 2〜3 GB 相当のデータが蓄積している計算になる。<br><br>
+            現時点で容量自体は残り約 118 TB あり、即時危機ではない。しかし以下の問題が潜在する：<br>
+            ①ライフサイクル管理なし＝毎年度の授業・プロジェクトチームが増加し続け、ストレージが際限なく増加する<br>
+            ②どのチームが何 GB を使っているか把握できず、大容量データの所在管理が不能（デザイン系学科ではPSD・動画等の大容量ファイルが多い）<br>
+            ③保持期限のないデータが10年後も残存し、情報管理義務との矛盾が生じる<br>
+            ④追加ストレージ購入が必要になった際の費用根拠が説明できない
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- リスク深刻度サマリー -->
+  <div class="card">
+    <div class="card-title">リスク深刻度サマリー</div>
+    <table class="risk-summary-table">
+      <tr>
+        <th>リスク</th>
+        <th>主な影響先</th>
+        <th>深刻度</th>
+        <th>アーカイブで解消できるか</th>
+      </tr>
+      <tr>
+        <td><strong>退職者・異動者のアクセス残存</strong></td>
+        <td>セキュリティ全般</td>
+        <td><span class="sev sev-h">高</span></td>
+        <td>✅ アーカイブ → 読み取り専用化・定期レビューで管理可能</td>
+      </tr>
+      <tr>
+        <td><strong>機密情報の管理外放置</strong></td>
+        <td>情報漏洩・法的責任</td>
+        <td><span class="sev sev-h">高</span></td>
+        <td>✅ アーカイブで可視化 → 必要なら削除に移行</td>
+      </tr>
+      <tr>
+        <td><strong>個人情報保護法の管理義務</strong></td>
+        <td>法的リスク</td>
+        <td><span class="sev sev-h">高</span></td>
+        <td>✅ 整理することで保管場所を把握・廃棄管理が可能に</td>
+      </tr>
+      <tr>
+        <td><strong>インシデント対応の困難化</strong></td>
+        <td>IT管理者・情シス</td>
+        <td><span class="sev sev-h">高</span></td>
+        <td>✅ チーム数が減れば調査範囲を絞り込める</td>
+      </tr>
+      <tr>
+        <td><strong>情報の迷子・重複チームの乱立</strong></td>
+        <td>全教職員・学生</td>
+        <td><span class="sev sev-m">中</span></td>
+        <td>✅ 整理によって「正しいチームがどれか」が明確になる</td>
+      </tr>
+      <tr>
+        <td><strong>古いファイルの誤参照</strong></td>
+        <td>業務品質</td>
+        <td><span class="sev sev-m">中</span></td>
+        <td>✅ アーカイブ化で「最新でない」が一目でわかるようになる</td>
+      </tr>
+      <tr>
+        <td><strong>通知過多・利用率の低下</strong></td>
+        <td>全ユーザー</td>
+        <td><span class="sev sev-m">中</span></td>
+        <td>✅ 余分なチームを整理することで通知が絞られる</td>
+      </tr>
+      <tr>
+        <td><strong>ストレージの無秩序な蓄積</strong><br><small style="color:#666">現在45.51 TB使用(27.8%)、1チーム平均2〜3 GB</small></td>
+        <td>IT予算・情報管理</td>
+        <td><span class="sev sev-m">中</span></td>
+        <td>✅ アーカイブで増加を抑制。削除で完全解消。ライフサイクル管理で追跡可能に</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout" style="background:#f0f4ff;border-left:4px solid #5558af;">
+    <strong>📊 ストレージ実測値（2026年7月時点）</strong><br>
+    テナント総容量 <strong>163.82 TB</strong> に対し <strong>45.51 TB を使用（27.8%）</strong>。残り 118 GB の余裕があるが、ライフサイクル管理なしにチームを増やし続けると増加一方となる。<br>
+    10,685 チームの逆算：平均 2〜3 GB/チーム。アーカイブ・削除フローを導入することで、新規チーム作成のスペースを確保しながら上限超過を回避できる。
+  </div>
+
+  <div class="callout red">
+    <strong>重要：</strong>深刻度「高」の4リスクはいずれも <strong>情報セキュリティ・法的責任に直結</strong> します。放置はリスクを時間とともに拡大させます。アーカイブによる整理は「整頓」ではなく、<strong>セキュリティと法的管理義務を果たすための必須対応</strong> です。
+  </div>
+
+  <h3>アーカイブとは何か</h3>
+  <div class="card">
+    <div class="card-title">アーカイブ後の状態</div>
+    <table style="table-layout:fixed;width:100%;">
+      <colgroup>
+        <col style="width:22%;">
+        <col style="width:18%;">
+        <col style="width:60%;">
+      </colgroup>
+      <tr><th>項目</th><th>アーカイブ前</th><th>アーカイブ後</th></tr>
+      <tr><td style="white-space:nowrap;">チャット・投稿の閲覧</td><td>✅ 可能</td><td>✅ 可能（読み取り専用）</td></tr>
+      <tr><td style="white-space:nowrap;">新しい投稿・返信</td><td>✅ 可能</td><td>🚫 不可</td></tr>
+      <tr><td style="white-space:nowrap;">ファイル・タブの閲覧</td><td>✅ 可能</td><td>✅ 可能（読み取り専用）</td></tr>
+      <tr><td style="white-space:nowrap;">ファイルの追加・編集</td><td>✅ 可能</td><td>🚫 不可</td></tr>
+      <tr><td style="white-space:nowrap;">チーム一覧での表示</td><td>✅ 通常リストに表示</td><td>⚪ 通常リストから外れ、サイドバー最下部の「アーカイブ済み」セクションに移動。展開すれば閲覧可</td></tr>
+      <tr><td style="white-space:nowrap;">ライセンス消費</td><td>消費</td><td><strong>消費なし（コスト削減）</strong></td></tr>
+      <tr><td style="white-space:nowrap;">復元</td><td>—</td><td>✅ いつでも可能（オーナー / IT管理者）</td></tr>
+    </table>
+  </div>
+
+  <h3>ストレージは変わらない — それでもアーカイブする理由</h3>
+  <div class="callout orange" style="margin-bottom:16px;">
+    <strong>⚠️ 前提として知っておくべきこと：</strong>アーカイブしてもストレージ使用量は変わりません。データを実際に解放するには<strong>削除</strong>が必要です。<br>
+    それでもアーカイブを先に行う理由は、削除前の「確認バッファ」と、以下のような即時メリットにあります。
+  </div>
+
+  <div class="compare-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="compare-card">
+      <div class="ct" style="border-color:#7c3aed;color:#7c3aed;">🔍 検索・Copilot の精度が上がる</div>
+      <p style="font-size:13px;color:#374151;margin:0;">アーカイブされたチームは通常の検索結果から除外されます。Teams 検索・Microsoft Copilot が参照するコンテキストが絞られ、<strong>古い情報に引っ張られた誤回答が減少</strong>します。</p>
+    </div>
+    <div class="compare-card">
+      <div class="ct" style="border-color:#d97706;color:#d97706;">🚫 誤投稿・誤更新を防ぐ</div>
+      <p style="font-size:13px;color:#374151;margin:0;">読み取り専用になるため、完了済みのプロジェクトや終了した授業のチームに<strong>誰かが誤ってメッセージを送ったりファイルを更新する事故を防げます</strong>。</p>
+    </div>
+    <div class="compare-card">
+      <div class="ct" style="border-color:#0369a1;color:#0369a1;">📋 管理の見通しがよくなる</div>
+      <p style="font-size:13px;color:#374151;margin:0;">Teams管理センターでアクティブチームとアーカイブ済みチームが明確に区別されます。<strong>「今動いているチームが何件か」が即座に把握でき</strong>、棚卸しや監査の工数が大幅に減ります。</p>
+    </div>
+    <div class="compare-card">
+      <div class="ct" style="border-color:#16a34a;color:#16a34a;">🛡 削除前の安全確認期間になる</div>
+      <p style="font-size:13px;color:#374151;margin:0;">いきなり削除すると復元できない場合があります。アーカイブを経由することで、<strong>「本当に不要か」を確認する猶予期間</strong>（推奨6ヶ月）を設けられます。</p>
+    </div>
+  </div>
+
+  <h3>💻 画面で見るアーカイブの変化</h3>
+
+  <!-- ① サイドバー比較 -->
+  <div class="card">
+    <div class="card-title">① チーム一覧での見え方の変化（Teamsサイドバー）</div>
+    <div class="mock-wrap">
+      <div class="mock-panel">
+        <div class="mock-panel-title">📌 通常状態（アーカイブ前）</div>
+        <div class="t-sidebar">
+          <div class="t-sidebar-header">チーム</div>
+          <div class="t-team-item active-item">
+            <div class="t-team-avatar" style="background:#8b5cf6;">情</div>
+            <div class="t-team-name">情報システム_M365推進</div>
+            <div class="t-active-dot"></div>
+          </div>
+          <div class="t-team-item">
+            <div class="t-team-avatar" style="background:#0ea5e9;">学</div>
+            <div class="t-team-name">2026後_デザイン基礎IA_田中</div>
+          </div>
+          <div class="t-team-item">
+            <div class="t-team-avatar" style="background:#f59e0b;">PJ</div>
+            <div class="t-team-name">PJ_M365移行_202612</div>
+          </div>
+          <div class="t-team-item">
+            <div class="t-team-avatar" style="background:#10b981;">入</div>
+            <div class="t-team-name">入試広報室</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 4px;font-size:22px;color:#9ca3af;flex-shrink:0;">→</div>
+
+      <div class="mock-panel">
+        <div class="mock-panel-title">🔒 アーカイブ後（対象チームが通常リストから消える）</div>
+        <div class="t-sidebar">
+          <div class="t-sidebar-header">チーム</div>
+          <div class="t-team-item active-item">
+            <div class="t-team-avatar" style="background:#8b5cf6;">情</div>
+            <div class="t-team-name">情報システム_M365推進</div>
+            <div class="t-active-dot"></div>
+          </div>
+          <div class="t-team-item">
+            <div class="t-team-avatar" style="background:#0ea5e9;">学</div>
+            <div class="t-team-name">2026後_デザイン基礎IA_田中</div>
+          </div>
+          <div class="t-team-item">
+            <div class="t-team-avatar" style="background:#10b981;">入</div>
+            <div class="t-team-name">入試広報室</div>
+          </div>
+          <hr class="t-section-divider">
+          <div class="t-section-label">アーカイブ済み</div>
+          <div class="t-team-item">
+            <div class="t-team-avatar" style="background:#9ca3af;">PJ</div>
+            <div class="t-team-name archived-name">PJ_M365移行_202612</div>
+            <div class="t-lock-icon">🔒</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:6px;">💡 アーカイブ済みチームは通常のチームリストから非表示になります。サイドバー下部の「アーカイブ済み」セクション、または検索フィルターで確認できます。</p>
+  </div>
+
+  <!-- ② アーカイブ操作手順 -->
+  <div class="card">
+    <div class="card-title">② アーカイブ操作手順（チームオーナー）</div>
+    <div class="mock-steps">
+      <div class="mock-step">
+        <div class="mock-step-num">1</div>
+        <div class="mock-step-body">
+          <div class="mock-step-title">チーム名の横の「…」をクリック → コンテキストメニューを開く</div>
+          <div style="margin-top:8px;">
+            <div class="ctx-menu" style="max-width:220px;">
+              <div class="ctx-item">📌 ピン留め</div>
+              <div class="ctx-item">👥 メンバーを追加</div>
+              <hr class="ctx-separator">
+              <div class="ctx-item">⚙️ チームの管理</div>
+              <hr class="ctx-separator">
+              <div class="ctx-item ctx-danger">🔒 このチームをアーカイブする</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mock-step">
+        <div class="mock-step-num">2</div>
+        <div class="mock-step-body">
+          <div class="mock-step-title">確認ダイアログが表示される → 「アーカイブ」をクリック</div>
+          <div style="margin-top:8px;">
+            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:16px;max-width:300px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+              <div style="font-size:13px;font-weight:700;color:#111827;margin-bottom:8px;">チームをアーカイブしますか？</div>
+              <div style="font-size:12px;color:#6b7280;margin-bottom:12px;line-height:1.7;">アーカイブ後はチームが読み取り専用になります。<br>オーナーまたは情シスがいつでも復元できます。</div>
+              <div style="display:flex;gap:8px;justify-content:flex-end;">
+                <div style="padding:5px 12px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;cursor:pointer;color:#374151;">キャンセル</div>
+                <div style="padding:5px 12px;background:#5558af;color:#fff;border-radius:4px;font-size:12px;cursor:pointer;font-weight:700;">アーカイブ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mock-step">
+        <div class="mock-step-num">3</div>
+        <div class="mock-step-body">
+          <div class="mock-step-title">アーカイブ完了 — チームが読み取り専用になる</div>
+          <div style="margin-top:8px;">
+            <div class="mock-panel" style="max-width:420px;">
+              <div class="t-channel-header">
+                <span style="font-size:16px;">🔒</span>
+                <div>
+                  <div class="t-channel-title">PJ_M365移行_202612</div>
+                  <div class="t-channel-sub">一般 • アーカイブ済み</div>
+                </div>
+              </div>
+              <div class="t-archived-banner">
+                <span>⚠️</span> このチームはアーカイブされています。閲覧のみ可能です。
+              </div>
+              <div class="t-messages">
+                <div class="t-message">
+                  <div class="t-avatar">田</div>
+                  <div class="t-msg-body">
+                    <div class="t-msg-name">田中 一郎 <span>昨日 14:30</span></div>
+                    <div class="t-msg-text">M365移行作業が完了しました。お疲れ様でした。</div>
+                  </div>
+                </div>
+              </div>
+              <div class="t-input-bar">
+                <div class="t-input-box t-disabled">アーカイブされたチームにはメッセージを送信できません</div>
+                <div class="t-send-btn t-disabled">送信</div>
+              </div>
+            </div>
+          </div>
+          <div class="mock-step-desc" style="margin-top:8px;">チャットや投稿・ファイルは引き続き閲覧できます。データは完全に保持されます。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 復元手順 -->
+  <div class="card">
+    <div class="card-title">③ アーカイブ解除（復元）手順</div>
+    <div class="mock-wrap">
+      <div style="flex:1;min-width:240px;">
+        <span class="role-label-blue">👤 チームオーナーが自分で復元する場合</span>
+        <div class="mock-steps">
+          <div class="mock-step">
+            <div class="mock-step-num">1</div>
+            <div class="mock-step-body">
+              <div class="mock-step-title">サイドバー下部の「アーカイブ済み」セクションを確認</div>
+              <div class="mock-step-desc">対象チームがグレーアウト＋🔒で表示されています</div>
+            </div>
+          </div>
+          <div class="mock-step">
+            <div class="mock-step-num">2</div>
+            <div class="mock-step-body">
+              <div class="mock-step-title">対象チームの「…」→「アーカイブを解除する」</div>
+              <div style="margin-top:6px;">
+                <div class="ctx-menu" style="max-width:200px;">
+                  <div class="ctx-item">📂 ファイルを見る</div>
+                  <hr class="ctx-separator">
+                  <div class="ctx-item ctx-safe">🔓 アーカイブを解除する</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mock-step">
+            <div class="mock-step-num">3</div>
+            <div class="mock-step-body">
+              <div class="mock-step-title">数秒で通常状態に復元</div>
+              <div class="mock-step-desc">メッセージ送信・ファイル編集がすぐに可能になります。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:240px;">
+        <span class="role-label-navy">🛠 IT管理者が管理センターから操作する場合</span>
+        <div class="mock-panel">
+          <div class="admin-header">Microsoft Teams 管理センター</div>
+          <div class="admin-filter">
+            <span>すべてのチーム</span>
+            <span class="f-active">アーカイブ済み ▾</span>
+          </div>
+          <div class="admin-row">
+            <div class="a-team-icon">PJ</div>
+            <div class="a-team-info">
+              <div class="a-team-name">PJ_M365移行_202612</div>
+              <div class="a-team-meta">アーカイブ: 2026-07-09 • メンバー 8名</div>
+            </div>
+            <div class="a-restore-link">復元</div>
+          </div>
+          <div class="admin-row">
+            <div class="a-team-icon" style="background:#f59e0b;">学</div>
+            <div class="a-team-info">
+              <div class="a-team-name">2025後_デザイン史Ⅱ_山本</div>
+              <div class="a-team-meta">アーカイブ: 2026-03-31 • メンバー 24名</div>
+            </div>
+            <div class="a-restore-link">復元</div>
+          </div>
+          <div class="admin-row">
+            <div class="a-team-icon" style="background:#10b981;">入</div>
+            <div class="a-team-info">
+              <div class="a-team-name">2025_入試検討WG</div>
+              <div class="a-team-meta">アーカイブ: 2025-12-15 • メンバー 6名</div>
+            </div>
+            <div class="a-restore-link">復元</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;">Teams 管理センター → チーム → フィルターで「アーカイブ済み」を選択 → 対象チームの「復元」をクリック</div>
+      </div>
+    </div>
+    <div class="callout green" style="margin-top:16px;">
+      <strong>ポイント：</strong>オーナーが自分で復元できるため、情シスへの問い合わせ・申請は不要です。「アーカイブ＝永久に消える」ではなく、<strong>「いつでも元に戻せる一時保管状態」</strong>と覚えてください。
+    </div>
+  </div>
+
+  <h3>誰がアーカイブ・復元できるか</h3>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="ct" style="border-color:#5558af;color:#5558af;">👤 チームオーナー</div>
+      <ul>
+        <li>自分のチームをいつでも <strong>アーカイブ</strong> できる</li>
+        <li>アーカイブしたチームを自分で <strong>復元（アーカイブ解除）</strong> できる</li>
+        <li>Teams アプリから直接操作（チーム設定）</li>
+        <li>IT管理者への申請・承認は不要</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="ct" style="border-color:#1a56a0;color:#1a56a0;">🛠 IT管理者（情シス）</div>
+      <ul>
+        <li><strong>全チームを対象</strong>に一括アーカイブ操作できる</li>
+        <li>PowerShell / Teams 管理センターから実行</li>
+        <li>一括処理スクリプトで非アクティブチームを効率整理</li>
+        <li>アーカイブ済みチームの完全削除も可能</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>結論：</strong>チームオーナーは申請不要・自分で復元できます。IT管理者も同様に復元可能なため、「アーカイブ＝完全に失われる」ではありません。不明な場合はアーカイブ解除するだけで元に戻ります。
+  </div>
+
+  <h3>削除との違い</h3>
+  <table>
+    <tr><th>操作</th><th>内容</th><th>復元</th><th>推奨タイミング</th></tr>
+    <tr>
+      <td><strong>アーカイブ</strong></td>
+      <td>読み取り専用で保持。データは残る</td>
+      <td>✅ 即時・誰でも</td>
+      <td><strong>非アクティブ検出時（まず実施）</strong></td>
+    </tr>
+    <tr>
+      <td><strong>削除</strong></td>
+      <td>チームとデータを削除</td>
+      <td>⚠️ 30日間のみ（管理者のみ）</td>
+      <td>アーカイブ後 6ヶ月以上経過 & 不要確認済<br><small style="color:#6b7280;">※ 学籍・成績・研究・入試関係など保持義務があるコンテンツを含むチームは削除前に文書管理規程を確認すること</small></td>
+    </tr>
+  </table>
+
+  <h3>武蔵美での推奨フロー</h3>
+
+  <div class="callout blue" style="margin-bottom:16px;">
+    <strong>💡 2つのフローを使い分けます：</strong>既存10,000件の<strong>初回クリーンアップ</strong>と、新規チームの<strong>恒常運用</strong>では仕組みが異なります。
+  </div>
+
+  <!-- フロー① 初回クリーンアップ -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:8px;">📦 フロー① 初回クリーンアップ（既存約10,000件・手動）</div>
+    <div class="flow">
+      <div class="flow-step info">対象抽出<br><small>管理センターで非アクティブ一覧</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step info">事前告知<br><small>全教職員へ2週間前に通知</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warn">一括アーカイブ<br><small>読み取り専用・復元可</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warn">6ヶ月保留<br><small>復元申請を受け付ける</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step alert">申請なし → 削除<br><small>※保持義務チームは除く</small></div>
+    </div>
+  </div>
+
+  <!-- フロー② 恒常運用 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:8px;">⚙️ フロー② 恒常運用（新規チーム・有効期限ポリシーで自動管理）</div>
+    <div class="callout" style="background:#f0f4ff;border-left:4px solid #5558af;margin-bottom:10px;font-size:12px;">
+      <strong>仕様：</strong>M365グループ有効期限ポリシーは<strong>アーカイブを経由しません</strong>。期限切れになると直接ソフト削除（30日間は管理者が復元可）されます。<br>
+      ⚠️ 「最後のメッセージから30日」などアクティビティベースの検出は標準機能にありません。有効期限ポリシーは「作成 or 最終更新から指定日数」での管理です。
+    </div>
+    <div class="flow">
+      <div class="flow-step info">有効期限ポリシー設定<br><small>業務系 365日／授業系 学期末</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step info">期限30日前に<br>オーナーへ自動メール<br><small>（標準機能）</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warn">オーナーが<br>1クリックで延長</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warn">未更新のまま<br>期限切れ</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step alert">直接ソフト削除<br><small>アーカイブなし・30日間復元可</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">初回クリーンアップ 実施ステップ</div>
+    <ul class="proposal-list">
+      <li>
+        <span class="pl-icon">1️⃣</span>
+        <span><strong>対象抽出</strong>：Teams管理センターの「非アクティブなチーム」フィルタで一覧をエクスポート。約10,000件が対象見込み。</span>
+      </li>
+      <li>
+        <span class="pl-icon">2️⃣</span>
+        <span><strong>段階的アーカイブ</strong>：教職員に事前告知（2週間前）→ 非アクティブ全件アーカイブ。オーナーはいつでも復元可。</span>
+      </li>
+      <li>
+        <span class="pl-icon">3️⃣</span>
+        <span><strong>6ヶ月後に確認</strong>：復元の申し出がないチームを削除候補にリスト化 → 確認後に削除。</span>
+      </li>
+      <li>
+        <span class="pl-icon">✅</span>
+        <span><strong>恒常運用化</strong>：Entra ID の有効期限ポリシーを設定し、新規チームから自動ライフサイクル管理を適用。スクリプト不要で継続運用できます。</span>
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 2: チーム種別 管理分離                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab1">
+<div class="content">
+  <div class="panel-title">② 業務系 / 授業系 チーム種別管理分離</div>
+
+  <div class="callout blue">
+    <strong>目的：</strong>1万件超のTeamsを「業務系（部署・プロジェクト）」と「授業系（授業・ゼミ）」に分類し、それぞれに合った命名規則・所有者ルール・有効期限を適用することで、管理を持続可能にします。
+  </div>
+
+  <h3>2種類の分類定義</h3>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="ct" style="border-color:#1d4ed8;color:#1d4ed8;">💼 業務系チーム</div>
+      <ul>
+        <li>部署・委員会・プロジェクト単位のチーム</li>
+        <li>例：入試広報室、学務課、IT推進プロジェクト</li>
+        <li>継続期間：部署存続中は永続（有効期限は延長前提）</li>
+        <li>所有者：<strong>部署長（または担当係長）</strong></li>
+        <li>作成権限：部署長承認後に情シスが作成</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="ct" style="border-color:#7c3aed;color:#7c3aed;">🎓 授業系チーム</div>
+      <ul>
+        <li>授業・ゼミ・研究室単位のチーム</li>
+        <li>例：2026後期 デザイン基礎ⅠA、佐藤ゼミ 2026年度</li>
+        <li>継続期間：<strong>年度・学期単位（学期末に自動アーカイブ）</strong></li>
+        <li>所有者：<strong>担当教員</strong></li>
+        <li>作成権限：<strong>教員が自由に作成可（申請不要）</strong>。有効期限で自動管理</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>命名規則案</h3>
+  <div class="card">
+    <div class="card-title">命名フォーマット</div>
+    <table>
+      <tr><th>種別</th><th>フォーマット</th><th>例</th></tr>
+      <tr>
+        <td><span class="badge badge-info">業務系</span></td>
+        <td><code>[部署略称]_[チーム名]</code></td>
+        <td><code>AD_情報システム_M365推進</code><br><code>GK_学務課_履修管理</code></td>
+      </tr>
+      <tr>
+        <td><span class="badge" style="background:#ede9fe;color:#6d28d9;">授業系</span></td>
+        <td><code>[年度][期]_[科目名]_[担当者]</code></td>
+        <td><code>2026後_デザイン基礎IA_田中</code><br><code>2026通_佐藤ゼミ</code></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">プロジェクト系</span></td>
+        <td><code>PJ_[プロジェクト名]_[終了年月]</code></td>
+        <td><code>PJ_M365移行_202612</code></td>
+      </tr>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">※ 部署略称は情シスが管理する略称テーブルで統一（AD=管理部門、GK=学務課 など）</p>
+  </div>
+
+  <h3>所有者ルール</h3>
+  <table>
+    <tr><th>種別</th><th>主所有者</th><th>副所有者（必須）</th><th>メンバー追加権限</th></tr>
+    <tr>
+      <td><span class="badge badge-info">業務系</span></td>
+      <td>部署長 / 担当係長</td>
+      <td>情シス担当者 1名</td>
+      <td>所有者のみ</td>
+    </tr>
+    <tr>
+      <td><span class="badge" style="background:#ede9fe;color:#6d28d9;">授業系</span></td>
+      <td>担当教員</td>
+      <td>学務担当者 1名</td>
+      <td>所有者のみ（学生は自己追加不可）</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-warn">プロジェクト系</span></td>
+      <td>プロジェクトリーダー</td>
+      <td>情シス担当者 1名</td>
+      <td>所有者のみ</td>
+    </tr>
+  </table>
+
+  <div class="callout orange">
+    <strong>副所有者に情シスを設定する理由：</strong>所有者が退職・異動した場合でも孤立チームが発生しない。情シスが「緊急の引き継ぎ窓口」として機能します。
+  </div>
+
+  <h3>チーム作成権限（ハイブリッド型の具体的運用）</h3>
+  <div class="card">
+    <div class="card-title">申請〜作成フロー</div>
+    <div class="flow">
+      <div class="flow-step info">申請フォーム送信<br><span style="font-size:10px">（SharePoint リスト）</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step warn">情シス確認<br><span style="font-size:10px">（命名規則・種別確認）</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step ok">自動またはIT管理者作成</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step ok">申請者（所有者）に通知</div>
+    </div>
+    <p style="font-size:13px;margin-top:8px;">申請フォームで収集する情報: チーム種別 / チーム名案 / 利用目的 / 主所有者 / 想定メンバー数 / 終了予定時期</p>
+  </div>
+
+  <h3>有効期限ポリシー</h3>
+  <table>
+    <tr><th>種別</th><th>管理方式</th><th>初期設定</th><th>期限通知</th><th>期限後の動作</th></tr>
+    <tr>
+      <td><span class="badge badge-info">業務系</span></td>
+      <td>有効期限ポリシー（自動）</td>
+      <td>12ヶ月</td>
+      <td>期限30日前・15日前・1日前にオーナーへメール通知</td>
+      <td>オーナーがメール内リンクから1クリックで延長。未更新の場合は<strong>自動ソフト削除</strong>（管理者のみ30日以内に復元可）</td>
+    </tr>
+    <tr>
+      <td><span class="badge" style="background:#ede9fe;color:#6d28d9;">授業系</span></td>
+      <td>有効期限ポリシー（自動）</td>
+      <td>学期末（3月 or 9月）</td>
+      <td>期限2週間前にオーナー（担当教員）へメール通知</td>
+      <td><strong>自動ソフト削除</strong>（管理者のみ30日以内に復元可）<br><small style="color:#6b7280;">※ 自動アーカイブは標準機能にありません</small></td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-warn">プロジェクト系</span></td>
+      <td>手動管理</td>
+      <td>申請時に指定（6〜12ヶ月）</td>
+      <td>期限1ヶ月前に通知</td>
+      <td>プロジェクト完了時にオーナーが手動アーカイブ → 6ヶ月後に確認・削除</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:8px;">※ 業務系・授業系は有効期限ポリシーによる自動ソフト削除。プロジェクト系はプロジェクト完了時点でオーナーが手動アーカイブし、その後削除する手動管理フローです。</p>
+
+  <div class="callout green" style="margin-top:16px;">
+    <strong>💾 例外ルート：削除せずアーカイブのまま継続保持したい場合</strong><br><br>
+    オーナーから「削除せずに記録として残したい」という希望があった場合、以下の手順でアーカイブ保持に切り替えできます。
+    <ol style="margin:10px 0 4px 16px;font-size:13px;line-height:2;">
+      <li>オーナーがIT管理者へアーカイブ保持を申請</li>
+      <li>IT管理者がチームをアーカイブ（読み取り専用化）</li>
+      <li>IT管理者が当該グループを有効期限ポリシーの対象から除外<br>
+        <small style="color:#6b7280;">※ この除外設定をしないと、アーカイブ後も期限が来るとソフト削除されるため必須</small></li>
+    </ol>
+    以後は読み取り専用のまま継続保持されます（削除されません）。不要になった時点でオーナーまたは管理者が手動で削除します。
+  </div>
+
+  <h3>移行計画（既存1万チームの扱い）</h3>
+  <ul class="proposal-list">
+    <li>
+      <span class="pl-icon">①</span>
+      <span><strong>スコープ絞り：</strong>既存チームに命名規則を遡及適用しない。<strong>新規作成分から適用</strong>し、既存は段階的に移行。</span>
+    </li>
+    <li>
+      <span class="pl-icon">②</span>
+      <span><strong>アクティブチームの名称変更：</strong>アクティブ400件程度を対象に、情シスとオーナーが連携して命名規則に沿ったリネームを実施。</span>
+    </li>
+    <li>
+      <span class="pl-icon">③</span>
+      <span><strong>非アクティブチームは一括アーカイブ：</strong>（Tab 1の計画と連動）命名規則よりも整理を優先。アーカイブ後にリネームは不要。</span>
+    </li>
+  </ul>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 3: 外部・ゲストアクセス                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab2">
+<div class="content">
+  <div class="panel-title">③ 外部アクセス・ゲストアクセスの限定開放</div>
+
+  <!-- 結論カード -->
+  <div class="card" style="border-left:4px solid #16a34a; background:#f0fdf4; margin-bottom:24px;">
+    <div class="card-title" style="color:#166534;">✅ 結論：ゲストアクセスを「申請制・条件付き」で有効化する</div>
+
+    <p style="margin-bottom:16px;">現在オフになっているゲストアクセスを、以下の条件を満たした上で限定的に開放します。外部アクセス（フェデレーション）は引き続き保留します。</p>
+
+    <table style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:16px;">
+      <tr>
+        <th style="background:#dcfce7; padding:8px 12px; text-align:left; border-bottom:2px solid #86efac; width:30%;">論点</th>
+        <th style="background:#dcfce7; padding:8px 12px; text-align:left; border-bottom:2px solid #86efac;">回答</th>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px; border-bottom:1px solid #bbf7d0; font-weight:600;">なぜ開放するのか</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #bbf7d0;">産学連携・外部講師・他大学との単位互換プログラムなど、<strong>学内だけでは完結しない業務が実際にある</strong>。現状はメール主体でファイルや議事録が散乱しており、Teams上で完結させることで管理・品質ともに向上する。</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px; border-bottom:1px solid #bbf7d0; font-weight:600;">セキュリティは大丈夫か</td>
+        <td style="padding:10px 12px; border-bottom:1px solid #bbf7d0;">以下5つの制御を組み合わせるため、全開放ではなく<strong>管理された限定開放</strong>になる：<br>
+          ① 招待できるのは<strong>チームオーナーのみ</strong>（メンバーは招待不可）<br>
+          ② 招待前に<strong>情シスの承認が必要</strong>（申請制）<br>
+          ③ ゲストアカウントは<strong>90日で自動失効</strong>（放置アカウントが残らない）<br>
+          ④ 秘密度ラベル「教職員」以上のチームへの招待は<strong>禁止</strong><br>
+          ⑤ ゲストが別チームにさらに招待する<strong>連鎖招待は禁止</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px; font-weight:600;">何をするか（アクション）</td>
+        <td style="padding:10px 12px;">
+          <div style="margin-bottom:8px;"><span style="background:#dbeafe;color:#1e40af;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;">初期実装（一回限り）</span></div>
+          <ol style="margin:0 0 12px 16px;font-size:13px;line-height:2;">
+            <li>Teams管理センターでゲストアクセスをテナント全体で有効化</li>
+            <li>ゲスト招待申請フォームと情シス承認フローを整備（下記構成を参照）</li>
+          </ol>
+
+          <!-- 申請フロー構成 -->
+          <div style="background:#f8f9ff;border:1px solid #c7caed;border-radius:8px;padding:14px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:10px;">📋 申請フロー構成（M365標準機能のみ・追加費用なし）</div>
+            <div style="display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap;font-size:12px;">
+              <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 12px;min-width:130px;text-align:center;">
+                <div style="font-size:16px;margin-bottom:4px;">📝</div>
+                <div style="font-weight:700;color:#1e40af;">Microsoft Forms</div>
+                <div style="color:#6b7280;margin-top:3px;line-height:1.5;">教職員が申請<br>（ゲスト氏名・メール・<br>目的・対象チーム・期間）</div>
+              </div>
+              <div style="display:flex;align-items:center;color:#9ca3af;font-size:18px;padding-top:20px;">→</div>
+              <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 12px;min-width:130px;text-align:center;">
+                <div style="font-size:16px;margin-bottom:4px;">⚡</div>
+                <div style="font-weight:700;color:#7c3aed;">Power Automate</div>
+                <div style="color:#6b7280;margin-top:3px;line-height:1.5;">フォーム送信を検知し<br>承認リクエストを<br>自動送信</div>
+              </div>
+              <div style="display:flex;align-items:center;color:#9ca3af;font-size:18px;padding-top:20px;">→</div>
+              <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 12px;min-width:130px;text-align:center;">
+                <div style="font-size:16px;margin-bottom:4px;">✅</div>
+                <div style="font-weight:700;color:#15803d;">Teams 承認アプリ</div>
+                <div style="color:#6b7280;margin-top:3px;line-height:1.5;">IT管理者がTeams上で<br>承認 / 否認</div>
+              </div>
+              <div style="display:flex;align-items:center;color:#9ca3af;font-size:18px;padding-top:20px;">→</div>
+              <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 12px;min-width:130px;text-align:center;">
+                <div style="font-size:16px;margin-bottom:4px;">👤</div>
+                <div style="font-weight:700;color:#d97706;">Entra ID</div>
+                <div style="color:#6b7280;margin-top:3px;line-height:1.5;">承認後にPower Automateが<br>ゲスト招待を<br>自動実行</div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#6b7280;margin-top:10px;">💡 申請履歴はSharePointリストに自動記録されるよう設定すると、四半期棚卸し時の一覧として活用できます。</div>
+          </div>
+          <div style="margin-bottom:8px;"><span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;">継続運用</span></div>
+          <ul style="margin:0 0 0 16px;font-size:13px;line-height:2;">
+            <li>四半期ごとにゲストアカウント一覧を棚卸し、90日自動失効を補完する形で不要アカウントを確認・削除</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout orange">
+    <strong>現状：</strong>外部アクセス（フェデレーション）・ゲストアクセスのいずれも現在 <strong>オフ</strong> の状態。一方でTeamsポリシー上は外部共有がONとなっており矛盾が発生。産学連携・研究協力でのニーズが実際にある。
+  </div>
+
+  <h3>「外部アクセス」と「ゲストアクセス」の違い（用語整理）</h3>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="ct" style="border-color:#dc2626;color:#dc2626;">🔒 外部アクセス（フェデレーション）<br><span style="font-weight:400;font-size:11px">現在: OFF</span></div>
+      <ul>
+        <li>他大学・他企業のM365テナントユーザーと <strong>チャット・通話</strong> を直接行う機能</li>
+        <li>相手が武蔵美テナントに参加せず、それぞれのテナントのまま通信</li>
+        <li>ファイル共有・チームへの招待は <strong>不可</strong></li>
+        <li>セキュリティリスクは比較的低い</li>
+        <li><span class="badge badge-warn">今回の推奨：まだ保留</span> セキュリティポリシーの整備後に検討</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="ct" style="border-color:#dc2626;color:#dc2626;">🚪 ゲストアクセス<br><span style="font-weight:400;font-size:11px">現在: OFF</span></div>
+      <ul>
+        <li>外部ユーザー（大学アカウント・個人アカウント問わず）を <strong>特定チームに招待</strong> する機能</li>
+        <li>招待されたチームのチャット・ファイル・会議に参加可能</li>
+        <li>テナント全体ではなく <strong>チーム単位でコントロール可能</strong></li>
+        <li><span class="recommend-badge">✅ 今回の推奨：限定的に有効化</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>ゲストアクセスを有効化する理由</h3>
+  <ul class="proposal-list">
+    <li>
+      <span class="pl-icon">🎓</span>
+      <span><strong>産学連携・研究協力：</strong>企業・他大学の研究者と共同プロジェクトを進める際に、メール往復なくTeamsで協業できる</span>
+    </li>
+    <li>
+      <span class="pl-icon">🎨</span>
+      <span><strong>外部クリエイター・講師：</strong>非常勤講師や外部ゲスト講師が授業チームに参加できる</span>
+    </li>
+    <li>
+      <span class="pl-icon">🏫</span>
+      <span><strong>他大学との単位互換プログラム：</strong>市ヶ谷キャンパス連携・共同授業で学外参加者との連携が可能になる</span>
+    </li>
+  </ul>
+
+  <h3>推奨する限定開放の設計</h3>
+  <div class="card">
+    <div class="card-title">ゲストアクセス有効化時の制限設定</div>
+    <table>
+      <tr><th>設定項目</th><th>推奨値</th><th>理由</th></tr>
+      <tr>
+        <td>ゲスト招待権限</td>
+        <td><strong>チームオーナーのみ</strong>（メンバーは招待不可）</td>
+        <td>招待の入口を絞る</td>
+      </tr>
+      <tr>
+        <td>ゲストの通話・会議</td>
+        <td>✅ 許可</td>
+        <td>コラボレーションに必要</td>
+      </tr>
+      <tr>
+        <td>ゲストのファイルアクセス</td>
+        <td>✅ 許可（当該チームのファイルのみ）</td>
+        <td>業務上必要</td>
+      </tr>
+      <tr>
+        <td>ゲストが他チームへの招待</td>
+        <td>🚫 禁止</td>
+        <td>連鎖招待防止</td>
+      </tr>
+      <tr>
+        <td>ゲストのプライベートチャット</td>
+        <td>🚫 禁止（チームチャットのみ）</td>
+        <td>会話の可視性確保</td>
+      </tr>
+      <tr>
+        <td>ゲストアカウントの有効期限</td>
+        <td><strong>90日（自動失効）</strong></td>
+        <td>幽霊アカウントの累積防止</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>申請〜アクセス付与フロー</h3>
+  <div class="flow">
+    <div class="flow-step info">オーナーがSharePoint申請フォームで申請<br><span style="font-size:10px">（招待理由・期間・招待先メール）</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step warn">情シスが確認・承認<br><span style="font-size:10px">（1〜2営業日）</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step ok">オーナーが対象チームにゲスト招待</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step info">90日後に自動失効通知<br>→ 必要なら延長申請</div>
+  </div>
+
+  <h3>セキュリティリスクと対策</h3>
+  <table>
+    <tr><th>リスク</th><th>対策</th></tr>
+    <tr>
+      <td>機密情報の漏洩</td>
+      <td>秘密度ラベル「教職員」が設定されたチームへのゲスト招待は禁止。「教職員＋学生」以上のラベルでも招待前に要承認</td>
+    </tr>
+    <tr>
+      <td>ゲストの過剰アクセス</td>
+      <td>チーム単位の制御 + ゲスト招待ログの月次レビュー</td>
+    </tr>
+    <tr>
+      <td>幽霊ゲストの累積</td>
+      <td>90日の自動失効 + 四半期ごとのゲスト棚卸し（Entra IDで一覧取得）</td>
+    </tr>
+    <tr>
+      <td>管理外チームへの招待</td>
+      <td>招待権限をオーナーのみに制限（情シスが副所有者として全チームを把握）</td>
+    </tr>
+    <tr>
+      <td>個人メールアカウントの招待</td>
+      <td>招待対象を組織メール（edu / co.jp 等）に制限する設定を適用</td>
+    </tr>
+  </table>
+
+  <h3>他大学の導入事例</h3>
+  <div class="card">
+    <div class="card-title">ゲストアクセス活用事例（一般的な国内大学）</div>
+    <ul class="proposal-list">
+      <li>
+        <span class="pl-icon">🏫</span>
+        <span><strong>産学連携チームへの企業担当者招待：</strong>研究プロジェクトごとにTeamsを作成し、企業側担当者をゲストとして招待。週次定例・ファイル共有・進捗管理をTeams上で完結。</span>
+      </li>
+      <li>
+        <span class="pl-icon">🎓</span>
+        <span><strong>他大学との単位互換授業：</strong>複数大学が参加する共同授業チームに、他大学教員・学生をゲスト招待。授業資料の共有・課題提出をTeams上で実施。</span>
+      </li>
+      <li>
+        <span class="pl-icon">🎨</span>
+        <span><strong>外部専門家の招聘：</strong>デザイン系・芸術系大学において、業界の第一人者をゲスト講師としてTeamsに招待し、学生と直接対話する授業形式を採用。</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="callout green">
+    <strong>推奨まとめ：</strong>まずゲストアクセスのみを <strong>申請制・90日自動失効・情シス承認</strong> の条件付きで有効化します。外部アクセス（フェデレーション）はセキュリティポリシー整備後に改めて検討します。ゲストアカウントの管理コストは四半期棚卸しで最小化できます。
+  </div>
+</div>
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+}
+</script>
+</body>
+</html>
