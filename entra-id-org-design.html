@@ -200,12 +200,13 @@
 <div class="page-header">
   <div>
     <h1>Entra ID 組織構造設計 — 階層・兼務の実現可否</h1>
-    <div class="meta">武蔵野美術大学 M365 導入支援 ／ 2026-06-18 定例フォローアップ</div>
+    <div class="meta">武蔵野美術大学 M365 導入支援 ／ 7/9 定例（第7回）完了 ・ 次回 7/16（木）</div>
   </div>
 </div>
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('action')">📋 アクションプラン</button>
+  <button class="tab-btn" onclick="switchTab('garoon-mapping')">📁 Garoon実データ → Entra ID</button>
   <button class="tab-btn" onclick="switchTab('hierarchy')">🏛️ 階層構造の実現</button>
   <button class="tab-btn" onclick="switchTab('concurrent')">🔄 兼務設定の実現</button>
   <button class="tab-btn" onclick="switchTab('comparison')">📊 Garoon 比較</button>
@@ -215,99 +216,413 @@
 <!-- ===== TAB 1: アクションプラン ===== -->
 <div id="tab-action" class="tab-panel active">
 
-  <div class="card card-blue">
-    <h2>📋 2026-06-18 定例 — 会議サマリー</h2>
-    <p>Entra IDグループ設計とワークフローツール比較について検討。組織構造（兼務含む）のEntra ID実現可否は持ち帰り事項となった。</p>
-    <h3>三井田 担当アクション（来週6/25までに対応）</h3>
-    <table class="action-table">
-      <thead>
-        <tr>
-          <th style="width:40%">アクション</th>
-          <th style="width:15%">担当</th>
-          <th style="width:20%">期限</th>
-          <th>対応状況</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>グループ設計の再検討</strong><br>
-          Entra IDで兼務・複雑な組織構造が実現可能か検討・説明</td>
-          <td><span class="owner-me">三井田</span></td>
-          <td class="deadline">6/25 定例まで</td>
-          <td>→ この資料で対応</td>
-        </tr>
-        <tr>
-          <td><strong>ライセンス費用の正確な試算</strong><br>
-          学生・非常勤含む全ユーザーでの試算</td>
-          <td><span class="owner-me">三井田</span></td>
-          <td class="deadline">6/25 定例まで</td>
-          <td>→ 要対応</td>
-        </tr>
-        <tr>
-          <td><strong>正式費用の算出・提示</strong></td>
-          <td><span class="owner-me">三井田</span></td>
-          <td class="deadline">6/25 定例まで</td>
-          <td>→ 要対応</td>
-        </tr>
-        <tr>
-          <td><strong>シンプルな承認フローの作成・提案</strong></td>
-          <td><span class="owner-me">三井田</span></td>
-          <td class="deadline">6/25 定例まで</td>
-          <td>→ 要対応</td>
-        </tr>
-        <tr>
-          <td><strong>資料展開</strong><br>
-          本日の要望を反映した資料を作成</td>
-          <td><span class="owner-me">三井田</span></td>
-          <td class="deadline">6/25 定例まで</td>
-          <td>→ この資料 + 更新版ワークフロー資料</td>
-        </tr>
-        <tr>
-          <td><strong>ワークフロー比較Webページ共有</strong></td>
-          <td><span class="owner-me">三井田</span></td>
-          <td class="deadline">6/25 定例まで</td>
-          <td>→ <a href="./workflow-comparison.html">workflow-comparison.html</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="card card-green">
-    <h2>✅ 大学側 M365 確認アクション（参考）</h2>
-    <table class="action-table">
-      <thead>
-        <tr>
-          <th style="width:40%">アクション</th>
-          <th style="width:20%">担当</th>
-          <th>期限</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>テストアカウントの受け取り・確認（三井田 → 畠中幹太さん経由で配布）</td>
-          <td><span class="owner-client">畠中幹太さん</span></td>
-          <td class="deadline">次回MTGまで</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+  <!-- 現在の積み残し・直近アクション -->
   <div class="card card-orange">
-    <h2>⚠️ 今回のキーイシュー：組織構造の再現性</h2>
-    <p>井上さん（大学側 IT管理担当）より「現在のガルーンと比較して、M365で複雑な組織構造（兼務など）を再現できるか」という懸念が示されました。</p>
-    <div class="callout callout-info">
+    <h2>🔥 現在の積み残しアクション（7/10時点）</h2>
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th style="width:42%">アクション</th>
+          <th style="width:15%">担当</th>
+          <th style="width:18%">期限</th>
+          <th>状況</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Teamsガバナンス方針案の提示</strong><br>
+          アーカイブ運用・業務系/授業系管理分離・外部ゲストアクセス限定開放の3テーマ</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td class="deadline">7/16 定例まで</td>
+          <td>→ <a href="./teams-governance.html">teams-governance.html</a> 作成済み・7/16で説明予定</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7/9 定例サマリー -->
+  <div class="card card-blue">
+    <h2>📋 7/9 定例（第7回）— 会議サマリー</h2>
+    <p>X-Point継続運用の確定・Canbus.費用回答・Entra ID/Teams調査完了・Teamsガバナンス方針の検討開始。</p>
+    <h3>主要決定事項・完了事項</h3>
+    <ul>
+      <li>✅ <strong>X-Pointは稟議書システムとして継続運用・M365移行対象外に確定</strong>。GaroonワークフローのみCanbus.へ移行する。</li>
+      <li>✅ <strong>Canbus.費用回答済み</strong>：Garoonワークフロー年間5,391件（2025年実績・月平均449件）。「2年ごとに定期エクスポートすれば月5万円プランで継続運用できる」と大学側へ回答。</li>
+      <li>✅ <strong>Entra ID・Teams管理センター調査完了</strong>：閲覧権限が付与され、管理センターの調査を実施済み。</li>
+      <li>✅ <strong>Teamsガバナンス方針の検討開始</strong>：アーカイブ運用・業務系/授業系管理分離・外部ゲストアクセス限定開放の3テーマ。三井田が7/16定例までに方針案を提示。</li>
+    </ul>
+  </div>
+
+  <!-- 7/2 定例サマリー -->
+  <div class="card" style="border-left: 4px solid var(--green);">
+    <h2 style="color:var(--green);">✅ 7/2 定例（第6回）— 完了</h2>
+    <ul>
+      <li>✅ テナント調査完了・7/1報告済み（<a href="./tenant-status.html">tenant-status.html</a>）</li>
+      <li>✅ セキュリティ基準コメントシートを大学側がレビュー済み → 時田氏が最終化・提出予定（7/15）</li>
+      <li>✅ Garoonワークフロー・コンテンツ一覧フォーマット（スプレッドシート）を7/2送付済み</li>
+      <li>✅ Canbus.の費用シミュレーション提示：2年ごとエクスポート＋リフレッシュ運用で月5万円プランを継続できると説明</li>
+    </ul>
+  </div>
+
+  <!-- 6/25 定例サマリー -->
+  <div class="card" style="border-left: 4px solid var(--green);">
+    <h2 style="color:var(--green);">✅ 6/25 定例（第4回）— 完了</h2>
+    <ul>
+      <li>✅ <strong>ワークフロー移行先をNextset → Canbus.（ユーザー数無制限・月5万円〜）に変更決定</strong></li>
+      <li>✅ SharePointニュース＋Entra IDグループ紐づけによるお知らせ優先表示方針を確定</li>
+      <li>✅ テストアカウントでテナントにログイン可（教務システムログイン不要）と確認</li>
+    </ul>
+  </div>
+
+  <!-- 6/18 定例サマリー（クローズ済み） -->
+  <div class="card" style="border-left: 4px solid #aab; opacity:.85;">
+    <h2 style="color:#556;">📌 6/18 定例（第3回）— 完了</h2>
+    <p style="font-size:13px;color:var(--muted);">Entra IDグループ設計とワークフローツール比較について検討。組織構造（兼務含む）のEntra ID実現可否は持ち帰り事項となった。</p>
+    <table class="action-table" style="font-size:13px;">
+      <thead>
+        <tr>
+          <th style="width:44%">アクション</th>
+          <th style="width:15%">担当</th>
+          <th>結果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>グループ設計の再検討（兼務・複雑な組織構造）</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td>✅ この資料（Garoon実データ → Entra IDタブ）で対応</td>
+        </tr>
+        <tr>
+          <td>ライセンス費用の正確な試算（学生・非常勤含む）</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td>✅ テナント調査で確認済み（tenant-status.html）</td>
+        </tr>
+        <tr>
+          <td>正式費用の算出・提示</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td>✅ 「定期エクスポートで月5万円プランの継続が可能」と回答済み</td>
+        </tr>
+        <tr>
+          <td>シンプルな承認フローの作成・提案</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td>✅ <a href="./workflow-comparison.html">workflow-comparison.html</a> で対応</td>
+        </tr>
+        <tr>
+          <td>ワークフロー比較Webページ共有</td>
+          <td><span class="owner-me">三井田</span></td>
+          <td>✅ 共有済み</td>
+        </tr>
+        <tr>
+          <td>テストアカウントの受け取り・確認</td>
+          <td><span class="owner-client">畠中幹太さん</span></td>
+          <td>✅ 6/25 テナントログイン可を確認</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===== TAB NEW: Garoon実データ → Entra ID ===== -->
+<div id="tab-garoon-mapping" class="tab-panel">
+
+  <div class="callout callout-info">
+    <span class="callout-icon">📅</span>
+    <div class="callout-body">
+      <strong>データソース</strong>：Garoon（maunet）ユーザー名簿の組織ツリーから確認（2026-07-10）。
+      事務組織・教学組織・カテゴリーの3軸が判明。兼務（1ユーザーが複数組織に所属）が実態として発生している。
+    </div>
+  </div>
+
+  <!-- Garoon構造 -->
+  <div class="card">
+    <h2>📁 Garoon から読み取った完全な組織構造</h2>
+
+    <h3 style="color:#1a56a0; margin-bottom:8px;">① 事務組織（グループ → チーム → 担当 の3階層）</h3>
+    <div class="tree">
+<span class="node-top">事務組織</span><br>
+├── <span class="node-mid">大学企画グループ</span><br>
+│   ├── <span class="node-leaf">教学企画チーム</span><br>
+│   ├── <span class="node-leaf">連携共創チーム</span><br>
+│   │   └── <span style="color:#888">校友会</span><br>
+│   ├── <span class="node-leaf">市ヶ谷チーム</span><br>
+│   └── <span class="node-leaf">広報入学チーム</span><br>
+│       ├── <span style="color:#888">広報担当</span><br>
+│       └── <span style="color:#888">入学担当</span><br>
+├── <span class="node-mid">総務グループ</span><br>
+│   ├── <span class="node-leaf">総務チーム</span><br>
+│   ├── <span class="node-leaf">施設管財チーム</span><br>
+│   │   ├── <span style="color:#888">施設管財担当</span><br>
+│   │   └── <span style="color:#888">情報管理担当</span>  ← 井上さんが兼務していた組織<br>
+│   └── <span class="node-leaf">経理チーム</span><br>
+├── <span class="node-mid">人事グループ</span><br>
+│   └── <span class="node-leaf">人事チーム</span><br>
+├── <span class="node-mid">学生支援グループ</span><br>
+│   ├── <span class="node-leaf">教務チーム</span><br>
+│   ├── <span class="node-leaf">学生生活チーム</span><br>
+│   ├── <span class="node-leaf">キャリアチーム</span><br>
+│   ├── <span class="node-leaf">通信教育チーム</span><br>
+│   └── <span class="node-leaf">国際チーム</span><br>
+├── <span class="node-mid">美術館・図書館グループ</span><br>
+│   └── <span class="node-leaf">美術・図書チーム</span><br>
+│       ├── <span style="color:#888">運営管理担当</span><br>
+│       ├── <span style="color:#888">美術担当</span><br>
+│       └── <span style="color:#888">図書担当</span><br>
+├── <span class="node-leaf">経営戦略室</span>  ← グループ外の独立室<br>
+├── <span class="node-leaf">100周年事業推進室</span>  ← 時限プロジェクト組織<br>
+├── <span class="node-special">監査チーム</span>  ← どのグループにも属さない独立組織<br>
+├── <span class="node-leaf">理事長</span>  ← 役職（個人）<br>
+├── <span class="node-leaf">業務執行理事</span>  ← 役職<br>
+└── <span class="node-leaf">常務理事</span>  ← 役職
+    </div>
+    <p style="font-size:13px; color:#667085; margin-top:6px;">※ Garoonユーザー名簿の組織ツリーより完全展開確認（2026-07-10）。灰色は「担当」レベル（第3階層）。</p>
+
+    <h3 style="color:#1a56a0; margin: 20px 0 8px;">② 教学組織（学科・センター等がフラットに並ぶ）</h3>
+    <div class="tree">
+<span class="node-top">教学組織</span><br>
+├── <span class="node-leaf">日本画</span><br>
+├── <span class="node-leaf">油絵</span><br>
+├── <span class="node-leaf">彫刻</span><br>
+├── <span class="node-leaf">視覚伝達デザイン</span><br>
+├── <span class="node-leaf">工芸工業デザイン</span><br>
+├── <span class="node-leaf">空間演出デザイン</span><br>
+├── <span class="node-leaf">建築</span><br>
+├── <span class="node-leaf">基礎デザイン</span><br>
+├── <span class="node-leaf">映像</span><br>
+├── <span class="node-leaf">芸術文化</span><br>
+├── <span class="node-leaf">デザイン情報</span><br>
+├── <span class="node-leaf">教養文化・学芸員課程</span><br>
+├── <span class="node-leaf">言語文化</span><br>
+├── <span class="node-leaf">身体運動文化</span><br>
+├── <span class="node-leaf">美学美術史</span><br>
+├── <span class="node-leaf">共通絵画</span><br>
+├── <span class="node-leaf">共通彫刻</span><br>
+├── <span class="node-leaf">教職課程</span><br>
+├── <span class="node-leaf">通信教育課程研究室</span><br>
+├── <span class="node-special">クリエイティブイノベーション</span><br>
+├── <span class="node-special">情報教育センター</span><br>
+└── <span class="node-special">民俗資料室</span>
+    </div>
+    <p style="font-size:13px; color:#667085; margin-top:6px;">※ 教学組織はGaroon上フラット（学部で束ねられていない）。教員は複数学科を兼担するケースがある。</p>
+
+    <h3 style="color:#1a56a0; margin: 20px 0 8px;">③ カテゴリー（雇用形態・役職区分）</h3>
+    <div class="tree">
+<span class="node-top">カテゴリー</span>  ← 縦軸：組織横断の雇用区分<br>
+├── <span class="node-leaf">職員 [専任]</span><br>
+├── <span class="node-leaf">職員 [嘱託]</span><br>
+├── <span class="node-leaf">教員</span><br>
+├── <span class="node-leaf">助教</span><br>
+├── <span class="node-leaf">助手</span><br>
+├── <span class="node-leaf">教務補助員</span><br>
+├── <span class="node-leaf">学生相談室</span><br>
+├── <span class="node-leaf">保健室</span><br>
+├── <span class="node-leaf">臨時勤務者</span><br>
+├── <span class="node-leaf">派遣職員</span><br>
+├── <span class="node-leaf">通信教育</span><br>
+├── <span class="node-leaf">副手</span><br>
+└── <span class="node-leaf">臨時副手</span>
+    </div>
+  </div>
+
+  <!-- Entra IDグループ設計案 -->
+  <div class="card card-blue">
+    <h2>⚙️ Entra ID グループ設計案（完全版）</h2>
+    <p>命名規則：<code>MAU_[軸]_[グループ]_[チーム]</code>。3軸を独立したグループ群として設計し、兼務は多重所属で実現する。</p>
+
+    <h3 style="margin: 16px 0 8px;">軸① 事務組織グループ（アクセス制御・メール配信の主軸）</h3>
+    <p style="font-size:13px; color:#667085; margin-bottom:8px;">グループ → チーム → 担当 の3階層。「担当」レベルのグループは、担当単位でSharePointアクセスを分けたい場合のみ作成する（不要ならチームレベルまでで十分）。</p>
+    <div class="tree">
+<span class="node-top">MAU_事務_全体</span>  ← 事務職員全員への一括連絡用<br>
+│<br>
+├── <span class="node-mid">MAU_事務_大学企画G</span><br>
+│   ├── <span class="node-leaf">MAU_事務_大学企画G_教学企画チーム</span><br>
+│   ├── <span class="node-leaf">MAU_事務_大学企画G_連携共創チーム</span><br>
+│   │   └── <span style="color:#888">MAU_事務_大学企画G_連携共創チーム_校友会</span>  ※要否確認<br>
+│   ├── <span class="node-leaf">MAU_事務_大学企画G_市ヶ谷チーム</span><br>
+│   └── <span class="node-leaf">MAU_事務_大学企画G_広報入学チーム</span><br>
+│       ├── <span style="color:#888">MAU_事務_大学企画G_広報入学チーム_広報担当</span>  ※要否確認<br>
+│       └── <span style="color:#888">MAU_事務_大学企画G_広報入学チーム_入学担当</span>  ※要否確認<br>
+│<br>
+├── <span class="node-mid">MAU_事務_総務G</span><br>
+│   ├── <span class="node-leaf">MAU_事務_総務G_総務チーム</span><br>
+│   ├── <span class="node-leaf">MAU_事務_総務G_施設管財チーム</span><br>
+│   │   ├── <span style="color:#888">MAU_事務_総務G_施設管財チーム_施設管財担当</span>  ※要否確認<br>
+│   │   └── <span style="color:#888">MAU_事務_総務G_施設管財チーム_情報管理担当</span>  ← 兼務者あり（要作成）<br>
+│   └── <span class="node-leaf">MAU_事務_総務G_経理チーム</span><br>
+│<br>
+├── <span class="node-mid">MAU_事務_人事G</span><br>
+│   └── <span class="node-leaf">MAU_事務_人事G_人事チーム</span><br>
+│<br>
+├── <span class="node-mid">MAU_事務_学生支援G</span><br>
+│   ├── <span class="node-leaf">MAU_事務_学生支援G_教務チーム</span><br>
+│   ├── <span class="node-leaf">MAU_事務_学生支援G_学生生活チーム</span><br>
+│   ├── <span class="node-leaf">MAU_事務_学生支援G_キャリアチーム</span><br>
+│   ├── <span class="node-leaf">MAU_事務_学生支援G_通信教育チーム</span><br>
+│   └── <span class="node-leaf">MAU_事務_学生支援G_国際チーム</span><br>
+│<br>
+├── <span class="node-mid">MAU_事務_美術館図書館G</span><br>
+│   └── <span class="node-leaf">MAU_事務_美術館図書館G_美術図書チーム</span><br>
+│       ├── <span style="color:#888">MAU_事務_美術館図書館G_美術図書チーム_運営管理担当</span>  ※要否確認<br>
+│       ├── <span style="color:#888">MAU_事務_美術館図書館G_美術図書チーム_美術担当</span>  ※要否確認<br>
+│       └── <span style="color:#888">MAU_事務_美術館図書館G_美術図書チーム_図書担当</span>  ※要否確認<br>
+│<br>
+├── <span class="node-leaf">MAU_事務_経営戦略室</span><br>
+├── <span class="node-special">MAU_事務_100周年事業推進室</span>  ← 時限グループ（廃止予定時期を説明欄に明記）<br>
+└── <span class="node-special">MAU_事務_監査チーム</span>  ← 独立（どのGにも属さない）
+    </div>
+
+    <div class="callout callout-warn" style="margin-top:12px;">
       <span class="callout-icon">💡</span>
       <div class="callout-body">
-        <strong>この資料の目的</strong>：上記の懸念に対して「Entra IDでどこまで実現できるか」「どこが限界か」を整理し、次回定例で説明するための根拠資料として使用する。
+        <strong>「担当」レベルのグループ作成は選択制</strong>：担当単位でSharePointドキュメントやTeamsチャンネルのアクセスを分ける必要がある場合のみ作成する。不要であればチームレベル（第2階層）までの運用で十分。兼務が確認されている <code>情報管理担当</code> は優先的に作成を推奨。
       </div>
     </div>
-    <h3>結論（先にまとめ）</h3>
-    <ul>
-      <li>✅ <strong>階層構造（ネスト型グループ）</strong>：完全に実現可能。すでに提案済みの設計で対応できる</li>
-      <li>✅ <strong>兼務設定</strong>：機能的には実現可能。ユーザーを複数グループに所属させることで同等の効果が得られる</li>
-      <li>⚠️ <strong>ガルーンとの視覚的な差異</strong>：「兼務」という明示的なラベルは存在しない。組織図的な表示はManagerフィールドの一本鎖に限られる</li>
-      <li>💡 <strong>代替手段あり</strong>：カスタム属性（extensionAttribute）で兼務を記録し、動的グループで自動管理する方式が有効</li>
-    </ul>
+
+    <h3 style="margin: 20px 0 8px;">軸② 教学組織グループ（学科別アクセス制御）</h3>
+    <div class="tree">
+<span class="node-top">MAU_教学_全体</span>  ← 教員全員への一括連絡用<br>
+│<br>
+├── <span class="node-leaf">MAU_教学_日本画</span><br>
+├── <span class="node-leaf">MAU_教学_油絵</span><br>
+├── <span class="node-leaf">MAU_教学_彫刻</span><br>
+├── <span class="node-leaf">MAU_教学_視覚伝達デザイン</span><br>
+├── <span class="node-leaf">MAU_教学_工芸工業デザイン</span><br>
+├── <span class="node-leaf">MAU_教学_空間演出デザイン</span><br>
+├── <span class="node-leaf">MAU_教学_建築</span><br>
+├── <span class="node-leaf">MAU_教学_基礎デザイン</span><br>
+├── <span class="node-leaf">MAU_教学_映像</span><br>
+├── <span class="node-leaf">MAU_教学_芸術文化</span><br>
+├── <span class="node-leaf">MAU_教学_デザイン情報</span><br>
+├── <span class="node-leaf">MAU_教学_教養文化学芸員課程</span><br>
+├── <span class="node-leaf">MAU_教学_言語文化</span><br>
+├── <span class="node-leaf">MAU_教学_身体運動文化</span><br>
+├── <span class="node-leaf">MAU_教学_美学美術史</span><br>
+├── <span class="node-leaf">MAU_教学_共通絵画</span><br>
+├── <span class="node-leaf">MAU_教学_共通彫刻</span><br>
+├── <span class="node-leaf">MAU_教学_教職課程</span><br>
+├── <span class="node-leaf">MAU_教学_通信教育課程研究室</span><br>
+├── <span class="node-special">MAU_教学_クリエイティブイノベーション</span><br>
+├── <span class="node-special">MAU_教学_情報教育センター</span><br>
+└── <span class="node-special">MAU_教学_民俗資料室</span>
+    </div>
+
+    <h3 style="margin: 20px 0 8px;">軸③ カテゴリーグループ（雇用形態別・ライセンス管理・セキュリティポリシー適用に活用）</h3>
+    <div class="tree">
+<span class="node-top">MAU_カテゴリ_（雇用形態）</span>  ← 横断的なセキュリティポリシー・ライセンス配布に使用<br>
+│<br>
+├── <span class="node-leaf">MAU_カテゴリ_職員専任</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_職員嘱託</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_教員</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_助教</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_助手</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_教務補助員</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_臨時勤務者</span><br>
+├── <span class="node-leaf">MAU_カテゴリ_派遣職員</span><br>
+└── <span class="node-leaf">MAU_カテゴリ_副手・臨時副手</span>
+    </div>
+
+    <h3 style="margin: 20px 0 8px;">最上位グループ（全員連絡・全体ポータルアクセス用）</h3>
+    <div class="tree">
+<span class="node-top">MAU_全教職員</span><br>
+├── MAU_事務_全体（事務組織を束ねる）<br>
+└── MAU_教学_全体（教学組織を束ねる）
+    </div>
+
+    <div class="callout callout-info" style="margin-top:16px;">
+      <span class="callout-icon">📊</span>
+      <div class="callout-body">
+        <strong>作成グループ総数の目安</strong>：最上位3 + 事務（グループ5 + チーム16） + 教学（22） + カテゴリー（9） + 独立組織3 ＝ <strong>約58グループ（最小構成）</strong>。担当レベルを全て作成する場合は +8 で約66グループ。いずれも管理可能な規模。
+      </div>
+    </div>
+  </div>
+
+  <!-- 兼務の設計 -->
+  <div class="card card-purple">
+    <h2>🔄 兼務の実装方法（多重グループ所属）</h2>
+    <p>Garoonで「複数組織に同時所属」しているユーザーは、Entra IDでは <strong>複数のグループに同時登録</strong> することで同等の機能を実現します。</p>
+
+    <h3 style="margin: 12px 0 8px;">兼務パターン別の実装例</h3>
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th style="width:30%">Garoonでの兼務状態</th>
+          <th>Entra IDでの対応</th>
+          <th style="width:25%">効果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>教員が <strong>日本画</strong> と <strong>共通絵画</strong> を兼担</td>
+          <td>MAU_教学_日本画 <strong>＋</strong> MAU_教学_共通絵画 に同時登録</td>
+          <td>両学科のSharePoint・Teamsにアクセスできる</td>
+        </tr>
+        <tr>
+          <td>職員が <strong>総務G_経理チーム</strong> の主所属 ＋ <strong>100周年事業推進室</strong> を兼務</td>
+          <td>MAU_事務_総務G_経理チーム <strong>＋</strong> MAU_事務_100周年事業推進室 に同時登録</td>
+          <td>本来業務と兼務先の両方のリソースにアクセスできる</td>
+        </tr>
+        <tr>
+          <td>事務職員が教学の <strong>情報教育センター</strong> を兼務</td>
+          <td>MAU_事務_[本来グループ] <strong>＋</strong> MAU_教学_情報教育センター に同時登録</td>
+          <td>事務系・教学系の両方のリソースにアクセスできる</td>
+        </tr>
+        <tr>
+          <td>カテゴリーが <strong>助手</strong> の教員（職階区分）</td>
+          <td>MAU_教学_[担当学科] <strong>＋</strong> MAU_カテゴリ_助手 に同時登録</td>
+          <td>助手向けライセンス配布・ポリシーが自動適用される</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin: 16px 0 8px;">主所属の管理方法</h3>
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        Entra IDには「主所属」「兼務」の区別がありません。<strong>userオブジェクトの <code>department</code> フィールドを主所属として使い、兼務はグループ多重登録で管理</strong>するのが現実的です。<br><br>
+        <strong>ユーザー属性の使い方：</strong><br>
+        ・<code>department</code>: 主所属組織（例: 総務グループ_経理チーム）<br>
+        ・<code>jobTitle</code>: 役職（教授/准教授/専任職員/嘱託職員 等）<br>
+        ・<code>employeeType</code>: カテゴリー（教員/職員[専任]/助手 等）<br>
+        ・<code>officeLocation</code>: 拠点（鷹の台/市ヶ谷）<br>
+        ・<code>extensionAttribute1</code>: 兼務先1（任意で記録）
+      </div>
+    </div>
+  </div>
+
+  <!-- 設計上の留意点 -->
+  <div class="card card-orange">
+    <h2>⚠️ 設計上の留意点</h2>
+    <table class="action-table">
+      <thead>
+        <tr><th style="width:30%">対象</th><th>留意事項</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>理事長・業務執行理事・常務理事</strong></td>
+          <td>Garoonでは「組織」として登録されているが、実態は個人の役職。Entra IDでは <code>jobTitle</code> フィールドに記載し、グループは作成しない（少数の個人）。</td>
+        </tr>
+        <tr>
+          <td><strong>学生相談室・保健室（カテゴリー）</strong></td>
+          <td>組織と役割の両方の性質を持つ。事務組織の下に配置するか、カテゴリーとして扱うか確認が必要。</td>
+        </tr>
+        <tr>
+          <td><strong>100周年事業推進室</strong></td>
+          <td>時限プロジェクト組織。グループ作成時に <strong>Entra ID グループの説明欄に廃止予定日を記載</strong>し、定例レビューで削除する。</td>
+        </tr>
+        <tr>
+          <td><strong>教学組織はフラット</strong></td>
+          <td>Garoon上「造形学部」「造形構想学部」という上位分類はない（各学科が直接並んでいる）。Entra IDグループも同様のフラット設計でよい。学部軸が必要になれば後から追加する。</td>
+        </tr>
+        <tr>
+          <td><strong>通信教育・派遣職員</strong></td>
+          <td>通常の専任教職員とライセンス要件が異なる可能性がある。カテゴリーグループ分けによりライセンスを別管理する。</td>
+        </tr>
+        <tr>
+          <td><strong>事務組織のチーム構成（確認中）</strong></td>
+          <td>学生支援グループ等のチーム構成は後日確認・追記予定。判明次第このページに反映する。</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
 </div>
@@ -316,72 +631,134 @@
 <div id="tab-hierarchy" class="tab-panel">
 
   <div class="card card-green">
-    <h2>🏛️ 結論：階層構造は完全に実現可能</h2>
+    <h2>🏛️ 結論：Garoon の3階層構造はEntra IDで完全に実現可能</h2>
     <div class="callout callout-ok">
       <span class="callout-icon">✅</span>
       <div class="callout-body">
-        Entra ID セキュリティグループはネスト（入れ子）構造をサポートしています。すでに提案済みの設計がそのまま適用できます。
+        Entra ID セキュリティグループはネスト（入れ子）構造をサポートしています。Garoonの「グループ → チーム → 担当」の3階層をそのままグループの入れ子で表現できます。
       </div>
     </div>
-    <p>Entra IDでは、グループの中に別のグループをメンバーとして追加できます（最大ネスト深度：制限なし）。これにより「大学全体 → 大部門 → 小部門」という階層を表現できます。</p>
+    <p>ユーザーは末端グループ（チームまたは担当）にのみ登録します。上位グループへのネストにより、権限・メールは自動的に継承されます。</p>
   </div>
 
   <div class="card">
-    <h2>🌳 提案済みのネスト型グループ構造</h2>
-    <p>提示済みの5層構造案（再掲）：</p>
+    <h2>🌳 Garoon実組織に基づくネスト型グループ構造（全体）</h2>
+    <p style="font-size:13px;color:#667085;margin-bottom:10px;">[ ] は担当レベル（第3階層・必要に応じて作成）。教学組織はGaroon上フラットなため、Entra IDもフラット設計。</p>
     <div class="tree">
-<span class="node-top">MAU_全教職員</span>  ← 最上位：全員対象の一斉連絡・SharePointアクセス用<br>
-├── <span class="node-mid">MAU_職員_全体</span><br>
-│   ├── <span class="node-leaf">MAU_職員_事務局_教務部</span><br>
-│   ├── <span class="node-leaf">MAU_職員_事務局_総務部</span><br>
-│   ├── <span class="node-leaf">MAU_職員_事務局_学生部</span><br>
-│   └── <span class="node-leaf">MAU_職員_市ヶ谷キャンパス</span><br>
-└── <span class="node-mid">MAU_教員_全体</span><br>
-    ├── <span class="node-leaf">MAU_教員_造形学部_油絵学科</span><br>
-    ├── <span class="node-leaf">MAU_教員_造形学部_工業デザイン学科</span><br>
-    ├── <span class="node-leaf">MAU_教員_造形構想学部</span><br>
-    └── <span class="node-leaf">MAU_教員_非常勤講師</span>
+<span class="node-top">MAU_全教職員</span>  ← 最上位：全員一斉連絡・全体ポータルアクセス用<br>
+│<br>
+├── <span class="node-mid">MAU_事務_全体</span>  ← 事務職員全員<br>
+│   ├── <span class="node-mid">MAU_事務_大学企画G</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_大学企画G_教学企画チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_大学企画G_連携共創チーム</span><br>
+│   │   │   └── <span style="color:#888">[MAU_事務_大学企画G_連携共創チーム_校友会]</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_大学企画G_市ヶ谷チーム</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_大学企画G_広報入学チーム</span><br>
+│   │       ├── <span style="color:#888">[MAU_事務_大学企画G_広報入学チーム_広報担当]</span><br>
+│   │       └── <span style="color:#888">[MAU_事務_大学企画G_広報入学チーム_入学担当]</span><br>
+│   ├── <span class="node-mid">MAU_事務_総務G</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_総務G_総務チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_総務G_施設管財チーム</span><br>
+│   │   │   ├── <span style="color:#888">[MAU_事務_総務G_施設管財チーム_施設管財担当]</span><br>
+│   │   │   └── <span class="node-special">MAU_事務_総務G_施設管財チーム_情報管理担当</span>  ← 兼務者あり・優先作成<br>
+│   │   └── <span class="node-leaf">MAU_事務_総務G_経理チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_人事G</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_人事G_人事チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_学生支援G</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_教務チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_学生生活チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_キャリアチーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_通信教育チーム</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_学生支援G_国際チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_美術館図書館G</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_美術館図書館G_美術図書チーム</span><br>
+│   │       ├── <span style="color:#888">[MAU_事務_美術館図書館G_美術図書チーム_運営管理担当]</span><br>
+│   │       ├── <span style="color:#888">[MAU_事務_美術館図書館G_美術図書チーム_美術担当]</span><br>
+│   │       └── <span style="color:#888">[MAU_事務_美術館図書館G_美術図書チーム_図書担当]</span><br>
+│   ├── <span class="node-leaf">MAU_事務_経営戦略室</span><br>
+│   ├── <span class="node-special">MAU_事務_100周年事業推進室</span>  ← 時限グループ<br>
+│   └── <span class="node-special">MAU_事務_監査チーム</span>  ← 独立組織<br>
+│<br>
+└── <span class="node-mid">MAU_教学_全体</span>  ← 教員全員（Garoon上フラットのため、このまま並列設計）<br>
+    ├── <span class="node-leaf">MAU_教学_日本画</span><br>
+    ├── <span class="node-leaf">MAU_教学_油絵</span><br>
+    ├── <span class="node-leaf">MAU_教学_彫刻</span><br>
+    ├── <span class="node-leaf">MAU_教学_視覚伝達デザイン</span><br>
+    ├── <span class="node-leaf">MAU_教学_工芸工業デザイン</span><br>
+    ├── <span class="node-leaf">MAU_教学_空間演出デザイン</span><br>
+    ├── <span class="node-leaf">MAU_教学_建築</span><br>
+    ├── <span class="node-leaf">MAU_教学_基礎デザイン</span><br>
+    ├── <span class="node-leaf">MAU_教学_映像</span><br>
+    ├── <span class="node-leaf">MAU_教学_芸術文化</span><br>
+    ├── <span class="node-leaf">MAU_教学_デザイン情報</span><br>
+    ├── <span class="node-leaf">MAU_教学_教養文化学芸員課程</span><br>
+    ├── <span class="node-leaf">MAU_教学_言語文化</span><br>
+    ├── <span class="node-leaf">MAU_教学_身体運動文化</span><br>
+    ├── <span class="node-leaf">MAU_教学_美学美術史</span><br>
+    ├── <span class="node-leaf">MAU_教学_共通絵画</span><br>
+    ├── <span class="node-leaf">MAU_教学_共通彫刻</span><br>
+    ├── <span class="node-leaf">MAU_教学_教職課程</span><br>
+    ├── <span class="node-leaf">MAU_教学_通信教育課程研究室</span><br>
+    ├── <span class="node-leaf">MAU_教学_クリエイティブイノベーション</span><br>
+    ├── <span class="node-leaf">MAU_教学_情報教育センター</span><br>
+    └── <span class="node-leaf">MAU_教学_民俗資料室</span>
     </div>
+
     <h3>この構造の動作メカニズム</h3>
     <ul>
-      <li>「MAU_全教職員」に何かアクセス権を付与すると、配下の全グループのメンバー全員に自動的に権限が継承される</li>
-      <li>「MAU_職員_事務局_教務部」だけに権限を付与すると、教務部のメンバーだけがアクセスできる</li>
-      <li>ユーザーは下位グループ（末端）に追加するだけで、上位グループの権限も自動的に得られる</li>
+      <li>ユーザーは <strong>末端グループ（チームまたは担当）にのみ登録</strong> する。上位グループへの重複登録は不要</li>
+      <li>上位グループに付与されたアクセス権は、ネストを通じて配下の全メンバーに自動継承される</li>
+      <li>例：「MAU_事務_総務G_経理チーム」にユーザーを追加するだけで、MAU_事務_総務G・MAU_事務_全体・MAU_全教職員 の権限も自動的に得られる</li>
     </ul>
   </div>
 
   <div class="card">
-    <h2>📌 SharePoint への適用例</h2>
+    <h2>📌 SharePoint への適用例（実組織名ベース）</h2>
     <table class="cmp-table">
       <thead>
         <tr>
-          <th class="feature-col">SharePointサイト</th>
-          <th>アクセス付与対象グループ</th>
+          <th class="feature-col">SharePointサイト・用途</th>
+          <th>アクセス付与するグループ</th>
           <th>結果</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="feature-col">大学ポータル（全体）</td>
+          <td class="feature-col">大学全体ポータル</td>
           <td>MAU_全教職員</td>
-          <td class="good">全教職員・非常勤含む全員</td>
+          <td class="good">事務・教学の全教職員</td>
         </tr>
         <tr>
-          <td class="feature-col">教務部専用サイト</td>
-          <td>MAU_職員_事務局_教務部</td>
-          <td class="good">教務部員のみ</td>
+          <td class="feature-col">事務局向け共有ドライブ</td>
+          <td>MAU_事務_全体</td>
+          <td class="good">事務職員のみ（教員は除外）</td>
         </tr>
         <tr>
-          <td class="feature-col">造形学部教員向けサイト</td>
-          <td>MAU_教員_造形学部_油絵学科 + MAU_教員_造形学部_工業デザイン学科 + …</td>
-          <td class="good">対象学科教員のみ</td>
+          <td class="feature-col">学生支援グループ内部サイト</td>
+          <td>MAU_事務_学生支援G</td>
+          <td class="good">教務・学生生活・キャリア・通信教育・国際 の全チーム員</td>
+        </tr>
+        <tr>
+          <td class="feature-col">経理チーム専用ドキュメント</td>
+          <td>MAU_事務_総務G_経理チーム</td>
+          <td class="good">経理チームメンバーのみ</td>
+        </tr>
+        <tr>
+          <td class="feature-col">油絵学科 教員向けサイト</td>
+          <td>MAU_教学_油絵</td>
+          <td class="good">油絵学科教員のみ</td>
+        </tr>
+        <tr>
+          <td class="feature-col">複数学科の共用リソース（例：共通実技）</td>
+          <td>MAU_教学_共通絵画 ＋ MAU_教学_共通彫刻</td>
+          <td class="good">該当学科教員のみ（兼担教員は両グループに登録）</td>
         </tr>
       </tbody>
     </table>
     <div class="callout callout-info" style="margin-top:14px;">
       <span class="callout-icon">💡</span>
       <div class="callout-body">
-        SharePoint の「対象ユーザー設定」（オーディエンス ターゲティング）でも Entra ID グループを指定できるため、<strong>ナビゲーションや告知記事の表示を部門別に切り替える</strong>ことも可能です。
+        SharePoint の「オーディエンスターゲティング」でも Entra ID グループを指定できるため、<strong>ポータルのナビゲーションや掲示記事の表示を部門別に切り替える</strong>ことも可能です。
       </div>
     </div>
   </div>
@@ -389,10 +766,10 @@
   <div class="card card-blue">
     <h2>⚙️ 技術的な制約（参考）</h2>
     <ul>
-      <li>ネスト上限：Microsoft 365 グループはネスト不可だが、<strong>セキュリティグループはネスト可能</strong>（今回はセキュリティグループで設計）</li>
+      <li>ネスト：Microsoft 365 グループはネスト不可だが、<strong>セキュリティグループはネスト可能</strong>（今回はセキュリティグループで設計）</li>
       <li>SharePoint のオーディエンスターゲティングはセキュリティグループを直接参照可能</li>
-      <li>Teams の通知・チャネルは独立したグループ管理だが、セキュリティグループをメンバー追加の基準にできる</li>
-      <li>動的メンバーシップルール（Entra ID P1 = A3ライセンス以上で利用可能）を使えば、ユーザー属性変更時にグループ所属が自動更新される</li>
+      <li>Teams へのメンバー追加時にセキュリティグループを指定でき、グループ単位で一括追加が可能</li>
+      <li>動的メンバーシップルール（Entra ID P1 = A3ライセンス以上）を使えば、ユーザー属性（department等）変更時にグループ所属が自動更新される</li>
     </ul>
   </div>
 
@@ -406,7 +783,7 @@
     <div class="callout callout-ok">
       <span class="callout-icon">✅</span>
       <div class="callout-body">
-        Entra IDではユーザーは<strong>複数のグループに同時所属</strong>できます。これにより「造形学部の教授が大学院研究科も兼任」「職員が複数部署を兼務」といったケースに対応できます。
+        Entra IDではユーザーは<strong>複数のグループに同時所属</strong>できます。これにより「工芸工業デザインの教員が情報教育センターも兼担」「職員が複数チームを兼務」といったケースに対応できます。
       </div>
     </div>
     <div class="callout callout-warn">
@@ -425,35 +802,35 @@
       <span class="callout-icon">📋</span>
       <div class="callout-body">
         <strong>6/18定例で出た実際の例（井上さん）</strong>：<br>
-        「監察チーム（チームリーダー）」かつ「総務グループ → 施設管理チーム → 情報管理担当（チームリーダー）」を兼務している。<br>
-        ガルーンでは <em>総務グループ/井上、施設管理チーム/井上、情報管理担当/井上、監察チーム/井上</em> と、それぞれ別エントリとして全て登録されている。<br>
+        「監査チーム（チームリーダー）」かつ「総務グループ → 施設管財チーム → 情報管理担当（チームリーダー）」を兼務している。<br>
+        ガルーンでは <em>総務グループ/井上、施設管財チーム/井上、情報管理担当/井上、監査チーム/井上</em> と、それぞれ別エントリとして全て登録されている。<br>
         この「縦軸（職位・雇用形態）× 横軸（部署・チーム）」の二次元構造をM365で実現できるか、が核心的な懸念点。
       </div>
     </div>
 
-    <h3>具体例：教務部を兼任する工業デザイン学科教授</h3>
+    <h3>具体例①：教学企画チームを兼任する工芸工業デザイン教員</h3>
     <div class="user-row">
       <div class="user-chip chip-blue">👤 田中 太郎 教授</div>
       <div style="display:flex; align-items:center; color:#667085;">→ 所属グループ：</div>
-      <div class="user-chip chip-green">MAU_教員_造形学部_工業デザイン学科</div>
-      <div class="user-chip chip-orange">MAU_職員_事務局_教務部</div>
+      <div class="user-chip chip-green">MAU_教学_工芸工業デザイン</div>
+      <div class="user-chip chip-orange">MAU_事務_大学企画G_教学企画チーム</div>
     </div>
     <div style="margin: 12px 0; padding-left: 20px;">
       <p>結果として、田中教授は：</p>
       <ul>
-        <li>工業デザイン学科向けの SharePoint サイトにアクセスできる</li>
-        <li>教務部向けの SharePoint サイトにもアクセスできる</li>
+        <li>工芸工業デザイン学科向けの SharePoint サイトにアクセスできる</li>
+        <li>教学企画チーム向けの SharePoint・Teamsにもアクセスできる</li>
         <li>MAU_全教職員 の一括連絡を受け取れる</li>
-        <li>教務部の Teams チャネルにも参加できる</li>
+        <li>両組織のチャネルに参加できる</li>
       </ul>
     </div>
 
-    <h3>別例：研究科と学部を兼任する教員</h3>
+    <h3>具体例②：複数学科を兼担する教員（教学組織内の兼務）</h3>
     <div class="user-row">
       <div class="user-chip chip-blue">👤 鈴木 花子 教授</div>
       <div style="display:flex; align-items:center; color:#667085;">→ 所属グループ：</div>
-      <div class="user-chip chip-green">MAU_教員_造形構想学部</div>
-      <div class="user-chip chip-purple">MAU_教員_造形学部_油絵学科</div>
+      <div class="user-chip chip-green">MAU_教学_油絵</div>
+      <div class="user-chip chip-purple">MAU_教学_共通絵画</div>
     </div>
   </div>
 
@@ -477,12 +854,12 @@
         <div class="step-body">
           <strong>動的メンバーシップルール（自動化）</strong>
           ユーザーの属性（department、jobTitle、employeeType等）に基づいてグループ所属を自動化。
-          <pre class="code"><span class="cm">// 例：工業デザイン学科の教員を自動追加するルール</span>
-<span class="kw">user.department</span> <span class="str">-eq</span> <span class="str">"造形学部_工業デザイン学科"</span>
+          <pre class="code"><span class="cm">// 例：工芸工業デザイン学科の教員を自動追加するルール</span>
+<span class="kw">user.department</span> <span class="str">-eq</span> <span class="str">"工芸工業デザイン"</span>
 <span class="kw">-and user.userType</span> <span class="str">-eq</span> <span class="str">"Member"</span>
 
 <span class="cm">// 例：兼務グループの自動化（extensionAttribute を使う場合）</span>
-<span class="kw">user.extensionAttribute1</span> <span class="str">-contains</span> <span class="str">"教務部兼務"</span></pre>
+<span class="kw">user.extensionAttribute1</span> <span class="str">-contains</span> <span class="str">"教学企画チーム兼務"</span></pre>
           <div class="callout callout-warn" style="margin-top:8px;">
             <span class="callout-icon">⚠️</span>
             <div class="callout-body"><strong>Entra ID P1 ライセンスが必要</strong>（A3/A5、または個別購入 約680円/月/ユーザー）</div>
@@ -498,8 +875,8 @@
             <span class="callout-icon">💡</span>
             <div class="callout-body">
               extensionAttribute は15個あり、自由に活用できます。例：<br>
-              <code>extensionAttribute1 = "工業デザイン学科"</code>（主所属）<br>
-              <code>extensionAttribute2 = "教務部兼務"</code>（兼務）<br>
+              <code>extensionAttribute1 = "工芸工業デザイン"</code>（主所属学科）<br>
+              <code>extensionAttribute2 = "教学企画チーム兼務"</code>（兼務）<br>
               これを台帳として管理し、グループ追加の根拠にする。
             </div>
           </div>
@@ -617,7 +994,7 @@
           <td class="feature-col">部門別の絞り込み配信</td>
           <td><span class="badge badge-yes">✅ 対応</span></td>
           <td><span class="badge badge-yes">✅ 対応</span></td>
-          <td>中間グループ（MAU_職員_全体 等）を宛先に</td>
+          <td>中間グループ（MAU_事務_全体 / MAU_教学_全体 等）を宛先に</td>
         </tr>
         <tr>
           <td class="feature-col">視覚的な組織図</td>
@@ -711,17 +1088,62 @@
         <div class="step-num">1</div>
         <div class="step-body">
           <strong>グループ命名規則の確定</strong><br>
-          <code>MAU_[種別]_[大分類]_[小分類]</code> の形式で統一
+          <code>MAU_[種別]_[大分類]_[小分類]</code> の形式で統一（詳細は「Garoon実データ → Entra ID」タブ参照）
           <div class="tree" style="margin-top:8px;">
 <span class="node-top">MAU_全教職員</span><br>
-├── <span class="node-mid">MAU_職員_全体</span><br>
-│   ├── <span class="node-leaf">MAU_職員_事務局_教務部</span><br>
-│   ├── <span class="node-leaf">MAU_職員_事務局_総務部</span><br>
-│   └── <span class="node-leaf">MAU_職員_市ヶ谷</span><br>
-├── <span class="node-mid">MAU_教員_全体</span><br>
-│   ├── <span class="node-leaf">MAU_教員_造形学部_[各学科]</span><br>
-│   ├── <span class="node-leaf">MAU_教員_造形構想学部_[各学科]</span><br>
-│   └── <span class="node-leaf">MAU_教員_非常勤講師</span><br>
+├── <span class="node-mid">MAU_事務_全体</span><br>
+│   ├── <span class="node-mid">MAU_事務_大学企画G</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_大学企画G_教学企画チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_大学企画G_連携共創チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_大学企画G_市ヶ谷チーム</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_大学企画G_広報入学チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_総務G</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_総務G_総務チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_総務G_施設管財チーム</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_総務G_経理チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_人事G</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_人事G_人事チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_学生支援G</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_教務チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_学生生活チーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_キャリアチーム</span><br>
+│   │   ├── <span class="node-leaf">MAU_事務_学生支援G_通信教育チーム</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_学生支援G_国際チーム</span><br>
+│   ├── <span class="node-mid">MAU_事務_美術館図書館G</span><br>
+│   │   └── <span class="node-leaf">MAU_事務_美術館図書館G_美術図書チーム</span><br>
+│   ├── <span class="node-leaf">MAU_事務_経営戦略室</span><br>
+│   ├── <span class="node-special">MAU_事務_100周年事業推進室</span>  ← 時限グループ<br>
+│   └── <span class="node-special">MAU_事務_監査チーム</span><br>
+├── <span class="node-mid">MAU_教学_全体</span><br>
+│   ├── <span class="node-leaf">MAU_教学_日本画</span><br>
+│   ├── <span class="node-leaf">MAU_教学_油絵</span><br>
+│   ├── <span class="node-leaf">MAU_教学_彫刻</span><br>
+│   ├── <span class="node-leaf">MAU_教学_視覚伝達デザイン</span><br>
+│   ├── <span class="node-leaf">MAU_教学_工芸工業デザイン</span><br>
+│   ├── <span class="node-leaf">MAU_教学_空間演出デザイン</span><br>
+│   ├── <span class="node-leaf">MAU_教学_建築</span><br>
+│   ├── <span class="node-leaf">MAU_教学_基礎デザイン</span><br>
+│   ├── <span class="node-leaf">MAU_教学_映像</span><br>
+│   ├── <span class="node-leaf">MAU_教学_芸術文化</span><br>
+│   ├── <span class="node-leaf">MAU_教学_デザイン情報</span><br>
+│   ├── <span class="node-leaf">MAU_教学_教養文化学芸員課程</span><br>
+│   ├── <span class="node-leaf">MAU_教学_言語文化</span><br>
+│   ├── <span class="node-leaf">MAU_教学_身体運動文化</span><br>
+│   ├── <span class="node-leaf">MAU_教学_美学美術史</span><br>
+│   ├── <span class="node-leaf">MAU_教学_共通絵画</span><br>
+│   ├── <span class="node-leaf">MAU_教学_共通彫刻</span><br>
+│   ├── <span class="node-leaf">MAU_教学_教職課程</span><br>
+│   ├── <span class="node-leaf">MAU_教学_通信教育課程研究室</span><br>
+│   ├── <span class="node-special">MAU_教学_クリエイティブイノベーション</span><br>
+│   ├── <span class="node-special">MAU_教学_情報教育センター</span><br>
+│   └── <span class="node-special">MAU_教学_民俗資料室</span><br>
+├── <span class="node-mid">MAU_カテゴリ_（雇用形態別）</span><br>
+│   ├── <span class="node-leaf">MAU_カテゴリ_職員専任</span><br>
+│   ├── <span class="node-leaf">MAU_カテゴリ_職員嘱託</span><br>
+│   ├── <span class="node-leaf">MAU_カテゴリ_教員</span><br>
+│   ├── <span class="node-leaf">MAU_カテゴリ_助教 / 助手</span><br>
+│   ├── <span class="node-leaf">MAU_カテゴリ_臨時勤務者 / 派遣職員</span><br>
+│   └── <span class="node-leaf">MAU_カテゴリ_副手・臨時副手</span><br>
 └── <span class="node-special">MAU_MFA対象_教職員</span>  ← セキュリティポリシー用
           </div>
         </div>
@@ -752,10 +1174,10 @@
           <strong>extensionAttribute の活用</strong><br>
           ユーザーの主所属・兼務情報をEntra IDの拡張属性に記録し、管理台帳代わりにする
           <pre class="code"><span class="cm">// Entra ID ユーザープロパティの例</span>
-<span class="kw">department</span>: <span class="str">"工業デザイン学科"</span>           <span class="cm">// 主所属</span>
-<span class="kw">extensionAttribute1</span>: <span class="str">"教員"</span>               <span class="cm">// 種別</span>
-<span class="kw">extensionAttribute2</span>: <span class="str">"教務部兼務"</span>          <span class="cm">// 兼務情報</span>
-<span class="kw">extensionAttribute3</span>: <span class="str">"大学院研究科兼務"</span>    <span class="cm">// 兼務情報2</span></pre>
+<span class="kw">department</span>: <span class="str">"工芸工業デザイン"</span>            <span class="cm">// 主所属（Garoon教学組織名に合わせる）</span>
+<span class="kw">extensionAttribute1</span>: <span class="str">"教員"</span>               <span class="cm">// 雇用形態（カテゴリー）</span>
+<span class="kw">extensionAttribute2</span>: <span class="str">"教学企画チーム兼務"</span>  <span class="cm">// 兼務情報</span>
+<span class="kw">extensionAttribute3</span>: <span class="str">""</span>                   <span class="cm">// 兼務情報2（必要に応じて）</span></pre>
         </div>
       </li>
       <li>
@@ -773,22 +1195,21 @@
   </div>
 
   <div class="card card-green">
-    <h2>✅ 次回定例（6/25）での説明ポイント</h2>
+    <h2>✅ 設計の結論（6/25定例で合意済み）</h2>
     <ul>
-      <li>階層構造：✅ すでに提案済みの設計で完全対応可能</li>
+      <li>階層構造：✅ Garoon実データに基づくネスト型グループ設計で完全対応可能</li>
       <li>兼務の機能的再現：✅ 複数グループ所属で権限・メール・アクセスはすべて対応できる</li>
-      <li><strong>「縦横」構造</strong>：✅ 「縦軸（雇用形態：専任/非常勤/派遣等）× 横軸（部署：総務グループ/施設管理チーム等）」は、ユーザーを両軸のグループにそれぞれ登録することで再現できる。ガルーンと同じ「全部門に別エントリ」がEntra IDでも可能</li>
+      <li><strong>「縦横」構造</strong>：✅ 「縦軸（カテゴリー：専任/嘱託/派遣等）× 横軸（事務組織：総務G/施設管財チーム等、または教学：学科）」をユーザーを両軸のグループに登録することで再現できる</li>
       <li>兼務の視覚表示（組織図）：⚠️ 標準機能では対応不可。組織図はManagerフィールドの1系統のみ</li>
-      <li>管理運用：現状ガルーンも手作業（畠中氏）→ M365も手作業スタートで同水準。Entra ID P1（動的グループ）で将来的に自動化できる</li>
-      <li>テストアカウントで確認：井上さんから配布予定のアカウントで実際の挙動を確認した上で最終回答する</li>
-      <li>「情報管理担当者がM365では使えないと言っている」点の確認：具体的にどの機能が不足か聞く</li>
+      <li>管理運用：手作業スタート（Phase 1）→ Entra ID P1（動的グループ）で将来的に自動化（Phase 2）</li>
+      <li>テストアカウント：6/25定例でテナントへのログイン可を確認済み</li>
     </ul>
 
     <hr class="divider">
 
-    <h3>井上さんへの確認事項（ヒアリング）</h3>
+    <h3>今後の確認事項（権限付与後に実施）</h3>
     <ul>
-      <li>現在ガルーンの組織図を誰がどのような用途で使っているか？</li>
+      <li>Entra ID管理センターにアクセスし、既存グループ構成を確認する（閲覧権限付与待ち）</li>
       <li>「兼務」の情報は人事部が管理しているか？何名くらい兼務者がいるか？</li>
       <li>兼務者への連絡は「主所属として」送るのか「兼務先として」送るのか、その両方か？</li>
       <li>SharePoint で「兼務が見える」必要があるか？（機能的に動けばよいか、見た目も重要か）</li>
@@ -801,7 +1222,7 @@
   function switchTab(name) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    const idx = ['action','hierarchy','concurrent','comparison','design'].indexOf(name);
+    const idx = ['action','garoon-mapping','hierarchy','concurrent','comparison','design'].indexOf(name);
     document.querySelectorAll('.tab-btn')[idx].classList.add('active');
     document.getElementById('tab-' + name).classList.add('active');
     window.scrollTo(0, 0);
