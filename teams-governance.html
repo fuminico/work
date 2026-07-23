@@ -790,11 +790,20 @@
     <strong>💡 2つのフローを使い分けます：</strong>既存10,000件の<strong>初回クリーンアップ</strong>と、新規チームの<strong>恒常運用</strong>では仕組みが異なります。
   </div>
 
+  <!-- 7/16定例フィードバック -->
+  <div class="callout" style="background:#fff7ed;border-left:4px solid #d97706;margin-bottom:16px;">
+    <strong>💬 7/16定例 フィードバック（要再検討）</strong><br>
+    <ul style="margin:8px 0 0 16px;font-size:13px;line-height:2;">
+      <li>「非アクティブ」と判断する基準期間として <strong>6ヶ月案</strong> を提示したが、年次業務（年1回しか使わないチーム等）を考慮すると短すぎる可能性がある → <strong>期間の定義を再検討</strong></li>
+      <li>アーカイブ後の削除待機期間（6ヶ月）は大筋で合意済み</li>
+    </ul>
+  </div>
+
   <!-- フロー① 初回クリーンアップ -->
   <div style="margin-bottom:20px;">
     <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:8px;">📦 フロー① 初回クリーンアップ（既存約10,000件・手動）</div>
     <div class="flow">
-      <div class="flow-step info">対象抽出<br><small>管理センターで非アクティブ一覧</small></div>
+      <div class="flow-step info">対象抽出<br><small>管理センターで非アクティブ一覧<br>※基準期間 要検討</small></div>
       <div class="flow-arrow">→</div>
       <div class="flow-step info">事前告知<br><small>全教職員へ2週間前に通知</small></div>
       <div class="flow-arrow">→</div>
@@ -831,22 +840,106 @@
     <ul class="proposal-list">
       <li>
         <span class="pl-icon">1️⃣</span>
-        <span><strong>対象抽出</strong>：Teams管理センターの「非アクティブなチーム」フィルタで一覧をエクスポート。約10,000件が対象見込み。</span>
+        <span><strong>対象抽出・判定</strong>：非アクティブTeams 判定ツールで2,750件を確認し、「削除検討」「アーカイブ候補」を確定する。</span>
       </li>
       <li>
         <span class="pl-icon">2️⃣</span>
-        <span><strong>段階的アーカイブ</strong>：教職員に事前告知（2週間前）→ 非アクティブ全件アーカイブ。オーナーはいつでも復元可。</span>
+        <span><strong>事前告知</strong>：全教職員へ2週間前に通知（対象リスト・アーカイブ日・復元方法を明示）。</span>
       </li>
       <li>
         <span class="pl-icon">3️⃣</span>
+        <span><strong>一括アーカイブ実行</strong>：下記の方法でまとめて処理（1件ずつの手作業は非現実的）。</span>
+      </li>
+      <li>
+        <span class="pl-icon">4️⃣</span>
         <span><strong>6ヶ月後に確認</strong>：復元の申し出がないチームを削除候補にリスト化 → 確認後に削除。</span>
       </li>
       <li>
         <span class="pl-icon">✅</span>
-        <span><strong>恒常運用化</strong>：Entra ID の有効期限ポリシーを設定し、新規チームから自動ライフサイクル管理を適用。スクリプト不要で継続運用できます。</span>
+        <span><strong>恒常運用化</strong>：Entra ID の有効期限ポリシーを設定し、新規チームから自動ライフサイクル管理を適用。</span>
       </li>
     </ul>
   </div>
+
+  <!-- 一括アーカイブの実行方法 -->
+  <h3>一括アーカイブの実行方法</h3>
+
+  <div class="callout orange">
+    <strong>重要：</strong>2,750件を1件ずつ手動でアーカイブするには1件あたり約20秒かかり、<strong>合計15時間超</strong>の単純作業になります。現実的な実行方法は以下の2択です。
+  </div>
+
+  <div class="compare-grid" style="grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+
+    <div class="compare-card">
+      <div class="ct" style="border-color:#1d4ed8;color:#1d4ed8;">🖱 方法 A：管理センターUI（GUI）</div>
+      <ul>
+        <li>Teams管理センター → チームを管理 → 複数選択 → アーカイブ</li>
+        <li>技術知識不要・権限さえあれば誰でも実行可</li>
+        <li>1ページ最大100件まで選択可能</li>
+      </ul>
+      <div style="margin-top:8px;padding:8px;background:#fef3c7;border-radius:6px;font-size:11px;color:#92400e;">
+        ⚠️ <strong>制限：</strong>2,750件 ÷ 100件/回 = 28回の操作が必要。フィルタで絞り込めば回数は減らせる。数百件以下なら現実的。
+      </div>
+    </div>
+
+    <div class="compare-card">
+      <div class="ct" style="border-color:#166534;color:#166534;">⚡ 方法 B：PowerShell スクリプト（推奨）</div>
+      <ul>
+        <li>判定ツールのCSVエクスポートと連携</li>
+        <li>2,750件を数時間で自動処理</li>
+        <li>深夜バッチ実行で業務影響ゼロ</li>
+      </ul>
+      <div style="margin-top:8px;padding:8px;background:#dcfce7;border-radius:6px;font-size:11px;color:#166534;">
+        ✅ <strong>推奨：</strong>件数が多い初回クリーンアップに最適。三井田が実行支援可。
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ 方法 B の実行手順（PowerShell + Microsoft Graph）</div>
+
+    <div style="font-size:12px;color:#374151;margin-bottom:10px;line-height:1.8;">
+      <strong>前提：</strong>実行者に Teams管理者（またはグローバル管理者）権限が必要です。<br>
+      <strong>所要時間：</strong>2,750件 × 0.5秒 ≒ 約25分（スロットリング次第で1〜2時間程度）
+    </div>
+
+    <ol style="font-size:12px;line-height:2;color:#374151;padding-left:18px;margin:0 0 12px;">
+      <li>判定ツールで「対象外」以外の判定を確定 → <strong>「📤 CSV出力」</strong>でリストを保存</li>
+      <li>CSVに含まれるチーム名と、Teams管理センター元CSVの<strong>TeamId列</strong>を突合してIDリストを作成</li>
+      <li>以下のスクリプトを実行（初回のみ <code style="background:#f3f4f6;padding:1px 4px;border-radius:3px;">Install-Module Microsoft.Graph</code> が必要）</li>
+    </ol>
+
+    <div style="background:#0f172a;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:11.5px;line-height:1.7;color:#e2e8f0;overflow-x:auto;">
+      <span style="color:#94a3b8"># ① Microsoftアカウントでサインイン（初回のみ）</span><br>
+      <span style="color:#7dd3fc">Connect-MgGraph</span> <span style="color:#fbbf24">-Scopes</span> <span style="color:#86efac">"TeamSettings.ReadWrite.All"</span><br>
+      <br>
+      <span style="color:#94a3b8"># ② 判定ツールのCSVと元CSVを突合したチームIDリストを読み込む</span><br>
+      <span style="color:#e879f9">$targets</span> = <span style="color:#7dd3fc">Import-Csv</span> <span style="color:#86efac">"archive-targets.csv"</span> <span style="color:#fbbf24">-Encoding</span> UTF8<br>
+      <br>
+      <span style="color:#94a3b8"># ③ 1件ずつアーカイブ（0.5秒待機でスロットリング回避）</span><br>
+      <span style="color:#e879f9">$i</span> = <span style="color:#fb923c">0</span><br>
+      <span style="color:#c4b5fd">foreach</span> (<span style="color:#e879f9">$t</span> <span style="color:#c4b5fd">in</span> <span style="color:#e879f9">$targets</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc">Invoke-MgArchiveTeam</span> <span style="color:#fbbf24">-TeamId</span> <span style="color:#e879f9">$t</span>.TeamId<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#e879f9">$i</span>++<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc">Write-Progress</span> <span style="color:#fbbf24">-Activity</span> <span style="color:#86efac">"アーカイブ中"</span> <span style="color:#fbbf24">-Status</span> <span style="color:#86efac">"<span style="color:#e879f9">$i</span> / $(<span style="color:#e879f9">$targets</span>.Count) 件"</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc">Start-Sleep</span> <span style="color:#fbbf24">-Milliseconds</span> <span style="color:#fb923c">500</span><br>
+      }<br>
+      <span style="color:#7dd3fc">Write-Host</span> <span style="color:#86efac">"✅ 完了：<span style="color:#e879f9">$i</span> 件をアーカイブしました"</span>
+    </div>
+
+    <div style="margin-top:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px 12px;font-size:11px;color:#475569;line-height:1.8;">
+      <strong>CSVフォーマット（archive-targets.csv）：</strong><br>
+      <code style="background:#e2e8f0;padding:1px 5px;border-radius:3px;">TeamId,TeamName</code><br>
+      <code style="background:#e2e8f0;padding:1px 5px;border-radius:3px;">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx,2019前期_デザイン概論</code><br>
+      <code style="background:#e2e8f0;padding:1px 5px;border-radius:3px;">yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy,卒業制作2020_視覚伝達</code>
+    </div>
+  </div>
+
+  <div class="callout" style="background:#f0f4ff;border-left:4px solid #5558af;font-size:12px;">
+    <strong>💡 実行タイミングの推奨：</strong>金曜深夜〜土曜早朝に実行するのが理想的です。アーカイブ直後はチームにアクセスしようとしたユーザーに「読み取り専用」表示が出るため、業務時間外に処理することで混乱を最小化できます。
+  </div>
+
 </div>
 </div>
 
@@ -937,8 +1030,19 @@
   </div>
 
   <h3>チーム作成権限（ハイブリッド型の具体的運用）</h3>
+
+  <div class="callout" style="background:#fff7ed;border-left:4px solid #d97706;margin-bottom:16px;">
+    <strong>💬 7/16定例 フィードバック（業務系 申請制 要検討）</strong><br>
+    業務系チームを「部署長承認 → 情シスが作成」とする申請制について、以下の懸念が指摘された：
+    <ul style="margin:8px 0 0 16px;font-size:13px;line-height:2;">
+      <li><strong>管理負荷の増大</strong>：申請の受付・審査・作成を情シスが担当すると業務量が増える</li>
+      <li><strong>チャット流出のリスク</strong>：申請が面倒でユーザーがTeamsのチャット機能（チーム外）に流れてしまう</li>
+    </ul>
+    → 承認プロセスの要否・承認の担当者・自動化の活用について <strong>次回定例で方針を再検討</strong>。
+  </div>
+
   <div class="card">
-    <div class="card-title">申請〜作成フロー</div>
+    <div class="card-title">申請〜作成フロー（案）</div>
     <div class="flow">
       <div class="flow-step info">申請フォーム送信<br><span style="font-size:10px">（SharePoint リスト）</span></div>
       <div class="flow-arrow">→</div>
@@ -977,6 +1081,12 @@
     </tr>
   </table>
   <p style="font-size:12px;color:var(--muted);margin-top:8px;">※ 業務系・授業系は有効期限ポリシーによる自動ソフト削除。プロジェクト系はプロジェクト完了時点でオーナーが手動アーカイブし、その後削除する手動管理フローです。</p>
+
+  <div class="callout" style="background:#fef2f2;border-left:4px solid #dc2626;margin-top:12px;font-size:13px;">
+    <strong>⚠️ 7/16定例 新規判明：授業資料の保管義務について確認が必要</strong><br>
+    大学規定により授業関連資料には <strong>5年程度の保管義務がある可能性</strong> が判明した。授業系チームを学期末にソフト削除する場合、30日間の復元可能期間では不足する恐れがある。<br>
+    → <strong>対応案</strong>：削除前に SharePoint または別ストレージへのアーカイブエクスポートを行う、または有効期限ポリシーの適用対象から一定条件の授業系チームを除外して長期保持する仕組みを検討。情報管理規定の確認が必要。
+  </div>
 
   <div class="callout green" style="margin-top:16px;">
     <strong>💾 例外ルート：削除せずアーカイブのまま継続保持したい場合</strong><br><br>
