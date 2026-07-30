@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>武蔵野美術大学 イントラネット — SharePoint サイト構成素案</title>
+<style>
+:root {
+  --tm: #1e40af; --tm-l: #dbeafe; --tm-d: #1e3a8a;
+  --accent: #7c3aed;
+  --ok: #166534; --ok-bg: #f0fdf4;
+  --warn: #92400e; --warn-bg: #fffbeb;
+  --info: #1e40af; --info-bg: #eff6ff;
+  --text: #1f2937; --muted: #6b7280; --subtle: #9ca3af;
+  --border: #e5e7eb; --bg: #f9fafb;
+  --musabi-blue: #003d8f; --musabi-gold: #b8922e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+
+/* ===== ドキュメントヘッダー ===== */
+.doc-header { background: var(--tm); color: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+.doc-header h1 { font-size: 18px; font-weight: 700; }
+.doc-header .back { color: rgba(255,255,255,.75); text-decoration: none; font-size: 13px; }
+.doc-main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 40px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
+
+/* ===== セクション ===== */
+.section { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+.section-title { font-size: 16px; font-weight: 700; color: var(--tm); margin-bottom: 12px; }
+.callout { border-radius: 8px; padding: 12px 16px; margin: 8px 0 14px; font-size: 13px; }
+.callout.info { background: var(--info-bg); border-left: 4px solid #3b82f6; color: var(--info); }
+.callout.ok   { background: var(--ok-bg);   border-left: 4px solid #16a34a; color: var(--ok); }
+.callout.warn { background: var(--warn-bg); border-left: 4px solid #d97706; color: var(--warn); }
+
+/* ===== サイト構成ツリー ===== */
+.site-tree { margin: 12px 0; }
+.tree-hub { background: var(--musabi-blue); color: #fff; border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap:10px; margin-bottom: 8px; font-weight: 700; font-size: 15px; }
+.tree-children { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-left: 24px; }
+.tree-node { border: 2px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.tree-node.blue   { border-color: #3b82f6; background: #eff6ff; }
+.tree-node.green  { border-color: #16a34a; background: #f0fdf4; }
+.tree-node.purple { border-color: #7c3aed; background: #f5f3ff; }
+.tree-node.amber  { border-color: #d97706; background: #fffbeb; }
+.tree-node-label  { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.tree-node-title  { font-size: 14px; font-weight: 700; }
+.tree-node-sub    { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* ===== モックアップ ===== */
+.mockup-wrap { border: 2px solid var(--border); border-radius: 10px; overflow: hidden; margin: 12px 0; }
+.mockup-bar  { background: var(--musabi-blue); color: #fff; padding: 8px 14px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.mockup-nav  { background: var(--musabi-blue); border-top: 1px solid rgba(255,255,255,.15); padding: 6px 14px; display: flex; gap: 16px; }
+.mockup-nav a { color: rgba(255,255,255,.8); font-size: 12px; text-decoration: none; padding: 4px 0; }
+.mockup-nav a.active { color: #fff; border-bottom: 2px solid #fff; }
+.mockup-body { background: #f4f4f4; padding: 16px; }
+.mockup-hero { background: linear-gradient(135deg, var(--musabi-blue) 0%, #0055b3 100%); color: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 14px; }
+.mockup-hero h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.mockup-hero p  { font-size: 13px; opacity: .85; }
+.mockup-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .mockup-grid { grid-template-columns: 1fr; } }
+.mockup-card { background: #fff; border-radius: 8px; padding: 14px; border: 1px solid var(--border); }
+.mockup-card h3 { font-size: 13px; font-weight: 700; color: var(--tm); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.news-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+.news-item:last-child { border-bottom: none; }
+.news-meta { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+.news-title { font-size: 13px; }
+.news-tag { display: inline-block; background: var(--tm-l); color: var(--tm); font-size: 10px; border-radius: 4px; padding: 1px 6px; font-weight: 700; margin-left: 4px; }
+.quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.quick-link { background: #f9fafb; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.quick-link:hover { background: var(--tm-l); }
+.mockup-sidebar-card { background: #fff; border-radius: 8px; padding: 14px; border: 1px solid var(--border); margin-bottom: 10px; }
+.workflow-item { padding: 6px 8px; background: #f9fafb; border-radius: 6px; margin-bottom: 6px; font-size: 12px; display: flex; align-items: center; gap: 8px; }
+.workflow-item .step { background: var(--tm); color: #fff; border-radius: 4px; padding: 1px 6px; font-size: 10px; font-weight: 700; }
+
+/* ===== テーブル ===== */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 12px; }
+th { background: #f3f4f6; padding: 8px 10px; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+.badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+.badge.hi  { background: #fee2e2; color: #991b1b; }
+.badge.med { background: #fef3c7; color: #92400e; }
+.badge.lo  { background: #dcfce7; color: #166534; }
+
+h3.sub { font-size: 14px; font-weight: 700; color: var(--text); margin: 16px 0 8px; padding-left: 8px; border-left: 3px solid var(--tm); }
+ul { padding-left: 18px; }
+li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>🏛 SharePoint イントラネット サイト構成素案</h1>
+</div>
+
+<div class="doc-main">
+  <div class="meta">作成: 2026-07-23 ／ 更新: 2026-07-30（7/30定例フィードバック反映済み）</div>
+
+  <div class="callout ok">
+    <strong>7/30定例 確定事項反映済み：</strong>
+    ① お知らせの受信者設定は「教員・職員」などの大まかな区分（細かい部署限定指定は廃止）
+    ② 投稿権限は制限せず運用でカバー
+    ③ スケジュール情報はSharePointニュースに掲載しない（Outlook/Teamsで確認）
+  </div>
+
+  <!-- サイト構成 -->
+  <div class="section">
+    <div class="section-title">📐 サイト構成案（ハブ＆スポーク型）</div>
+
+    <div class="callout ok">
+      SharePointの推奨構成「ハブサイト（全学） + スポークサイト（部署・学科）」を採用。Garoonの組織構造（事務3階層 + フラット教学）に対応。
+    </div>
+
+    <div class="site-tree">
+      <div class="tree-hub">🏠 武蔵野美術大学 イントラポータル（ハブサイト）— 全学統合トップページ</div>
+      <div class="tree-children">
+        <div class="tree-node blue">
+          <div class="tree-node-label">事務系</div>
+          <div class="tree-node-title">📂 総務・人事</div>
+          <div class="tree-node-sub">規程集・人事通知・採用情報</div>
+        </div>
+        <div class="tree-node blue">
+          <div class="tree-node-label">事務系</div>
+          <div class="tree-node-title">📂 財務・経理</div>
+          <div class="tree-node-sub">経費精算・予算情報・ワークフロー</div>
+        </div>
+        <div class="tree-node blue">
+          <div class="tree-node-label">事務系</div>
+          <div class="tree-node-title">📂 施設・設備</div>
+          <div class="tree-node-sub">施設予約・工事情報・申請（最大ボリューム）</div>
+        </div>
+        <div class="tree-node blue">
+          <div class="tree-node-label">事務系</div>
+          <div class="tree-node-title">📂 情報システム</div>
+          <div class="tree-node-sub">M365利用手引き・ITお知らせ・申請</div>
+        </div>
+        <div class="tree-node green">
+          <div class="tree-node-label">教学系</div>
+          <div class="tree-node-title">📚 各学科・研究室</div>
+          <div class="tree-node-sub">造形学部11学科 + 造形構想学部2学科</div>
+        </div>
+        <div class="tree-node green">
+          <div class="tree-node-label">教学系</div>
+          <div class="tree-node-title">📚 大学院・通信教育</div>
+          <div class="tree-node-sub">研究科・通信教育課程</div>
+        </div>
+        <div class="tree-node purple">
+          <div class="tree-node-label">ワークフロー</div>
+          <div class="tree-node-title">⚙️ 申請・ワークフロー</div>
+          <div class="tree-node-sub">Canbus. 連携（Garoon移行フロー）</div>
+        </div>
+        <div class="tree-node amber">
+          <div class="tree-node-label">共通</div>
+          <div class="tree-node-title">🔗 よく使うリンク集</div>
+          <div class="tree-node-sub">M365アプリ・教務・図書・ポータル</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- トップページモックアップ -->
+  <div class="section">
+    <div class="section-title">🖥️ ハブサイト トップページ モックアップ</div>
+    <div class="callout info">
+      以下はトップページの設計イメージです。Garoonの掲示板（回覧）はここの「全学お知らせ」に相当します。
+    </div>
+
+    <div class="mockup-wrap">
+      <div class="mockup-bar">
+        🏫 武蔵野美術大学 イントラネット
+        <span style="margin-left:auto; font-size:11px; opacity:.7">三井田 史親 ｜ 情報システム</span>
+      </div>
+      <div class="mockup-nav">
+        <a href="#" class="active">🏠 ホーム</a>
+        <a href="#">📣 全学お知らせ</a>
+        <a href="#">📂 事務局</a>
+        <a href="#">📚 教学</a>
+        <a href="#">⚙️ 申請・ワークフロー</a>
+        <a href="#">🔗 リンク集</a>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-hero">
+          <h2>武蔵野美術大学 教職員ポータル</h2>
+          <p>M365に移行しました。Garoonのお知らせ・申請はこちらからご利用ください。</p>
+        </div>
+        <div class="mockup-grid">
+          <div>
+            <div class="mockup-card">
+              <h3>📣 全学お知らせ <span style="font-size:10px;color:var(--muted);font-weight:400">← Garoon「掲示板・回覧」の移行先</span></h3>
+              <div class="news-item">
+                <div class="news-meta">2026/07/18 ・ 情報システム部</div>
+                <div class="news-title">M365テナントへの移行について（重要）<span class="news-tag">全教職員</span></div>
+              </div>
+              <div class="news-item">
+                <div class="news-meta">2026/07/15 ・ 人事部</div>
+                <div class="news-title">夏季休暇期間中の窓口対応について<span class="news-tag">全教職員</span></div>
+              </div>
+              <div class="news-item">
+                <div class="news-meta">2026/07/10 ・ 施設管財課</div>
+                <div class="news-title">鷹の台キャンパス 空調設備メンテナンスのお知らせ<span class="news-tag">鷹の台</span></div>
+              </div>
+              <div class="news-item">
+                <div class="news-meta">2026/07/08 ・ 財務部</div>
+                <div class="news-title">2026年度 第1四半期 経費精算の提出について<span class="news-tag">教職員</span></div>
+              </div>
+              <div style="text-align:right; margin-top:8px"><a href="#" style="font-size:12px;color:var(--tm)">すべてのお知らせを見る →</a></div>
+            </div>
+          </div>
+          <div>
+            <div class="mockup-sidebar-card">
+              <h3 style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px">⚙️ よく使う申請</h3>
+              <div class="workflow-item"><span class="step">申請</span>施設使用申請</div>
+              <div class="workflow-item"><span class="step">申請</span>出張旅費申請</div>
+              <div class="workflow-item"><span class="step">申請</span>アルバイト雇用申請</div>
+              <div class="workflow-item"><span class="step">申請</span>物品購入申請</div>
+              <a href="#" style="font-size:12px;color:var(--tm);display:block;text-align:right;margin-top:4px">すべての申請を見る →</a>
+            </div>
+            <div class="mockup-sidebar-card">
+              <h3 style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px">🔗 クイックリンク</h3>
+              <div class="quick-links">
+                <div class="quick-link">📧 Outlook</div>
+                <div class="quick-link">💬 Teams</div>
+                <div class="quick-link">📁 OneDrive</div>
+                <div class="quick-link">📊 SharePoint</div>
+                <div class="quick-link">📅 カレンダー</div>
+                <div class="quick-link">🎓 教務システム</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Garoon機能対応表 -->
+  <div class="section">
+    <div class="section-title">🔄 Garoon機能 → SharePoint 対応設計</div>
+
+    <table>
+      <tr>
+        <th>Garoon機能</th>
+        <th>M365の移行先</th>
+        <th>移行難易度</th>
+        <th>設計ポイント</th>
+      </tr>
+      <tr>
+        <td><strong>掲示板・お知らせ（回覧）</strong><br>全体・部署別発信</td>
+        <td>SharePoint ニュース Web パーツ<br>（ハブサイト トップページ）</td>
+        <td><span class="badge lo">低</span></td>
+        <td>Entra IDグループ対象に優先表示。全体公開をデフォルト。</td>
+      </tr>
+      <tr>
+        <td><strong>ワークフロー（申請フロー）</strong><br>施設管財・旅費・アルバイト等</td>
+        <td><strong>Canbus.</strong>（Systena社）または <strong>Power Automate</strong><br>※ツール選定を比較検討中</td>
+        <td><span class="badge hi">高</span></td>
+        <td>約100件のうち高頻度フローから移行。施設管財系がパイロット候補。Power Automateデモを8/6定例までに作成・比較判断。</td>
+      </tr>
+      <tr>
+        <td><strong>稟議書（X-Point）</strong><br>公式な承認フロー</td>
+        <td>X-Point 継続使用</td>
+        <td>—</td>
+        <td>M365移行対象外。Garoon廃止後もX-Pointは独立稼働。</td>
+      </tr>
+      <tr>
+        <td><strong>ファイル共有（共有ドライブ）</strong></td>
+        <td>SharePoint ドキュメントライブラリ<br>+ OneDrive（個人）</td>
+        <td><span class="badge med">中</span></td>
+        <td>事務局・学科ごとのサイトにドキュメントライブラリを設置。権限設計が重要。</td>
+      </tr>
+      <tr>
+        <td><strong>スケジュール（共有カレンダー）</strong></td>
+        <td>Outlook カレンダー（共有）<br>+ Teams カレンダー</td>
+        <td><span class="badge lo">低</span></td>
+        <td>過去データ移行不要。新規から開始。会議室予約はOutlookで代替。</td>
+      </tr>
+      <tr>
+        <td><strong>組織図・電話帳</strong></td>
+        <td>Entra ID プロフィール<br>+ Teams プロフィールカード</td>
+        <td><span class="badge lo">低</span></td>
+        <td>Entra IDのユーザー属性（部署・役職）整備で自動表示。</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 回覧移行の詳細設計 -->
+  <div class="section">
+    <div class="section-title">📣 回覧（掲示板）移行の詳細設計</div>
+
+    <h3 class="sub">投稿フローの設計（6/25合意内容の具体化）</h3>
+    <table>
+      <tr><th>項目</th><th>Garoon（現状）</th><th>SharePoint（移行後）</th></tr>
+      <tr><td>投稿権限</td><td>誰でも投稿可能</td><td>誰でも投稿可能（同じ運用を維持）</td></tr>
+      <tr><td>公開先の設定</td><td>読者グループを選択（部署単位の細かい指定あり）</td><td>「教員全体」「職員全体」「全教職員」など大まかな区分で指定（7/30確定）。細かい部署限定指定は廃止し、シンプルな運用を優先。</td></tr>
+      <tr><td>通知</td><td>メール通知あり</td><td>Teams「活動」フィードで通知（メール通知もオプションで可能）</td></tr>
+      <tr><td>過去記事の移行</td><td>大量のアーカイブが存在</td><td>新規から開始。過去記事は各部署の判断でアップ直し（合意済み）</td></tr>
+    </table>
+
+    <h3 class="sub">移行スケジュール（案）</h3>
+    <table>
+      <tr><th>期間</th><th>内容</th></tr>
+      <tr><td>〜2026年9月</td><td>SharePointイントラサイト基盤構築・テスト投稿</td></tr>
+      <tr><td>2026年10月</td><td>SharePoint本番公開・新しいお知らせはSharePointへ。Garoonは参照のみ（読み取り専用）に移行</td></tr>
+      <tr><td>2026年10〜12月</td><td>各部署が必要な過去記事をSharePointへ転記（任意）</td></tr>
+      <tr><td>2027年3月</td><td>Garoon廃止（契約終了）</td></tr>
+    </table>
+  </div>
+
+  <!-- 申請フロー移行 -->
+  <div class="section">
+    <div class="section-title">⚙️ ワークフロー移行の詳細設計（Canbus. 活用）</div>
+
+    <div class="callout ok">
+      6/25定例でCanbus.（Systena社）に移行方針決定済み。ユーザー数無制限・月額5万円プラン（1万レコード）。年間約4,500件の申請は約26ヶ月で1万レコードに達するため、2年ごとの古いレコード削除で運用可能。
+    </div>
+
+    <h3 class="sub">Garoon ワークフロー内訳と移行優先度（案）</h3>
+    <table>
+      <tr><th>カテゴリ</th><th>年間件数割合</th><th>移行優先度</th><th>パイロット候補</th></tr>
+      <tr>
+        <td>施設管財関連<br>（施設使用・設備申請等）</td>
+        <td>50.5%（約2,700件/年）</td>
+        <td><span class="badge hi">最優先</span></td>
+        <td>✅ 第1パイロット</td>
+      </tr>
+      <tr>
+        <td>アルバイト・非常勤関連</td>
+        <td>15.5%（約830件/年）</td>
+        <td><span class="badge med">第2優先</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>総務・庶務系</td>
+        <td>15.0%（約810件/年）</td>
+        <td><span class="badge med">第2優先</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>その他（旅費・物品等）</td>
+        <td>19%（約1,000件/年）</td>
+        <td><span class="badge lo">第3優先</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+
+    <h3 class="sub">Canbus. 実装ロードマップ（案）</h3>
+    <table>
+      <tr><th>ステップ</th><th>内容</th><th>目標時期</th></tr>
+      <tr><td>① 選定・確定</td><td>7/30定例でWFリストを照合し、パイロットフロー（施設使用申請）を決定</td><td>7/30</td></tr>
+      <tr><td>② Canbus. デモ</td><td>Systena社にデモ依頼（三井田が調整）。画面・操作感を大学側に確認</td><td>8月上旬</td></tr>
+      <tr><td>③ パイロット構築</td><td>施設使用申請フロー1本をCanbus. で実装・テスト</td><td>8〜9月</td></tr>
+      <tr><td>④ 試験運用</td><td>情シスメンバーでテスト運用 → 問題なければ関係部署に展開</td><td>9〜10月</td></tr>
+      <tr><td>⑤ 追加移行</td><td>高頻度フロー（アルバイト・総務系）を順次Canbus. に移行</td><td>10〜12月</td></tr>
+      <tr><td>⑥ 全面移行</td><td>Garoonのワークフロー全廃止 → Canbus. 一本化</td><td>2027年3月</td></tr>
+    </table>
+  </div>
+
+  <!-- 確認事項 -->
+  <div class="section">
+    <div class="section-title">❓ 7/30定例で確認したい事項</div>
+    <table>
+      <tr><th>No.</th><th>確認事項</th><th>誰に確認</th></tr>
+      <tr><td>①</td><td>ガルーンから抽出したWFリスト（約100件）の内訳確認。現在も使用中か・頻度はどのくらいか</td><td>畠中・井上</td></tr>
+      <tr><td>②</td><td>Garoonの契約終了時期（廃止デッドライン）</td><td>井上</td></tr>
+      <tr><td>③</td><td>施設使用申請フローの承認フロー構造（誰が承認するか）</td><td>畠中</td></tr>
+      <tr><td>④</td><td>回覧（掲示板）の現在の主な投稿部署・投稿頻度</td><td>畠中</td></tr>
+      <tr><td>⑤</td><td>SharePointサイト構成案へのフィードバック（このページ）</td><td>全員</td></tr>
+      <tr><td>⑥</td><td>Canbus. デモの日程（定例内か別途セッションか）</td><td>井上</td></tr>
+    </table>
+  </div>
+
+  <div class="meta" style="text-align:right; margin-top:8px">
+    作成: 三井田（2026-07-23）／ 7/30定例でフィードバック取得予定
+  </div>
+</div>
+</body>
+</html>

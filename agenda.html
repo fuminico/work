@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>定例アジェンダ 第9回（7/23）— 武蔵野美術大学 M365導入支援</title>
+<title>定例アジェンダ 第10回（7/30）— 武蔵野美術大学 M365導入支援</title>
 <style>
   :root {
     --gray:    #6b7280;
@@ -117,40 +117,6 @@
   .check-list li:last-child { border-bottom: none; }
   .check-list li::before { content: '?'; position: absolute; left: 6px; font-size: 12px; top: 7px; font-weight: 800; color: var(--orange); }
 
-  .request-list { list-style: none; margin-bottom: 14px; }
-  .request-list li {
-    font-size: 13px;
-    padding: 7px 0 7px 26px;
-    position: relative;
-    color: #374151;
-    border-bottom: 1px solid #f3f4f6;
-    line-height: 1.5;
-  }
-  .request-list li:last-child { border-bottom: none; }
-  .request-list li::before { content: '📌'; position: absolute; left: 0; font-size: 13px; top: 7px; }
-  .request-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 4px;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-  .tag-conf { background: #dbeafe; color: #1d4ed8; }
-
-  /* Teams テーマカード */
-  .teams-agenda-card {
-    background: var(--teams-bg);
-    border: 1px solid #c7caed;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 10px;
-  }
-  .tac-title { font-size: 13px; font-weight: 800; color: var(--teams); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-  .tac-point { font-size: 12px; padding: 3px 0 3px 16px; position: relative; color: #374151; line-height: 1.5; }
-  .tac-point::before { content: '・'; position: absolute; left: 0; top: 3px; color: var(--teams); }
-
   /* データカード */
   .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
   .data-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; }
@@ -185,6 +151,16 @@
   .garoon-num { font-weight: 700; text-align: right; width: 70px; }
   .garoon-pct { text-align: right; width: 54px; color: var(--gray); }
 
+  /* カード内サブタイトル */
+  .sub-heading {
+    margin: 12px 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    border-left: 3px solid #d1d5db;
+    padding-left: 8px;
+  }
+
   /* 色テーマ別 */
   .green  .block-header { background: var(--green-bg); }
   .green  .block-badge  { background: var(--green); color: #fff; }
@@ -200,6 +176,11 @@
   .orange .block-badge  { background: var(--orange); color: #fff; }
   .orange .block-time   { color: var(--orange); }
   .orange .point-list li::before { color: var(--orange); }
+
+  .purple .block-header { background: var(--purple-bg); }
+  .purple .block-badge  { background: var(--purple); color: #fff; }
+  .purple .block-time   { color: var(--purple); }
+  .purple .point-list li::before { color: var(--purple); }
 
   .red    .block-header { background: var(--red-bg); }
   .red    .block-badge  { background: var(--red); color: #fff; }
@@ -246,7 +227,7 @@
     border: 1px solid var(--border); transition: background .15s;
   }
   .ref-link:hover { background: #e5e7eb; }
-  .ref-link.primary { background: var(--teams-bg); color: var(--teams); border-color: #c7caed; }
+  .ref-link.primary { background: var(--blue-bg); color: var(--blue); border-color: #bfdbfe; }
 
   @media (max-width: 600px) {
     .data-grid { grid-template-columns: 1fr 1fr; }
@@ -257,9 +238,9 @@
 
 <div class="header">
   <div class="header-label">武蔵野美術大学 M365導入支援コンサルティング</div>
-  <h1>定例 アジェンダ — 第9回</h1>
-  <div class="meta">2026年7月23日（木）　担当：三井田</div>
-  <div class="total-time">⏱ 合計 約35分（冒頭5 ＋ ①10 ＋ ②20）</div>
+  <h1>定例 アジェンダ — 第10回</h1>
+  <div class="meta">2026年7月30日（木）　担当：三井田</div>
+  <div class="total-time">⏱ 三井田担当 約30分（冒頭2 ＋ ①13 ＋ ②8 ＋ ③5 ＋ まとめ2）</div>
 </div>
 
 <div class="blocks">
@@ -268,187 +249,107 @@
   <div class="block green">
     <div class="block-header">
       <div class="block-badge">冒頭</div>
-      <div class="block-title">前回（7/16）フォローアップ</div>
-      <div class="block-time">5分</div>
+      <div class="block-title">前回フォローアップ — ゲストアクセス調査結果（口頭共有）</div>
+      <div class="block-time">2分</div>
     </div>
     <div class="block-body">
       <ul class="point-list">
-        <li>
-          <strong>✅ Teamsガバナンス方針案フィードバック取得済み：</strong>
-          7/16定例にてテーマ①②のフィードバックをいただきました。テーマ③（ゲストアクセス）は未説明のため、本日①ブロックで改めて説明します。
-          <ul class="sub-list">
-            <li><strong>アーカイブ基準「6ヶ月」→ 要再検討：</strong>年次業務チーム（年1回しか使わない等）を考慮すると6ヶ月では短すぎる可能性あり</li>
-            <li><strong>新規作成「申請制」に懸念：</strong>管理者の審査負荷増大 ／ Teams作成ブロック時にプライベートチャット乱立のリスク</li>
-            <li><strong>授業資料の保管義務（要確認）：</strong>文書保管規程による5年保管の可能性あり。削除前に要確認</li>
-            <li>アーカイブ後の削除待機期間（6ヶ月）は大筋合意</li>
-          </ul>
-        </li>
-        <li>
-          <strong>✅ 非アクティブTeams 整理リスト作成完了：</strong>
-          Teams管理センターのCSVデータを分析し、クリーンアップ対象2,750件をカテゴリー別に整理しました。本日②ブロックで内容の共有と操作説明を行います。
-        </li>
+        <li><strong>調査結果の共有：</strong>ゲスト側の操作性改善・90日自動失効の解除は、いずれも技術的には実現可能です。ただし、どちらの改善も追加のゲストライセンスが必要になります。</li>
+        <li><strong>三井田の見解：</strong>追加コストに対して得られるメリットが限定的であるため、現時点では優先度は高くないと考えています。最終的なご判断は大学側にお任せします。</li>
       </ul>
+      <div style="margin-top:8px;">
+        <a href="teams-guest-access.html" target="_blank" style="font-size:12px;color:#1d4ed8;text-decoration:none;">🔍 ゲストアクセス調査レポート（詳細）↗</a>
+      </div>
     </div>
   </div>
 
   <!-- ブロック① -->
-  <div class="block teams-theme">
+  <div class="block blue">
     <div class="block-header">
-      <div class="block-badge">① 説明</div>
-      <div class="block-title">Teamsガバナンス テーマ③ ゲストアクセスの限定開放</div>
-      <div class="block-time">10分</div>
+      <div class="block-badge">① 議論</div>
+      <div class="block-title">ガルーン移行 — ワークフロー</div>
+      <div class="block-time">13分</div>
     </div>
     <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:14px;">7/16定例では時間の都合で説明できなかったテーマ③について改めて説明します。<br>
-      <a href="teams-governance.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:#eeeeff;border:1px solid #c7caed;border-radius:6px;color:#5558af;font-weight:700;font-size:12px;text-decoration:none;">🏛 詳細資料：Teams ガバナンス方針案 Tab3 ↗</a></p>
-
-      <div class="teams-agenda-card">
-        <div class="tac-title">🚪 テーマ③ 外部との連携（ゲストアクセスの限定開放）</div>
-        <div class="tac-point"><strong>現状：</strong>外部アクセス・ゲストアクセスともに<strong>OFF</strong>。大学外の方とはTeams上で協働できない。</div>
-        <div class="tac-point"><strong>ニーズ：</strong>産学連携先・外部講師・共同研究者など、大学外の方とTeams上でファイル共有・連絡を取りたい場面が存在。</div>
-        <div class="tac-point"><strong>提案：ゲストアクセスのみを有効化。</strong>外部アクセス（外部ユーザーとの個人チャット）は引き続き無効のままにする。</div>
-        <div class="tac-point">
-          <strong>セキュリティ担保（5つのコントロール）：</strong>
-          <ul class="sub-list" style="margin-top:4px;">
-            <li>招待権限はチームオーナーのみ（一般メンバーは招待不可）</li>
-            <li>情シス承認制（ゲスト招待は申請→承認後に実施）</li>
-            <li>90日で自動失効（更新手続きがなければアクセス終了）</li>
-            <li>個人メールアドレス（Gmail等）への招待禁止</li>
-            <li>秘密度ラベル「教職員」が設定されたチームへのゲスト招待禁止</li>
-          </ul>
-        </div>
-      </div>
-
+      <p style="font-size:12px;color:var(--gray);margin-bottom:14px;">
+        三井田がGaroonからWFリスト（約100件・年間4,500件規模、施設管財系50%）を抽出済み。本日このリストをベースに大学側と照合します。<br>
+        <a href="investigation-report-07.html#garoon" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:#dbeafe;border:1px solid #bfdbfe;border-radius:6px;color:#1d4ed8;font-weight:700;font-size:12px;text-decoration:none;">📄 Garoon WFフロー一覧（調査レポート）↗</a>
+      </p>
       <ul class="check-list">
         <li>
-          <strong>実際の利用ニーズ：</strong>産学連携・非常勤講師・共同研究で、現時点で何件程度の需要が見込まれますか？<br>
-          <span style="font-size:12px;color:var(--gray);">月単位の申請件数のイメージを教えていただけると運用設計に反映できます</span>
+          <strong>使用中フローの絞り込み：</strong>約100件のうち「現在も使っているフロー」と「使っていないフロー」を当日一緒に確認できますか？<br>
+          <span style="font-size:12px;color:var(--gray);">大学側が担当部署を把握している場合、その場でリストを見ながら識別していただけると助かります</span>
         </li>
         <li>
-          <strong>情シス承認フローの運用負荷：</strong>承認担当は1名ですか？週に何件程度の申請が見込まれますか？<br>
-          <span style="font-size:12px;color:var(--gray);">件数によっては申請フォーム（Microsoft Forms等）で申請を受け付けることで効率化できます</span>
+          <strong>移行ツール選定・パイロット開始時期：</strong>Garoon廃止の逆算上、ツール選定を8月中に確定・9月パイロット開始が理想ですが、感触はいかがですか？<br>
+          <span style="font-size:12px;color:var(--gray);">まずSystema社デモを経てCanbus.採用の可否を判断し、採用確定後にパイロットフロー（施設管財系）を選定する流れを想定しています</span>
         </li>
         <li>
-          <strong>90日自動失効の運用：</strong>継続利用が必要なゲストの更新手続きをどう運用するか（担当者・連絡フロー）<br>
-          <span style="font-size:12px;color:var(--gray);">自動失効前に通知メールが届くため、それを起点に更新申請をする流れを想定</span>
+          <strong>Canbus. デモの日程：</strong>Systena社によるデモセッションを別途設定します。大学側の参加者・希望日程はいつ頃がよいですか？<br>
+          <span style="font-size:12px;color:var(--gray);">採用判断の前にデモで機能・操作感をご確認いただきます</span>
         </li>
       </ul>
+      <div style="margin-top:8px;">
+        <a href="garoon-migration-issues.html" target="_blank" style="font-size:12px;color:#1d4ed8;text-decoration:none;">📋 未決論点整理（参考）↗</a>
+      </div>
     </div>
   </div>
 
   <!-- ブロック② -->
   <div class="block orange">
     <div class="block-header">
-      <div class="block-badge">② 共有 ＆ 説明</div>
-      <div class="block-title">非アクティブTeams 判定ツール — 内訳共有 ＆ 操作説明</div>
-      <div class="block-time">20分</div>
+      <div class="block-badge">② 議論</div>
+      <div class="block-title">ガルーン移行 — 回覧・お知らせ</div>
+      <div class="block-time">8分</div>
     </div>
     <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:12px;">Teams管理センターのCSVデータを分析し、2,750件のクリーンアップ対象をまとめたツールを画面共有しながら説明します。前半で内訳・全体像を共有し、後半で操作方法と担当分けを確認します。<br>
-      <a href="https://musabi-git-main-fuminicos-projects.vercel.app/teams-inactive-list.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;color:#c2410c;font-weight:700;font-size:12px;text-decoration:none;">📋 非アクティブTeams 判定ツール（実データ入り）↗</a></p>
-
-      <div style="margin:0 0 8px;font-size:12px;font-weight:700;color:#374151;border-left:3px solid #f97316;padding-left:8px;">前半（〜10分）：データの内訳と全体像</div>
-
-      <div class="data-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="data-card">
-          <div class="data-num" style="color:#16a34a">3,661</div>
-          <div class="data-label">アクティブ</div>
-          <div class="data-sub">6ヶ月以内に使用あり</div>
-        </div>
-        <div class="data-card">
-          <div class="data-num" style="color:#6b7280">4,277</div>
-          <div class="data-label">既アーカイブ済み</div>
-          <div class="data-sub">削除待ち</div>
-        </div>
-        <div class="data-card">
-          <div class="data-num" style="color:#c2410c">2,750</div>
-          <div class="data-label">クリーンアップ対象</div>
-          <div class="data-sub">本日説明する範囲</div>
-        </div>
-      </div>
-
-      <div style="margin:12px 0 8px;font-size:12px;font-weight:700;color:#374151">クリーンアップ対象 2,750件の内訳</div>
-      <table class="garoon-table">
-        <tr>
-          <th>判定</th>
-          <th>基準</th>
-          <th class="garoon-num">件数</th>
-        </tr>
-        <tr>
-          <td><span style="display:inline-block;padding:1px 8px;background:#fef3c7;color:#92400e;border-radius:999px;font-size:11px;font-weight:700">6〜12ヶ月</span></td>
-          <td>最終アクティビティが半年〜1年前（様子見）</td>
-          <td class="garoon-num">490件</td>
-        </tr>
-        <tr>
-          <td><span style="display:inline-block;padding:1px 8px;background:#fee2e2;color:#991b1b;border-radius:999px;font-size:11px;font-weight:700">12〜24ヶ月</span></td>
-          <td>1〜2年放置（アーカイブ候補）</td>
-          <td class="garoon-num">687件</td>
-        </tr>
-        <tr>
-          <td><span style="display:inline-block;padding:1px 8px;background:#fce7f3;color:#9d174d;border-radius:999px;font-size:11px;font-weight:700">削除検討</span></td>
-          <td>2年超放置またはテスト用チーム</td>
-          <td class="garoon-num">1,290件</td>
-        </tr>
-        <tr>
-          <td><span style="display:inline-block;padding:1px 8px;background:#ede9fe;color:#5b21b6;border-radius:999px;font-size:11px;font-weight:700">要確認</span></td>
-          <td>180日間アクティビティ記録なし（用途不明）</td>
-          <td class="garoon-num">283件</td>
-        </tr>
-        <tr class="total-row">
-          <td colspan="2">合計（クリーンアップ対象）</td>
-          <td class="garoon-num">2,750件</td>
-        </tr>
-      </table>
-
-      <div style="margin:12px 0 8px;font-size:12px;font-weight:700;color:#374151">カテゴリー別（自動分類）</div>
-      <table class="garoon-table">
-        <tr><th>カテゴリー</th><th>分類基準（チーム名のパターン）</th><th class="garoon-num">件数</th></tr>
-        <tr><td><span style="background:#dbeafe;color:#1e40af;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:700">授業系</span></td><td>前期/後期/ゼミ・学科コード＋年度数字 等</td><td class="garoon-num">1,989件</td></tr>
-        <tr><td><span style="background:#f3f4f6;color:#374151;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:700">不明・未分類</span></td><td>上記いずれにも該当しない</td><td class="garoon-num">690件</td></tr>
-        <tr><td><span style="background:#fef9c3;color:#854d0e;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:700">プロジェクト</span></td><td>PJ_・制作展・卒業制作 等</td><td class="garoon-num">42件</td></tr>
-        <tr><td><span style="background:#dcfce7;color:#166534;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:700">業務系</span></td><td>委員会・スタッフ・事務局 等</td><td class="garoon-num">29件</td></tr>
-      </table>
-
-      <div style="font-size:11px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:8px 12px;color:#9a3412;margin-top:8px;line-height:1.8;">
-        ⚠️ <strong>授業系（1,989件）について：</strong>授業資料の保管義務（文書保管規程）が5年間の場合、2020〜2022年度（2年超経過）は削除前に保管義務の有無を確認する必要があります。
-      </div>
-
-      <div style="margin:16px 0 8px;font-size:12px;font-weight:700;color:#374151;border-left:3px solid #f97316;padding-left:8px;">後半（〜10分）：ツールの操作方法 ＆ 担当分け</div>
-
-      <div class="teams-agenda-card" style="background:#eff6ff;border-color:#bfdbfe;">
-        <div class="tac-title" style="color:#1d4ed8">🖱 基本操作（担当者ごと）</div>
-        <div class="tac-point"><strong>① 担当範囲を絞り込む</strong>：画面上部のフィルタでカテゴリー（授業系 など）・年度・判定を選択</div>
-        <div class="tac-point"><strong>② チームを選択する</strong>：行頭のチェックボックスをクリック。ヘッダーのチェックでページ全50件を一括選択可能</div>
-        <div class="tac-point"><strong>③ 判定を変更する</strong>：画面下に現れる一括変更バーで変更先を選び「✔ 適用」。個別に変更したい場合は各行右端のドロップダウン</div>
-        <div class="tac-point"><strong>④ 確認だけの場合</strong>：判定を変えなくてよいと判断した場合は「✅ 確認済み（元のまま）」を選択 → 進捗バーにカウントされます</div>
-        <div class="tac-point"><strong>⑤ 判定は自動保存</strong>：変更した判定は <strong>即座にDBへ保存</strong> されます。ファイルの受け渡しは不要です</div>
-      </div>
-
-      <div class="teams-agenda-card" style="background:#f0fdf4;border-color:#86efac;">
-        <div class="tac-title" style="color:#166534">☁️ データは共有DBで自動同期</div>
-        <div class="tac-point">判定を変えると <strong>全員のブラウザにリアルタイム反映</strong> されます（JSONの受け渡し不要）</div>
-        <div class="tac-point">他の人の変更を手動で取り込みたい場合は「🔄 最新データを取得」ボタンをクリック</div>
-        <div class="tac-point">作業後に送付・報告は不要です。ツールを閉じれば完了です</div>
-      </div>
-
-      <div style="margin:12px 0 8px;font-size:12px;font-weight:700;color:#374151">📌 担当分けの提案（一例）</div>
-      <table class="garoon-table">
-        <tr><th>担当</th><th>対象カテゴリー</th><th class="garoon-num">件数</th><th>フィルタ方法</th></tr>
-        <tr><td>担当 A</td><td>授業系</td><td class="garoon-num">1,989件</td><td>カテゴリー「授業系」で絞り込み</td></tr>
-        <tr><td>担当 B</td><td>業務系・プロジェクト・不明</td><td class="garoon-num">761件</td><td>カテゴリーを「業務系」「プロジェクト」「不明」で絞り込み</td></tr>
-      </table>
-      <div style="font-size:11px;color:var(--gray);margin-top:6px;">件数や担当人数に応じて「年度」「判定」でさらに細かく分けることも可能です。</div>
-
-      <ul class="check-list" style="margin-top:12px;">
+      <p style="font-size:12px;color:var(--gray);margin-bottom:14px;">
+        移行先はSharePointニュース、新コンテンツから各部署がアップ直し（6/25合意済み）。本日は受信者設定と切り替えタイミングを確認します。
+      </p>
+      <ul class="check-list">
         <li>
-          <strong>担当者の割り当て：</strong>何名で分担しますか？役割分担のイメージを今日決められますか？
+          <strong>回覧の送り先について：</strong>Garoonで「全員ではなく、特定の人たちだけ」に送っている回覧はありますか？<br>
+          <span style="font-size:12px;color:var(--gray);">たとえば「○○学部のみ」「○○部署のみ」「鷹の台キャンパスのみ」といったパターンがあれば教えてください。SharePointでも同じ送り先設定ができるよう準備します</span>
         </li>
         <li>
-          <strong>完了期限：</strong>判定作業の完了目標はいつ頃を想定しますか？（次回定例 7/30 までに一通り？）
+          <strong>切り替え開始タイミング：</strong>Garoonのお知らせからSharePointニュースへの切り替えをいつから想定していますか？<br>
+          <span style="font-size:12px;color:var(--gray);">SharePointイントラ公開後に2〜3ヶ月の並行運用期間を設けることを提案します</span>
         </li>
         <li>
-          <strong>ツールの共有方法：</strong>GitHubページのURLをTeamsで共有します。追加で操作マニュアルが必要ですか？
+          <strong>投稿担当者のオンボーディング：</strong>各部署のお知らせ担当者にSharePoint投稿権限を付与する場合、人数規模はどのくらいですか？
         </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ブロック③ -->
+  <div class="block purple">
+    <div class="block-header">
+      <div class="block-badge">③ 画面確認</div>
+      <div class="block-title">SharePoint イントラサイト素案</div>
+      <div class="block-time">5分</div>
+    </div>
+    <div class="block-body">
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">下記リンクを画面共有しながら構成案を確認します。</p>
+      <a href="sharepoint-intranet-draft.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;color:#6d28d9;font-weight:700;font-size:12px;text-decoration:none;">🏛 SharePointイントラサイト素案を開く ↗</a>
+      <ul class="check-list" style="margin-top:14px;">
+        <li><strong>サイト構成のフィードバック：</strong>現在のGaroonの使われ方と比較して、構成に違和感はありますか？</li>
+        <li><strong>パイロット部署：</strong>SharePointを最初に使い始める部署の候補はありますか？</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- まとめ -->
+  <div class="block red">
+    <div class="block-header">
+      <div class="block-badge">まとめ</div>
+      <div class="block-title">決定事項の確認 ＆ 次回テーマ</div>
+      <div class="block-time">2分</div>
+    </div>
+    <div class="block-body">
+      <ul class="point-list">
+        <li><strong>本日の決定事項を確認：</strong>下欄に記入します</li>
+        <li><strong>次回定例テーマ：</strong>Canbus.デモ日程確定 ／ Entra IDグループ設計 ／ SharePoint構築進捗</li>
       </ul>
     </div>
   </div>
@@ -469,28 +370,18 @@
   <div class="summary-tasks-body">
     <div>
       <div class="summary-col-title">大学側</div>
-      <div class="summary-item task">Teamsガバナンス テーマ③フィードバック（ゲストアクセスのニーズ・承認フロー体制）</div>
-      <div class="summary-item task">文書保管規程の確認（授業資料5年保管の有無）</div>
-      <div class="summary-item task">非アクティブTeams判定作業（担当割り当て後に開始）</div>
-      <div class="summary-item task">判定完了後にJSONを取りまとめ → 三井田へ送付</div>
+      <div class="summary-item task">GaroonWFリストの「使用中 / 未使用」確認</div>
+      <div class="summary-item task">Garoon回覧の受信者パターンの洗い出し</div>
+      <div class="summary-item task">SharePointパイロット部署候補の提示</div>
+      <div class="summary-item task">Canbus. デモへの参加（日程確定後）</div>
     </div>
     <div>
       <div class="summary-col-title">三井田</div>
-      <div class="summary-item task">テーマ①②③フィードバックを反映：Teamsガバナンス方針 修正版の作成</div>
-      <div class="summary-item task">判定ツールのGitHub Pages URL を大学側にTeamsで共有</div>
-      <div class="summary-item task">受け取ったJSONをインポート → CSV出力・取りまとめレポート作成</div>
+      <div class="summary-item task">WFリストをベースにパイロット候補フロー（2〜3件）を絞り込み</div>
+      <div class="summary-item task">Canbus. デモをSystema社と日程調整</div>
+      <div class="summary-item task">受信者パターンを元にEntra IDグループ設計案を作成</div>
+      <div class="summary-item task">SharePointイントラサイト基盤構築（フィードバック反映後）</div>
     </div>
-  </div>
-</div>
-
-<!-- 前提情報 -->
-<div class="summary">
-  <div class="summary-header other">📝 前提情報・背景</div>
-  <div class="summary-body">
-    <div class="summary-item note"><strong>7/16定例（第8回）主要フィードバック：</strong>アーカイブ基準「6ヶ月」は年次業務チームを考慮すると短い可能性あり → 要再検討。申請制は管理負荷増大とチャット流出リスクの懸念あり。</div>
-    <div class="summary-item note"><strong>ゲストアクセスの現状：</strong>Teams管理センター確認済み。外部アクセス・ゲストアクセスともにOFF。テナント全体で一括設定が可能。</div>
-    <div class="summary-item note"><strong>Teamsデータ抽出元：</strong>Teams管理センター「Teams usage」レポート（180日分：2026-01-14〜2026-07-13）+ チーム一覧CSV（2026-07-16時点）を結合して集計。</div>
-    <div class="summary-item note"><strong>ツールの保存先：</strong>変更内容は各自のブラウザに自動保存（localStorage）。JSONファイルで他の人と共有・マージが可能。</div>
   </div>
 </div>
 
@@ -498,10 +389,11 @@
 <div class="ref">
   <div class="ref-title">参考資料</div>
   <div class="ref-links">
-    <a class="ref-link primary" href="teams-governance.html" target="_blank">🏛 Teams ガバナンス方針案（Tab3: ゲストアクセス）</a>
-    <a class="ref-link primary" href="https://musabi-git-main-fuminicos-projects.vercel.app/teams-inactive-list.html" target="_blank">📋 非アクティブTeams 整理リスト（判定ツール）</a>
-    <a class="ref-link" href="tenant-status.html" target="_blank">📊 テナント現状レポート</a>
-    <a class="ref-link" href="index.html" target="_blank">🏠 プロジェクトインデックス</a>
+    <a class="ref-link primary" href="garoon-migration-issues.html" target="_blank">📋 ガルーン移行 未決論点整理</a>
+    <a class="ref-link primary" href="sharepoint-intranet-draft.html" target="_blank">🏛 SharePointイントラサイト素案</a>
+    <a class="ref-link" href="investigation-report-07.html#garoon" target="_blank">📄 GaroonWFフロー一覧</a>
+    <a class="ref-link" href="teams-guest-access.html" target="_blank">🔍 ゲストアクセス調査レポート</a>
+    <a class="ref-link" href="teams-governance.html" target="_blank">🏛 Teamsガバナンス方針案</a>
   </div>
 </div>
 

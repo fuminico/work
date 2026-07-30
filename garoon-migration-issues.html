@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ガルーン移行 未決論点整理 — 武蔵野美術大学 M365</title>
+<style>
+:root {
+  --tm: #1e40af;
+  --tm-l: #dbeafe;
+  --ok: #166534; --ok-bg: #f0fdf4;
+  --warn: #92400e; --warn-bg: #fffbeb;
+  --info: #1e40af; --info-bg: #eff6ff;
+  --danger: #991b1b; --danger-bg: #fef2f2;
+  --text: #1f2937; --muted: #6b7280;
+  --border: #e5e7eb; --bg: #f9fafb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.65; }
+header { background: var(--tm); color: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+header h1 { font-size: 18px; font-weight: 700; }
+header .back { color: rgba(255,255,255,.75); text-decoration: none; font-size: 13px; }
+header .back:hover { color: #fff; }
+main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+.card h2 { font-size: 16px; font-weight: 700; color: var(--tm); margin-bottom: 12px; }
+.card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin: 16px 0 8px; padding-left: 8px; border-left: 3px solid var(--tm); }
+.card h4 { font-size: 13px; font-weight: 700; color: var(--muted); margin: 12px 0 6px; }
+.callout { border-radius: 8px; padding: 12px 16px; margin: 8px 0 12px; font-size: 13px; }
+.callout.ok     { background: var(--ok-bg);     border-left: 4px solid #16a34a; color: var(--ok); }
+.callout.warn   { background: var(--warn-bg);   border-left: 4px solid #d97706; color: var(--warn); }
+.callout.info   { background: var(--info-bg);   border-left: 4px solid #3b82f6; color: var(--info); }
+.callout.danger { background: var(--danger-bg); border-left: 4px solid #ef4444; color: var(--danger); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 12px; }
+th { background: #f3f4f6; padding: 8px 10px; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+.badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+.badge.ok     { background: #dcfce7; color: #166534; }
+.badge.done   { background: #e0e7ff; color: #3730a3; }
+.badge.open   { background: #fef3c7; color: #92400e; }
+.badge.hot    { background: #fee2e2; color: #991b1b; }
+ul { padding-left: 18px; }
+li { margin-bottom: 4px; }
+.agenda-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; }
+.agenda-num { background: var(--tm); color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.agenda-body { flex: 1; }
+.agenda-title { font-weight: 700; font-size: 14px; }
+.agenda-time { font-size: 11px; color: var(--muted); margin: 2px 0 4px; }
+.agenda-note { font-size: 12px; color: var(--muted); }
+.issue-block { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+.issue-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #f9fafb; border-bottom: 1px solid var(--border); }
+.issue-title { font-weight: 700; font-size: 13px; flex: 1; }
+.issue-body { padding: 12px 14px; font-size: 13px; }
+.issue-row { display: grid; grid-template-columns: 90px 1fr; gap: 6px 12px; margin-bottom: 6px; }
+.issue-label { color: var(--muted); font-weight: 600; font-size: 12px; }
+.body-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .body-split { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>📋 ガルーン移行 未決論点整理</h1>
+</header>
+<main>
+  <div class="meta">作成: 2026-07-23</div>
+
+  <!-- ガルーン移行 未決論点 -->
+  <div class="card">
+    <h2>⚠️ 未決論点サマリー</h2>
+    <div class="callout info">
+      ワークフローリスト（約100件）抽出済み。7/30定例でパイロット選定・Canbus.デモ日程を合意する。
+    </div>
+
+    <h3>① ワークフロー（Garoon申請フロー）</h3>
+    <div style="font-size:12px;color:var(--muted);margin:-4px 0 10px;padding-left:8px;">※ 稟議・決裁フロー（X-Point）は対象外。X-Pointは継続利用。</div>
+    <table>
+      <tr><th style="width:52px">#</th><th>論点</th><th style="width:100px">状況</th><th>三井田の対応方針</th></tr>
+      <tr>
+        <td>W-1</td>
+        <td>移行対象フローの選定・優先順位付け</td>
+        <td><span class="badge hot">未決・最優先</span></td>
+        <td>リスト持参で大学側と照合。施設管財系（年間50%）をパイロット第1弾に選定。</td>
+      </tr>
+      <tr>
+        <td>W-2</td>
+        <td>Canbus. デモ・試験運用の日程</td>
+        <td><span class="badge hot">未決</span></td>
+        <td>Systena社によるデモ日程を大学側と合意して設定する。採用判断はデモ確認後。</td>
+      </tr>
+      <tr>
+        <td>W-3</td>
+        <td>承認フロー権限設計（組織構造の複雑さ）</td>
+        <td><span class="badge open">要確認</span></td>
+        <td>パイロット1本に絞り、まず動く形を作る。組織構造の全面再現は後回し。</td>
+      </tr>
+      <tr>
+        <td>W-4</td>
+        <td>Garoon廃止スケジュール</td>
+        <td><span class="badge open">要確認</span></td>
+        <td>2027年3月末廃止を目標に逆算。パイロット開始は8〜9月が目安。</td>
+      </tr>
+    </table>
+
+    <h3>② 回覧・お知らせ（掲示板系）</h3>
+    <table>
+      <tr><th style="width:52px">#</th><th>論点</th><th style="width:100px">状況</th><th>三井田の対応方針</th></tr>
+      <tr>
+        <td>K-0</td>
+        <td>Entra IDグループ設計（受信者制御の前提）</td>
+        <td><span class="badge hot">未決・前提条件</span></td>
+        <td>受信者パターンを大学側とヒアリング → 5〜10グループを設計。SharePoint公開前に整備。</td>
+      </tr>
+      <tr>
+        <td>K-1</td>
+        <td>Garoon→SharePoint 切り替えタイミング</td>
+        <td><span class="badge open">要確認</span></td>
+        <td>SharePointイントラ公開と同時に切替。Garoonは2〜3ヶ月並行で参照のみ。</td>
+      </tr>
+      <tr>
+        <td>K-2</td>
+        <td>SharePointサイトの配置設計</td>
+        <td><span class="badge open">要確認</span></td>
+        <td><a href="sharepoint-intranet-draft.html" target="_blank">イントラサイト素案↗</a>を基に議論。全学お知らせはトップNewsに集約。</td>
+      </tr>
+      <tr>
+        <td>K-3</td>
+        <td>投稿権限・対象設定の方式</td>
+        <td><span class="badge ok">ほぼ確定</span></td>
+        <td>全体発信＋Entra IDグループタグで対象指定（6/25合意済み）。各部署オンボーディング手順の整備が残課題。</td>
+      </tr>
+    </table>
+
+    <h3>③ 全体スケジュール案</h3>
+    <table>
+      <tr><th>時期</th><th>マイルストーン</th><th>担当</th></tr>
+      <tr><td>2026年8月</td><td>WFリスト精査 / Systena社デモ実施・Canbus.採用可否を判断 / SharePointイントラ基盤構築</td><td>三井田・大学側</td></tr>
+      <tr><td>2026年9月</td><td>（Canbus.採用確定の場合）パイロット移行（施設管財系1〜3フロー）・SharePoint試験公開</td><td>三井田・情シス</td></tr>
+      <tr><td>2026年10月</td><td>Canbus.追加移行・SharePoint本番公開・Garoon並行運用開始</td><td>三井田・各部署</td></tr>
+      <tr><td>2026年12月</td><td>Garoonフロー・お知らせ 全移行完了</td><td>全部署</td></tr>
+      <tr><td>2027年1〜3月</td><td>Garoon廃止</td><td>情シス</td></tr>
+    </table>
+  </div>
+
+  <!-- 三井田の次アクション -->
+  <div class="card">
+    <h2>✅ 三井田の次アクション（7/30前）</h2>
+    <table>
+      <tr><th>No.</th><th>タスク</th><th>状況</th></tr>
+      <tr><td>①</td><td>ガルーンWFリストを照合できる形に整理して持参</td><td><span class="badge open">準備中</span></td></tr>
+      <tr><td>②</td><td>Systena社にCanbus.デモの日程調整を依頼・大学側参加者を確認</td><td><span class="badge open">要準備</span></td></tr>
+      <tr><td>③</td><td>SharePointイントラサイト素案</td><td><span class="badge ok">完了→ <a href="sharepoint-intranet-draft.html" target="_blank">確認↗</a></span></td></tr>
+      <tr><td>④</td><td>Teamsゲストアクセス調査レポート</td><td><span class="badge ok">完了→ <a href="teams-guest-access.html" target="_blank">確認↗</a></span></td></tr>
+    </table>
+  </div>
+
+  <div class="meta" style="text-align:right; margin-top:8px">
+    作成: 三井田（2026-07-23）
+  </div>
+</main>
+</body>
+</html>

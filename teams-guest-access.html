@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams ゲストアクセス 調査レポート — 武蔵野美術大学 M365</title>
+<style>
+:root {
+  --tm: #4f46e5;
+  --tm-light: #eef2ff;
+  --ok: #166534;
+  --ok-bg: #f0fdf4;
+  --warn: #92400e;
+  --warn-bg: #fffbeb;
+  --danger: #991b1b;
+  --danger-bg: #fef2f2;
+  --info: #1e40af;
+  --info-bg: #eff6ff;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f9fafb; color: var(--text); font-size: 14px; line-height: 1.6; }
+header { background: var(--tm); color: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+header h1 { font-size: 18px; font-weight: 700; }
+header .back { color: rgba(255,255,255,.75); text-decoration: none; font-size: 13px; }
+header .back:hover { color: #fff; }
+main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+.meta { color: var(--text-muted); font-size: 12px; margin-bottom: 20px; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+.card h2 { font-size: 16px; font-weight: 700; color: var(--tm); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin: 14px 0 8px; }
+.callout { border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+.callout.ok   { background: var(--ok-bg);     border-left: 4px solid #16a34a; color: var(--ok); }
+.callout.warn { background: var(--warn-bg);   border-left: 4px solid #d97706; color: var(--warn); }
+.callout.info { background: var(--info-bg);   border-left: 4px solid #3b82f6; color: var(--info); }
+.callout.danger { background: var(--danger-bg); border-left: 4px solid #ef4444; color: var(--danger); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 14px; }
+th { background: #f3f4f6; padding: 8px 10px; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+td.center { text-align: center; }
+.badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+.badge.ok     { background: #dcfce7; color: #166534; }
+.badge.warn   { background: #fef3c7; color: #92400e; }
+.badge.danger { background: #fee2e2; color: #991b1b; }
+.badge.info   { background: #dbeafe; color: #1e40af; }
+ul { padding-left: 18px; }
+li { margin-bottom: 4px; }
+.section-label { font-size: 11px; font-weight: 700; color: var(--tm); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+@media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
+.summary-item { background: var(--tm-light); border-radius: 8px; padding: 14px; }
+.summary-item .label { font-size: 11px; color: var(--tm); font-weight: 700; margin-bottom: 4px; }
+.summary-item .value { font-size: 14px; font-weight: 700; color: var(--text); }
+.summary-item .note { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🔍 Teams ゲストアクセス 調査レポート</h1>
+</header>
+<main>
+  <div class="meta">調査日: 2026-07-23 ／ 対象: musabiac.onmicrosoft.com（A3 Educationテナント）／ 次回定例: 7/30</div>
+
+  <div class="callout info">
+    <strong>調査背景:</strong> 7/23定例で「ゲスト側の操作感が煩雑では？」「最終ログインから90日で失効できるか？」という懸念が大学側から出た。本ページはその調査結果をまとめたもの。
+  </div>
+
+  <!-- サマリー -->
+  <div class="card">
+    <h2>📋 調査サマリー</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="label">ゲスト側の見え方</div>
+        <div class="value">招待チームのみ閲覧可</div>
+        <div class="note">テナント全体・他チームは見えない</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">テナント切り替え</div>
+        <div class="value">必要（要注意）</div>
+        <div class="note">ゲスト側は自分のアカウントから切り替えて参加</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">最終ログインから90日失効</div>
+        <div class="value">技術的には可能</div>
+        <div class="note">Entra ID Governanceアドオンが必要（A3に含まれず）</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">A3テナントでの追加コスト</div>
+        <div class="value">アドオン購入が必要</div>
+        <div class="note">Entra ID Governance P1 for Education</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ゲスト側の見え方 -->
+  <div class="card">
+    <h2>👁 ゲスト側の見え方（Teamsアクセス範囲）</h2>
+
+    <h3>チャンネル・ファイル・メンバー</h3>
+    <table>
+      <tr><th>項目</th><th>ゲスト</th><th>メンバー</th></tr>
+      <tr><td>チャンネル（招待されたチーム内）</td><td class="center"><span class="badge ok">閲覧・投稿可</span></td><td class="center"><span class="badge ok">全て閲覧可</span></td></tr>
+      <tr><td>プライベートチャンネル</td><td>そのチャンネルに追加されていれば参加可</td><td>同左（招待必要）</td></tr>
+      <tr><td>ファイル（SharePointタブ）</td><td>外部共有が許可されていれば閲覧・編集可</td><td>制限なし</td></tr>
+      <tr><td>メンバー一覧</td><td>デフォルトで全員見える<br><span style="font-size:11px;color:#6b7280">（管理者がゲスト権限で制限可能）</span></td><td>全員閲覧可</td></tr>
+      <tr><td>他のチーム（参加していないもの）</td><td class="center"><span class="badge danger">見えない</span></td><td>制限なし</td></tr>
+    </table>
+
+    <div class="callout ok">
+      ゲストは「招待されたチームのみ」に厳格に限定される。テナント全体・他のチーム・組織情報への横断アクセスは不可。
+    </div>
+
+    <h3>テナント全体・組織情報へのアクセス</h3>
+    <table>
+      <tr><th>情報</th><th>ゲストの見え方</th></tr>
+      <tr><td>他のTeamsチーム</td><td><span class="badge danger">完全非表示</span>（検索不可）</td></tr>
+      <tr><td>SharePoint（共有されていないサイト）</td><td><span class="badge danger">アクセス不可</span></td></tr>
+      <tr><td>Entra IDのユーザー一覧・組織図</td><td>ポリシーで制御可（デフォルト：ディレクトリアクセス制限）</td></tr>
+      <tr><td>ホストテナントのユーザー検索</td><td>Entra IDのゲストアクセス制限ポリシーによる<br><span style="font-size:11px;color:#6b7280">3段階（メンバー同等 / ディレクトリ制限 / 自分のみ）</span></td></tr>
+    </table>
+
+    <h3>⚠️ 重要：テナント切り替えが必要（7/23定例での懸念点）</h3>
+    <div class="callout warn">
+      <strong>ゲストアクセス（B2B）の仕組み上、ゲスト側はアカウントを切り替えて参加する必要がある。</strong><br>
+      大学側参加者が指摘した通り「自分のアカウントでサインインしているTeamsから、招待されたテナントに切り替えて参照する」という操作が必要。これが煩雑さの原因。
+    </div>
+
+    <h3>外部アクセス（フェデレーション）との比較</h3>
+    <table>
+      <tr><th>方式</th><th>ゲスト側の操作</th><th>ホスト側の制御</th><th>適したユースケース</th></tr>
+      <tr>
+        <td><strong>ゲストアクセス（B2B）</strong><br><span style="font-size:11px;color:#6b7280">今回の提案</span></td>
+        <td>自分のアカウントから切り替えが必要<br>Microsoftアカウント不要（メールアドレスで招待可）</td>
+        <td>細かく制御可能<br>ファイル共有・チャンネル参加まで</td>
+        <td>産学連携・外部委員・共同研究</td>
+      </tr>
+      <tr>
+        <td><strong>外部アクセス（フェデレーション）</strong><br><span style="font-size:11px;color:#6b7280">切り替え不要</span></td>
+        <td>自分のテナントアカウントのままアクセス可<br>切り替え不要で使いやすい</td>
+        <td>制御範囲が限定的<br>チャット・会議のみ（ファイル共有不可）</td>
+        <td>他組織との会議・チャット</td>
+      </tr>
+    </table>
+    <div class="callout info">
+      大学側参加者が「結局Slackになった」と言ったのは、外部アクセスではなくゲストアクセスで参加していた可能性がある。用途によってはフェデレーション（外部アクセス）の方が適切なケースもある。
+    </div>
+  </div>
+
+  <!-- 90日自動失効 -->
+  <div class="card">
+    <h2>⏱ 最終ログインから90日で自動失効（技術的実現可否）</h2>
+
+    <div class="callout ok">
+      <strong>技術的には可能。</strong> Microsoft Entra ID Governance の「アクセスレビュー」機能を使い、最終サインインから指定日数（最大730日まで）でゲストアカウントを自動無効化・削除できる。
+    </div>
+
+    <h3>仕組み（2段階処理）</h3>
+    <table>
+      <tr><th>ステップ</th><th>内容</th><th>期間</th></tr>
+      <tr><td>① 不活性として検出</td><td>最終サインインから90日経過したゲストをアクセスレビューが検出</td><td>設定に基づき自動</td></tr>
+      <tr><td>② 無効化（アクセス剥奪）</td><td>サインインをブロック。アカウントは残る。管理者が再有効化可能</td><td>即時</td></tr>
+      <tr><td>③ 自動削除</td><td>無効化から30日後にテナントからアカウントを完全削除</td><td>無効化から30日後</td></tr>
+    </table>
+
+    <h3>「作成から90日」との違い</h3>
+    <table>
+      <tr><th>方式</th><th>説明</th><th>ユーザー体験</th></tr>
+      <tr>
+        <td><strong>作成から90日（三井田当初案）</strong></td>
+        <td>招待されてから90日で失効。毎回更新手続きが必要</td>
+        <td>アクティブユーザーも毎回更新が必要 → <span class="badge danger">煩雑</span></td>
+      </tr>
+      <tr>
+        <td><strong>最終ログインから90日（大学側希望）</strong></td>
+        <td>最後にサインインしてから90日間未使用で失効</td>
+        <td>使い続けている間は失効しない → <span class="badge ok">ユーザーフレンドリー</span></td>
+      </tr>
+    </table>
+
+    <div class="callout warn">
+      <strong>⚠️ ライセンス要件：A3には含まれず、アドオン購入が必要</strong><br>
+      アクセスレビュー機能は <strong>Microsoft Entra ID Governance</strong>（旧 Azure AD P2 Identity Governance）が必要。A3 Educationライセンスには含まれていない。<br>
+      必要アドオン: <strong>Microsoft Entra ID Governance P1 for Education</strong>（ゲストユーザー単位の課金）<br>
+      2026年1月以降、ゲスト向けはアドオン購入が強制化されている。
+    </div>
+
+    <h3>設定箇所</h3>
+    <ul>
+      <li>Entra管理センター → Identity Governance → アクセスレビュー → 新規作成</li>
+      <li>対象：ゲストユーザー</li>
+      <li>頻度：四半期ごと（または任意の間隔）</li>
+      <li>不活性閾値：90日（最大730日まで変更可）</li>
+      <li>自動適用：「拒否されたゲストを無効化して削除」を有効化</li>
+    </ul>
+  </div>
+
+  <!-- 提案への示唆 -->
+  <div class="card">
+    <h2>💡 次回提案への示唆（7/30定例向け）</h2>
+
+    <h3>変更すべき点</h3>
+    <table>
+      <tr><th>項目</th><th>当初案</th><th>修正案</th><th>理由</th></tr>
+      <tr>
+        <td>失効方式</td>
+        <td>作成から90日</td>
+        <td><strong>最終ログインから90日</strong></td>
+        <td>アクティブユーザーに毎回更新を強いない</td>
+      </tr>
+      <tr>
+        <td>失効の実装</td>
+        <td>（未定）</td>
+        <td>Entra ID アクセスレビュー<br><span style="font-size:11px;color:#6b7280">別途Entra ID Governanceアドオンが必要</span></td>
+        <td>自動化・監査ログが残る</td>
+      </tr>
+      <tr>
+        <td>アクセス方式</td>
+        <td>ゲストアクセス（B2B）のみ提案</td>
+        <td>ゲストアクセス＋外部アクセスの使い分けを整理</td>
+        <td>用途によって適切な方式が異なる</td>
+      </tr>
+    </table>
+
+    <h3>ゲスト側の操作フロー（ブラッシュアップすべき内容）</h3>
+    <div class="callout info">
+      次回定例で示す「ゲスト側の見え方」として以下を資料化する：
+      <ul style="margin-top:8px">
+        <li>招待メールの受信→初回サインインの手順（Microsoftアカウントなしの場合も含む）</li>
+        <li>テナント切り替えの操作（モバイル・デスクトップ別）</li>
+        <li>ゲストとして見えるチャンネル・ファイルの範囲</li>
+        <li>ファイルのアップロード・編集権限（設定次第）</li>
+        <li>90日後に失効する際の通知・更新手順</li>
+      </ul>
+    </div>
+
+    <h3>ライセンスコスト（Entra ID Governance P1 for Education）</h3>
+    <table>
+      <tr><th>対象</th><th>参考単価</th><th>概算（職員350名の場合）</th></tr>
+      <tr><td>商用ライセンス</td><td>約 $7 / ユーザー / 月</td><td>約 $2,450 / 月（≒ 36万円 / 月）</td></tr>
+      <tr><td>教育機関向け（Education）</td><td>約 $3〜4 / ユーザー / 月</td><td>約 $1,050〜1,400 / 月（≒ 15〜21万円 / 月）</td></tr>
+    </table>
+    <div class="callout danger">
+      ※ ライセンスは「レビュー対象のゲスト数」または「レビューを管理するメンバー数」に応じて必要。正確な対象範囲はMicrosoft公式サイトで要確認。いずれにせよ追加コストが発生するため、<strong>採用しない前提で代替案を検討する。</strong>
+    </div>
+
+    <h3>代替案：追加ライセンスなしで管理する方法</h3>
+    <table>
+      <tr><th>方法</th><th>内容</th><th>管理者の手間</th><th>ゲスト側の手間</th></tr>
+      <tr>
+        <td><strong>① 作成から90日で自動失効</strong><br><span style="font-size:11px;color:#6b7280">（標準機能・無料）</span></td>
+        <td>Entra ID外部コラボレーション設定で「ゲストの有効期限を90日」に設定。期限が来ると招待リンクが無効になり、再招待が必要</td>
+        <td><span class="badge ok">少ない</span><br>自動で失効するため放置ゲストが残らない</td>
+        <td><span class="badge warn">やや煩雑</span><br>継続利用の場合も90日ごとに再認証が必要</td>
+      </tr>
+      <tr>
+        <td><strong>② 申請制 ＋ 台帳管理</strong><br><span style="font-size:11px;color:#6b7280">（追加ライセンス不要）</span></td>
+        <td>ゲスト招待は情シス承認制のまま。招待時に「氏名・目的・利用期間・担当者」を台帳（ExcelまたはTeamsチャネル）に記録。情シスが年2〜4回、台帳と実際のゲスト一覧を照合して不要なアカウントを手動削除</td>
+        <td><span class="badge warn">定期作業が必要</span><br>年2〜4回の手動レビュー（招待数が少なければ30分程度）</td>
+        <td><span class="badge ok">少ない</span><br>有効期間中は操作不要</td>
+      </tr>
+    </table>
+
+    <div class="callout info">
+      <strong>推奨：① ＋ ② の組み合わせ。</strong>
+      「作成から90日の自動失効」で放置アカウントを防ぎつつ、申請制と台帳管理で招待数そのものを絞る。ゲストアクセスの利用頻度が低いうちは、これが最もコストをかけずに管理できる現実的な方法。
+    </div>
+  </div>
+
+  <div class="meta" style="text-align:right; margin-top:8px">
+    調査: 三井田（2026-07-23）／ Microsoft Learn 公式ドキュメント準拠
+  </div>
+</main>
+</body>
+</html>
