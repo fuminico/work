@@ -21,17 +21,27 @@ body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; back
 /* ===== ドキュメントヘッダー ===== */
 .doc-header { background: var(--tm); color: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
 .doc-header h1 { font-size: 18px; font-weight: 700; }
-.doc-header .back { color: rgba(255,255,255,.75); text-decoration: none; font-size: 13px; }
 .doc-main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 40px; }
-.meta { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
 
-/* ===== セクション ===== */
-.section { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-.section-title { font-size: 16px; font-weight: 700; color: var(--tm); margin-bottom: 12px; }
+/* ===== callout ===== */
 .callout { border-radius: 8px; padding: 12px 16px; margin: 8px 0 14px; font-size: 13px; }
 .callout.info { background: var(--info-bg); border-left: 4px solid #3b82f6; color: var(--info); }
 .callout.ok   { background: var(--ok-bg);   border-left: 4px solid #16a34a; color: var(--ok); }
 .callout.warn { background: var(--warn-bg); border-left: 4px solid #d97706; color: var(--warn); }
+
+/* ===== タブ ===== */
+.tab-nav { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn { background: none; border: none; padding: 10px 14px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; flex-shrink: 0; transition: color .15s, background .15s; }
+.tab-btn.active { color: var(--tm); border-bottom-color: var(--tm); background: #eff6ff; border-radius: 6px 6px 0 0; }
+.tab-btn:hover:not(.active) { color: var(--text); background: #f3f4f6; border-radius: 6px 6px 0 0; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ===== セクション ===== */
+.section { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+.section-title { font-size: 16px; font-weight: 700; color: var(--tm); margin-bottom: 12px; }
 
 /* ===== サイト構成ツリー ===== */
 .site-tree { margin: 12px 0; }
@@ -65,6 +75,10 @@ body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; back
 .news-meta { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
 .news-title { font-size: 13px; }
 .news-tag { display: inline-block; background: var(--tm-l); color: var(--tm); font-size: 10px; border-radius: 4px; padding: 1px 6px; font-weight: 700; margin-left: 4px; }
+.news-theme-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.news-theme-tag { background: var(--tm-l); color: var(--tm); border: 1px solid #93c5fd; border-radius: 14px; padding: 4px 10px; font-size: 11px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.news-theme-tag:hover { background: var(--tm); color: #fff; }
+.news-webpart-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; padding: 2px 8px; background: #f3f4f6; border-radius: 4px; display: inline-block; }
 .quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .quick-link { background: #f9fafb; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
 .quick-link:hover { background: var(--tm-l); }
@@ -84,6 +98,17 @@ td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
 h3.sub { font-size: 14px; font-weight: 700; color: var(--text); margin: 16px 0 8px; padding-left: 8px; border-left: 3px solid var(--tm); }
 ul { padding-left: 18px; }
 li { margin-bottom: 4px; }
+
+/* ===== アドレス帳モックアップ ===== */
+.ab-person-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: flex; align-items: flex-start; gap: 10px; }
+.ab-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.ab-name { font-size: 13px; font-weight: 700; color: var(--tm); }
+.ab-role { font-size: 11px; color: var(--muted); margin: 1px 0; }
+.ab-meta { font-size: 11px; color: var(--text); }
+.ab-btns { display: flex; gap: 4px; margin-top: 6px; }
+.ab-btn { background: #f3f4f6; border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-size: 10px; color: var(--text); cursor: default; }
+.ab-mockup-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+@media (max-width: 600px) { .ab-mockup-2col { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -93,283 +118,617 @@ li { margin-bottom: 4px; }
 </div>
 
 <div class="doc-main">
-  <div class="meta">作成: 2026-07-23 ／ 更新: 2026-07-30（7/30定例フィードバック反映済み）</div>
+  <div class="meta">作成: 2026-07-23 ／ 7/30定例フィードバック反映 ／ 2026-07-30 8/6定例向けブラッシュアップ版</div>
 
   <div class="callout ok">
-    <strong>7/30定例 確定事項反映済み：</strong>
+    <strong>7/30定例 確定事項：</strong>
     ① お知らせの受信者設定は「教員・職員」などの大まかな区分（細かい部署限定指定は廃止）
     ② 投稿権限は制限せず運用でカバー
-    ③ スケジュール情報はSharePointニュースに掲載しない（Outlook/Teamsで確認）
+    ③ スケジュール情報はSharePointサイトには掲載不要（Outlook/Teamsで確認）
+  </div>
+  <div class="callout info">
+    <strong>8/6定例 ブラッシュアップのポイント：</strong>
+    ④ お知らせを「全体向けニュース」と「テーマ別ニュース（人事通知・訃報など）」の2種類のNewsウェブパーツに分離。
+    テーマ別はトップページには目立たせず、見たい人がリンクから開く設計（7/30での大学側ご意見を反映）。
   </div>
 
-  <!-- サイト構成 -->
-  <div class="section">
-    <div class="section-title">📐 サイト構成案（ハブ＆スポーク型）</div>
-
-    <div class="callout ok">
-      SharePointの推奨構成「ハブサイト（全学） + スポークサイト（部署・学科）」を採用。Garoonの組織構造（事務3階層 + フラット教学）に対応。
-    </div>
-
-    <div class="site-tree">
-      <div class="tree-hub">🏠 武蔵野美術大学 イントラポータル（ハブサイト）— 全学統合トップページ</div>
-      <div class="tree-children">
-        <div class="tree-node blue">
-          <div class="tree-node-label">事務系</div>
-          <div class="tree-node-title">📂 総務・人事</div>
-          <div class="tree-node-sub">規程集・人事通知・採用情報</div>
-        </div>
-        <div class="tree-node blue">
-          <div class="tree-node-label">事務系</div>
-          <div class="tree-node-title">📂 財務・経理</div>
-          <div class="tree-node-sub">経費精算・予算情報・ワークフロー</div>
-        </div>
-        <div class="tree-node blue">
-          <div class="tree-node-label">事務系</div>
-          <div class="tree-node-title">📂 施設・設備</div>
-          <div class="tree-node-sub">施設予約・工事情報・申請（最大ボリューム）</div>
-        </div>
-        <div class="tree-node blue">
-          <div class="tree-node-label">事務系</div>
-          <div class="tree-node-title">📂 情報システム</div>
-          <div class="tree-node-sub">M365利用手引き・ITお知らせ・申請</div>
-        </div>
-        <div class="tree-node green">
-          <div class="tree-node-label">教学系</div>
-          <div class="tree-node-title">📚 各学科・研究室</div>
-          <div class="tree-node-sub">造形学部11学科 + 造形構想学部2学科</div>
-        </div>
-        <div class="tree-node green">
-          <div class="tree-node-label">教学系</div>
-          <div class="tree-node-title">📚 大学院・通信教育</div>
-          <div class="tree-node-sub">研究科・通信教育課程</div>
-        </div>
-        <div class="tree-node purple">
-          <div class="tree-node-label">ワークフロー</div>
-          <div class="tree-node-title">⚙️ 申請・ワークフロー</div>
-          <div class="tree-node-sub">Canbus. 連携（Garoon移行フロー）</div>
-        </div>
-        <div class="tree-node amber">
-          <div class="tree-node-label">共通</div>
-          <div class="tree-node-title">🔗 よく使うリンク集</div>
-          <div class="tree-node-sub">M365アプリ・教務・図書・ポータル</div>
-        </div>
-      </div>
-    </div>
+  <!-- タブナビゲーション -->
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="tab-site"        onclick="switchTab('tab-site')">📐 サイト構成</button>
+    <button class="tab-btn"        data-tab="tab-mockup"      onclick="switchTab('tab-mockup')">🖥️ トップページ</button>
+    <button class="tab-btn"        data-tab="tab-garoon"      onclick="switchTab('tab-garoon')">🔄 Garoon対応</button>
+    <button class="tab-btn"        data-tab="tab-circulation" onclick="switchTab('tab-circulation')">📣 回覧移行</button>
+    <button class="tab-btn"        data-tab="tab-wf"          onclick="switchTab('tab-wf')">⚙️ ワークフロー</button>
+    <button class="tab-btn"        data-tab="tab-address"     onclick="switchTab('tab-address')">👥 アドレス帳</button>
+    <button class="tab-btn"        data-tab="tab-qa"          onclick="switchTab('tab-qa')">❓ 確認事項</button>
   </div>
 
-  <!-- トップページモックアップ -->
-  <div class="section">
-    <div class="section-title">🖥️ ハブサイト トップページ モックアップ</div>
-    <div class="callout info">
-      以下はトップページの設計イメージです。Garoonの掲示板（回覧）はここの「全学お知らせ」に相当します。
-    </div>
-
-    <div class="mockup-wrap">
-      <div class="mockup-bar">
-        🏫 武蔵野美術大学 イントラネット
-        <span style="margin-left:auto; font-size:11px; opacity:.7">三井田 史親 ｜ 情報システム</span>
+  <!-- ① サイト構成 -->
+  <div id="tab-site" class="tab-panel active">
+    <div class="section">
+      <div class="section-title">📐 サイト構成案（ハブ＆スポーク型）</div>
+      <div class="callout ok">
+        SharePointの推奨構成「ハブサイト（全学） + スポークサイト（部署・学科）」を採用。Garoonの組織構造（事務3階層 + フラット教学）に対応。
       </div>
-      <div class="mockup-nav">
-        <a href="#" class="active">🏠 ホーム</a>
-        <a href="#">📣 全学お知らせ</a>
-        <a href="#">📂 事務局</a>
-        <a href="#">📚 教学</a>
-        <a href="#">⚙️ 申請・ワークフロー</a>
-        <a href="#">🔗 リンク集</a>
-      </div>
-      <div class="mockup-body">
-        <div class="mockup-hero">
-          <h2>武蔵野美術大学 教職員ポータル</h2>
-          <p>M365に移行しました。Garoonのお知らせ・申請はこちらからご利用ください。</p>
-        </div>
-        <div class="mockup-grid">
-          <div>
-            <div class="mockup-card">
-              <h3>📣 全学お知らせ <span style="font-size:10px;color:var(--muted);font-weight:400">← Garoon「掲示板・回覧」の移行先</span></h3>
-              <div class="news-item">
-                <div class="news-meta">2026/07/18 ・ 情報システム部</div>
-                <div class="news-title">M365テナントへの移行について（重要）<span class="news-tag">全教職員</span></div>
-              </div>
-              <div class="news-item">
-                <div class="news-meta">2026/07/15 ・ 人事部</div>
-                <div class="news-title">夏季休暇期間中の窓口対応について<span class="news-tag">全教職員</span></div>
-              </div>
-              <div class="news-item">
-                <div class="news-meta">2026/07/10 ・ 施設管財課</div>
-                <div class="news-title">鷹の台キャンパス 空調設備メンテナンスのお知らせ<span class="news-tag">鷹の台</span></div>
-              </div>
-              <div class="news-item">
-                <div class="news-meta">2026/07/08 ・ 財務部</div>
-                <div class="news-title">2026年度 第1四半期 経費精算の提出について<span class="news-tag">教職員</span></div>
-              </div>
-              <div style="text-align:right; margin-top:8px"><a href="#" style="font-size:12px;color:var(--tm)">すべてのお知らせを見る →</a></div>
-            </div>
+      <div class="site-tree">
+        <div class="tree-hub">🏠 武蔵野美術大学 イントラポータル（ハブサイト）— 全学統合トップページ</div>
+        <div class="tree-children">
+          <div class="tree-node blue">
+            <div class="tree-node-label">事務系</div>
+            <div class="tree-node-title">📂 総務・人事</div>
+            <div class="tree-node-sub">規程集・人事通知・採用情報</div>
           </div>
-          <div>
-            <div class="mockup-sidebar-card">
-              <h3 style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px">⚙️ よく使う申請</h3>
-              <div class="workflow-item"><span class="step">申請</span>施設使用申請</div>
-              <div class="workflow-item"><span class="step">申請</span>出張旅費申請</div>
-              <div class="workflow-item"><span class="step">申請</span>アルバイト雇用申請</div>
-              <div class="workflow-item"><span class="step">申請</span>物品購入申請</div>
-              <a href="#" style="font-size:12px;color:var(--tm);display:block;text-align:right;margin-top:4px">すべての申請を見る →</a>
-            </div>
-            <div class="mockup-sidebar-card">
-              <h3 style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px">🔗 クイックリンク</h3>
-              <div class="quick-links">
-                <div class="quick-link">📧 Outlook</div>
-                <div class="quick-link">💬 Teams</div>
-                <div class="quick-link">📁 OneDrive</div>
-                <div class="quick-link">📊 SharePoint</div>
-                <div class="quick-link">📅 カレンダー</div>
-                <div class="quick-link">🎓 教務システム</div>
-              </div>
-            </div>
+          <div class="tree-node blue">
+            <div class="tree-node-label">事務系</div>
+            <div class="tree-node-title">📂 財務・経理</div>
+            <div class="tree-node-sub">経費精算・予算情報・ワークフロー</div>
+          </div>
+          <div class="tree-node blue">
+            <div class="tree-node-label">事務系</div>
+            <div class="tree-node-title">📂 施設・設備</div>
+            <div class="tree-node-sub">施設予約・工事情報・申請（最大ボリューム）</div>
+          </div>
+          <div class="tree-node blue">
+            <div class="tree-node-label">事務系</div>
+            <div class="tree-node-title">📂 情報システム</div>
+            <div class="tree-node-sub">M365利用手引き・ITお知らせ・申請</div>
+          </div>
+          <div class="tree-node green">
+            <div class="tree-node-label">教学系</div>
+            <div class="tree-node-title">📚 各学科・研究室</div>
+            <div class="tree-node-sub">造形学部11学科 + 造形構想学部2学科</div>
+          </div>
+          <div class="tree-node green">
+            <div class="tree-node-label">教学系</div>
+            <div class="tree-node-title">📚 大学院・通信教育</div>
+            <div class="tree-node-sub">研究科・通信教育課程</div>
+          </div>
+          <div class="tree-node purple">
+            <div class="tree-node-label">ワークフロー</div>
+            <div class="tree-node-title">⚙️ 申請・ワークフロー</div>
+            <div class="tree-node-sub">Canbus. 連携（Garoon移行フロー）</div>
+          </div>
+          <div class="tree-node amber">
+            <div class="tree-node-label">共通</div>
+            <div class="tree-node-title">🔗 よく使うリンク集</div>
+            <div class="tree-node-sub">M365アプリ・教務・図書・ポータル</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Garoon機能対応表 -->
-  <div class="section">
-    <div class="section-title">🔄 Garoon機能 → SharePoint 対応設計</div>
-
-    <table>
-      <tr>
-        <th>Garoon機能</th>
-        <th>M365の移行先</th>
-        <th>移行難易度</th>
-        <th>設計ポイント</th>
-      </tr>
-      <tr>
-        <td><strong>掲示板・お知らせ（回覧）</strong><br>全体・部署別発信</td>
-        <td>SharePoint ニュース Web パーツ<br>（ハブサイト トップページ）</td>
-        <td><span class="badge lo">低</span></td>
-        <td>Entra IDグループ対象に優先表示。全体公開をデフォルト。</td>
-      </tr>
-      <tr>
-        <td><strong>ワークフロー（申請フロー）</strong><br>施設管財・旅費・アルバイト等</td>
-        <td><strong>Canbus.</strong>（Systena社）または <strong>Power Automate</strong><br>※ツール選定を比較検討中</td>
-        <td><span class="badge hi">高</span></td>
-        <td>約100件のうち高頻度フローから移行。施設管財系がパイロット候補。Power Automateデモを8/6定例までに作成・比較判断。</td>
-      </tr>
-      <tr>
-        <td><strong>稟議書（X-Point）</strong><br>公式な承認フロー</td>
-        <td>X-Point 継続使用</td>
-        <td>—</td>
-        <td>M365移行対象外。Garoon廃止後もX-Pointは独立稼働。</td>
-      </tr>
-      <tr>
-        <td><strong>ファイル共有（共有ドライブ）</strong></td>
-        <td>SharePoint ドキュメントライブラリ<br>+ OneDrive（個人）</td>
-        <td><span class="badge med">中</span></td>
-        <td>事務局・学科ごとのサイトにドキュメントライブラリを設置。権限設計が重要。</td>
-      </tr>
-      <tr>
-        <td><strong>スケジュール（共有カレンダー）</strong></td>
-        <td>Outlook カレンダー（共有）<br>+ Teams カレンダー</td>
-        <td><span class="badge lo">低</span></td>
-        <td>過去データ移行不要。新規から開始。会議室予約はOutlookで代替。</td>
-      </tr>
-      <tr>
-        <td><strong>組織図・電話帳</strong></td>
-        <td>Entra ID プロフィール<br>+ Teams プロフィールカード</td>
-        <td><span class="badge lo">低</span></td>
-        <td>Entra IDのユーザー属性（部署・役職）整備で自動表示。</td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- 回覧移行の詳細設計 -->
-  <div class="section">
-    <div class="section-title">📣 回覧（掲示板）移行の詳細設計</div>
-
-    <h3 class="sub">投稿フローの設計（6/25合意内容の具体化）</h3>
-    <table>
-      <tr><th>項目</th><th>Garoon（現状）</th><th>SharePoint（移行後）</th></tr>
-      <tr><td>投稿権限</td><td>誰でも投稿可能</td><td>誰でも投稿可能（同じ運用を維持）</td></tr>
-      <tr><td>公開先の設定</td><td>読者グループを選択（部署単位の細かい指定あり）</td><td>「教員全体」「職員全体」「全教職員」など大まかな区分で指定（7/30確定）。細かい部署限定指定は廃止し、シンプルな運用を優先。</td></tr>
-      <tr><td>通知</td><td>メール通知あり</td><td>Teams「活動」フィードで通知（メール通知もオプションで可能）</td></tr>
-      <tr><td>過去記事の移行</td><td>大量のアーカイブが存在</td><td>新規から開始。過去記事は各部署の判断でアップ直し（合意済み）</td></tr>
-    </table>
-
-    <h3 class="sub">移行スケジュール（案）</h3>
-    <table>
-      <tr><th>期間</th><th>内容</th></tr>
-      <tr><td>〜2026年9月</td><td>SharePointイントラサイト基盤構築・テスト投稿</td></tr>
-      <tr><td>2026年10月</td><td>SharePoint本番公開・新しいお知らせはSharePointへ。Garoonは参照のみ（読み取り専用）に移行</td></tr>
-      <tr><td>2026年10〜12月</td><td>各部署が必要な過去記事をSharePointへ転記（任意）</td></tr>
-      <tr><td>2027年3月</td><td>Garoon廃止（契約終了）</td></tr>
-    </table>
-  </div>
-
-  <!-- 申請フロー移行 -->
-  <div class="section">
-    <div class="section-title">⚙️ ワークフロー移行の詳細設計（Canbus. 活用）</div>
-
-    <div class="callout ok">
-      6/25定例でCanbus.（Systena社）に移行方針決定済み。ユーザー数無制限・月額5万円プラン（1万レコード）。年間約4,500件の申請は約26ヶ月で1万レコードに達するため、2年ごとの古いレコード削除で運用可能。
+  <!-- ② トップページモックアップ -->
+  <div id="tab-mockup" class="tab-panel">
+    <div class="section">
+      <div class="section-title">🖥️ ハブサイト トップページ モックアップ</div>
+      <div class="callout info">
+        以下はトップページの設計イメージです。Garoonの掲示板（回覧）はここの「全学お知らせ」に相当します。
+      </div>
+      <div class="mockup-wrap">
+        <div class="mockup-bar">
+          🏫 武蔵野美術大学 イントラネット
+          <span style="margin-left:auto; font-size:11px; opacity:.7">三井田 史親 ｜ 情報システム</span>
+        </div>
+        <div class="mockup-nav">
+          <a href="#" class="active">🏠 ホーム</a>
+          <a href="#">📣 全学お知らせ</a>
+          <a href="#">📂 事務局</a>
+          <a href="#">📚 教学</a>
+          <a href="#">⚙️ 申請・ワークフロー</a>
+          <a href="#">👥 社員電話帳</a>
+          <a href="#">🔗 リンク集</a>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-hero">
+            <h2>武蔵野美術大学 教職員ポータル</h2>
+            <p>M365に移行しました。Garoonのお知らせ・申請はこちらからご利用ください。</p>
+          </div>
+          <div class="mockup-grid">
+            <div>
+              <div class="mockup-card">
+                <div class="news-webpart-label">Newsウェブパーツ①</div>
+                <h3 style="margin-top:6px">📣 全体向けお知らせ <span style="font-size:10px;color:var(--muted);font-weight:400">← Garoon「掲示板・回覧」の主な移行先</span></h3>
+                <div class="news-item">
+                  <div class="news-meta">2026/07/18 ・ 情報システム部</div>
+                  <div class="news-title">M365テナントへの移行について（重要）<span class="news-tag">全教職員</span></div>
+                </div>
+                <div class="news-item">
+                  <div class="news-meta">2026/07/10 ・ 施設管財課</div>
+                  <div class="news-title">鷹の台キャンパス 空調設備メンテナンスのお知らせ<span class="news-tag">全教職員</span></div>
+                </div>
+                <div class="news-item">
+                  <div class="news-meta">2026/07/08 ・ 財務部</div>
+                  <div class="news-title">2026年度 第1四半期 経費精算の提出について<span class="news-tag">全教職員</span></div>
+                </div>
+                <div class="news-item">
+                  <div class="news-meta">2026/07/01 ・ 学務課</div>
+                  <div class="news-title">後期授業開始に向けた教室配置の変更について<span class="news-tag">教員</span></div>
+                </div>
+                <div style="text-align:right; margin-top:8px"><a href="#" style="font-size:12px;color:var(--tm)">すべてのお知らせを見る →</a></div>
+              </div>
+              <div class="mockup-card" style="margin-top:10px; border-color: #c7d2fe;">
+                <div class="news-webpart-label" style="background:#eef2ff; color:#4338ca;">Newsウェブパーツ②</div>
+                <h3 style="margin-top:6px; color:#4338ca;">🔖 テーマ別お知らせ <span style="font-size:10px;color:var(--muted);font-weight:400">— 見たい人がリンクから開く形</span></h3>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">人事通知・訃報など特定のテーマを閲覧したい方はカテゴリーを選択してください</p>
+                <div class="news-theme-tags">
+                  <a class="news-theme-tag">👤 人事・採用情報</a>
+                  <a class="news-theme-tag">🕊 訃報・弔事</a>
+                  <a class="news-theme-tag">🏥 安全衛生情報</a>
+                  <a class="news-theme-tag">🏗 施設・設備情報</a>
+                </div>
+                <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+                  <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">📌 最新の人事・採用情報</div>
+                  <div class="news-item" style="font-size:12px;">
+                    <div class="news-meta">2026/07/15 ・ 人事部</div>
+                    <div class="news-title">夏季休暇期間中の窓口対応について</div>
+                  </div>
+                  <div class="news-item" style="font-size:12px;">
+                    <div class="news-meta">2026/07/02 ・ 人事部</div>
+                    <div class="news-title">2026年度下期 昇給・異動について</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="mockup-sidebar-card">
+                <h3 style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px">⚙️ よく使う申請</h3>
+                <div class="workflow-item"><span class="step">申請</span>施設使用申請</div>
+                <div class="workflow-item"><span class="step">申請</span>出張旅費申請</div>
+                <div class="workflow-item"><span class="step">申請</span>アルバイト雇用申請</div>
+                <div class="workflow-item"><span class="step">申請</span>物品購入申請</div>
+                <a href="#" style="font-size:12px;color:var(--tm);display:block;text-align:right;margin-top:4px">すべての申請を見る →</a>
+              </div>
+              <div class="mockup-sidebar-card">
+                <h3 style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px">🔗 クイックリンク</h3>
+                <div class="quick-links">
+                  <div class="quick-link">📧 Outlook</div>
+                  <div class="quick-link">💬 Teams</div>
+                  <div class="quick-link">📁 OneDrive</div>
+                  <div class="quick-link">📊 SharePoint</div>
+                  <div class="quick-link">👥 社員電話帳</div>
+                  <div class="quick-link">🎓 教務システム</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <h3 class="sub">Garoon ワークフロー内訳と移行優先度（案）</h3>
-    <table>
-      <tr><th>カテゴリ</th><th>年間件数割合</th><th>移行優先度</th><th>パイロット候補</th></tr>
-      <tr>
-        <td>施設管財関連<br>（施設使用・設備申請等）</td>
-        <td>50.5%（約2,700件/年）</td>
-        <td><span class="badge hi">最優先</span></td>
-        <td>✅ 第1パイロット</td>
-      </tr>
-      <tr>
-        <td>アルバイト・非常勤関連</td>
-        <td>15.5%（約830件/年）</td>
-        <td><span class="badge med">第2優先</span></td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>総務・庶務系</td>
-        <td>15.0%（約810件/年）</td>
-        <td><span class="badge med">第2優先</span></td>
-        <td>—</td>
-      </tr>
-      <tr>
-        <td>その他（旅費・物品等）</td>
-        <td>19%（約1,000件/年）</td>
-        <td><span class="badge lo">第3優先</span></td>
-        <td>—</td>
-      </tr>
-    </table>
-
-    <h3 class="sub">Canbus. 実装ロードマップ（案）</h3>
-    <table>
-      <tr><th>ステップ</th><th>内容</th><th>目標時期</th></tr>
-      <tr><td>① 選定・確定</td><td>7/30定例でWFリストを照合し、パイロットフロー（施設使用申請）を決定</td><td>7/30</td></tr>
-      <tr><td>② Canbus. デモ</td><td>Systena社にデモ依頼（三井田が調整）。画面・操作感を大学側に確認</td><td>8月上旬</td></tr>
-      <tr><td>③ パイロット構築</td><td>施設使用申請フロー1本をCanbus. で実装・テスト</td><td>8〜9月</td></tr>
-      <tr><td>④ 試験運用</td><td>情シスメンバーでテスト運用 → 問題なければ関係部署に展開</td><td>9〜10月</td></tr>
-      <tr><td>⑤ 追加移行</td><td>高頻度フロー（アルバイト・総務系）を順次Canbus. に移行</td><td>10〜12月</td></tr>
-      <tr><td>⑥ 全面移行</td><td>Garoonのワークフロー全廃止 → Canbus. 一本化</td><td>2027年3月</td></tr>
-    </table>
   </div>
 
-  <!-- 確認事項 -->
-  <div class="section">
-    <div class="section-title">❓ 7/30定例で確認したい事項</div>
-    <table>
-      <tr><th>No.</th><th>確認事項</th><th>誰に確認</th></tr>
-      <tr><td>①</td><td>ガルーンから抽出したWFリスト（約100件）の内訳確認。現在も使用中か・頻度はどのくらいか</td><td>畠中・井上</td></tr>
-      <tr><td>②</td><td>Garoonの契約終了時期（廃止デッドライン）</td><td>井上</td></tr>
-      <tr><td>③</td><td>施設使用申請フローの承認フロー構造（誰が承認するか）</td><td>畠中</td></tr>
-      <tr><td>④</td><td>回覧（掲示板）の現在の主な投稿部署・投稿頻度</td><td>畠中</td></tr>
-      <tr><td>⑤</td><td>SharePointサイト構成案へのフィードバック（このページ）</td><td>全員</td></tr>
-      <tr><td>⑥</td><td>Canbus. デモの日程（定例内か別途セッションか）</td><td>井上</td></tr>
-    </table>
+  <!-- ③ Garoon対応 -->
+  <div id="tab-garoon" class="tab-panel">
+    <div class="section">
+      <div class="section-title">🔄 Garoon機能 → SharePoint 対応設計</div>
+      <table>
+        <tr>
+          <th>Garoon機能</th>
+          <th>M365の移行先</th>
+          <th>移行難易度</th>
+          <th>設計ポイント</th>
+        </tr>
+        <tr>
+          <td><strong>掲示板・お知らせ（回覧）</strong><br>全体・部署別発信</td>
+          <td>SharePoint ニュース Web パーツ<br>（ハブサイト トップページ）</td>
+          <td><span class="badge lo">低</span></td>
+          <td>Entra IDグループ対象に優先表示。全体公開をデフォルト。</td>
+        </tr>
+        <tr>
+          <td><strong>ワークフロー（申請フロー）</strong><br>施設管財・旅費・アルバイト等</td>
+          <td><strong>Canbus.</strong>（Systena社）または <strong>Power Automate</strong><br>※ツール選定を比較検討中</td>
+          <td><span class="badge hi">高</span></td>
+          <td>約100件のうち高頻度フローから移行。施設管財系がパイロット候補。Power Automateデモを8/6定例までに作成・比較判断。</td>
+        </tr>
+        <tr>
+          <td><strong>稟議書（X-Point）</strong><br>公式な承認フロー</td>
+          <td>X-Point 継続使用</td>
+          <td>—</td>
+          <td>M365移行対象外。Garoon廃止後もX-Pointは独立稼働。</td>
+        </tr>
+        <tr>
+          <td><strong>ファイル共有（共有ドライブ）</strong></td>
+          <td>SharePoint ドキュメントライブラリ<br>+ OneDrive（個人）</td>
+          <td><span class="badge med">中</span></td>
+          <td>事務局・学科ごとのサイトにドキュメントライブラリを設置。権限設計が重要。</td>
+        </tr>
+        <tr>
+          <td><strong>スケジュール（共有カレンダー）</strong></td>
+          <td>Outlook カレンダー（共有）<br>+ Teams カレンダー</td>
+          <td><span class="badge lo">低</span></td>
+          <td>過去データ移行不要。新規から開始。SharePointサイトには掲載不要。</td>
+        </tr>
+        <tr>
+          <td><strong>組織図・電話帳</strong></td>
+          <td>Entra ID プロファイル整備<br>+ Microsoft Search（People）<br>+ SharePoint 社員電話帳ページ</td>
+          <td><span class="badge lo">低</span></td>
+          <td>Entra IDに部署・役職・電話番号を登録しておくことが前提。SearchウェブパーツでSharePoint上に電話帳ページを設置できる（追加費用ゼロ）。</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ④ 回覧移行 -->
+  <div id="tab-circulation" class="tab-panel">
+    <div class="section">
+      <div class="section-title">📣 回覧（掲示板）移行の詳細設計</div>
+
+      <h3 class="sub">お知らせの2分類設計（8/6向けブラッシュアップ）</h3>
+      <div class="callout info" style="margin-bottom:12px;">
+        7/30定例での「テーマに応じた枠組みを新しく作りたい」というご意見を受け、NewsウェブパーツをA・Bの2種類に分けて設計しています。
+      </div>
+      <table>
+        <tr>
+          <th style="width:120px">種別</th>
+          <th>対象のお知らせ</th>
+          <th>トップページでの表示</th>
+          <th>具体例</th>
+        </tr>
+        <tr>
+          <td><strong>📣 全体向けニュース</strong><br><span style="font-size:11px;color:var(--muted)">Webパーツ①</span></td>
+          <td>業務上、全教職員が把握すべき一般的な案内</td>
+          <td>メインコンテンツとして目立つ位置に表示（常時表示）</td>
+          <td>M365移行のお知らせ、施設メンテナンス、経費精算締切、学事暦変更 等</td>
+        </tr>
+        <tr>
+          <td><strong>🔖 テーマ別ニュース</strong><br><span style="font-size:11px;color:var(--muted)">Webパーツ②</span></td>
+          <td>特定テーマに関心がある人が能動的に確認する情報</td>
+          <td>カテゴリーリンク集として配置。見たい人がタップして開く（押しつけない）</td>
+          <td>人事・採用情報、訃報・弔事、安全衛生情報、施設・設備情報 等</td>
+        </tr>
+      </table>
+      <div class="callout warn" style="margin-top:4px;">
+        <strong>8/6で確認したい点：</strong>テーマ別カテゴリーとして「人事・採用情報」「訃報・弔事」以外に追加したいジャンルはありますか？
+      </div>
+
+      <h3 class="sub">投稿フロー・権限設計（7/30確定事項）</h3>
+      <table>
+        <tr><th>項目</th><th>Garoon（現状）</th><th>SharePoint（移行後）</th></tr>
+        <tr><td>投稿権限</td><td>誰でも投稿可能</td><td>誰でも投稿可能（同じ運用を維持・7/30確定）</td></tr>
+        <tr><td>公開先の設定</td><td>読者グループを選択（部署単位の細かい指定あり）</td><td>「教員全体」「職員全体」「全教職員」など大まかな区分のみ（7/30確定）。細かい部署限定指定は廃止。</td></tr>
+        <tr><td>通知</td><td>メール通知あり</td><td>Teams「活動」フィードで通知（メール通知もオプションで可能）</td></tr>
+        <tr><td>過去記事の移行</td><td>大量のアーカイブが存在</td><td>新規から開始。過去記事は各部署の判断でアップ直し（合意済み）</td></tr>
+      </table>
+
+      <h3 class="sub">移行スケジュール（案）</h3>
+      <table>
+        <tr><th>期間</th><th>内容</th></tr>
+        <tr><td>〜2026年9月</td><td>SharePointイントラサイト基盤構築・テスト投稿</td></tr>
+        <tr><td>2026年10月</td><td>SharePoint本番公開・新しいお知らせはSharePointへ。Garoonは参照のみ（読み取り専用）に移行</td></tr>
+        <tr><td>2026年10〜12月</td><td>各部署が必要な過去記事をSharePointへ転記（任意）</td></tr>
+        <tr><td>2027年3月</td><td>Garoon廃止（契約終了）</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑤ ワークフロー -->
+  <div id="tab-wf" class="tab-panel">
+    <div class="section">
+      <div class="section-title">⚙️ ワークフロー移行の詳細設計（ツール選定中）</div>
+
+      <div class="callout warn">
+        <strong>ツール選定 比較検討中：</strong> Power Automate（M365 A3に含まれる・追加費用ゼロ）vs Canbus.（Systena社・月5万円〜・ノーコード）。8/6定例でPower Automateのデモを確認し、方針を決定する。
+      </div>
+
+      <h3 class="sub">Garoon ワークフロー内訳と移行優先度（案）</h3>
+      <table>
+        <tr><th>カテゴリ</th><th>年間件数割合</th><th>移行優先度</th><th>パイロット候補</th></tr>
+        <tr>
+          <td>施設管財関連<br>（施設使用・設備申請等）</td>
+          <td>50.5%（約2,700件/年）</td>
+          <td><span class="badge hi">最優先</span></td>
+          <td>✅ 第1パイロット（消耗品購入申請）</td>
+        </tr>
+        <tr>
+          <td>アルバイト・非常勤関連</td>
+          <td>15.5%（約830件/年）</td>
+          <td><span class="badge med">第2優先</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>総務・庶務系</td>
+          <td>15.0%（約810件/年）</td>
+          <td><span class="badge med">第2優先</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>その他（旅費・物品等）</td>
+          <td>19%（約1,000件/年）</td>
+          <td><span class="badge lo">第3優先</span></td>
+          <td>—</td>
+        </tr>
+      </table>
+
+      <h3 class="sub">移行ロードマップ（案・ツール確定後に確定）</h3>
+      <table>
+        <tr><th>ステップ</th><th>内容</th><th>目標時期</th></tr>
+        <tr><td>① デモ確認・ツール選定</td><td>8/6定例でPower Automateデモ確認 → Canbus. vs PA の方針決定</td><td>8/6</td></tr>
+        <tr><td>② ヒアリングシート回答</td><td>大学側が現在使用中フローを仕分け。優先移行フローを確定</td><td>8月中</td></tr>
+        <tr><td>③ パイロット構築</td><td>施設管財系フロー1本を選定ツールで実装・テスト</td><td>9月</td></tr>
+        <tr><td>④ 試験運用</td><td>情シスメンバーでテスト → 問題なければ関係部署に展開</td><td>9〜10月</td></tr>
+        <tr><td>⑤ 追加移行</td><td>高頻度フロー（アルバイト・総務系）を順次移行</td><td>10〜12月</td></tr>
+        <tr><td>⑥ 全面移行</td><td>Garoonのワークフロー全廃止 → 新ツール一本化</td><td>2027年3月</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑥ アドレス帳 -->
+  <div id="tab-address" class="tab-panel">
+    <div class="section">
+      <div class="section-title">👥 社員アドレス帳（電話帳）の設計</div>
+
+      <div class="callout info">
+        <strong>7/30でいただいた要望：</strong>SharePoint上でほかのメンバーのアドレス帳（氏名・部署・役職・電話番号等）を参照したい。
+        まずはM365標準機能で対応できる範囲を提案します。
+      </div>
+
+      <h3 class="sub">M365標準でできること（追加費用ゼロ）</h3>
+      <table>
+        <tr>
+          <th style="width:180px">機能</th>
+          <th>概要</th>
+          <th>SharePointでの使い方</th>
+        </tr>
+        <tr>
+          <td><strong>① Microsoft Search<br>People 検索</strong><br><span style="font-size:11px;color:var(--muted)">今日から使える・設定不要</span></td>
+          <td>SharePoint・Outlook・Teams共通の人物検索。名前・部署名を入力するだけ。メールアドレス・部署・役職・電話番号（登録済みの場合）を表示。</td>
+          <td>各ページの検索バーから利用可能。「田中」と入力すれば田中さん全員のカードが出る。</td>
+        </tr>
+        <tr>
+          <td><strong>② SharePoint 社員電話帳ページ</strong><br><span style="font-size:11px;color:var(--muted)">設定工数：小〜中</span></td>
+          <td>SharePointの Modern ページに「Microsoft Search Web パーツ」を配置し、スコープを「People（ユーザー）」に設定。独立した電話帳ページとして機能する。</td>
+          <td>サイトナビゲーションに「👥 社員電話帳」としてリンク。部署フィルタなどの絞り込みも設定可能。</td>
+        </tr>
+        <tr>
+          <td><strong>③ Entra ID プロファイルカード</strong><br><span style="font-size:11px;color:var(--muted)">今日から使える・設定不要</span></td>
+          <td>Teams・SharePoint・Outlook上でメンバーの名前にマウスオーバー（またはタップ）するとプロファイルカードが表示される。チャット開始・メール送信も可能。</td>
+          <td>SharePointのニュース記事や文書ライブラリの「作成者」欄から自然に活用できる。</td>
+        </tr>
+        <tr>
+          <td><strong>④ Outlook グローバルアドレス一覧（GAL）</strong><br><span style="font-size:11px;color:var(--muted)">今日から使える・設定不要</span></td>
+          <td>Exchange Online の標準機能。全職員が自動登録される。Outlookのアドレス帳ボタンから部署別・五十音順で一覧閲覧。</td>
+          <td>SharePoint上ではなくOutlook側の機能。メール送信時の宛先検索として日常的に使える。</td>
+        </tr>
+      </table>
+
+      <h3 class="sub">Garoonのアドレス帳に近い順（推奨順位）</h3>
+      <div class="callout info" style="margin-bottom:12px;">
+        Garoonのアドレス帳は「氏名・部署・役職・内線番号の一覧を部署フィルタや名前検索で絞り込む」という使い方です。この使い方に最も近い順で整理します。
+      </div>
+      <table>
+        <tr>
+          <th style="width:8%">順位</th>
+          <th style="width:28%">実装案</th>
+          <th>Garoonとの比較</th>
+          <th style="width:18%">設定コスト</th>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td style="text-align:center;font-size:16px;">★</td>
+          <td><strong>② SharePoint 社員電話帳ページ</strong><br><span style="font-size:11px;color:var(--green)">推奨</span></td>
+          <td>専用ページとして独立し、部署フィルタ・氏名検索・内線番号を一覧表示できる。<strong>「一覧から探す」というGaroonに最も近い使い方ができる</strong></td>
+          <td>小〜中<br><span style="font-size:11px;color:var(--muted)">Entra IDプロファイル整備が前提</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--primary);">2位</td>
+          <td><strong>① Microsoft Search People検索</strong></td>
+          <td>名前を検索バーに入力すれば即座にカードが表示される。検索起点なので「一覧を眺めて探す」使い方とは少し異なる。よく名前を知っている人を素早く探すには最適</td>
+          <td>不要<br><span style="font-size:11px;color:var(--muted)">今日から使える</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--muted);">3位</td>
+          <td><strong>④ Outlook GAL</strong></td>
+          <td>全職員が自動登録された一覧を部署別・五十音順で閲覧できる。一覧性はあるが、SharePoint上ではなくOutlookの機能のため、イントラサイトとの一体感はない</td>
+          <td>不要<br><span style="font-size:11px;color:var(--muted)">今日から使える</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-weight:700;color:var(--muted);">4位</td>
+          <td><strong>③ Entra IDプロファイルカード</strong></td>
+          <td>名前にカーソルを当てたときに表示されるカード。「探す」というより「見かけた人の情報をその場で確認する」用途。アドレス帳としての使い方とは異なる</td>
+          <td>不要<br><span style="font-size:11px;color:var(--muted)">今日から使える</span></td>
+        </tr>
+      </table>
+      <div class="callout warn" style="margin-top:10px;margin-bottom:20px;">
+        ⚠️ <strong>Garoonと比べて再現できない点：</strong>Garoonのアドレス帳は各ユーザーの最終ログイン日時を表示しますが、M365標準機能ではこの情報を一覧上に表示する方法がありません。
+      </div>
+
+      <h3 class="sub">各機能の見え方（イメージ）</h3>
+
+      <div style="font-size:12px;font-weight:700;color:#374151;margin:8px 0 6px;">② SharePoint 社員電話帳ページ（Search Web パーツで専用ページを作成）　★推奨・1位</div>
+      <div class="mockup-wrap" style="margin-bottom:16px;">
+        <div class="mockup-bar" style="font-size:12px;">🏫 武蔵野美術大学 イントラネット</div>
+        <div class="mockup-nav">
+          <a href="#" style="color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;padding:4px 0;">🏠 ホーム</a>
+          <a href="#" style="color:#fff;font-size:12px;text-decoration:none;border-bottom:2px solid #fff;padding:4px 0;">👥 社員電話帳</a>
+          <a href="#" style="color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;padding:4px 0;">⚙️ 申請</a>
+        </div>
+        <div class="mockup-body" style="padding:14px;">
+          <div style="font-size:15px;font-weight:700;color:#1f2937;margin-bottom:12px;">👥 社員電話帳</div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:140px;background:#fff;border:1px solid #d1d5db;border-radius:4px;padding:7px 10px;font-size:12px;color:#9ca3af;">🔍 氏名・部署で検索...</div>
+            <div style="background:#fff;border:1px solid #d1d5db;border-radius:4px;padding:7px 10px;font-size:12px;color:#374151;">部署: すべて ▼</div>
+            <div style="background:#fff;border:1px solid #d1d5db;border-radius:4px;padding:7px 10px;font-size:12px;color:#374151;">キャンパス: すべて ▼</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+            <div class="ab-person-card"><div class="ab-avatar" style="background:#1e40af;">花</div><div><div class="ab-name">田中 花子</div><div class="ab-role">庶務課 主任</div><div class="ab-meta">📞 内線 1234</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div></div>
+            <div class="ab-person-card"><div class="ab-avatar" style="background:#92400e;">太</div><div><div class="ab-name">山本 太郎</div><div class="ab-role">施設管財課 主事</div><div class="ab-meta">📞 内線 2100</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div></div>
+            <div class="ab-person-card"><div class="ab-avatar" style="background:#065f46;">恵</div><div><div class="ab-name">鈴木 恵子</div><div class="ab-role">人事課 係長</div><div class="ab-meta">📞 内線 1532</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div></div>
+            <div class="ab-person-card"><div class="ab-avatar" style="background:#7c3aed;">美</div><div><div class="ab-name">田中 美咲</div><div class="ab-role">情報システム 担当</div><div class="ab-meta">📞 内線 3891</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:right;">全 247 件中 1〜4 件表示</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:#374151;margin:8px 0 6px;">① Microsoft Search — People 検索（検索バーに名前を入力）　2位</div>
+      <div class="mockup-wrap" style="margin-bottom:16px;">
+        <div class="mockup-bar" style="font-size:12px;padding:8px 14px;display:flex;align-items:center;">
+          🏫 武蔵野美術大学 イントラネット
+          <div style="margin-left:auto;background:rgba(255,255,255,.18);border-radius:20px;padding:4px 16px;display:flex;align-items:center;gap:6px;font-size:12px;">🔍 <span>田中</span></div>
+        </div>
+        <div class="mockup-body" style="padding:14px;">
+          <div style="display:flex;gap:14px;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:12px;">
+            <span style="font-size:12px;color:var(--muted);">すべて</span>
+            <span style="font-size:12px;color:var(--tm);font-weight:700;border-bottom:2px solid var(--tm);padding-bottom:2px;">ユーザー（3）</span>
+            <span style="font-size:12px;color:var(--muted);">ファイル</span>
+            <span style="font-size:12px;color:var(--muted);">サイト</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+            <div class="ab-person-card">
+              <div class="ab-avatar" style="background:#1e40af;">花</div>
+              <div><div class="ab-name">田中 花子</div><div class="ab-role">庶務課 主任</div><div class="ab-meta">📧 t.hanako@musabi.ac.jp</div><div class="ab-meta">📞 内線 1234</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div>
+            </div>
+            <div class="ab-person-card">
+              <div class="ab-avatar" style="background:#065f46;">健</div>
+              <div><div class="ab-name">田中 健二</div><div class="ab-role">施設管財課 係長</div><div class="ab-meta">📧 k.tanaka@musabi.ac.jp</div><div class="ab-meta">📞 内線 2567</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div>
+            </div>
+            <div class="ab-person-card">
+              <div class="ab-avatar" style="background:#7c3aed;">美</div>
+              <div><div class="ab-name">田中 美咲</div><div class="ab-role">情報システム 担当</div><div class="ab-meta">📧 m.tanaka@musabi.ac.jp</div><div class="ab-meta">📞 内線 3891</div><div class="ab-btns"><span class="ab-btn">💬 Teams</span><span class="ab-btn">📧 メール</span></div></div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;">← SharePoint 検索バーに名前を入力するだけ。設定不要・すぐ使える。</div>
+        </div>
+      </div>
+
+      <div class="ab-mockup-2col">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#374151;margin:0 0 6px;">④ Outlook グローバルアドレス一覧（GAL）　3位</div>
+          <div class="mockup-wrap">
+            <div style="background:#0078d4;color:#fff;padding:7px 12px;font-size:12px;font-weight:600;">📒 アドレス帳</div>
+            <div style="background:#f3f2f1;border-bottom:1px solid #e1dfdd;padding:6px 8px;display:flex;gap:6px;align-items:center;">
+              <span style="font-size:11px;color:#323130;">検索名:</span>
+              <div style="flex:1;background:#fff;border:1px solid #8a8886;padding:3px 8px;font-size:11px;color:#323130;border-radius:2px;">山本</div>
+              <span style="font-size:11px;color:#0078d4;font-weight:600;cursor:pointer;">検索 ▶</span>
+            </div>
+            <div style="display:grid;grid-template-columns:45% 55%;">
+              <div style="border-right:1px solid #e1dfdd;padding:8px;">
+                <div style="font-size:10px;color:#8a8886;margin-bottom:4px;">表示名 ▲</div>
+                <div style="padding:5px 6px;background:#deecf9;font-size:11px;border-radius:2px;cursor:pointer;margin-bottom:2px;color:#323130;font-weight:600;">山本 太郎</div>
+                <div style="padding:5px 6px;font-size:11px;cursor:pointer;margin-bottom:2px;color:#323130;">山本 はるか</div>
+                <div style="padding:5px 6px;font-size:11px;cursor:pointer;color:#323130;">山本 裕介</div>
+              </div>
+              <div style="padding:10px;">
+                <div style="font-size:13px;font-weight:700;color:#323130;margin-bottom:8px;">山本 太郎</div>
+                <div style="font-size:11px;color:#605e5c;margin-bottom:4px;">🏢 施設管財課 主事</div>
+                <div style="font-size:11px;color:#605e5c;margin-bottom:4px;">📞 内線 2100</div>
+                <div style="font-size:11px;color:#0078d4;margin-bottom:4px;word-break:break-all;">📧 y.yamamoto@musabi.ac.jp</div>
+                <div style="font-size:11px;color:#605e5c;">📍 鷹の台キャンパス</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#374151;margin:0 0 6px;">③ Entra ID プロファイルカード（名前にカーソルで表示）　4位</div>
+          <div class="mockup-wrap">
+            <div class="mockup-body" style="padding:12px;">
+              <div style="background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">
+                  2026/07/18 ・ 投稿者: <span style="color:var(--tm);text-decoration:underline;font-weight:600;cursor:pointer;">田中 花子</span>
+                  <span style="color:#d97706;"> ← カーソルを合わせると ↓</span>
+                </div>
+                <div style="font-size:12px;font-weight:600;color:var(--text);">M365移行についての案内（重要）</div>
+              </div>
+              <div style="background:#fff;border:1px solid #d1d5db;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.12);padding:14px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                  <div style="width:48px;height:48px;border-radius:50%;background:var(--musabi-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;">花</div>
+                  <div>
+                    <div style="font-size:14px;font-weight:700;color:#111827;">田中 花子</div>
+                    <div style="font-size:11px;color:var(--muted);">庶務課 主任</div>
+                  </div>
+                </div>
+                <div style="font-size:12px;color:#374151;margin-bottom:3px;">📞 内線 1234</div>
+                <div style="font-size:12px;color:#374151;margin-bottom:10px;">📧 t.hanako@musabi.ac.jp</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;">
+                  <span style="background:#0078d4;color:#fff;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;">💬 チャット</span>
+                  <span style="background:#f3f4f6;color:#374151;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;">📧 メール</span>
+                  <span style="background:#f3f4f6;color:#374151;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;">詳細 →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub">前提：Entra ID プロファイルの整備（最重要）</h3>
+      <div class="callout warn">
+        <strong>⚠️ 2026/8/6定例で判明：現在のEntra IDは部署・役職・内線番号がほぼ未入力です。</strong><br>
+        プロファイルが未入力だとアドレス帳機能は何も表示されません。
+        どの方法を採用しても、Entra IDに以下の情報が登録されていることが前提です。<br>
+        <strong>→ GaroonからのID移行時にプロパティも移行する必要があります。担当ベンダーに移行可能な範囲・方法を確認中。</strong>
+      </div>
+      <table>
+        <tr>
+          <th>項目</th>
+          <th>Entra IDの属性名</th>
+          <th>優先度</th>
+          <th>登録方法</th>
+        </tr>
+        <tr><td>氏名（表示名）</td><td>displayName</td><td><span class="badge hi">必須</span></td><td>アカウント作成時に設定済みのはず</td></tr>
+        <tr><td>メールアドレス</td><td>mail / userPrincipalName</td><td><span class="badge hi">必須</span></td><td>Exchange Online移行で整備済み</td></tr>
+        <tr><td>部署</td><td>department</td><td><span class="badge hi">高</span></td><td>管理者がEntra ID管理センターで入力 または CSVインポート</td></tr>
+        <tr><td>役職</td><td>jobTitle</td><td><span class="badge hi">高</span></td><td>同上</td></tr>
+        <tr><td>電話番号（内線）</td><td>businessPhones</td><td><span class="badge med">中</span></td><td>同上（内線番号を整理してから入力）</td></tr>
+        <tr><td>オフィスの場所</td><td>officeLocation</td><td><span class="badge lo">低</span></td><td>鷹の台・市ヶ谷など</td></tr>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:4px;">※ プロファイル情報はEntra ID管理センターでCSV一括インポートが可能。約800名分の職員データがあれば効率的に整備できます。</p>
+
+      <h3 class="sub">推奨アプローチ（段階的実装）</h3>
+      <table>
+        <tr><th>フェーズ</th><th>内容</th><th>目標時期</th><th>費用</th></tr>
+        <tr>
+          <td><strong>フェーズ1</strong><br>すぐ使える状態に</td>
+          <td>Entra IDプロファイル（部署・役職）をCSVで一括入力。Microsoft Searchでの人物検索が機能し始める。</td>
+          <td>〜2026年9月</td>
+          <td><span class="badge lo">追加ゼロ</span></td>
+        </tr>
+        <tr>
+          <td><strong>フェーズ2</strong><br>専用ページ設置</td>
+          <td>SharePointに「社員電話帳」ページを作成。Search Web パーツを配置し、部署別絞り込みを設定。ナビゲーションにリンク追加。</td>
+          <td>〜2026年10月</td>
+          <td><span class="badge lo">追加ゼロ</span></td>
+        </tr>
+        <tr>
+          <td><strong>フェーズ3（任意）</strong><br>電話番号の整備</td>
+          <td>内線番号リストが整備できた段階でbusinessPhones属性に登録。Outlookの GAL・Teamsからも参照可能になる。</td>
+          <td>検討後</td>
+          <td><span class="badge lo">追加ゼロ</span></td>
+        </tr>
+      </table>
+
+      <div class="callout ok" style="margin-top:8px;">
+        <strong>まとめ：</strong>標準機能（Microsoft Search + SharePointページ）で「氏名・部署・役職・メール・電話番号」の参照は実現できます。
+        カレンダーアドインや Viva Connections は不要です。前提となる Entra ID プロファイル整備（CSVインポート）が最初のアクションです。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 確認事項 -->
+  <div id="tab-qa" class="tab-panel">
+    <div class="section">
+      <div class="section-title">❓ 8/6定例で確認したい事項</div>
+      <table>
+        <tr><th>No.</th><th>確認事項</th><th>誰に確認</th></tr>
+        <tr><td>①</td><td><strong>お知らせ2分類の方針：</strong>「全体向けニュース」と「テーマ別ニュース（人事・訃報など）」を別ウェブパーツに分ける設計で違和感はないか</td><td>全員</td></tr>
+        <tr><td>②</td><td><strong>テーマ別カテゴリーの追加：</strong>人事・訃報以外にテーマ別に切り出したいお知らせの種類はあるか（例：安全衛生情報・施設情報など）</td><td>畠中・井上</td></tr>
+        <tr><td>③</td><td><strong>全体レイアウトのフィードバック：</strong>トップページの構成（ヒーロー・ニュース・申請ショートカット・クイックリンク）に気になる点はあるか</td><td>全員</td></tr>
+        <tr><td>④</td><td><strong>ワークフローデモ（別ブロック）：</strong>Power Automateの消耗品購入申請デモを見て、移行ツール選定の感触はどうか</td><td>井上・担当者</td></tr>
+        <tr><td>⑤</td><td><strong>社員電話帳について：</strong>Entra IDに部署・役職・内線番号などの情報はすでに登録されているか。一括入力できる職員マスタデータ（Excel等）が存在するか</td><td>井上・担当者</td></tr>
+      </table>
+    </div>
   </div>
 
   <div class="meta" style="text-align:right; margin-top:8px">
-    作成: 三井田（2026-07-23）／ 7/30定例でフィードバック取得予定
+    作成: 三井田（2026-07-23）／ 7/30フィードバック反映・8/6ブラッシュアップ版（2026-07-30）
   </div>
 </div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelector('.tab-btn[data-tab="' + id + '"]').classList.add('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
