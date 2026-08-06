@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power Automate ワークフローデモ — 消耗品購入申請</title>
+<style>
+:root {
+  --pa: #0078d4;
+  --pa-l: #deecf9;
+  --pa-d: #004578;
+  --ok: #107c10; --ok-bg: #dff0d8;
+  --warn: #797673; --warn-bg: #fff4ce;
+  --text: #1f2937; --muted: #6b7280;
+  --border: #e5e7eb; --bg: #f9fafb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', -apple-system, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.65; }
+header { background: var(--pa-d); color: #fff; padding: 16px 24px; }
+header h1 { font-size: 18px; font-weight: 700; }
+header .sub { font-size: 12px; opacity: .75; margin-top: 2px; }
+main { max-width: 900px; margin: 24px auto; padding: 0 16px 48px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
+.section { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+.section-title { font-size: 15px; font-weight: 700; color: var(--pa-d); margin-bottom: 14px; }
+.callout { border-radius: 8px; padding: 12px 16px; margin: 8px 0 14px; font-size: 13px; }
+.callout.ok   { background: var(--ok-bg);   border-left: 4px solid var(--ok);   color: #155724; }
+.callout.warn { background: var(--warn-bg); border-left: 4px solid #c8a000;      color: #533f03; }
+.callout.info { background: var(--pa-l);    border-left: 4px solid var(--pa);    color: var(--pa-d); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 12px; }
+th { background: #f3f4f6; padding: 8px 10px; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+.badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+.badge.pa { background: var(--pa-l); color: var(--pa-d); }
+.badge.ok { background: var(--ok-bg); color: var(--ok); }
+.badge.warn { background: #fff4ce; color: #7a5f00; }
+
+/* フロー図 */
+.flow { display: flex; flex-direction: column; gap: 0; align-items: flex-start; margin: 16px 0; }
+.flow-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: #fff; border: 2px solid var(--border); border-radius: 10px;
+  padding: 14px 16px; width: 100%;
+}
+.flow-step.trigger  { border-color: var(--pa); }
+.flow-step.action   { border-color: #6264a7; }
+.flow-step.approval { border-color: #107c10; }
+.flow-step.notify   { border-color: #d83b01; }
+.flow-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.flow-body { flex: 1; }
+.flow-label { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
+.flow-step.trigger  .flow-label { color: var(--pa); }
+.flow-step.action   .flow-label { color: #6264a7; }
+.flow-step.approval .flow-label { color: #107c10; }
+.flow-step.notify   .flow-label { color: #d83b01; }
+.flow-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.flow-detail { font-size: 12px; color: var(--muted); }
+.flow-arrow { text-align: center; font-size: 18px; color: var(--muted); padding: 4px 0; }
+
+/* フォームモック */
+.form-mock { border: 2px solid var(--border); border-radius: 10px; overflow: hidden; }
+.form-bar { background: var(--pa-d); color: #fff; padding: 10px 16px; font-size: 14px; font-weight: 700; }
+.form-body { padding: 16px; background: #fff; }
+.form-row { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+.form-input { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 13px; color: var(--text); background: #f9fafb; }
+.form-input.required { border-color: #9bb3d8; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-submit { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.btn { padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+.btn.primary { background: var(--pa); color: #fff; }
+.btn.secondary { background: #f3f4f6; color: var(--text); border: 1px solid var(--border); }
+
+/* 承認メール */
+.email-mock { border: 2px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 13px; }
+.email-bar { background: #6264a7; color: #fff; padding: 10px 16px; font-weight: 700; }
+.email-header { padding: 12px 16px; border-bottom: 1px solid var(--border); background: #fafafa; }
+.email-row { display: flex; gap: 8px; margin-bottom: 4px; }
+.email-key { width: 60px; color: var(--muted); font-size: 12px; flex-shrink: 0; }
+.email-body { padding: 16px; }
+.approve-btn-wrap { display: flex; gap: 10px; margin-top: 16px; }
+.approve-btn { padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 13px; border: none; cursor: pointer; }
+.approve-btn.yes { background: #107c10; color: #fff; }
+.approve-btn.no { background: #d83b01; color: #fff; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ Power Automate ワークフローデモ</h1>
+  <div class="sub">武蔵野美術大学 — Garoon「消耗品購入申請」の移行設計</div>
+</header>
+
+<main>
+  <div class="meta">作成: 2026-07-30 ／ 8/6フィードバック反映: 2026-08-06 ／ ステータス: <strong>実環境デモ準備中</strong>（8/27定例でデモ予定）</div>
+
+  <div class="callout ok">
+    ✅ <strong>8/6定例（第11回）完了。次回8/27は提供いただいたSharePointサイトでの実環境デモを実施します。</strong><br>
+    デモサイト: <code>musabiac.sharepoint.com/sites/M365MigrationDemo</code> に消耗品購入申請フロー＋Teams通知を実装中。
+  </div>
+  <div class="callout info">
+    Garoonワークフロー約100件のうち、<strong>施設管財系フローのパイロット候補</strong>として「消耗品購入申請」を選定しました。
+    シンプルな「申請 → 上長承認 → 購入担当への通知」フローを Power Automate で再現する場合の設計です。
+  </div>
+
+  <!-- なぜこのフローを選んだか -->
+  <div class="section">
+    <div class="section-title">🎯 デモ対象フローの選定理由</div>
+    <table>
+      <tr><th>選定条件</th><th>消耗品購入申請を選んだ理由</th></tr>
+      <tr><td>利用頻度</td><td>施設管財系は年間件数の50%を占める最多カテゴリ。消耗品申請は最も件数が多い。</td></tr>
+      <tr><td>フローの単純さ</td><td>「申請者 → 承認者1名 → 完了通知」のシンプル構成でデモに最適。</td></tr>
+      <tr><td>汎用性</td><td>承認ロジックをマスターすれば他のGaroonフロー（備品修理・鍵借用等）にも横展開できる。</td></tr>
+      <tr><td>リスク</td><td>金額の大きい調達は別フローで管理されており、このフローは低リスク。</td></tr>
+    </table>
+  </div>
+
+  <!-- フロー全体図 -->
+  <div class="section">
+    <div class="section-title">🔄 Power Automate フロー設計</div>
+    <div class="callout ok">フロー名：<strong>消耗品購入申請フロー</strong>　｜　トリガー：Forms（申請フォーム）への回答送信</div>
+
+    <div class="flow">
+
+      <div class="flow-step trigger">
+        <div class="flow-icon">📋</div>
+        <div class="flow-body">
+          <div class="flow-label">Trigger</div>
+          <div class="flow-title">Microsoft Forms — フォーム回答が送信されたとき</div>
+          <div class="flow-detail">申請者がSharePoint上のFormsに入力して送信 → フロー起動</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-step action">
+        <div class="flow-icon">👤</div>
+        <div class="flow-body">
+          <div class="flow-label">Action — Get response details</div>
+          <div class="flow-title">申請内容の取得</div>
+          <div class="flow-detail">品名・数量・金額・使用用途・申請者情報をフォーム回答から取得</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-step approval">
+        <div class="flow-icon">✅</div>
+        <div class="flow-body">
+          <div class="flow-label">Action — Start and wait for an approval</div>
+          <div class="flow-title">承認リクエストの送信（上長）</div>
+          <div class="flow-detail">申請者の所属部署に紐づく上長（Entra IDの上司情報を参照）にTeams / メールで承認依頼を送信。承認・差戻しのボタンをTeams内で操作可能。</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓（承認の場合）</div>
+
+      <div class="flow-step notify">
+        <div class="flow-icon">📬</div>
+        <div class="flow-body">
+          <div class="flow-label">Action — Send email / Teams notification</div>
+          <div class="flow-title">施設管財担当へ購入通知 ＋ 申請者へ結果通知</div>
+          <div class="flow-detail">承認完了後、施設管財担当に購入手配を依頼するメール/Teams通知を送信。申請者にも承認済みの旨を自動通知。</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓（差戻しの場合）</div>
+
+      <div class="flow-step notify" style="border-color:#d83b01">
+        <div class="flow-icon">🔄</div>
+        <div class="flow-body">
+          <div class="flow-label">Action — Rejected</div>
+          <div class="flow-title">差戻し通知 ＋ コメント送付</div>
+          <div class="flow-detail">上長が差戻した場合、差戻しコメントを付けて申請者に通知。再申請を促す。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout warn" style="margin-top:12px">
+      <strong>⚠️ 上記はシンプルな「1段階・1名承認」のケースです。</strong>
+      実際の業務でよく必要になる以下の機能は、このフローには含まれておらず、<strong>Power Automateでは別途追加実装が必要</strong>です。
+    </div>
+    <table style="margin-top:12px">
+      <tr>
+        <th style="width:28%">追加したい機能</th>
+        <th style="width:36%">⚡ Power Automateでの対応</th>
+        <th style="width:36%">🟣 Canbus.での対応</th>
+      </tr>
+      <tr>
+        <td><strong>差戻し後の再申請</strong></td>
+        <td>差戻し通知後、申請者が<em>再度フォームを送信する</em>と新しいフローが起動する。同一申請の履歴が分断され、経緯の追跡が難しい。再申請ループ処理を別途設計する必要あり</td>
+        <td>同一申請書の中で差戻し→修正→再申請が完結。承認者コメントも申請書に一体で残る</td>
+      </tr>
+      <tr>
+        <td><strong>承認履歴の記録</strong></td>
+        <td>「誰がいつ承認したか」を残すには、SharePointリストへの書き込み処理を自分で追加実装する必要あり</td>
+        <td>標準機能として自動記録される</td>
+      </tr>
+      <tr>
+        <td><strong>電子印鑑</strong></td>
+        <td>標準機能にない。承認済み書類への押印が必要な場合は別途作り込みが必要</td>
+        <td>承認完了時に自動押印（標準搭載）</td>
+      </tr>
+      <tr>
+        <td><strong>複数人の並列承認</strong>（部長と法務が同時に）</td>
+        <td><code>Apply to each</code>と<code>Create approval</code>を組み合わせた複雑なパターンが必要</td>
+        <td>承認ノードを並べるだけで設定できる</td>
+      </tr>
+      <tr>
+        <td><strong>承認期限切れ・リマインド</strong></td>
+        <td><code>Do until</code>ループや並列タイムアウト処理を自分で組む必要あり</td>
+        <td>期限・リマインド設定が画面から設定できる</td>
+      </tr>
+      <tr>
+        <td><strong>条件分岐（金額で承認者が変わるなど）</strong></td>
+        <td>Switch/Conditionのネストが深くなり、フロー図が読みにくくなる。修正・引継ぎが困難になる</td>
+        <td>条件（C）ノードをGUIで追加するだけ。全体像が視覚的に把握しやすい</td>
+      </tr>
+      <tr>
+        <td><strong>各部署担当者が<br>フロー作成できるか</strong></td>
+        <td>Power Automate はプログラミング的な理解が必要（トリガー・アクション・式関数・JSON等）。情報管理担当者が一括管理するのが現実的</td>
+        <td>GUIのドラッグ＆ドロップ中心。承認ルートの設定が直感的なため、権限付与で各部署担当者がフローを作成・管理することが可能</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 申請フォームモック -->
+  <div class="section">
+    <div class="section-title">📋 申請フォーム（Microsoft Forms）イメージ</div>
+    <div class="callout warn">※ これは画面イメージです。実際のForms URLは別途共有します。</div>
+    <div class="form-mock">
+      <div class="form-bar">📋 消耗品購入申請</div>
+      <div class="form-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-label">申請者氏名 *</div>
+            <div class="form-input required">（自動入力：ログインユーザー）</div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">所属部署 *</div>
+            <div class="form-input required">（自動入力：Entra IDより）</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">品名 *</div>
+          <div class="form-input required">例：コピー用紙 A4 500枚×5冊</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-label">数量 *</div>
+            <div class="form-input required">例：5</div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">概算金額（円）*</div>
+            <div class="form-input required">例：3,000</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">使用用途・理由 *</div>
+          <div class="form-input required" style="height:60px; display:block;">例：事務局会議資料の印刷用</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">希望納入日</div>
+          <div class="form-input">例：2026年8月15日</div>
+        </div>
+        <div class="form-submit">
+          <button class="btn secondary">キャンセル</button>
+          <button class="btn primary">📨 申請を送信する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 承認通知モック -->
+  <div class="section">
+    <div class="section-title">✅ 承認者（上長）に届く Teams メッセージ</div>
+    <div class="email-mock">
+      <div class="email-bar">💬 Teams — 承認依頼</div>
+      <div class="email-header">
+        <div class="email-row"><div class="email-key">From</div><div>Power Automate（承認リクエスト）</div></div>
+        <div class="email-row"><div class="email-key">To</div><div>山田 部長（上長）</div></div>
+        <div class="email-row"><div class="email-key">件名</div><div>【承認依頼】消耗品購入申請 — 鈴木 花子（総務部）</div></div>
+      </div>
+      <div class="email-body">
+        <p style="margin-bottom:10px">以下の消耗品購入申請が届いています。内容をご確認の上、承認または差戻しをお願いします。</p>
+        <table style="margin-bottom:14px">
+          <tr><th style="width:120px">品名</th><td>コピー用紙 A4 500枚×5冊</td></tr>
+          <tr><th>数量</th><td>5冊</td></tr>
+          <tr><th>概算金額</th><td>3,000円</td></tr>
+          <tr><th>使用用途</th><td>事務局会議資料の印刷用</td></tr>
+          <tr><th>申請者</th><td>鈴木 花子（総務部）</td></tr>
+          <tr><th>申請日時</th><td>2026-07-30 14:23</td></tr>
+        </table>
+        <div class="approve-btn-wrap">
+          <button class="approve-btn yes">✅ 承認する</button>
+          <button class="approve-btn no">🔄 差戻す</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 設計の違い -->
+  <div class="section">
+    <div class="section-title">🔧 設計のしくみ — PAとCanbus.で何が違うか</div>
+
+    <p style="font-size:13px;margin-bottom:16px;">
+      Power AutomateとCanbus.の最大の違いは、<strong>「承認フローとして必要な機能が最初から揃っているか、自分で作り込む必要があるか」</strong>という点にあります。
+      PAは汎用の自動化ツールのため、差戻し・再申請・承認履歴・電子印鑑などを自分でロジックとして組む必要があります。
+      Canbus.はワークフロー専用に設計されており、これらが標準機能として最初から入っています。
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+
+      <div style="border:2px solid #0078d4;border-radius:10px;overflow:hidden;">
+        <div style="background:#0078d4;color:#fff;padding:10px 14px;font-weight:700;font-size:13px;">⚡ Power Automateの設計プロセス</div>
+        <div style="padding:14px;font-size:13px;">
+          <div style="margin-bottom:10px;padding:10px;background:#f0f6ff;border-radius:6px;border-left:3px solid #0078d4;">
+            <div style="font-weight:700;margin-bottom:4px;">① フォーム設計（Microsoft Forms）</div>
+            <div style="color:#555;">申請項目（品名・数量・金額など）をFormsで別途作成。PAとは独立したツール。</div>
+          </div>
+          <div style="text-align:center;color:#999;font-size:18px;margin:4px 0;">↓ 別ツールへ移動</div>
+          <div style="margin-bottom:10px;padding:10px;background:#f0f6ff;border-radius:6px;border-left:3px solid #0078d4;">
+            <div style="font-weight:700;margin-bottom:4px;">② フロー設計（Power Automate）</div>
+            <div style="color:#555;">「何をトリガーにするか」「どの条件でどのアクションに分岐するか」をフロービルダーで1ステップずつ積み上げる。複雑になるほど設計が難しくなる。</div>
+          </div>
+          <div style="margin-top:10px;background:#fff4ce;border-radius:6px;padding:8px 10px;font-size:12px;color:#7a5f00;">
+            ⚠️ 2つのツールを往来しながら設計・管理する必要がある
+          </div>
+        </div>
+      </div>
+
+      <div style="border:2px solid #7c3aed;border-radius:10px;overflow:hidden;">
+        <div style="background:#7c3aed;color:#fff;padding:10px 14px;font-weight:700;font-size:13px;">🟣 Canbus.の設計プロセス</div>
+        <div style="padding:14px;font-size:13px;">
+          <div style="margin-bottom:10px;padding:10px;background:#f5f0ff;border-radius:6px;border-left:3px solid #7c3aed;">
+            <div style="font-weight:700;margin-bottom:4px;">① フォーム設計（Canbus.内）</div>
+            <div style="color:#555;">申請項目をドラッグ＆ドロップで配置。27種の入力部品から選べる。</div>
+          </div>
+          <div style="text-align:center;color:#999;font-size:18px;margin:4px 0;">↓ 同じツール内で切り替え</div>
+          <div style="padding:10px;background:#f5f0ff;border-radius:6px;border-left:3px solid #7c3aed;margin-bottom:10px;">
+            <div style="font-weight:700;margin-bottom:4px;">② フロー設計（Canbus. フロービルダー）</div>
+            <div style="color:#555;">承認ルート・条件分岐をGUIで設定。ドラッグ＆ドロップで承認ノードを追加、条件（C）で承認者を動的に変更できる。</div>
+          </div>
+          <div style="margin-top:10px;background:#dff0d8;border-radius:6px;padding:8px 10px;font-size:12px;color:#1a5c2e;">
+            ✅ フォーム設計もフロー設計も<strong>同一ツール（Canbus.）内で完結</strong>。別アプリへの切り替えが不要。
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout warn">
+      <strong>PAが複雑になるとどうなるか：</strong>たとえば「金額が5万円以下は係長承認、5万円超は部長承認、10万円超は理事長承認」のような条件分岐をPAで設定すると、フロービルダー上に条件ノードが積み重なり、全体像の把握・修正・引継ぎが難しくなります。同じ設計をCanbus.では画面上の分岐設定で直感的に行えます。
+    </div>
+  </div>
+
+  <!-- Canbus.比較 -->
+  <div class="section">
+    <div class="section-title">⚖️ Power Automate vs Canbus. — 移行先の二択比較</div>
+    <div class="callout info" style="margin-bottom:14px">
+      Garoonの後継として検討しているのは「Power Automate（M365標準）」と「Canbus.（外部ツール）」の2択です。
+      この設計を見ていただいた上で、どちらで進めるかをご判断ください。
+    </div>
+    <table>
+      <tr><th>観点</th><th>⚡ Power Automate</th><th>🟣 Canbus.</th></tr>
+      <tr><td>費用</td><td><strong>追加費用ゼロ</strong>（M365 A3ライセンスに含む）</td><td>月5万円〜（ユーザー数無制限）</td></tr>
+      <tr><td>申請〜承認の管理</td><td>申請フォーム（Forms）とフロー（PA）が<strong>別ツールで分散管理</strong></td><td><strong>1つの画面で申請〜承認が完結</strong></td></tr>
+      <tr><td>承認方法</td><td>Teams内のボタンで承認（ログイン不要）</td><td>Canbus.画面で承認（専用UI）</td></tr>
+      <tr><td>現場メンテナンス</td><td>PAの知識が必要。<strong>現場担当者が自力で修正するのは難しい</strong></td><td>ノーコードで設定可能。<strong>現場自立運用しやすい</strong></td></tr>
+      <tr><td>条件分岐・複雑なルール</td><td>対応可能だが<strong>フローが複雑化</strong>し設計コストが上がる</td><td>GUIで直感的に設定可能</td></tr>
+      <tr><td>M365連携（Teams・SharePoint）</td><td><strong>深く連携可能</strong>（M365標準機能）</td><td>標準連携は限定的</td></tr>
+      <tr><td>データ保存先</td><td>SharePointリスト（Excel形式で出力可）</td><td>Canbus.クラウド（レコード数で課金）</td></tr>
+    </table>
+    <div class="callout ok" style="margin-top:12px">
+      <strong>Power Automateが向いているケース</strong>：承認ルートがシンプル、担当者がPAを習得できる、費用を増やしたくない場合。
+    </div>
+    <div class="callout warn" style="margin-top:8px">
+      <strong>Canbus.が向いているケース</strong>：現場が自立してフロー管理したい、承認ルートが複雑、Garoonに近い使い勝手を求める場合。
+    </div>
+  </div>
+
+  <!-- 次のステップ -->
+  <div class="section">
+    <div class="section-title">📋 8/27定例に向けて — 確認・デモ予定</div>
+    <table>
+      <tr><th>項目</th><th>内容</th><th>担当</th></tr>
+      <tr>
+        <td><strong>① 実環境デモ</strong></td>
+        <td>提供いただいたSharePointデモサイトで消耗品購入申請フロー＋Teams通知を実装・動作確認</td>
+        <td>三井田（実装中）</td>
+      </tr>
+      <tr>
+        <td><strong>② PA承認履歴</strong></td>
+        <td>標準機能（History Webパーツ等）でどこまで実現できるか詳細を調査・報告</td>
+        <td>三井田</td>
+      </tr>
+      <tr>
+        <td><strong>③ Canbus.メーカーデモ</strong></td>
+        <td>実際のUIを大学側が体験できる機会を設定検討</td>
+        <td>三井田</td>
+      </tr>
+      <tr>
+        <td><strong>④ Entra IDプロファイル</strong></td>
+        <td>担当ベンダーへのGaroon→Entra IDプロパティ移行の可否確認（先方対応）</td>
+        <td>大学側→ベンダーへ確認</td>
+      </tr>
+    </table>
+    <div class="callout info" style="margin-top:12px">
+      <strong>8/6定例での大学側からの主なフィードバック：</strong><br>
+      ・PAの複雑さ（差戻し・承認履歴・電子印鑑が自作必要）は認識いただいた<br>
+      ・「各部署の担当者がフロー作成できるか」の観点もCanbus.比較に追加してほしい<br>
+      ・部署を跨ぐステップ承認（複数人・順番あり）を持つWFが多く、PAの条件分岐複雑化が懸念
+    </div>
+    <div class="section-title" style="margin-top:24px;">📋 8/6定例で判断された事項</div>
+    <table>
+      <tr><th>判断</th><th>問いかけ</th><th>YESの場合</th><th>NOの場合</th></tr>
+      <tr>
+        <td><strong>① PAの複雑さを<br>許容できるか？</strong></td>
+        <td>申請書（Forms）とフロー（PA）が別管理・現場メンテが難しい点は業務上問題ありませんか？</td>
+        <td>Power Automateで進める（追加費用ゼロ）</td>
+        <td>② へ</td>
+      </tr>
+      <tr>
+        <td><strong>② Canbus.の費用<br>（月5万円〜）を<br>許容できるか？</strong></td>
+        <td>現場自立運用・Garoonに近い使い勝手を優先する場合、月5万円の追加費用は許容範囲ですか？</td>
+        <td>Canbus.で進める</td>
+        <td>PAで進める（費用優先）</td>
+      </tr>
+    </table>
+    <div class="callout info" style="margin-top:12px">
+      <strong>補足確認事項（PAを選んだ場合）</strong>：承認者ルールに代理承認・複数承認・金額分岐などの条件がある場合は教えてください。複雑度によってPA設計のコストが変わります。
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
