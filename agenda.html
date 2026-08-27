@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>定例アジェンダ 第11回（8/6）— 武蔵野美術大学 M365導入支援</title>
+<title>定例アジェンダ 第12回（8/27）— 武蔵野美術大学 M365導入支援</title>
 <style>
   :root {
     --gray:    #6b7280;
@@ -238,9 +238,9 @@
 
 <div class="header">
   <div class="header-label">武蔵野美術大学 M365導入支援コンサルティング</div>
-  <h1>定例 アジェンダ — 第11回</h1>
-  <div class="meta">2026年8月6日（木）　担当：三井田</div>
-  <div class="total-time">⏱ 三井田担当 約53分（冒頭3 ＋ ①15 ＋ ②13 ＋ ③10 ＋ ④10 ＋ まとめ2）</div>
+  <h1>定例 アジェンダ — 第12回</h1>
+  <div class="meta">2026年8月27日（木）　担当：三井田</div>
+  <div class="total-time">⏱ 約45分（冒頭3 ＋ ①20 ＋ ②8 ＋ ③7 ＋ ④5 ＋ まとめ2）</div>
 </div>
 
 <div class="blocks">
@@ -249,13 +249,63 @@
   <div class="block green">
     <div class="block-header">
       <div class="block-badge">冒頭</div>
-      <div class="block-title">前回確定事項の確認（口頭）</div>
+      <div class="block-title">8/6定例の振り返り ＆ 本日のゴール</div>
       <div class="block-time">3分</div>
     </div>
     <div class="block-body">
+
+      <div class="sub-heading">✅ 8/6確定事項の再確認</div>
       <ul class="point-list">
-        <li><strong>7/30確定事項の再確認：</strong>回覧受信者設定は教員・職員レベルの大まかな区分、投稿権限は制限なし、スケジュールはSharePointニュース非掲載。</li>
-        <li><strong>本日のゴール：</strong>Power Automateの<strong>設計・画面イメージ</strong>をご確認いただき、WF移行ツールの方向性を決める（デモ環境は現在準備中）。</li>
+        <li>PAの複雑さ（差戻し・承認履歴が自作必要）を大学側が認識済み</li>
+        <li>WFヒアリング集計結果：全95件（高優先15・中優先21・低優先58・移行不要1）</li>
+        <li>Entra IDプロファイル（部署・役職・内線）がほぼ未整備と判明 → 担当ベンダーへ確認依頼中（状況共有をお願いしたい）</li>
+      </ul>
+
+      <div class="sub-heading">📋 8/6定例で出た大学側の要望・意見（本日の対応箇所）</div>
+      <table class="garoon-table" style="margin-bottom:14px;">
+        <tr><th style="width:18%">カテゴリ</th><th>大学側の要望・意見</th><th style="width:18%">本日の対応</th></tr>
+        <tr>
+          <td><strong>ツール比較①</strong></td>
+          <td>「各部署の担当者がフロー作成できるか」という観点をPA vs Canbus.の比較に加えてほしい</td>
+          <td>ブロック②で確認</td>
+        </tr>
+        <tr>
+          <td><strong>ツール比較②</strong></td>
+          <td>PAとCanbus.の習得難易度・設計工程の差を具体的に見たい（デモを見た上で判断したい）</td>
+          <td>ブロック①②で確認</td>
+        </tr>
+        <tr>
+          <td><strong>WF要件</strong></td>
+          <td>現行WFの多くが部署をまたいだ複数人のステップ承認。PAで現実的に対応できるのか</td>
+          <td>ブロック①②で確認</td>
+        </tr>
+        <tr>
+          <td><strong>PA機能確認</strong></td>
+          <td>承認履歴・進捗確認は標準機能で表示・参照できるのか確認してほしい<br><span style="color:#16a34a;font-size:11px;">✅ 回答済み：標準機能でできること・できないこと・作り込みで実現できることを整理（ブロック①参照）</span></td>
+          <td>ブロック①で説明</td>
+        </tr>
+        <tr>
+          <td><strong>アドレス帳前提</strong></td>
+          <td>Entra IDの部署・役職・内線が整備されていないとアドレス帳は何も表示されない。ベンダーへ移行可能範囲の確認を依頼しているが、進捗を共有してほしい</td>
+          <td>ブロック③で確認</td>
+        </tr>
+        <tr>
+          <td><strong>アドレス帳仕様</strong></td>
+          <td>対象ユーザーの範囲（教職員のみ？学生は非公開にできるか？）と検索機能の詳細を知りたい<br><span style="color:#16a34a;font-size:11px;">✅ 回答済み：ABP＋Teamsスコープ検索で制御可能・追加費用なし（ブロック③参照）</span></td>
+          <td>ブロック③で説明</td>
+        </tr>
+        <tr>
+          <td><strong>Canbus.</strong></td>
+          <td>ツールの比較判断のためにCanbus.のメーカーデモを実施したい</td>
+          <td>ブロック②で日程確認</td>
+        </tr>
+      </table>
+
+      <div class="sub-heading">🎯 本日のゴール</div>
+      <ul class="point-list">
+        <li>実際のSharePointサイト（M365MigrationDemo）でPAフローが動く様子を確認する <span style="color:var(--gray);font-size:12px;">→ ブロック①</span></li>
+        <li>PAかCanbus.か、方向性の結論（または方向感）を出す <span style="color:var(--gray);font-size:12px;">→ ブロック②</span></li>
+        <li>Entra ID整備の見通し・ベンダー確認状況を確認する <span style="color:var(--gray);font-size:12px;">→ ブロック③</span></li>
       </ul>
     </div>
   </div>
@@ -263,140 +313,156 @@
   <!-- ブロック① -->
   <div class="block blue">
     <div class="block-header">
-      <div class="block-badge">① 設計説明</div>
-      <div class="block-title">Power Automate — 消耗品購入申請 設計イメージ</div>
-      <div class="block-time">15分</div>
+      <div class="block-badge">① ライブデモ</div>
+      <div class="block-title">Power Automate 実環境デモ — 消耗品購入申請フロー ＋ Teams通知</div>
+      <div class="block-time">20分</div>
     </div>
     <div class="block-body">
-      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#92400e;">
-        ⚠️ <strong>本日は設計・画面イメージの説明となります。</strong>
-        Power Automate実行環境（SharePointサイト）のご提供が間に合わなかったため、実際の動作デモは次回以降となります。
+      <div style="background:#dbeafe;border:1px solid #bfdbfe;border-radius:6px;padding:8px 12px;margin-bottom:12px;font-size:12px;color:#1e40af;">
+        ✅ <strong>本日は実際のSharePointサイト（M365MigrationDemo）で動作するフローをライブデモします。</strong>
       </div>
 
-      <div class="sub-heading">🎯 この確認の目的</div>
-      <p style="font-size:13px;margin-bottom:10px;">
-        Power Automateは<strong>追加費用ゼロ</strong>でM365ライセンスに含まれますが、設計・運用に一定の複雑さが伴います。<br>
-        本日は設計イメージを見ていただき、<strong>「その複雑さを許容できるか」を判断していただく</strong>ことが目的です。<br>
-        難しいと感じた場合は、外部ツール <strong>Canbus.（月額5万円〜）</strong> に切り替える選択肢があります（③で議論）。
-      </p>
+      <div class="sub-heading">🎯 デモの構成（実装済み・動作確認済み）</div>
+      <table class="garoon-table" style="margin-bottom:12px;">
+        <tr>
+          <th style="width:13%;white-space:nowrap;">順序</th><th style="width:22%">操作・説明</th><th>内容</th><th style="width:18%">使用ツール</th>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>① 説明</strong></td>
+          <td>SPリスト構造を見せる</td>
+          <td>「消耗品購入申請」リストの列構成（申請者名・品名・数量・金額・承認ステータス）を確認</td>
+          <td>SharePoint</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>② 説明</strong></td>
+          <td>申請フォームを見せる</td>
+          <td>Formsフォームの設問を確認。URL: <span style="font-family:monospace;font-size:11px;">forms.cloud.microsoft/r/dvU0VwyvuC</span></td>
+          <td>Microsoft Forms</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>③ 説明</strong></td>
+          <td>フロービルダーを見せる</td>
+          <td>Power Automateのフロー全体図（5ステップ）を画面で説明</td>
+          <td>Power Automate</td>
+        </tr>
+        <tr style="background:#eff6ff;">
+          <td style="white-space:nowrap;"><strong>④ ライブ</strong></td>
+          <td>フォームを送信する</td>
+          <td>テストデータ（品名・数量・金額・用途）を入力して送信</td>
+          <td>Microsoft Forms</td>
+        </tr>
+        <tr style="background:#eff6ff;">
+          <td style="white-space:nowrap;"><strong>⑤ ライブ</strong></td>
+          <td>Teams承認を実演</td>
+          <td>承認者のTeamsに届いた承認カードを表示 → 承認ボタンをクリック</td>
+          <td>Teams Approvals</td>
+        </tr>
+        <tr style="background:#eff6ff;">
+          <td style="white-space:nowrap;"><strong>⑥ ライブ</strong></td>
+          <td>SPリスト更新を確認</td>
+          <td>承認ステータスが「承認待ち」→「承認済」に自動更新されたことを確認</td>
+          <td>SharePoint</td>
+        </tr>
+      </table>
+      <div style="font-size:11px;color:#6b7280;margin-bottom:8px;">※ ④〜⑥は実際のフォーム送信からSharePoint更新まで通しで実演します（所要時間：送信から完了まで約30秒〜1分）</div>
 
-      <div class="sub-heading">⚡ Power Automateで実現するフロー（消耗品購入申請の例）</div>
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">
-        「申請フォーム（Microsoft Forms）送信 → 上長にTeams承認依頼 → 承認後に購入担当へ通知」の流れです。
-      </p>
-      <a href="power-automate-demo.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-bottom:14px;padding:5px 12px;background:var(--blue-bg);border:1px solid #bfdbfe;border-radius:6px;color:var(--blue);font-weight:700;font-size:12px;text-decoration:none;">⚡ Power Automateデモ設計資料を開く ↗</a>
+      <div class="sub-heading">⚠️ デモで見えること / 見えないこと</div>
+      <table class="garoon-table" style="margin-bottom:12px;">
+        <tr>
+          <th style="width:50%">✅ 今回のデモで確認できること</th>
+          <th style="width:50%">⚠️ 今回のデモでは含まない（別途実装が必要）</th>
+        </tr>
+        <tr>
+          <td>基本フロー（申請→承認依頼→Teams通知）の動作</td>
+          <td>差戻し・再申請フロー（別ロジックが必要）</td>
+        </tr>
+        <tr>
+          <td>Teams上での承認UIの確認</td>
+          <td>電子印鑑・正式な承認履歴PDF</td>
+        </tr>
+        <tr>
+          <td>SharePointリストへのデータ保存</td>
+          <td>複数人の並列承認・条件分岐（金額別で承認者変更など）</td>
+        </tr>
+        <tr>
+          <td>フロービルダー上の設計図の説明</td>
+          <td>リマインド通知・承認期限切れ処理</td>
+        </tr>
+        <tr>
+          <td>Teams Approvalsアプリで承認者・日時の確認（断片的）</td>
+          <td><strong>申請の進捗確認（申請者が「今どのステップか」を見るUI）</strong>— 標準機能では存在しない</td>
+        </tr>
+      </table>
 
-      <div class="sub-heading">⚠️ Power Automateの「面倒さ」— 正直にお伝えします</div>
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">PAは汎用の自動化ツールです。「承認フロー」として当然必要な機能が標準では搭載されておらず、すべて自分でロジックを組む必要があります。</p>
-      <ul class="point-list" style="margin-bottom:14px;">
-        <li><strong>差戻し・再申請が複雑：</strong>上長が差戻した後、申請者が内容を修正して再申請するには「再申請受付フロー」を別途設計する必要があります。同一の申請書の中で差戻し→修正→再申請が完結するCanbus.と異なり、PAでは申請の履歴が途中で分断されます。</li>
-        <li><strong>承認履歴・電子印鑑を自分で作り込む必要がある：</strong>「誰がいつ承認したか」という履歴や、承認済み申請書への押印はPAの標準機能にありません。SharePointリストへの書き込み処理などを別途組む必要があります。Canbus.ではこれらが標準機能として最初から入っています。</li>
-        <li><strong>複雑な承認ルートになるほど設計が難しくなる：</strong>複数人の並列承認・条件分岐（金額で承認者が変わるなど）・承認期限切れのリマインドといった要件が加わるたびに、フロービルダー上のロジックが積み重なり、全体像の把握・修正・引継ぎが難しくなります。</li>
-      </ul>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#92400e;">
+        <strong>⚠️ PAの承認履歴・進捗確認に関する制限（重要）</strong><br><br>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <tr>
+            <th style="text-align:left;padding:4px 8px;background:#fed7aa;color:#7c2d12;width:30%;">知りたいこと</th>
+            <th style="text-align:left;padding:4px 8px;background:#fed7aa;color:#7c2d12;width:35%;">PA標準機能</th>
+            <th style="text-align:left;padding:4px 8px;background:#fed7aa;color:#7c2d12;">要カスタム実装</th>
+          </tr>
+          <tr style="border-bottom:1px solid #fed7aa;">
+            <td style="padding:5px 8px;">今どのステップにいるか（申請者）</td>
+            <td style="padding:5px 8px;">❌ 見られるUIなし</td>
+            <td style="padding:5px 8px;">SPリストで申請状況一覧ページを作成</td>
+          </tr>
+          <tr style="border-bottom:1px solid #fed7aa;">
+            <td style="padding:5px 8px;">誰がいつ承認したか（履歴）</td>
+            <td style="padding:5px 8px;">△ Teams Approvalsに断片的に残る</td>
+            <td style="padding:5px 8px;">SPリストに書き込む処理を設計・実装</td>
+          </tr>
+          <tr style="border-bottom:1px solid #fed7aa;">
+            <td style="padding:5px 8px;">全申請の管理台帳・過去履歴</td>
+            <td style="padding:5px 8px;">❌ なし</td>
+            <td style="padding:5px 8px;">SPリストがそのまま台帳（デザイン要）</td>
+          </tr>
+          <tr>
+            <td style="padding:5px 8px;">フロー内部のエラー・実行ログ</td>
+            <td style="padding:5px 8px;">✅ 管理者のみ確認可</td>
+            <td style="padding:5px 8px;">—</td>
+          </tr>
+        </table>
+        <p style="margin-top:8px;">→ Garoonのワークフローのように「現在 第2承認者で審査中」と申請者が見られるUIは、PAでは標準では存在しません。実現するには別途SPリストやPower Appsでの画面作成が必要です。</p>
+      </div>
+
+      <a href="pa-implementation-guide.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-bottom:14px;padding:5px 12px;background:var(--blue-bg);border:1px solid #bfdbfe;border-radius:6px;color:var(--blue);font-weight:700;font-size:12px;text-decoration:none;">⚡ デモ実装ガイド（手順書）を開く ↗</a>
 
       <ul class="check-list">
         <li>
-          <strong>フロー設計のイメージ確認：</strong>設計資料を見て、Garoonの現行フローと比べて違和感のある点はありますか？<br>
-          <span style="font-size:12px;color:var(--gray);">「これはGaroonでできていたが再現できないか？」という点があれば教えてください</span>
+          <strong>基本フローの操作感：</strong>実際に動いているのを見て、違和感のある点はありますか？<br>
+          <span style="font-size:12px;color:var(--gray);">「Garoonでできていたが再現できないか」という点があれば教えてください</span>
         </li>
         <li>
-          <strong>承認者ルールの確認：</strong>代理承認・複数承認・金額分岐などの特殊ルールはありますか？<br>
-          <span style="font-size:12px;color:var(--gray);">複雑なルールが多い場合、Power Automateでの実現コストが上がるため、Canbus.との比較判断に影響します</span>
+          <strong>承認履歴の確認：</strong>承認済み申請の履歴はSharePointリストで確認できますが、これで「誰がいつ承認したか」を把握できますか？<br>
+          <span style="font-size:12px;color:var(--gray);">印鑑形式・PDF出力などの書式要件があれば別途対応検討が必要です</span>
+        </li>
+        <li>
+          <strong>承認者ルールの追加要件：</strong>金額による承認者変更・複数人の同時承認・代理承認などの要件はありますか？<br>
+          <span style="font-size:12px;color:var(--gray);">これらの要件が多いほどPA設計の複雑度が上がり、②の判断（Canbus.検討）に影響します</span>
         </li>
       </ul>
     </div>
   </div>
 
   <!-- ブロック② -->
-  <div class="block orange">
-    <div class="block-header">
-      <div class="block-badge">② 画面確認</div>
-      <div class="block-title">SharePoint イントラサイト — 7/30フィードバック反映版 ＋ アドレス帳設計</div>
-      <div class="block-time">13分</div>
-    </div>
-    <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:14px;">
-        7/30定例でいただいたご意見（テーマ別にお知らせを分けたい・トップ画面を整理したい等）を反映した素案をご確認いただきます。
-      </p>
-      <a href="sharepoint-intranet-draft.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-bottom:14px;padding:5px 12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;color:#c2410c;font-weight:700;font-size:12px;text-decoration:none;">🏛 SharePoint イントラサイト素案（更新版）を開く ↗</a>
-      <ul class="check-list">
-        <li>
-          <strong>お知らせの2分類：</strong>「全体向けニュース」と「テーマ別ニュース（人事・訃報など）」を別のNewsウェブパーツとして並置する提案です。テーマ別はトップには目立たせず、見たい人がクリックして開く形を想定しています。この分類方針で違和感はありませんか？<br>
-          <span style="font-size:12px;color:var(--gray);">7/30での「テーマに応じた枠組みを新しく作りたい」というご意見をもとに設計しました</span>
-        </li>
-        <li>
-          <strong>テーマ別カテゴリーの追加：</strong>人事・訃報以外に「テーマ別」に分けたいお知らせの種類はありますか？<br>
-          <span style="font-size:12px;color:var(--gray);">例：安全衛生情報、施設・設備情報、学内イベント案内など</span>
-        </li>
-        <li>
-          <strong>全体レイアウトのフィードバック：</strong>スケジュール非掲載・受信者を教員/職員の大区分のみに変更した点含め、全体的な構成に気になる点はありますか？</li>
-      </ul>
-
-      <div class="sub-heading">👥 社員アドレス帳（電話帳）— 実装案の比較と推奨</div>
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">
-        Garoonのアドレス帳（氏名・部署・役職・内線番号の一覧、部署フィルタ・名前検索）に対し、M365標準機能での代替案を4つ提案しています。Garoonに近い順に整理します。
-      </p>
-      <table class="garoon-table" style="margin-bottom:12px;">
-        <tr>
-          <th style="width:8%">順位</th>
-          <th style="width:30%">実装案</th>
-          <th>Garoonとの比較</th>
-          <th style="width:18%">設定コスト</th>
-        </tr>
-        <tr style="background:#f0fdf4;">
-          <td style="text-align:center;font-weight:700;color:#16a34a;">★ 1位</td>
-          <td><strong>② SharePoint 社員電話帳ページ</strong></td>
-          <td>専用ページとして独立、部署フィルタ・氏名検索あり、内線番号も表示。<strong>一覧から探すというGaroonに最も近い使い方ができる</strong></td>
-          <td>小〜中（ページ作成＋Entra IDプロファイル整備が必要）</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;font-weight:700;color:#2563eb;">2位</td>
-          <td><strong>① Microsoft Search People検索</strong></td>
-          <td>名前を検索バーに入力すれば即座にカードが表示。検索起点なのでGaroonの「一覧を眺めて探す」使い方とは少し異なる</td>
-          <td>設定不要（すぐ使える）</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;font-weight:700;color:#6b7280;">3位</td>
-          <td><strong>④ Outlook GAL</strong></td>
-          <td>全職員が自動登録された一覧。部署別・五十音順で閲覧可能。ただしOutlook上の機能でSharePoint上には表示されない</td>
-          <td>設定不要（すぐ使える）</td>
-        </tr>
-        <tr>
-          <td style="text-align:center;font-weight:700;color:#6b7280;">4位</td>
-          <td><strong>③ Entra IDプロファイルカード</strong></td>
-          <td>名前にカーソルを当てたときに表示されるカード。「探す」というより「見かけた人を確認する」用途。アドレス帳としては使い方が異なる</td>
-          <td>設定不要（すぐ使える）</td>
-        </tr>
-      </table>
-      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:8px 12px;font-size:12px;color:#92400e;margin-bottom:12px;">
-        ⚠️ <strong>Garoonと比べて再現できない点：</strong>Garoonは最終ログイン日時が表示されますが、M365標準機能では同様の情報を一覧に表示する手段がありません。
-      </div>
-      <ul class="check-list">
-        <li>
-          <strong>アドレス帳の実装方針：</strong>Garoonに最も近い「② SharePoint 社員電話帳ページ」を本実装として進めてよいですか？<br>
-          <span style="font-size:12px;color:var(--gray);">前提として、Entra IDに部署・役職・内線番号などのプロファイルが登録されている必要があります。現在の登録状況を確認させてください</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ブロック③ -->
   <div class="block purple">
     <div class="block-header">
-      <div class="block-badge">③ 議論</div>
-      <div class="block-title">WF移行ツール方針 — Canbus. vs Power Automate</div>
-      <div class="block-time">10分</div>
+      <div class="block-badge">② 議論</div>
+      <div class="block-title">WF移行ツールの課題共有 — PA vs Canbus.</div>
+      <div class="block-time">8分</div>
     </div>
     <div class="block-body">
-      <p style="font-size:12px;color:var(--gray);margin-bottom:14px;">
-        ①の設計説明を踏まえ、ツール選定の方針を決めます。二択の判断基準を整理します。
+      <p style="font-size:12px;color:var(--gray);margin-bottom:12px;">
+        ①のデモを踏まえ、PAの得意・不得意を整理します。Canbus.はメーカーデモを見ていないため<strong>本日は最終判断しません</strong>。
+        PAの課題と比較観点を共有し、<strong>Canbus.メーカーデモを次ステップとして合意する</strong>ことがゴールです。
       </p>
 
       <table class="garoon-table" style="margin-bottom:14px;">
         <tr>
-          <th style="width:28%">観点</th>
-          <th style="width:36%">⚡ Power Automate</th>
-          <th style="width:36%">🟣 Canbus.（外部ツール）</th>
+          <th style="width:26%">判断観点</th>
+          <th style="width:37%">⚡ Power Automate</th>
+          <th style="width:37%">🟣 Canbus.（外部ツール）</th>
         </tr>
         <tr>
           <td>費用</td>
@@ -406,22 +472,27 @@
         <tr>
           <td>差戻し・再申請</td>
           <td>再申請フローを別途設計が必要。<strong>申請履歴が途中で分断される</strong></td>
-          <td>同一申請書の中で差戻し→修正→再申請が<strong>完結・履歴も一体</strong></td>
+          <td>同一申請書内で差戻し→修正→再申請が<strong>完結・履歴も一体</strong></td>
         </tr>
         <tr>
-          <td>承認履歴・電子印鑑</td>
-          <td><strong>標準機能なし。</strong>自分でSharePointリスト書き込み等を作り込む必要あり</td>
-          <td><strong>標準搭載。</strong>承認完了で自動押印・履歴が申請書に付随して記録</td>
+          <td>承認履歴</td>
+          <td>承認者・日時はTeams Approvalsで確認できるが、申請案件と紐付けた一覧ビューは<strong>自作が必要</strong></td>
+          <td>申請ページにタイムラインで<strong>自動記録</strong>。誰がいつ承認・差し戻しをしたかを一目で確認できる</td>
+        </tr>
+        <tr style="background:#fef9e7;">
+          <td><strong>申請の進捗確認<br>（申請者が現在の<br>審査状況を見られるか）</strong></td>
+          <td>❌ <strong>申請者向け進捗UIなし（標準機能）。</strong>申請者は「今どのステップか」を自分では確認できない。管理者のみフロー実行ログ閲覧可。確認するにはSPリスト等で別途画面を実装する必要あり</td>
+          <td>✅ <strong>標準搭載。</strong>申請書を開くと現在のステップ・担当者・待機状況がリアルタイムで確認できる。Garoonのワークフローに近い体験</td>
         </tr>
         <tr>
           <td>複雑な承認ルート</td>
-          <td>条件分岐・並列承認・リマインドを追加するたびにフロー図が複雑化。<strong>修正・引継ぎが難しくなる</strong></td>
+          <td>条件分岐・並列承認・リマインド追加でフロー図が複雑化。<strong>修正・引継ぎが困難になる</strong></td>
           <td>承認ノードをGUIで並べるだけ。<strong>全体像が視覚的に把握しやすい</strong></td>
         </tr>
-        <tr>
-          <td>現場メンテナンス</td>
-          <td>PAの操作知識が必要。<strong>情シス以外では難しい</strong></td>
-          <td>ノーコードで設定可能。<strong>現場自立運用しやすい</strong></td>
+        <tr style="background:#fef9e7;">
+          <td><strong>各部署担当者が<br>フロー作成できるか</strong></td>
+          <td>プログラミング的な理解が必要。<strong>情シス集中管理が現実的</strong></td>
+          <td>GUIのドラッグ＆ドロップ中心。<strong>権限付与で各部署が自立管理可能</strong></td>
         </tr>
         <tr>
           <td>M365連携</td>
@@ -432,129 +503,194 @@
 
       <ul class="check-list">
         <li>
-          <strong>判断①：PAの実装コスト・運用負担を許容できますか？</strong><br>
-          <span style="font-size:12px;color:var(--gray);">差戻し・承認履歴・電子印鑑をすべて自前で作り込む負担と、複雑化した際の保守コストを許容できるなら<strong>Power Automate（費用ゼロ）</strong>で進めます</span>
+          <strong>確認①：PAのデモを見て、気になる点・追加で確認したいことはありますか？</strong><br>
+          <span style="font-size:12px;color:var(--gray);">差戻し・承認履歴・複数人の部署横断承認など、Garoonで使っていた機能との差を中心に確認します</span>
         </li>
         <li>
-          <strong>判断②：難しい場合、Canbus.（月5万円〜）の費用は許容できますか？</strong><br>
-          <span style="font-size:12px;color:var(--gray);">承認に必要な機能がすべて標準搭載され、現場が自立して運用・メンテできる点が最大のメリットです</span>
+          <strong>合意②：Canbus.のメーカーデモを次のステップとして設定してよいですか？</strong><br>
+          <span style="font-size:12px;color:var(--gray);">PAとの比較判断はCanbus.の実機を見てから行います。三井田がメーカーに連絡し、日程を調整します</span>
         </li>
       </ul>
       <div style="margin-top:10px;">
-        <a href="workflow-comparison.html" target="_blank" style="font-size:12px;color:var(--blue);text-decoration:none;">📊 Canbus. vs Power Automate 詳細比較資料 ↗</a>
+        <a href="workflow-comparison.html" target="_blank" style="font-size:12px;color:var(--blue);text-decoration:none;">📊 Canbus. vs PA 詳細比較資料 ↗</a>
       </div>
     </div>
   </div>
 
-  <!-- ブロック④ -->
+  <!-- ブロック③ -->
   <div class="block orange">
     <div class="block-header">
-      <div class="block-badge">④ 報告・提案</div>
-      <div class="block-title">WFヒアリング結果報告 ＆ 今後の進め方提案</div>
-      <div class="block-time">10分</div>
+      <div class="block-badge">③ 報告・確認</div>
+      <div class="block-title">Entra IDプロファイル整備の見通し ＆ アドレス帳実装</div>
+      <div class="block-time">7分</div>
     </div>
     <div class="block-body">
       <p style="font-size:12px;color:var(--gray);margin-bottom:12px;">
-        全95件のワークフロー調査が完了しました。大学側からご回答いただいた結果を共有し、移行ロードマップを提案します。
+        8/26時点のEntra IDプロパティをPowerShellで実測しました。アドレス帳機能（SharePoint社員電話帳ページ）の実現には、この整備が前提条件です。
       </p>
 
-      <div class="sub-heading">📊 ヒアリング結果サマリー（全95件）</div>
-      <div class="data-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px;">
-        <div class="data-card">
-          <div class="data-num" style="color:#16a34a;">15</div>
-          <div class="data-label">高優先度</div>
-          <div class="data-sub">移行必須</div>
-        </div>
-        <div class="data-card">
-          <div class="data-num" style="color:#1d4ed8;">21</div>
-          <div class="data-label">中優先度</div>
-          <div class="data-sub">移行推奨</div>
-        </div>
-        <div class="data-card">
-          <div class="data-num" style="color:#6b7280;">58</div>
-          <div class="data-label">低・不明</div>
-          <div class="data-sub">後回し可</div>
-        </div>
-        <div class="data-card">
-          <div class="data-num" style="color:#b91c1c;">1</div>
-          <div class="data-label">移行不要</div>
-          <div class="data-sub">廃止予定</div>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#92400e;">
+        <strong>⚠️ 実測結果（2026-08-26 時点）：</strong>教職員アカウント 1,578件を確認。部署・役職はほぼ全員空欄です。<br>
+        <table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:12px;">
+          <tr style="background:#fed7aa;color:#7c2d12;">
+            <th style="padding:4px 8px;text-align:left;width:30%;">プロパティ</th>
+            <th style="padding:4px 8px;text-align:left;">入力済み</th>
+            <th style="padding:4px 8px;text-align:left;">充足率</th>
+          </tr>
+          <tr><td style="padding:4px 8px;">department（部署）</td><td style="padding:4px 8px;">11件 / 1,578件</td><td style="padding:4px 8px;color:#dc2626;font-weight:700;">0.7%</td></tr>
+          <tr><td style="padding:4px 8px;">jobTitle（役職）</td><td style="padding:4px 8px;">2件 / 1,578件</td><td style="padding:4px 8px;color:#dc2626;font-weight:700;">0.1%</td></tr>
+          <tr><td style="padding:4px 8px;">officeLocation</td><td style="padding:4px 8px;">0件 / 1,578件</td><td style="padding:4px 8px;color:#dc2626;font-weight:700;">0%</td></tr>
+        </table>
+        <div style="margin-top:8px;">
+          AD同期アカウント: <strong>1,393件（88%）</strong>　／　クラウドオンリー: <strong>185件（12%）</strong><br>
+          <span style="color:#92400e;">→ 元のオンプレADにもプロパティが入っていなかった可能性が高く、メール移行ベンダーの問題ではなく<strong>データ自体が未整備の状態</strong>です。</span>
         </div>
       </div>
 
-      <div class="sub-heading">⭐ 高優先度フォーム（年間件数順・抜粋）</div>
-      <table class="garoon-table" style="margin-bottom:14px;">
-        <tr><th>フォーム名</th><th>年間件数</th><th>カテゴリー</th></tr>
-        <tr><td>物品等購入申請書</td><td class="garoon-num">1,375件</td><td>施設管財</td></tr>
-        <tr><td>人事チーム申請</td><td class="garoon-num">373件</td><td>人事 ★今回新判明</td></tr>
-        <tr><td>SA・TA・指導補助員実績報告書</td><td class="garoon-num">221件</td><td>アルバイト等</td></tr>
-        <tr><td>特別講師招へい願及び謝金支給願</td><td class="garoon-num">199件</td><td>アルバイト等</td></tr>
-        <tr><td>学外実習・見学等届</td><td class="garoon-num">155件</td><td>教務 ★今回新判明</td></tr>
-        <tr><td>授業補助員採用届</td><td class="garoon-num">140件</td><td>アルバイト等</td></tr>
-        <tr><td colspan="3" style="color:var(--gray);font-size:11px;">他：消耗品購入①〜④・公印押印簿・総務チーム申請・入構許可申請・トラック借用申請</td></tr>
-      </table>
-
-      <div class="sub-heading">🔍 今回新たに判明した重要事項</div>
-      <ul class="point-list" style="margin-bottom:14px;">
-        <li><strong>アカウント関連（6件）が存在：</strong>ユーザー登録（教学用・職員用・連携研究員用）、退職者処理、職責変更申請など。GaroonのWF移行ではなく、M365のEntra IDプロビジョニングフローとして設計し直すことを提案します。</li>
-        <li><strong>原議書関連（4件）が存在：</strong>理事会承認事項・人事・給与・委嘱関連の決裁フロー。X-point管理の可能性が高く、X-point廃止（年度末）に向けて移行先の検討が急務。</li>
-        <li><strong>移行不要：</strong>「メール容量増加申請（事務室用）」はExchange Online移行後に廃止で合意済み（大学側回答）。</li>
-      </ul>
-
-      <div class="sub-heading">🗓 今後の進め方（三井田提案）</div>
-      <table class="garoon-table" style="margin-bottom:14px;">
+      <table class="garoon-table" style="margin-bottom:12px;">
         <tr>
-          <th style="width:22%">フェーズ</th>
-          <th style="width:22%">時期</th>
+          <th style="width:30%">確認事項</th>
           <th>内容</th>
         </tr>
         <tr>
+          <td><strong>データの現実的な収集先</strong></td>
+          <td>Garoonに部署・役職情報が入っている可能性が高い。大学側でGaroonからユーザー情報をエクスポートしてもらい、それをセットリスト（Excelなど）にまとめてもらう</td>
+        </tr>
+        <tr>
+          <td><strong>Entra IDへの反映手順</strong></td>
+          <td>AD同期アカウント（88%）はオンプレADを更新→AD Connectが自動同期。クラウドオンリー（12%）はPowerShellまたはEntra管理センターで直接更新</td>
+        </tr>
+        <tr>
+          <td><strong>アドレス帳の対象範囲</strong></td>
+          <td>教職員のみ表示（学生は非公開）にする想定で問題ないか。検索で見つけられる範囲は？</td>
+        </tr>
+      </table>
+
+      <div class="sub-heading">🔒 【回答】Teams・Outlook で学生に教職員情報が見えてしまう問題</div>
+      <div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#14532d;">
+        <strong>✅ 制御できます。</strong>追加ライセンス不要で、Teams・Outlook どちらの検索範囲も制御可能です。
+      </div>
+      <p style="font-size:12px;color:#374151;margin-bottom:10px;">
+        SharePoint 社員電話帳ページ自体は教職員限定公開なので学生はアクセスできません。<br>
+        ただし Teams や Outlook では、同一テナント内の全ユーザーを検索できてしまうため、別途制御が必要です。
+      </p>
+      <table class="garoon-table" style="margin-bottom:12px;">
+        <tr><th style="width:28%">設定</th><th>内容</th><th style="width:20%">影響範囲</th></tr>
+        <tr>
+          <td><strong>① Exchange Online<br>アドレス帳ポリシー（ABP）</strong></td>
+          <td>学生用・教職員用でアドレス帳を分離。学生が Outlook で宛先検索しても教職員が表示されなくなる</td>
+          <td>Outlook / OWA</td>
+        </tr>
+        <tr>
+          <td><strong>② Teams スコープ付き<br>ディレクトリ検索</strong></td>
+          <td>Teams 管理センターでオンにすると、① の ABP 設定が Teams の人物検索にも反映される。学生が Teams で名前を検索しても教職員は候補に表示されない</td>
+          <td>Teams</td>
+        </tr>
+      </table>
+      <table class="garoon-table" style="margin-bottom:14px;">
+        <tr><th style="width:28%">前提・注意点</th><th>内容</th></tr>
+        <tr>
+          <td>ライセンス</td>
+          <td>A3 に Exchange Online が含まれるため<strong>追加費用なし</strong>。Information Barriers（有償）は不要</td>
+        </tr>
+        <tr>
+          <td>Entra ID整備との関係</td>
+          <td>ABP は Exchange Online 側の設定。Entra ID プロファイル整備とは<strong>独立して</strong>設定できる</td>
+        </tr>
+        <tr>
+          <td>双方向の制御</td>
+          <td>「学生→教職員が見えない」設定が基本。「教職員→学生が見えない」も別ポリシーで設定可能</td>
+        </tr>
+        <tr>
+          <td>設定タイミング</td>
+          <td>Entra ID整備・アドレス帳公開と合わせて設定する。ABP は IT 管理者（または三井田）が Exchange 管理センターで実施</td>
+        </tr>
+      </table>
+
+      <div class="sub-heading">👥 推奨実装案（再確認）</div>
+      <a href="sharepoint-intranet-draft.html" target="_blank" style="display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;padding:5px 12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;color:#c2410c;font-weight:700;font-size:12px;text-decoration:none;">🏛 SharePoint イントラサイト素案（アドレス帳タブ）↗</a>
+
+      <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#334155;">
+        <strong>📋 Garoon アドレス帳の現状（事前確認済み）</strong><br>
+        <table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:12px;">
+          <tr style="background:#e2e8f0;">
+            <th style="padding:4px 8px;text-align:left;width:30%;">項目</th>
+            <th style="padding:4px 8px;text-align:left;">状況</th>
+          </tr>
+          <tr><td style="padding:4px 8px;">氏名</td><td style="padding:4px 8px;">✅ 全員入力済み</td></tr>
+          <tr><td style="padding:4px 8px;">メールアドレス</td><td style="padding:4px 8px;">✅ 全員入力済み（musabi.ac.jp）</td></tr>
+          <tr><td style="padding:4px 8px;">部署・所属グループ</td><td style="padding:4px 8px;">✅ 入力されている見込み（ヒアリングで確認）</td></tr>
+          <tr><td style="padding:4px 8px;">内線番号</td><td style="padding:4px 8px;">⚠️ 約半数のみ入力。残りは空欄</td></tr>
+          <tr><td style="padding:4px 8px;">在席情報</td><td style="padding:4px 8px;">❌ ほぼ更新されておらず実態なし</td></tr>
+        </table>
+        <div style="margin-top:6px;color:#64748b;">→ 部署・グループ・メールはGaroonからエクスポートしてEntra IDに反映できる見込み。内線は整備が必要。</div>
+      </div>
+
+      <ul class="check-list">
+        <li>
+          <strong>Garoonアドレス帳の実際の使われ方：</strong>皆さんはどんな情報を探すときにアドレス帳を使っていますか？<br>
+          <span style="font-size:12px;color:var(--gray);">例：「この人の内線を調べる」「この部署の担当者を探す」「メールアドレスを確認する」など。M365のアドレス帳に何が必要かを決める基準になります</span>
+        </li>
+        <li>
+          <strong>Garoonからのデータエクスポート依頼：</strong>部署・所属グループ・内線番号が含まれるユーザー一覧をGaroonから出力していただけますか？<br>
+          <span style="font-size:12px;color:var(--gray);">三井田がそのデータを元にEntra IDへのインポートを行います。CSVまたはExcel形式で問題ありません</span>
+        </li>
+        <li>
+          <strong>アドレス帳の優先度：</strong>Garoon廃止後に「人を探せない」問題が起きやすい機能です。WF移行と並行して整備を進めてよいですか？</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ブロック④ -->
+  <div class="block green">
+    <div class="block-header">
+      <div class="block-badge">④ 確認</div>
+      <div class="block-title">WFフェーズ1着手確認 ＆ 移行計画の共有</div>
+      <div class="block-time">5分</div>
+    </div>
+    <div class="block-body">
+      <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#14532d;">
+        <strong>✅ 方針の整理：「全件移行」と「優先度順着手」は矛盾しない</strong><br>
+        大学側の方針は「原則すべて移行」ですが、WF移行は1件ずつ順次対応しかできません。<br>
+        また大学側でも内部整理（使っていないWFの取捨選択）を進めています。<br>
+        → <strong>高優先度15件から先行着手しつつ、大学の内部整理と並行して進める</strong>のが現実的です。低優先度の58件は整理の結果として自然に絞られることが期待できます。
+      </div>
+
+      <div class="sub-heading">📊 WFヒアリング結果（全95件）の再確認</div>
+      <div class="data-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:12px;">
+        <div class="data-card"><div class="data-num" style="color:#16a34a;">15</div><div class="data-label">高優先度</div><div class="data-sub">先行着手</div></div>
+        <div class="data-card"><div class="data-num" style="color:#1d4ed8;">21</div><div class="data-label">中優先度</div><div class="data-sub">フェーズ3以降</div></div>
+        <div class="data-card"><div class="data-num" style="color:#6b7280;">58</div><div class="data-label">低・不明</div><div class="data-sub">大学側整理待ち</div></div>
+        <div class="data-card"><div class="data-num" style="color:#b91c1c;">1</div><div class="data-label">移行不要</div><div class="data-sub">廃止予定</div></div>
+      </div>
+
+      <div class="sub-heading">🗓 フェーズ移行計画</div>
+      <table class="garoon-table" style="margin-bottom:12px;">
+        <tr><th style="width:22%">フェーズ</th><th style="width:22%">時期</th><th>内容</th></tr>
+        <tr>
           <td><strong>フェーズ1</strong><br><span style="font-size:11px;color:var(--gray)">詳細ヒアリング</span></td>
           <td>〜2026年9月</td>
-          <td>高優先度15件の承認ルート・条件分岐・代理承認を1件ずつ確認。アカウント関連6件はEntra ID設計と並行して検討。</td>
+          <td>高優先度15件の承認ルート・条件分岐・代理承認を1件ずつ確認。<strong>ツール選定の結論を待たずに進められる</strong>フェーズ。</td>
         </tr>
         <tr>
           <td><strong>フェーズ2</strong><br><span style="font-size:11px;color:var(--gray)">パイロット実装</span></td>
           <td>〜2026年10月</td>
-          <td>高優先度の中から先行3件を選定しPower Automateで実装・テスト。候補：消耗品購入申請・物品等購入申請・人事チーム申請。</td>
+          <td>高優先度の中から先行3件を選定して実装・テスト。<strong>Canbus.メーカーデモの結果を受けてツールを確定</strong>してから着手。</td>
         </tr>
         <tr>
           <td><strong>フェーズ3</strong><br><span style="font-size:11px;color:var(--gray)">本格移行</span></td>
           <td>2026年11月〜</td>
-          <td>残り高優先度フローを順次移行。X-point廃止（年度末）に合わせ原議書関連を最優先確定。低優先度・不明フローは廃止または後回しで整理。</td>
+          <td>残り高優先度→中優先度を順次移行。低優先度58件は大学の内部整理結果を踏まえて改めて判断。</td>
         </tr>
       </table>
 
-      <div class="sub-heading">❓ 不明フロー（58件中の「?不明」）の扱いについて相談</div>
-      <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">
-        今回のヒアリング結果で「低・不明」に分類された58件のうち、使用状況が「?不明」と回答されたものが一定数あります。
-        Garoon廃止に向けて、これらをどう扱うか方針を決めておく必要があります。
-      </p>
-      <table class="garoon-table" style="margin-bottom:12px;">
-        <tr>
-          <th style="width:30%">対応方針の選択肢</th>
-          <th>内容・条件</th>
-        </tr>
-        <tr>
-          <td><strong>① 廃止（そのまま移行しない）</strong></td>
-          <td>「誰も使っていない / 使わなくなったフロー」であれば廃止を確定。移行対象から除外する</td>
-        </tr>
-        <tr>
-          <td><strong>② 追加ヒアリングを実施</strong></td>
-          <td>「実際に使っているかもしれない」フローは、各部署の担当者に個別確認が必要。確認コストがかかる</td>
-        </tr>
-        <tr>
-          <td><strong>③ 一時保留・様子見</strong></td>
-          <td>Garoon廃止後に「あのフローが移行されていない」という声が出たタイミングで対応する。ニーズが実証されてから動く方法</td>
-        </tr>
-      </table>
       <ul class="check-list">
-        <li><strong>「?不明」フローの対応方針：</strong>上記①〜③のいずれを基本方針とするか、大学側でご判断いただけますか？<br>
-          <span style="font-size:12px;color:var(--gray);">三井田としては③（一時保留）を推奨します。追加ヒアリングのコストを避けつつ、実際に困った人が声を上げてから対応する方が現実的なためです</span>
+        <li>
+          <strong>フェーズ1の着手合意：</strong>高優先度15件の詳細ヒアリング（承認ルート・条件分岐等）を9月に開始してよいですか？<br>
+          <span style="font-size:12px;color:var(--gray);">三井田がヒアリングシート（詳細版）を作成します。対象部署へのご連絡をお願いします。ツール選定前でもヒアリングは先行できます</span>
         </li>
-        <li><strong>フェーズ1の着手タイミング：</strong>8/27の定例再開後にスタートする想定です。進め方の方向性でご意見はありますか？</li>
-        <li><strong>アカウント関連の担当確認：</strong>ユーザー登録・退職者処理などは情シス担当者が申請者になりますか？フロー設計のために申請ルートを確認させてください。</li>
-        <li><strong>機密ラベル設定（時田さん）：</strong>本日は時田さんご不在のため、進捗は別途チャットワークで確認します。</li>
+        <li>
+          <strong>大学側の内部整理：</strong>使っていないWFの取捨選択はいつ頃完了しますか？低優先度58件の最終的な移行対象数が見えると全体スケジュールが立てやすくなります</li>
       </ul>
     </div>
   </div>
@@ -563,14 +699,14 @@
   <div class="block red">
     <div class="block-header">
       <div class="block-badge">まとめ</div>
-      <div class="block-title">決定事項の確認 ＆ 次回テーマ</div>
+      <div class="block-title">本日の決定事項確認 ＆ 次回テーマ</div>
       <div class="block-time">2分</div>
     </div>
     <div class="block-body">
       <ul class="point-list">
-        <li><strong>本日の決定事項を確認：</strong>下欄に記入します</li>
-        <li><strong>次回定例テーマ（8/27）：</strong>フェーズ1着手（高優先度フロー詳細ヒアリング）／ SharePointデモサイト進捗 ／ アカウント関連フロー設計方針確認</li>
-        <li><strong>8月定例スケジュール：</strong>8/13・8/20は休止、<strong>8/27再開</strong>予定</li>
+        <li><strong>本日の決定事項を確認：</strong>① WF移行ツール方針（PA / Canbus.） ② フェーズ1の着手合意 ③ 「?不明」フローの扱い方針</li>
+        <li><strong>次のステップ：</strong>今回のデモを受けて <strong style="color:#7c3aed;">Canbus.メーカーデモ</strong> の日程を調整する（三井田が先方に連絡）</li>
+        <li><strong>次回定例テーマ（9月中旬以降調整）：</strong>Canbus.メーカーデモ結果共有・ツール選定最終判断 ／ フェーズ1高優先度ヒアリング結果共有 ／ Entra IDプロファイル整備状況確認</li>
       </ul>
     </div>
   </div>
@@ -591,17 +727,16 @@
   <div class="summary-tasks-body">
     <div>
       <div class="summary-col-title">大学側</div>
-      <div class="summary-item task">フェーズ1：高優先度WF（15件）の承認ルート・条件分岐・代理承認を確認（〜9月）</div>
+      <div class="summary-item task">担当ベンダーへのEntra IDプロパティ移行の可否確認・結果共有</div>
       <div class="summary-item task">アカウント関連フロー（6件）の現行申請ルートを情シス担当者へ確認</div>
-      <div class="summary-item task">原議書関連（4件）の現在の管理場所（X-point or Garoon）を確認・共有</div>
-      <div class="summary-item task">機密ラベル設定：Power BI・Entra ID セキュリティグループの設定作業（時田さん）</div>
+      <div class="summary-item task">フェーズ1ヒアリング対象部署への連絡・調整（三井田がシートを送付後）</div>
     </div>
     <div>
       <div class="summary-col-title">三井田</div>
-      <div class="summary-item task">フェーズ1：高優先度フローのヒアリングシート（詳細版）作成・送付</div>
-      <div class="summary-item task">アカウント関連6件のEntra IDプロビジョニングフロー設計案を作成</div>
-      <div class="summary-item task">SharePointデモサイト構築（管理者からURL取得後に着手）</div>
-      <div class="summary-item task">パイロット3件の実装準備（Power Automate環境のサイト確保待ち）</div>
+      <div class="summary-item task">フェーズ1：高優先度WF（15件）詳細ヒアリングシートの作成・送付</div>
+      <div class="summary-item task">PA承認履歴（History Webパーツ等）の標準機能実装範囲の詳細確認</div>
+      <div class="summary-item task">Canbus. メーカーデモ調整（ツール選定判断前に実体験の機会を提供）</div>
+      <div class="summary-item task">Entra ID対象範囲（教職員のみ・学生非公開・検索機能）の詳細整理・共有</div>
     </div>
   </div>
 </div>
@@ -610,11 +745,10 @@
 <div class="ref">
   <div class="ref-title">参考資料</div>
   <div class="ref-links">
-    <a class="ref-link primary" href="power-automate-demo.html" target="_blank">⚡ Power Automateデモ設計資料</a>
+    <a class="ref-link primary" href="pa-implementation-guide.html" target="_blank">⚡ デモ実装ガイド（手順書）</a>
     <a class="ref-link primary" href="sharepoint-intranet-draft.html" target="_blank">🏛 SharePointイントラサイト素案</a>
-    <a class="ref-link" href="workflow-comparison.html" target="_blank">📊 Canbus. vs PA 比較資料</a>
+    <a class="ref-link" href="workflow-comparison.html" target="_blank">📊 Canbus. vs PA 詳細比較資料</a>
     <a class="ref-link" href="garoon-migration-issues.html" target="_blank">📋 ガルーン移行 未決論点整理</a>
-    <a class="ref-link" href="investigation-report-07.html#garoon" target="_blank">📄 GaroonWFフロー一覧</a>
   </div>
 </div>
 
