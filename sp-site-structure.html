@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SharePoint サイト構成案 — WF 100件対応設計</title>
+<style>
+  :root {
+    --gray:    #6b7280;
+    --light:   #f9fafb;
+    --border:  #e5e7eb;
+    --green:   #16a34a;
+    --green-bg:#dcfce7;
+    --blue:    #1d4ed8;
+    --blue-bg: #dbeafe;
+    --orange:  #c2410c;
+    --orange-bg:#ffedd5;
+    --purple:  #7c3aed;
+    --purple-bg:#ede9fe;
+    --red:     #b91c1c;
+    --red-bg:  #fee2e2;
+    --navy:    #1e3a5f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+    min-height: 100vh;
+    padding: 32px 20px 48px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header-label {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .header .meta { font-size: 12px; color: var(--gray); }
+  .doc-tag {
+    display: inline-block;
+    background: var(--blue-bg);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-top: 8px;
+    border: 1px solid #bfdbfe;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; }
+
+  .section {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    margin-bottom: 16px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+  }
+  .section-badge {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 15px; font-weight: 800; flex: 1; }
+  .section-body  { padding: 0 20px 18px; }
+
+  /* 色テーマ */
+  .sec-blue   .section-header { background: var(--blue-bg); }
+  .sec-blue   .section-badge  { background: var(--blue); color: #fff; }
+  .sec-green  .section-header { background: var(--green-bg); }
+  .sec-green  .section-badge  { background: var(--green); color: #fff; }
+  .sec-orange .section-header { background: var(--orange-bg); }
+  .sec-orange .section-badge  { background: var(--orange); color: #fff; }
+  .sec-purple .section-header { background: var(--purple-bg); }
+  .sec-purple .section-badge  { background: var(--purple); color: #fff; }
+  .sec-red    .section-header { background: var(--red-bg); }
+  .sec-red    .section-badge  { background: var(--red); color: #fff; }
+
+  .sub-heading {
+    margin: 14px 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    border-left: 3px solid #d1d5db;
+    padding-left: 8px;
+  }
+
+  table.tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  table.tbl th {
+    background: var(--navy);
+    color: #fff;
+    padding: 7px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  table.tbl td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: top;
+    color: #374151;
+    line-height: 1.5;
+  }
+  table.tbl tr:last-child td { border-bottom: none; }
+  table.tbl tr:nth-child(even) td { background: #f8faff; }
+  table.tbl .good { color: var(--green); font-weight: 700; }
+  table.tbl .bad  { color: var(--red); font-weight: 700; }
+  table.tbl .mid  { color: var(--orange); font-weight: 700; }
+
+  .point-list { list-style: none; margin-bottom: 14px; }
+  .point-list li {
+    font-size: 13px;
+    padding: 5px 0 5px 18px;
+    position: relative;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    line-height: 1.5;
+  }
+  .point-list li:last-child { border-bottom: none; }
+  .point-list li::before { content: '▸'; position: absolute; left: 0; font-size: 11px; top: 6px; color: var(--blue); }
+
+  .check-list { list-style: none; margin-bottom: 14px; }
+  .check-list li {
+    font-size: 13px;
+    padding: 7px 0 7px 26px;
+    position: relative;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    line-height: 1.5;
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before { content: '?'; position: absolute; left: 6px; font-size: 12px; top: 7px; font-weight: 800; color: var(--orange); }
+
+  /* アーキテクチャ図 */
+  .arch-box {
+    background: #f8faff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 12px 0;
+    font-size: 12px;
+  }
+  .arch-hub {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .arch-hub-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin: 8px 0 0;
+  }
+  .arch-hub-item {
+    background: rgba(255,255,255,.15);
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .arch-arrow {
+    text-align: center;
+    color: var(--blue);
+    font-size: 18px;
+    margin: 6px 0;
+  }
+  .arch-spokes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .arch-spoke {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .arch-spoke-title {
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--navy);
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .arch-spoke-item {
+    font-size: 11px;
+    color: var(--gray);
+    padding: 2px 0 2px 10px;
+    position: relative;
+  }
+  .arch-spoke-item::before {
+    content: '・';
+    position: absolute;
+    left: 0;
+  }
+
+  /* フェーズバー */
+  .phase-bar {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .phase-item {
+    flex: 1;
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 11px;
+  }
+  .phase-item.p1 { background: #dbeafe; border: 1px solid #93c5fd; }
+  .phase-item.p2 { background: #dcfce7; border: 1px solid #86efac; }
+  .phase-item.p3 { background: #fef9c3; border: 1px solid #fde047; }
+  .phase-label { font-size: 10px; color: var(--gray); margin-bottom: 4px; }
+  .phase-title { font-weight: 700; font-size: 12px; color: #1e293b; }
+  .phase-desc  { font-size: 10px; color: #6b7280; margin-top: 4px; line-height: 1.4; }
+
+  .callout {
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .callout.info { background: var(--blue-bg); border-left: 4px solid var(--blue); color: #1e3a8a; }
+  .callout.warn { background: var(--orange-bg); border-left: 4px solid var(--orange); color: #7c2d12; }
+  .callout.tip  { background: var(--green-bg); border-left: 4px solid var(--green); color: #14532d; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 4px;
+  }
+  .tag.common { background: #dbeafe; color: var(--blue); }
+  .tag.dept   { background: #dcfce7; color: var(--green); }
+  .tag.shared { background: var(--purple-bg); color: var(--purple); }
+
+  .wf-example {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+  }
+  .wf-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    border: 1px solid;
+  }
+  .wf-pill.common { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+  .wf-pill.dept   { background: #f0fdf4; border-color: #86efac; color: #15803d; }
+  .wf-pill.shared { background: #faf5ff; border-color: #d8b4fe; color: #7c3aed; }
+
+  @media (max-width: 600px) {
+    .arch-hub-list { grid-template-columns: 1fr 1fr; }
+    .arch-spokes { grid-template-columns: 1fr; }
+    .phase-bar { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">武蔵野美術大学 M365導入支援コンサルティング</div>
+  <h1>SharePoint サイト構成案 — WF 100件対応設計</h1>
+  <div class="meta">作成：三井田　2026年9月3日（第13回定例 ブロック④ 参考資料）</div>
+  <div class="doc-tag">📐 設計案 / 検討素材</div>
+</div>
+
+<div class="container">
+
+  <!-- 課題の整理 -->
+  <div class="section sec-blue">
+    <div class="section-header">
+      <div class="section-badge">課題</div>
+      <div class="section-title">なぜサイト設計が必要か — WF 100件の分布問題</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:12px;">
+        Power Automate（またはCanbus.）でWFを構築する場合、各WFのデータ保存先として<strong>SharePoint リスト</strong>を使用する。
+        100件のWFをどのサイトのどのリストに配置するかを設計しないと、「誰でも全部門の申請データが見える」「管理が煩雑になる」等の問題が生じる。
+      </p>
+
+      <div class="sub-heading">📊 WFの分類（想定）</div>
+      <table class="tbl">
+        <tr>
+          <th style="width:30%">種別</th>
+          <th style="width:45%">特徴</th>
+          <th style="width:25%">対応方針</th>
+        </tr>
+        <tr>
+          <td><span class="tag common">全社共通</span><strong>全社共通 WF</strong></td>
+          <td>全部門が申請者になり得る。承認者は申請内容・部門によって動的に変わる<br><span style="color:var(--gray);">例：消耗品購入、出張旅費、慶弔見舞金、業者支払依頼</span></td>
+          <td><strong>共通サイト</strong>に集約</td>
+        </tr>
+        <tr>
+          <td><span class="tag dept">部門専用</span><strong>部門専用 WF</strong></td>
+          <td>特定の学部・部署のみが申請・閲覧する。他部門には関係ない<br><span style="color:var(--gray);">例：造形学部の特殊素材発注、事務局の人事稟議</span></td>
+          <td><strong>各部門サイト</strong>に配置</td>
+        </tr>
+        <tr>
+          <td><span class="tag shared">複数部門共有</span><strong>複数部門共有 WF</strong></td>
+          <td>一部の部門間で共有するが、全社ではない<br><span style="color:var(--gray);">例：大学院・学部共通の研究費申請、両キャンパス共通の施設予約</span></td>
+          <td>内容に応じて<strong>共通サイト or 共有グループ</strong></td>
+        </tr>
+      </table>
+
+      <div class="callout warn">
+        <strong>⚠️ 確認が必要：</strong>現時点ではWF 100件の種別分類が未整理。ヒアリングシートの集計後に「全社共通」「部門専用」「複数部門共有」の件数比率が判明する。
+        件数比率によって最適なサイト構成の重心が変わるため、ヒアリング完了後に本提案を更新する。
+      </div>
+    </div>
+  </div>
+
+  <!-- 推奨構成案 -->
+  <div class="section sec-purple">
+    <div class="section-header">
+      <div class="section-badge">推奨案</div>
+      <div class="section-title">Hub &amp; Spoke 構成 — 共通ハブ ＋ 部門サイト</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:12px;">
+        全社共通申請を扱う「共通ハブサイト」を1つ設け、各部門専用サイトをそこに接続する構成。
+        SharePoint の<strong>ハブサイト機能</strong>を使うことで、統合検索・統一ナビゲーションを維持しながら、アクセス制御を部門単位で分離できる。
+      </p>
+
+      <div class="arch-box">
+        <div class="arch-hub">
+          🏛 全社共通申請サイト（Hub）<span style="font-size:11px;font-weight:400;opacity:.8;margin-left:12px;">全学教職員がアクセス可能</span>
+          <div class="arch-hub-list">
+            <div class="arch-hub-item">💰 消耗品購入申請</div>
+            <div class="arch-hub-item">✈ 出張旅費申請</div>
+            <div class="arch-hub-item">🎁 慶弔見舞金申請</div>
+            <div class="arch-hub-item">🏢 業者支払依頼</div>
+            <div class="arch-hub-item">🔑 システム権限申請</div>
+            <div class="arch-hub-item">…（全社共通分）</div>
+          </div>
+        </div>
+        <div class="arch-arrow">↕ ハブ接続（ナビゲーション・検索を共有）</div>
+        <div class="arch-spokes">
+          <div class="arch-spoke">
+            <div class="arch-spoke-title">🎨 造形学部サイト</div>
+            <div class="arch-spoke-item">特殊素材・資材発注申請</div>
+            <div class="arch-spoke-item">設備・工房使用申請</div>
+            <div class="arch-spoke-item">非常勤講師手配</div>
+          </div>
+          <div class="arch-spoke">
+            <div class="arch-spoke-title">🖼 造形構想学部サイト</div>
+            <div class="arch-spoke-item">コース別備品申請</div>
+            <div class="arch-spoke-item">外部連携・コラボ申請</div>
+          </div>
+          <div class="arch-spoke">
+            <div class="arch-spoke-title">📚 通信教育課程サイト</div>
+            <div class="arch-spoke-item">スクーリング関連申請</div>
+            <div class="arch-spoke-item">教材発送依頼</div>
+          </div>
+          <div class="arch-spoke">
+            <div class="arch-spoke-title">🏛 事務局サイト</div>
+            <div class="arch-spoke-item">人事稟議・採用申請</div>
+            <div class="arch-spoke-item">施設・設備管理申請</div>
+            <div class="arch-spoke-item">予算執行申請</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <strong>✅ この構成のポイント：</strong>
+        全社共通申請は1か所に集まるので「どこに申請するか分からない」問題が起きない。
+        部門専用申請は各部門サイトに閉じているので、他部門から申請データが見えない。
+        両方の問題を同時に解決できる。
+      </div>
+    </div>
+  </div>
+
+  <!-- アクセス制御 -->
+  <div class="section sec-green">
+    <div class="section-header">
+      <div class="section-badge">設計</div>
+      <div class="section-title">アクセス制御設計 — Entra ID セキュリティグループとの連携</div>
+    </div>
+    <div class="section-body">
+      <div class="sub-heading">🔑 サイト種別ごとのアクセス制御方針</div>
+      <table class="tbl">
+        <tr>
+          <th>サイト</th>
+          <th>閲覧権限</th>
+          <th>SP リスト設計</th>
+          <th>Entra ID 依存度</th>
+        </tr>
+        <tr>
+          <td><strong>全社共通 Hub</strong></td>
+          <td>全学教職員（認証済みユーザー全員）</td>
+          <td>WF種別ごとに個別リスト。申請者の所属フィールドで自部門分のみ表示するビューを設定</td>
+          <td class="mid">中（部門情報が取れると便利）</td>
+        </tr>
+        <tr>
+          <td><strong>各部門 Spoke</strong></td>
+          <td>該当部門のメンバーのみ<br>（Entra ID セキュリティグループで制御）</td>
+          <td>部門専用リスト。全員がアクセスできるのは当該部門員のみのため、ビュー設計は不要</td>
+          <td class="bad">高（SGが機能することが前提）</td>
+        </tr>
+      </table>
+
+      <div class="callout warn">
+        <strong>⚠️ 前提条件：</strong>部門ごとのアクセス制御には Entra ID のセキュリティグループ（SG）が必要。
+        現状 <code>department</code> プロパティの充足率が約0.7%であるため、SGの整備をEntra ID整備と並行して進める必要がある。
+        SGが整備されるまでは「全社共通サイト1本」でスタートし、部門分離は後工程とする段階的アプローチが現実的。
+      </div>
+
+      <div class="sub-heading">📧 Microsoft Forms とのアクセス制御</div>
+      <p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px;">
+        Microsoft Forms はURLを知っていれば誰でもアクセスできる（Formsアプリ側での部門制限は事実上困難）。
+        部門専用申請のURLアクセス制限は、<strong>URLの配布経路で制御</strong>する運用が現実的。
+      </p>
+      <table class="tbl">
+        <tr>
+          <th>申請種別</th>
+          <th>Forms URL の配布方法</th>
+          <th>補足</th>
+        </tr>
+        <tr>
+          <td><span class="tag common">全社共通</span></td>
+          <td>全社 Teams チャネル / イントラネット（SharePoint ページ）に掲載</td>
+          <td>誰でもアクセス可・意図的な公開設計</td>
+        </tr>
+        <tr>
+          <td><span class="tag dept">部門専用</span></td>
+          <td>各部門の Teams チャネルに固定投稿（ピン留め）</td>
+          <td>Teams のチャネルアクセス制御が実質的なゲートになる</td>
+        </tr>
+        <tr>
+          <td><span class="tag shared">複数部門共有</span></td>
+          <td>対象部門の Teams チャネルそれぞれにピン留め、またはプライベートチャネル活用</td>
+          <td>対象部門を明示した入口設計が必要</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- WF振り分けの判断基準 -->
+  <div class="section sec-orange">
+    <div class="section-header">
+      <div class="section-badge">判断基準</div>
+      <div class="section-title">WFをどちらに配置するか — 振り分けフロー</div>
+    </div>
+    <div class="section-body">
+      <p style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:12px;">
+        ヒアリングシートの集計後、各WFをどのサイトに配置するかを以下のフローで判断する。
+      </p>
+
+      <table class="tbl">
+        <tr>
+          <th>判断基準</th>
+          <th>→ 配置先</th>
+        </tr>
+        <tr>
+          <td>全部門の教職員が申請者になり得る</td>
+          <td>✅ <strong>全社共通 Hub サイト</strong></td>
+        </tr>
+        <tr>
+          <td>特定の1部門のみが申請・閲覧する</td>
+          <td>✅ <strong>該当部門の Spoke サイト</strong></td>
+        </tr>
+        <tr>
+          <td>2〜3部門間で共有するが全社ではない</td>
+          <td>🔶 <strong>全社共通サイトに配置し、入口（Teams URL）を対象部門のみに限定</strong>（サイト分割のコストと天秤にかけて判断）</td>
+        </tr>
+        <tr>
+          <td>承認者が部門をまたぐ（例：部門長→役員→理事会）</td>
+          <td>✅ <strong>全社共通 Hub サイト</strong>（PAフローで承認者を動的指定）</td>
+        </tr>
+        <tr>
+          <td>データに機密性が高く、担当者以外に見せたくない</td>
+          <td>✅ <strong>専用 Spoke サイト</strong>（または SP リストのアイテムレベル権限で制御）</td>
+        </tr>
+      </table>
+
+      <div class="sub-heading">WF種別の例（現在のデモサイトベース）</div>
+      <p style="font-size:11px;color:var(--gray);margin-bottom:8px;">
+        <span class="tag common">全社共通</span> 全社Hub &nbsp;
+        <span class="tag dept">部門専用</span> 各部門Spoke &nbsp;
+        <span class="tag shared">複数部門共有</span> Hub or 共有グループ
+      </p>
+      <div class="wf-example">
+        <span class="wf-pill common">消耗品購入申請</span>
+        <span class="wf-pill common">出張旅費申請</span>
+        <span class="wf-pill common">慶弔見舞金申請</span>
+        <span class="wf-pill common">業者支払依頼</span>
+        <span class="wf-pill common">システム権限申請</span>
+        <span class="wf-pill dept">造形：特殊素材発注</span>
+        <span class="wf-pill dept">造形：工房使用申請</span>
+        <span class="wf-pill dept">事務：人事稟議</span>
+        <span class="wf-pill dept">事務：予算執行申請</span>
+        <span class="wf-pill shared">研究費申請（院・学部共通）</span>
+        <span class="wf-pill shared">施設予約（両キャンパス）</span>
+      </div>
+      <p style="font-size:11px;color:var(--gray);">※ 上記は仮例。ヒアリングシート集計後に実際のWF名で分類を確定する</p>
+    </div>
+  </div>
+
+  <!-- 段階的移行 -->
+  <div class="section sec-blue">
+    <div class="section-header">
+      <div class="section-badge">計画</div>
+      <div class="section-title">段階的移行計画 — Entra ID 整備に合わせた展開</div>
+    </div>
+    <div class="section-body">
+      <div class="phase-bar">
+        <div class="phase-item p1">
+          <div class="phase-label">フェーズ 1（パイロット）</div>
+          <div class="phase-title">全社共通サイト 1本でスタート</div>
+          <div class="phase-desc">全社共通WF 3件をPAで実装。サイト構成・フロー設計の型を確立する</div>
+        </div>
+        <div class="phase-item p2">
+          <div class="phase-label">フェーズ 2（部門展開）</div>
+          <div class="phase-title">主要部門サイトを追加</div>
+          <div class="phase-desc">Entra ID SG整備と並行して、事務局・造形学部等のSpokeサイトを構築。部門専用WFを移行</div>
+        </div>
+        <div class="phase-item p3">
+          <div class="phase-label">フェーズ 3（全社展開）</div>
+          <div class="phase-title">全部門 Hub &amp; Spoke 完成</div>
+          <div class="phase-desc">残り全部門のサイトを構築。低優先度WFの整理・移行。運用マニュアル完成</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <strong>📌 フェーズ1の具体的なゴール（9〜10月）：</strong><br>
+        現在のデモサイト「M365MigrationDemo」を本番サイトとして整備、または本番サイトを新規作成。
+        「消耗品購入申請」フローを本番化（差し戻し・承認履歴・FlowBot DM 含む）。
+        このフローを雛形として、全社共通WF残り2件をツール選定後に展開。
+      </div>
+    </div>
+  </div>
+
+  <!-- 比較表 -->
+  <div class="section sec-green">
+    <div class="section-header">
+      <div class="section-badge">比較</div>
+      <div class="section-title">構成案の比較 — 単一サイト vs Hub &amp; Spoke</div>
+    </div>
+    <div class="section-body">
+      <table class="tbl">
+        <tr>
+          <th style="width:28%">観点</th>
+          <th style="width:36%">単一サイト方式</th>
+          <th style="width:36%">Hub &amp; Spoke 方式（推奨）</th>
+        </tr>
+        <tr>
+          <td><strong>管理コスト</strong></td>
+          <td class="good">◎ 1サイトのみ</td>
+          <td class="mid">△ サイト数が増える（管理者が必要）</td>
+        </tr>
+        <tr>
+          <td><strong>部門間のデータ分離</strong></td>
+          <td class="bad">× 全WFが混在・リスト権限設計が複雑</td>
+          <td class="good">◎ サイト単位で明確に分離</td>
+        </tr>
+        <tr>
+          <td><strong>全社申請の対応</strong></td>
+          <td class="good">◎ そのまま対応可</td>
+          <td class="good">◎ 共通サイトで対応</td>
+        </tr>
+        <tr>
+          <td><strong>申請者の使いやすさ</strong></td>
+          <td class="mid">△ WFが増えると目的のフォームが探しにくい</td>
+          <td class="good">◎ 共通申請は1か所・部門申請は部門サイト</td>
+        </tr>
+        <tr>
+          <td><strong>拡張性</strong></td>
+          <td class="mid">△ WF追加で1サイトが肥大化</td>
+          <td class="good">◎ 部門サイト追加で対応</td>
+        </tr>
+        <tr>
+          <td><strong>Entra ID 依存度</strong></td>
+          <td class="mid">△ リスト権限でカバー可能</td>
+          <td class="bad">△ 部門SG整備が前提（未整備時はHub 1本でスタート）</td>
+        </tr>
+        <tr>
+          <td><strong>PA フロー設計</strong></td>
+          <td class="mid">△ 全WFが同一構造になりやすい</td>
+          <td class="mid">△ サイトURLが変わるため部門別フロー設計が必要</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 大学側への確認事項 -->
+  <div class="section sec-red">
+    <div class="section-header">
+      <div class="section-badge">確認</div>
+      <div class="section-title">大学側に確認すべき事項</div>
+    </div>
+    <div class="section-body">
+      <ul class="check-list">
+        <li>
+          <strong>WFの種別分類は誰が行うか：</strong>各WFが「全社共通」「部門専用」「複数部門共有」のどれに当たるかは、業務知識のある大学側での判断が必要。ヒアリングシートに「利用部署」欄を追加して情報収集できるか？
+        </li>
+        <li>
+          <strong>SharePoint サイト管理者を誰が担うか：</strong>Hub &amp; Spoke構成では、全社共通サイト1名＋各部門サイト担当者が必要。現場での運用権限・担当者の割当てはどうするか？
+        </li>
+        <li>
+          <strong>Entra ID セキュリティグループの整備スケジュール：</strong>部門ごとのアクセス制御に直結する。Garoonエクスポートデータ受領後、どの時点でSGを構築できるか？
+        </li>
+        <li>
+          <strong>「複数部門共有」WFの承認ルート：</strong>複数部門にまたがる申請は承認者も複数部門にまたがることが多い。誰がどの順で承認するかの確認が必要。
+        </li>
+        <li>
+          <strong>現在のデモサイトを本番利用するか：</strong>「M365MigrationDemo」サイトのURLのまま本番化するか、新規に本番サイトを作成するか。大学側の命名規則・サイト管理ポリシーを確認したい。
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 参照リンク -->
+  <div style="max-width:860px;margin:12px auto 0;background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:14px 20px;">
+    <div style="font-size:11px;font-weight:700;color:var(--gray);letter-spacing:.06em;margin-bottom:10px;">REFERENCE LINKS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <a href="agenda.html" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600;text-decoration:none;background:#fff;color:#374151;border:1px solid var(--border);">← 定例アジェンダ（第13回）</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

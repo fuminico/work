@@ -1,0 +1,669 @@
+<title>武蔵野美術大学 イントラネット</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* ── トークン ── */
+:root {
+  --navy:      #003d8f;
+  --navy-d:    #002d6a;
+  --navy-l:    #e8eef8;
+  --gold:      #b8922e;
+  --gold-l:    #f8f2e4;
+  --surface:   #ffffff;
+  --bg:        #f5f6f9;
+  --border:    #dde1eb;
+  --text:      #1a1e2d;
+  --muted:     #5c6580;
+  --subtle:    #8f96ad;
+  --tag-all:   #003d8f; --tag-all-bg:   #e8eef8;
+  --tag-fac:   #166534; --tag-fac-bg:   #dcfce7;
+  --tag-stf:   #7c2d12; --tag-stf-bg:   #fde8d8;
+  --shadow:    0 1px 3px rgba(0,30,80,.08), 0 4px 12px rgba(0,30,80,.05);
+  --radius:    8px;
+  --font-body: "Noto Sans JP", -apple-system, sans-serif;
+  --font-head: "Noto Serif JP", Georgia, serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy:    #4d82d6;
+    --navy-d:  #3a6ac4;
+    --navy-l:  #1a2540;
+    --gold:    #d4a84b;
+    --gold-l:  #2a2010;
+    --surface: #1c2233;
+    --bg:      #141824;
+    --border:  #2c3450;
+    --text:    #e4e8f5;
+    --muted:   #9aa3c0;
+    --subtle:  #6b748f;
+    --tag-all-bg: #1a2540;
+    --tag-fac-bg: #0f2c1f;
+    --tag-stf-bg: #2a1510;
+    --shadow:  0 1px 3px rgba(0,0,0,.3), 0 4px 12px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"] {
+  --navy:    #4d82d6;
+  --navy-d:  #3a6ac4;
+  --navy-l:  #1a2540;
+  --gold:    #d4a84b;
+  --gold-l:  #2a2010;
+  --surface: #1c2233;
+  --bg:      #141824;
+  --border:  #2c3450;
+  --text:    #e4e8f5;
+  --muted:   #9aa3c0;
+  --subtle:  #6b748f;
+  --tag-all-bg: #1a2540;
+  --tag-fac-bg: #0f2c1f;
+  --tag-stf-bg: #2a1510;
+  --shadow:  0 1px 3px rgba(0,0,0,.3), 0 4px 12px rgba(0,0,0,.25);
+}
+
+/* ── リセット・ベース ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); font-size: 14px; line-height: 1.7; background: var(--bg); color: var(--text); }
+a { color: var(--navy); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; }
+
+/* ── パイロットバナー ── */
+.pilot-bar {
+  background: #7c2d12;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  padding: 6px 16px;
+  letter-spacing: .04em;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.pilot-bar span {
+  opacity: .75;
+  font-weight: 400;
+  margin-left: 10px;
+}
+
+/* ── SPスイートバー ── */
+.suite-bar {
+  background: #1f2d4e;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+.suite-waffle { font-size: 18px; color: rgba(255,255,255,.8); cursor: default; }
+.suite-m365 { font-size: 12px; color: rgba(255,255,255,.9); font-weight: 600; letter-spacing: .02em; }
+.suite-sep { flex: 1; }
+.suite-user {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  cursor: default;
+}
+
+/* ── サイトヘッダー ── */
+.site-header {
+  background: var(--navy);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  gap: 14px;
+}
+.site-logo {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: var(--gold);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head);
+  font-size: 16px; font-weight: 700; color: #fff;
+}
+.site-name {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .01em;
+}
+.site-name-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  font-weight: 400;
+  margin-left: 10px;
+}
+.header-search {
+  margin-left: auto;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  color: rgba(255,255,255,.8);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: text;
+  width: 200px;
+}
+
+/* ── ナビゲーション ── */
+.site-nav {
+  background: var(--navy-d);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.nav-item {
+  color: rgba(255,255,255,.75);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 11px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.nav-item:hover { color: #fff; text-decoration: none; }
+.nav-item.active { color: #fff; border-bottom-color: var(--gold); }
+
+/* ── メインレイアウト ── */
+.main-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+/* ── ウェルカムヒーロー ── */
+.welcome-hero {
+  background: linear-gradient(100deg, var(--navy) 0%, #1450b0 100%);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  color: #fff;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.welcome-hero::after {
+  content: '武蔵野美術大学';
+  position: absolute;
+  right: -10px; bottom: -14px;
+  font-family: var(--font-head);
+  font-size: 64px;
+  font-weight: 700;
+  opacity: .06;
+  color: #fff;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.welcome-text h2 {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-wrap: balance;
+}
+.welcome-text p { font-size: 13px; opacity: .8; }
+.welcome-date {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+  opacity: .75;
+}
+.welcome-date .wd { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.welcome-date .wl { font-size: 11px; }
+
+/* ── コンテンツグリッド ── */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
+
+/* ── セクション共通 ── */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--navy-l);
+}
+.section-head h2 {
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.section-head .see-all {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+.section-head .see-all:hover { color: var(--navy); }
+
+/* ── ニュースカード ── */
+.news-grid { display: flex; flex-direction: column; gap: 10px; }
+.news-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  box-shadow: var(--shadow);
+  transition: box-shadow .15s;
+}
+.news-card:hover { box-shadow: 0 2px 8px rgba(0,30,80,.12), 0 6px 20px rgba(0,30,80,.08); }
+.news-card-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.news-card-icon.blue   { background: var(--navy-l); }
+.news-card-icon.green  { background: #dcfce7; }
+.news-card-icon.amber  { background: #fef3c7; }
+.news-card-icon.purple { background: #f5f3ff; }
+.news-card-body { flex: 1; min-width: 0; }
+.news-card-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.news-date { font-size: 11px; color: var(--subtle); font-variant-numeric: tabular-nums; }
+.news-tag {
+  font-size: 10px; font-weight: 700; border-radius: 3px;
+  padding: 1px 6px; letter-spacing: .03em;
+}
+.news-tag.all    { background: var(--tag-all-bg); color: var(--tag-all); }
+.news-tag.fac    { background: var(--tag-fac-bg); color: var(--tag-fac); }
+.news-tag.staff  { background: var(--tag-stf-bg); color: var(--tag-stf); }
+.news-card-title {
+  font-size: 14px; font-weight: 700; color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 3px;
+}
+.news-card-title a:hover { color: var(--navy); text-decoration: none; }
+.news-card-body p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.news-new {
+  display: inline-block;
+  background: #dc2626;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  vertical-align: middle;
+  letter-spacing: .04em;
+}
+
+/* ── クイックリンク ── */
+.quick-section { margin-top: 20px; }
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 500px) { .quick-grid { grid-template-columns: repeat(2, 1fr); } }
+.quick-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: box-shadow .15s, border-color .15s;
+  text-align: center;
+}
+.quick-item:hover {
+  border-color: var(--navy);
+  box-shadow: 0 2px 8px rgba(0,30,80,.12);
+  text-decoration: none;
+}
+.quick-icon { font-size: 24px; }
+.quick-label { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.3; }
+
+/* ── サイドバー ── */
+.sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+.side-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.side-card-head {
+  background: var(--navy-l);
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: .02em;
+}
+.side-card-body { padding: 12px 14px; }
+
+.notice-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.notice-item:last-child { border-bottom: none; padding-bottom: 0; }
+.notice-meta { font-size: 10px; color: var(--subtle); margin-bottom: 2px; font-variant-numeric: tabular-nums; }
+.notice-title { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.45; }
+.notice-title a:hover { color: var(--navy); text-decoration: none; }
+
+.link-list { list-style: none; }
+.link-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.link-list li:last-child { border-bottom: none; }
+.link-list a { color: var(--navy); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+.link-list a::before { content: '›'; color: var(--gold); font-weight: 700; }
+.link-list a:hover { text-decoration: none; color: var(--navy-d); }
+
+.my-approvals { display: flex; flex-direction: column; gap: 6px; }
+.approval-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.approval-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.approval-dot.pending { background: #f59e0b; }
+.approval-dot.done    { background: #16a34a; }
+.approval-text { flex: 1; line-height: 1.4; }
+.approval-date { font-size: 10px; color: var(--subtle); white-space: nowrap; }
+
+/* ── フッター ── */
+.site-footer {
+  background: #1a1e2d;
+  color: rgba(255,255,255,.5);
+  font-size: 11px;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.site-footer a { color: rgba(255,255,255,.55); }
+.site-footer a:hover { color: rgba(255,255,255,.8); text-decoration: none; }
+</style>
+
+<!-- パイロット版バナー -->
+<div class="pilot-bar">
+  🔧 パイロット版（ダミーコンテンツ）— 2026年9月 三井田作成
+  <span>レイアウト確認用です。実際のSharePointへの設定はレイアウト合意後に着手します。</span>
+</div>
+
+<!-- Microsoft 365 スイートバー -->
+<div class="suite-bar">
+  <span class="suite-waffle">⊞</span>
+  <span class="suite-m365">Microsoft 365</span>
+  <span class="suite-sep"></span>
+  <div class="suite-user" title="現在のユーザー">山田</div>
+</div>
+
+<!-- サイトヘッダー -->
+<div class="site-header">
+  <div class="site-logo">美</div>
+  <div>
+    <span class="site-name">武蔵野美術大学</span>
+    <span class="site-name-sub">教職員イントラネット</span>
+  </div>
+  <div class="header-search">
+    <span>🔍</span>
+    <span>サイト内を検索...</span>
+  </div>
+</div>
+
+<!-- ナビゲーション -->
+<nav class="site-nav">
+  <a class="nav-item active" href="#">ホーム</a>
+  <a class="nav-item" href="#">お知らせ</a>
+  <a class="nav-item" href="#">申請・手続き</a>
+  <a class="nav-item" href="#">規程・様式</a>
+  <a class="nav-item" href="#">各部署情報</a>
+  <a class="nav-item" href="#">施設・設備</a>
+  <a class="nav-item" href="#">情報システム</a>
+</nav>
+
+<!-- メインコンテンツ -->
+<div class="main-wrap">
+
+  <!-- ウェルカムヒーロー -->
+  <div class="welcome-hero">
+    <div class="welcome-text">
+      <h2>おはようございます、山田さん</h2>
+      <p>本日は3件の未処理承認があります。クイックリンクからご確認ください。</p>
+    </div>
+    <div class="welcome-date">
+      <div class="wd">2026年9月10日</div>
+      <div class="wl">水曜日　教職員向けポータル</div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+
+    <!-- 左：ニュース + クイックリンク -->
+    <div>
+
+      <!-- ニュース -->
+      <div class="section-head">
+        <h2>📢 全学ニュース</h2>
+        <a class="see-all" href="#">すべて見る →</a>
+      </div>
+      <div class="news-grid">
+
+        <div class="news-card">
+          <div class="news-card-icon blue">📅</div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-date">2026-09-08</span>
+              <span class="news-tag all">全学向け</span>
+              <span class="news-new">NEW</span>
+            </div>
+            <div class="news-card-title">
+              <a href="#">2026年度後期授業開始のご案内（10月1日〜）</a>
+            </div>
+            <p>後期授業は10月1日（木）より開始します。時間割・教室の最終確認は大学ポータルよりご確認ください。履修登録変更期間は9月25日までです。</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-icon amber">🛜</div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-date">2026-09-05</span>
+              <span class="news-tag all">全学向け</span>
+            </div>
+            <div class="news-card-title">
+              <a href="#">学内 Wi-Fi 更新工事のお知らせ（9/15〜9/20）</a>
+            </div>
+            <p>鷹の台キャンパス・1号館〜4号館のWi-Fiアクセスポイントを更新します。工事期間中は当該エリアの接続が不安定になる場合があります。代替アクセスポイントの位置は別紙をご参照ください。</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-icon green">📋</div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-date">2026-09-03</span>
+              <span class="news-tag fac">教員向け</span>
+              <span class="news-new">NEW</span>
+            </div>
+            <div class="news-card-title">
+              <a href="#">消耗品購入申請フローが SharePoint に移行しました</a>
+            </div>
+            <p>これまでGaroonで運用していた消耗品購入申請が SharePoint + Power Automate に移行しました。下記クイックリンクまたは「申請・手続き」メニューよりご利用ください。</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-icon purple">💻</div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-date">2026-08-28</span>
+              <span class="news-tag staff">職員向け</span>
+            </div>
+            <div class="news-card-title">
+              <a href="#">Microsoft Teams の利用ガイドを更新しました</a>
+            </div>
+            <p>2026年度版のTeams利用ガイドを公開しました。チャンネル命名規則・会議録画の保存ポリシーなど、今年度から変更になったルールを中心に改訂しています。</p>
+          </div>
+        </div>
+
+      </div><!-- /news-grid -->
+
+      <!-- クイックリンク -->
+      <div class="quick-section">
+        <div class="section-head">
+          <h2>⚡ よく使う申請・リンク</h2>
+        </div>
+        <div class="quick-grid">
+          <a class="quick-item" href="#">
+            <span class="quick-icon">🛒</span>
+            <span class="quick-label">消耗品<br>購入申請</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">✈️</span>
+            <span class="quick-label">出張・<br>旅費申請</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">🔑</span>
+            <span class="quick-label">備品・鍵<br>貸出申請</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">📄</span>
+            <span class="quick-label">各種<br>届出・様式</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">💬</span>
+            <span class="quick-label">Microsoft<br>Teams</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">📚</span>
+            <span class="quick-label">図書館<br>蔵書検索</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">🏥</span>
+            <span class="quick-label">健康管理<br>センター</span>
+          </a>
+          <a class="quick-item" href="#">
+            <span class="quick-icon">📊</span>
+            <span class="quick-label">研究費<br>管理システム</span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- 右：サイドバー -->
+    <div class="sidebar">
+
+      <!-- 自分の承認状況 -->
+      <div class="side-card">
+        <div class="side-card-head">📥 自分の承認・申請状況</div>
+        <div class="side-card-body">
+          <div class="my-approvals">
+            <div class="approval-item">
+              <div class="approval-dot pending"></div>
+              <div class="approval-text">消耗品購入申請（鈴木 花子）<br><span style="font-size:11px;color:var(--muted);">承認待ち</span></div>
+              <span class="approval-date">09/09</span>
+            </div>
+            <div class="approval-item">
+              <div class="approval-dot pending"></div>
+              <div class="approval-text">備品貸出申請（田中 一郎）<br><span style="font-size:11px;color:var(--muted);">承認待ち</span></div>
+              <span class="approval-date">09/08</span>
+            </div>
+            <div class="approval-item">
+              <div class="approval-dot done"></div>
+              <div class="approval-text">出張申請（佐藤 美咲）<br><span style="font-size:11px;color:var(--muted);">承認済み</span></div>
+              <span class="approval-date">09/05</span>
+            </div>
+          </div>
+          <a href="#" style="display:block;margin-top:10px;font-size:12px;color:var(--navy);">すべての申請を見る →</a>
+        </div>
+      </div>
+
+      <!-- テーマ別お知らせ -->
+      <div class="side-card">
+        <div class="side-card-head">📌 テーマ別お知らせ</div>
+        <div class="side-card-body">
+          <div style="font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.06em;margin-bottom:8px;">人事通知</div>
+          <div class="notice-item">
+            <div class="notice-meta">2026-09-01</div>
+            <div class="notice-title"><a href="#">10月1日付 人事異動のご連絡（施設管財部・総務課）</a></div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-meta">2026-08-15</div>
+            <div class="notice-title"><a href="#">2026年度 定期昇給・賞与の支給について</a></div>
+          </div>
+          <div style="font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.06em;margin:12px 0 8px;">健康・安全</div>
+          <div class="notice-item">
+            <div class="notice-meta">2026-09-05</div>
+            <div class="notice-title"><a href="#">2026年度 定期健康診断 日程のご案内（10〜11月実施）</a></div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-meta">2026-08-20</div>
+            <div class="notice-title"><a href="#">インフルエンザ予防接種 補助制度のご案内（申請9/30まで）</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 関連リンク -->
+      <div class="side-card">
+        <div class="side-card-head">🔗 学内リソース</div>
+        <div class="side-card-body">
+          <ul class="link-list">
+            <li><a href="#">大学公式サイト</a></li>
+            <li><a href="#">学内電話帳</a></li>
+            <li><a href="#">規程集・就業規則</a></li>
+            <li><a href="#">情報システム利用申請</a></li>
+            <li><a href="#">施設管財・会議室予約</a></li>
+            <li><a href="#">ヘルプデスク（情報システム課）</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /sidebar -->
+
+  </div><!-- /content-grid -->
+
+</div><!-- /main-wrap -->
+
+<!-- フッター -->
+<div class="site-footer">
+  <span>武蔵野美術大学 教職員イントラネット</span>
+  <span>·</span>
+  <a href="#">利用規約</a>
+  <span>·</span>
+  <a href="#">情報システム課へ問い合わせ</a>
+  <span style="margin-left:auto;">© 2026 Musashino Art University</span>
+</div>
