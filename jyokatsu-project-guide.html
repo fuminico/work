@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>女性活躍職場改善プロジェクト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceaE4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --rose:#a63a5c; --rose-ink:#7c2743; --rose-pale:#fbeaf0; --rose-line:#f0c9d6;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eceef3; --ink-soft:#b7bdcb; --ink-faint:#7d8494;
+      --paper:#14161c; --surface:#1b1e26; --surface-2:#1f2a44;
+      --border:#2b2f3a; --border-soft:#262a34;
+      --blue:#8ba0e8; --blue-ink:#c3cffa; --blue-pale:#1c2748; --blue-line:#33447f;
+      --rose:#e58aa8; --rose-ink:#f3b7c9; --rose-pale:#33202a; --rose-line:#5c3242;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eceef3; --ink-soft:#b7bdcb; --ink-faint:#7d8494;
+    --paper:#14161c; --surface:#1b1e26; --surface-2:#1f2a44;
+    --border:#2b2f3a; --border-soft:#262a34;
+    --blue:#8ba0e8; --blue-ink:#c3cffa; --blue-pale:#1c2748; --blue-line:#33447f;
+    --rose:#e58aa8; --rose-ink:#f3b7c9; --rose-pale:#33202a; --rose-line:#5c3242;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+    font-size:15.5px; line-height:1.85; padding-inline:20px;
+  }
+  h1,h2,h3{font-family:'Shippori Mincho B1',serif; text-wrap:balance; margin:0; color:var(--ink);}
+  .eyebrow{
+    font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--blue-ink);
+  }
+  .num{font-variant-numeric:tabular-nums;}
+  a{color:var(--blue-ink);}
+  img{max-width:100%;}
+
+  .wrap{max-width:920px; margin-inline:auto;}
+  section{padding-block:64px; border-bottom:1px solid var(--border-soft);}
+  section:last-of-type{border-bottom:none;}
+  .alt{background:var(--surface-2); margin-inline:-20px; padding-inline:20px;}
+  .alt .wrap{max-width:920px;}
+
+  /* topbar */
+  .topbar{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border); margin-inline:-20px; padding-inline:20px;
+  }
+  .topbar-in{max-width:920px; margin-inline:auto; display:flex; align-items:center; gap:18px; padding-block:12px;}
+  .brand{font-family:'Shippori Mincho B1',serif; font-weight:600; font-size:16px; white-space:nowrap;}
+  .brand b{color:var(--blue-ink);}
+  .navpills{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-block:2px;}
+  .navpills::-webkit-scrollbar{display:none;}
+  .navpills a{
+    flex:none; font-size:12.5px; color:var(--ink-soft); text-decoration:none;
+    padding:6px 11px; border-radius:999px; border:1px solid var(--border); white-space:nowrap;
+  }
+  .navpills a:hover{color:var(--blue-ink); border-color:var(--blue-line); background:var(--blue-pale);}
+
+  /* hero */
+  .hero{padding-block:72px 56px;}
+  .hero .eyebrow{margin-bottom:14px;}
+  .hero h1{font-size:clamp(28px,5.4vw,44px); font-weight:800; line-height:1.4;}
+  .hero .lede{margin-top:18px; font-size:16.5px; color:var(--ink-soft); max-width:60ch;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+  .chip{
+    font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700;
+    padding:7px 13px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);
+  }
+  .chip.blue{background:var(--blue-pale); border-color:var(--blue-line); color:var(--blue-ink);}
+  .chip.rose{background:var(--rose-pale); border-color:var(--rose-line); color:var(--rose-ink);}
+  .hero-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:36px;}
+  .stat{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 16px; box-shadow:var(--shadow);}
+  .stat .v{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:900; font-size:26px; color:var(--blue-ink);}
+  .stat .l{font-size:12.5px; color:var(--ink-faint); margin-top:4px;}
+  @media (max-width:560px){ .hero-stats{grid-template-columns:1fr 1fr;} }
+
+  /* headings */
+  .head{display:flex; align-items:baseline; gap:14px; margin-bottom:8px; flex-wrap:wrap;}
+  .head h2{font-size:clamp(22px,3.6vw,30px); font-weight:700;}
+  .sub{color:var(--ink-soft); margin-top:10px; max-width:68ch;}
+
+  /* cards / grid */
+  .grid{display:grid; gap:14px; margin-top:28px;}
+  .grid.cols-2{grid-template-columns:1fr 1fr;}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:720px){ .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;} }
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow);}
+  .card h3{font-size:16.5px; font-weight:700; margin-bottom:8px;}
+  .card p{margin:0; color:var(--ink-soft); font-size:14px;}
+  .card ul{margin:8px 0 0; padding-left:1.1em; color:var(--ink-soft); font-size:14px;}
+  .card li{margin-block:3px;}
+
+  .card.accent-blue{border-color:var(--blue-line); background:linear-gradient(180deg,var(--blue-pale),var(--surface) 70%);}
+  .card.accent-rose{border-color:var(--rose-line); background:linear-gradient(180deg,var(--rose-pale),var(--surface) 70%);}
+
+  .taglist{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+  .tag{font-size:12px; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:600; padding:4px 10px; border-radius:999px; background:var(--surface-2); color:var(--ink-soft); border:1px solid var(--border);}
+
+  /* requirement rows */
+  .reqlist{margin-top:22px; display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
+  .reqrow{background:var(--surface); display:grid; grid-template-columns:28px 1fr; gap:12px; padding:15px 18px; align-items:start;}
+  .reqrow .mark{width:22px; height:22px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex:none;}
+  .reqrow .t{font-weight:700; font-size:14.5px;}
+  .reqrow .d{color:var(--ink-soft); font-size:13.5px; margin-top:2px;}
+
+  /* comparison table */
+  .tblwrap{overflow-x:auto; margin-top:28px; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+  table{border-collapse:collapse; width:100%; min-width:560px; background:var(--surface);}
+  th,td{padding:13px 16px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:14px; vertical-align:top;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); border-bottom:1px solid var(--border);}
+  tbody tr:last-child td{border-bottom:none;}
+  td.amount{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); white-space:nowrap;}
+  .rowlabel{font-weight:700;}
+
+  /* amount blocks */
+  .amountbox{display:flex; align-items:baseline; gap:10px; margin-top:6px;}
+  .amountbox .big{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:900; font-size:34px; color:var(--blue-ink); line-height:1;}
+  .amountbox .unit{font-size:14px; color:var(--ink-soft);}
+
+  .breakdown{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px;}
+  @media (max-width:680px){ .breakdown{grid-template-columns:1fr;} }
+  .bblock{border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; background:var(--surface);}
+  .bblock .btitle{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:13px; letter-spacing:.04em;}
+  .bblock .bamount{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:900; font-size:22px; color:var(--blue-ink); margin-top:4px;}
+  .bblock ul{margin:12px 0 0; padding-left:1.15em; font-size:13.8px; color:var(--ink-soft);}
+  .bblock li{margin-block:4px;}
+
+  /* stepper */
+  .steps{margin-top:30px; display:flex; flex-direction:column; gap:0; border-left:2px solid var(--blue-line); margin-left:16px; padding-left:26px;}
+  .step{position:relative; padding-block:16px;}
+  .step:first-child{padding-top:0;}
+  .step::before{
+    content:attr(data-n); position:absolute; left:-38px; top:16px;
+    width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff;
+    font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:12.5px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step:first-child::before{top:0;}
+  .step h3{font-size:15.5px; font-weight:700;}
+  .step p{margin:5px 0 0; color:var(--ink-soft); font-size:13.8px;}
+  .step .note{display:inline-block; margin-top:8px; font-size:12.5px; color:var(--rose-ink); background:var(--rose-pale); border:1px solid var(--rose-line); padding:4px 10px; border-radius:8px;}
+
+  /* seminar schedule */
+  .schedrow{display:grid; grid-template-columns:64px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid var(--border-soft); align-items:baseline;}
+  .schedrow:last-child{border-bottom:none;}
+  .schedrow .d{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); font-size:14px;}
+  .schedrow .t{font-size:14px;}
+  .schedrow .v{font-size:12.5px; color:var(--ink-faint); margin-top:2px;}
+
+  /* video card */
+  .videorow{display:flex; gap:16px; align-items:center; padding:16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); margin-top:14px;}
+  .videoicon{flex:none; width:52px; height:52px; border-radius:12px; background:var(--blue-pale); color:var(--blue-ink); display:flex; align-items:center; justify-content:center; font-size:20px;}
+  .videorow .vt{font-weight:700; font-size:14.5px;}
+  .videorow .vd{font-size:13px; color:var(--ink-soft); margin-top:2px;}
+
+  /* cases */
+  .case{border:1px solid var(--border); border-radius:var(--radius); padding:22px; background:var(--surface); box-shadow:var(--shadow);}
+  .case .kind{font-family:'Zen Kaku Gothic New',sans-serif; font-size:11.5px; font-weight:700; color:var(--ink-faint); letter-spacing:.05em;}
+  .case h3{margin-top:6px; font-size:18px;}
+  .case .head2{color:var(--ink-soft); font-size:13.5px; margin-top:6px;}
+  .case p{margin-top:12px; color:var(--ink-soft); font-size:14px;}
+
+  /* mikispace eval */
+  .verdict{
+    display:flex; gap:16px; align-items:flex-start; padding:22px; border-radius:var(--radius);
+    background:var(--rose-pale); border:1px solid var(--rose-line); margin-top:26px;
+  }
+  .verdict .vicon{flex:none; font-size:26px;}
+  .verdict h3{font-size:16px; margin-bottom:6px;}
+  .verdict p{margin:0 0 8px; font-size:14px; color:var(--ink);}
+  .verdict p:last-child{margin-bottom:0;}
+
+  .factgrid{display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:22px; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
+  .factgrid .f{padding:14px 18px; border-bottom:1px solid var(--border-soft); border-right:1px solid var(--border-soft);}
+  .factgrid .f:nth-child(2n){border-right:none;}
+  .factgrid .k{font-size:12px; color:var(--ink-faint); font-family:'Zen Kaku Gothic New',sans-serif;}
+  .factgrid .val{font-size:14px; font-weight:600; margin-top:2px;}
+  @media (max-width:600px){ .factgrid{grid-template-columns:1fr;} .factgrid .f{border-right:none;} }
+
+  .checktable td.status{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; white-space:nowrap;}
+  .ok{color:#1f7a4d;}
+  .warn{color:var(--rose-ink);}
+
+  .flag{
+    margin-top:16px; padding:13px 16px; border-radius:10px; background:var(--surface-2);
+    border:1px dashed var(--border); font-size:13px; color:var(--ink-soft);
+  }
+
+  footer{padding-block:56px 90px; color:var(--ink-faint); font-size:12.5px;}
+  footer .wrap{display:flex; flex-direction:column; gap:6px;}
+
+  @media (max-width:600px){
+    .brand{font-size:14px;}
+    .hero{padding-top:44px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><b>女活プロジェクト</b>解説</div>
+    <nav class="navpills">
+      <a href="#overview">概要</a>
+      <a href="#eligibility">対象条件</a>
+      <a href="#compare">奨励金比較</a>
+      <a href="#subsidy-a">情報公開20万円</a>
+      <a href="#subsidy-b">職場改善180万円</a>
+      <a href="#expert">専門家派遣</a>
+      <a href="#seminar">セミナー</a>
+      <a href="#flow">申請の流れ</a>
+      <a href="#video">動画</a>
+      <a href="#cases">事例</a>
+      <a href="#miki">ミキスペース評価</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section class="hero" id="top">
+  <div class="eyebrow">東京都 中小企業等支援事業 解説スライド</div>
+  <h1>女性の活躍推進に向けた<br>職場環境改善プロジェクト</h1>
+  <p class="lede">令和8年度。東京都内の中小企業が、女性を含む多様な人材が活躍できる職場づくりに取り組むことを、最大180万円の奨励金と無料の専門家伴走支援で後押しする制度です。本資料では実施条件・支援内容・申請の流れを整理し、公式サイト（jyokatsu-project.jp）の掲載内容にもとづいて網羅的にまとめています。</p>
+  <div class="hero-meta">
+    <span class="chip blue">対象：東京都内の中小企業</span>
+    <span class="chip blue">申請方法：Jグランツ（電子申請のみ）</span>
+    <span class="chip rose">利用料：すべて無料</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="v num">最大180</div><div class="l">万円｜職場環境改善奨励金</div></div>
+    <div class="stat"><div class="v num">20</div><div class="l">万円｜情報公開促進奨励金</div></div>
+    <div class="stat"><div class="v num">年1,000</div><div class="l">事業者｜全10回の申請枠</div></div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="head"><div class="eyebrow">01｜プロジェクト概要</div></div>
+  <h2>何のための制度か</h2>
+  <p class="sub">「女性が働き続けにくい」「管理職への登用が進まない」「制度はあるが実態として定着していない」——こうした東京都内中小企業の課題に対応し、職場環境の見直し・改善の取組を後押しすることで、女性従業員の処遇改善と賃金向上を目指す事業です。女性活躍推進法にもとづく行動計画の策定や、賃金差異の情報公開の取組を、奨励金と専門家支援の両面から支えます。</p>
+  <div class="grid cols-3">
+    <div class="card">
+      <h3>💴 奨励金</h3>
+      <p>情報公開促進20万円＋職場環境改善180万円。要件を満たせば併給可能（情報公開促進を先に確定させてから職場環境改善を申請）。</p>
+    </div>
+    <div class="card">
+      <h3>🧑‍💼 専門家伴走支援</h3>
+      <p>女性活躍推進の実務経験を持つ専門家が企業を訪問し、個別事情に応じて無料で支援。</p>
+    </div>
+    <div class="card">
+      <h3>📚 学びの場</h3>
+      <p>経営層・人事向けセミナー、働く女性向けのキャリア形成セミナー・相談会、社内研修用の動画配信を無料で提供。</p>
+    </div>
+  </div>
+  <div class="flag">運営：東京都（雇用環境整備等を担う関連団体が事務局を担当）｜お問い合わせ：03-6744-6539（平日9:00〜17:00）｜メール：shinsa[at]jyokatsu-project.jp</div>
+</section>
+
+<section class="alt" id="eligibility">
+  <div class="wrap">
+  <div class="head"><div class="eyebrow">02｜対象となる企業</div></div>
+  <h2>共通の実施条件</h2>
+  <p class="sub">2つの奨励金に共通して、まず次の条件を満たす必要があります。個人事業主も要件を満たせば対象になります。</p>
+  <div class="reqlist">
+    <div class="reqrow"><div class="mark">1</div><div><div class="t">本社または主たる事業所が東京都内にあること</div><div class="d">法人・個人事業主のいずれも対象。都内に事業拠点があることが前提。</div></div></div>
+    <div class="reqrow"><div class="mark">2</div><div><div class="t">「女性の割合が4割を下回っている」区分が1つ以上あること</div><div class="d">労働者・係長職・管理職・役員のうち、いずれか1区分でも女性比率が40％未満であれば該当。全区分で高比率である必要はなく、逆に全体では女性比率が高くても、特定の役職区分（役員や管理職など）で4割未満であれば要件を満たす点に注意。</div></div></div>
+    <div class="reqrow"><div class="mark">3</div><div><div class="t">都内勤務の雇用保険被保険者を1名以上雇用</div><div class="d">両奨励金に共通する最低条件。</div></div></div>
+  </div>
+
+  <div class="grid cols-2" style="margin-top:34px;">
+    <div class="card accent-blue">
+      <h3>女性活躍情報公開促進奨励金（20万円）の追加条件</h3>
+      <ul>
+        <li>常時雇用労働者数が<b>100人以下</b></li>
+        <li>厚労省「女性の活躍推進企業データベース」に、男女間賃金差異・女性管理職比率等の<b>情報公開の実績がないこと</b></li>
+      </ul>
+    </div>
+    <div class="card accent-blue">
+      <h3>職場環境改善奨励金（最大180万円）の追加条件</h3>
+      <ul>
+        <li>常時雇用労働者数が<b>300人以下</b></li>
+        <li>上記以外は共通条件と同じ</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="head"><div class="eyebrow">03｜2つの奨励金</div></div>
+  <h2>制度の全体比較</h2>
+  <p class="sub">性質の異なる2つの奨励金が用意されています。情報公開促進奨励金を先に確定させ、その後に職場環境改善奨励金を申請するという順序で、併給が可能です。</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>項目</th><th>女性活躍情報公開促進奨励金</th><th>職場環境改善奨励金</th></tr></thead>
+      <tbody>
+        <tr><td class="rowlabel">支給額</td><td class="amount">20万円（固定）</td><td class="amount">最大180万円</td></tr>
+        <tr><td class="rowlabel">対象規模</td><td>常時雇用労働者 100人以下</td><td>常時雇用労働者 300人以下</td></tr>
+        <tr><td class="rowlabel">実施期間</td><td>支給決定後 3ヶ月</td><td>支給決定後 6ヶ月</td></tr>
+        <tr><td class="rowlabel">専門家支援</td><td>1回（約2時間・原則訪問）</td><td>2回（各約2時間・1回目訪問／2回目訪問 or オンライン）</td></tr>
+        <tr><td class="rowlabel">主な取組内容</td><td>行動計画の策定・公表、賃金差異等の情報公開、幹部研修</td><td>女性役員・管理職・係長の増加や新役職の新設、非正規の退職金制度導入等</td></tr>
+        <tr><td class="rowlabel">性質</td><td>「公開する」ことへの支援</td><td>「実際に登用する」ことへの支援</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="alt" id="subsidy-a">
+  <div class="wrap">
+  <div class="head"><div class="eyebrow">04｜制度詳細</div></div>
+  <h2>女性活躍情報公開促進奨励金</h2>
+  <div class="amountbox"><div class="big num">20</div><div class="unit">万円（固定額）</div></div>
+  <p class="sub">実施期間は支給決定後3ヶ月。この間に、以下①〜⑥をすべて実施する必要があります。</p>
+  <div class="grid cols-2" style="margin-top:20px;">
+    <div class="card"><h3>① 現状把握</h3><p>女性の活躍状況の把握・課題分析</p></div>
+    <div class="card"><h3>② 行動計画</h3><p>数値目標を1つ以上含む行動計画の策定・周知・公表</p></div>
+    <div class="card"><h3>③ 届出</h3><p>都道府県労働局への行動計画の届出</p></div>
+    <div class="card"><h3>④ 情報公開</h3><p>男女間賃金差異・女性管理職比率に加え、1項目以上を公表</p></div>
+    <div class="card"><h3>⑤ 専門家支援</h3><p>専門家支援を1回受講（約2時間・原則訪問）</p></div>
+    <div class="card"><h3>⑥ 幹部研修</h3><p>幹部等向けの研修を実施</p></div>
+  </div>
+  </div>
+</section>
+
+<section id="subsidy-b">
+  <div class="head"><div class="eyebrow">04｜制度詳細</div></div>
+  <h2>女性の活躍推進に向けた職場環境改善奨励金</h2>
+  <div class="amountbox"><div class="big num">最大180</div><div class="unit">万円（A区分＋B区分の合算）</div></div>
+  <p class="sub">実施期間は支給決定後6ヶ月。基幹となるA区分（登用の実績づくり）に加え、B区分（体制整備の加算）を組み合わせて申請できます。</p>
+
+  <div class="breakdown">
+    <div class="bblock">
+      <div class="btitle">A区分｜基幹取組　各30万円・最大120万円</div>
+      <div class="bamount num">30万円 × 最大4項目</div>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--ink-soft);">いずれか1つ以上を選択。各取組について、その役職に<b>新たに女性が1人以上就任</b>することが必須（既に就任している女性の存在だけでは対象外）。</p>
+      <ul>
+        <li>女性役員の増加</li>
+        <li>女性管理職の増加</li>
+        <li>女性係長職の増加</li>
+        <li>非正規従業員でも登用が可能な役職の新設</li>
+      </ul>
+    </div>
+    <div class="bblock">
+      <div class="btitle">B区分｜加算項目　各10万円・最大60万円</div>
+      <div class="bamount num">10万円 × 最大6項目</div>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--ink-soft);">A区分の取組を土台に、体制整備を上乗せで評価。</p>
+      <ul>
+        <li>非正規従業員の退職金制度の導入</li>
+        <li>育成計画・研修の実施（A区分対象者、最大5人まで）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid cols-2" style="margin-top:28px;">
+    <div class="card"><h3>実施必須事項</h3>
+      <ul>
+        <li>A・B区分で選んだ取組の実施</li>
+        <li>専門家派遣を2回受講</li>
+        <li>従業員向け社内研修の実施</li>
+        <li>行動計画の策定・届出</li>
+      </ul>
+    </div>
+    <div class="card"><h3>公表が必須の項目</h3>
+      <ul>
+        <li>労働者に占める女性割合</li>
+        <li>係長職・管理職・役員の女性割合</li>
+        <li>男女賃金差異</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="expert">
+  <div class="wrap">
+  <div class="head"><div class="eyebrow">05｜無料の伴走支援</div></div>
+  <h2>専門家支援・派遣</h2>
+  <p class="sub">実務経験豊富な女性活躍推進の専門家が、企業の従業員構成や女性管理職比率など個別事情に合わせて、費用負担なしで支援します。流れは「申請 → 事前ヒアリング → 日程調整 → 専門家派遣 → 具体的アドバイス」。</p>
+  <div class="grid cols-2" style="margin-top:24px;">
+    <div class="card">
+      <h3>情報公開促進奨励金の場合</h3>
+      <ul><li>期間：3ヶ月</li><li>回数：1回（必須）</li><li>1回あたり：約2時間</li><li>方式：原則、都内事業所への現地訪問</li></ul>
+    </div>
+    <div class="card">
+      <h3>職場環境改善奨励金の場合</h3>
+      <ul><li>期間：6ヶ月</li><li>回数：2回（必須・1回目から3ヶ月以上あけて2回目）</li><li>1回あたり：約2時間</li><li>方式：1回目は原則訪問、2回目は訪問またはオンライン</li></ul>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="seminar">
+  <div class="head"><div class="eyebrow">06｜学びの場</div></div>
+  <h2>セミナー・相談会・診断ツール</h2>
+  <p class="sub">申請の有無にかかわらず参加できる無料コンテンツも用意されています。</p>
+
+  <div class="grid cols-2" style="margin-top:10px;">
+    <div class="card">
+      <h3>オンラインセミナー（経営層・人事向け）</h3>
+      <p>テーマ「職場における男女間格差をなくす」。女性活躍推進法の改正背景・ポイント、人事賃金制度の紹介など。Zoom開催・各回90分（14:00〜15:30）。講師：新田香織氏（社会保険労務士法人グラース代表）。対象：常時雇用労働者300人以下、定員各回200社。</p>
+      <div class="taglist">
+        <span class="tag">6/30</span><span class="tag">8/5</span><span class="tag">10/6</span><span class="tag">12/3</span><span class="tag">R9.2/2</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>集合型セミナー（働く女性向け）</h3>
+      <p>「女性のキャリアアップ実践セミナー」。定員各回30名・先着順。14:00〜16:30（その後、個別相談会）。対象：東京都内在住または在勤の女性。大手町・品川・立川・池袋・新宿の都内5会場で開催。</p>
+      <div class="taglist">
+        <span class="tag">7/29 女性管理職というキャリア</span><span class="tag">10/7 求められる能力</span><span class="tag">11/19 ライフイベントとの両立</span><span class="tag">12/17 任用前後のリアル</span><span class="tag">1/21 さらなる成長</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <h3>📊 女性活躍推進度診断ツール</h3>
+    <p>簡単な質問に答えるだけで自社の現状を可視化。業種・企業規模ごとの比較分析や、課題に応じた対応事例・関連する都の施策を確認できます（東京都の外部ツール josei-suishin.metro.tokyo.lg.jp）。</p>
+  </div>
+</section>
+
+<section class="alt" id="flow">
+  <div class="wrap">
+  <div class="head"><div class="eyebrow">07｜申請の流れ</div></div>
+  <h2>支給申請から振込までの7ステップ</h2>
+  <p class="sub">申請はJグランツによる電子申請のみで、窓口・郵送の受付は行っていません。申請には<b>GビズIDプライム</b>アカウントが必須です。</p>
+  <div class="steps">
+    <div class="step" data-n="準備"><h3>事前準備：GビズIDプライムの取得</h3><p>デジタル庁が発行するGビズIDプライムアカウントが必要。発行までに日数がかかるため、余裕をもって取得しておく。</p><span class="note">ID発行まで時間がかかるため要注意</span></div>
+    <div class="step" data-n="1"><h3>支給申請</h3><p>Jグランツでオンライン申請。</p></div>
+    <div class="step" data-n="2"><h3>審査・支給決定</h3><p>事務局による審査を経て、支給決定が通知される。</p></div>
+    <div class="step" data-n="3"><h3>奨励金対象事業の取組実施</h3><p>専門家による伴走支援を受けながら、行動計画にもとづき取組を実施。</p></div>
+    <div class="step" data-n="4"><h3>実績報告</h3><p>Jグランツで取組の実施結果を報告。</p></div>
+    <div class="step" data-n="5"><h3>支給額の確定</h3><p>実績報告の内容をもとに、支給額が確定する。</p></div>
+    <div class="step" data-n="6"><h3>奨励金請求</h3><p>Jグランツで請求手続きを行う。</p></div>
+    <div class="step" data-n="7"><h3>奨励金振込</h3><p>指定口座へ奨励金が振り込まれる。</p></div>
+  </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="head"><div class="eyebrow">08｜動画コンテンツ</div></div>
+  <h2>公式サイト掲載の動画</h2>
+  <p class="sub">申請に必須のGビズIDプライム取得方法を解説する、公式マニュアル動画が2本掲載されています。いずれも法人・個人事業主の別に対応した手順解説です。</p>
+  <div class="videorow">
+    <div class="videoicon">▶</div>
+    <div><div class="vt">GビズIDプライムアカウント作成マニュアル｜法人事業向け編</div><div class="vd">再生時間：4分29秒</div></div>
+  </div>
+  <div class="videorow">
+    <div class="videoicon">▶</div>
+    <div><div class="vt">GビズIDプライムアカウント作成マニュアル｜個人事業主向け編</div><div class="vd">再生時間：4分20秒</div></div>
+  </div>
+  <div class="flag">このほか、社内研修向けに「いつでもどこでも学べる」無料の動画配信コンテンツも用意される予定（公式サイトでは近日公開の案内）。</div>
+</section>
+
+<section class="alt" id="cases">
+  <div class="wrap">
+  <div class="head"><div class="eyebrow">09｜導入事例</div></div>
+  <h2>取組企業のインタビュー</h2>
+  <div class="grid cols-2" style="margin-top:10px;">
+    <div class="case">
+      <div class="kind">建設業</div>
+      <h3>巴山建設株式会社</h3>
+      <div class="head2">総務部主任へのインタビュー（2026年5月16日掲載）</div>
+      <p>2021年から女性技術者の積極雇用を開始。業界の人材不足という課題に向き合いながら女性活躍を推進し、「男性社会」のイメージ払拭と、多角的な視点による現場環境の改善につなげている。</p>
+    </div>
+    <div class="case">
+      <div class="kind">人材コンサルティング／ネットクリエイティブ／公共インサイト</div>
+      <h3>株式会社リブリッジ</h3>
+      <div class="head2">管理部リーダーへのインタビュー（2026年5月15日掲載）</div>
+      <p>2016年から女性活躍推進に先進的に取り組み、女性が能力を発揮しながら働き続けられる環境づくりを継続。ロールモデルの存在が働き方への意識を変え、離職率の低下にもつながっている。</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="head"><div class="eyebrow">10｜スケジュールと申請枠</div></div>
+  <h2>令和8年度の申請受付状況</h2>
+  <div class="grid cols-3" style="margin-top:10px;">
+    <div class="card"><h3>受付期間</h3><p>令和8年6月15日〜令和9年3月31日。全10回の申請枠、各回100事業者・年間計1,000事業者を予定。</p></div>
+    <div class="card"><h3>申請の上限</h3><p>1事業者につき、各奨励金1回ずつの申請が上限。</p></div>
+    <div class="card"><h3>直近の状況</h3><p>2026年9月1日時点で奨励金は4回目、オンラインセミナーは3回目の申込受付を開始。9月10日にFAQページへの追加あり。</p></div>
+  </div>
+  <div class="flag">Jグランツのシステムメンテナンス予定：9月12日（土）9:00〜14:30頃／9月16日（水）20:00〜翌7:00頃は申請システムが利用不可。</div>
+</section>
+
+<section class="alt" id="miki">
+  <div class="wrap">
+  <div class="head"><div class="eyebrow">11｜個別評価</div></div>
+  <h2>株式会社ミキスペースは対象になるか</h2>
+  <p class="sub">公式サイト（miki-space.com）の会社概要をもとに、本制度の対象条件と照らし合わせた評価です。非公開情報（従業員数・男女比の内訳）は「要確認」としています。</p>
+
+  <div class="factgrid">
+    <div class="f"><div class="k">本社所在地</div><div class="val">東京都葛飾区西亀有3-5-3〈公式サイト記載〉</div></div>
+    <div class="f"><div class="k">代表者</div><div class="val">代表取締役 緒方みき</div></div>
+    <div class="f"><div class="k">設立</div><div class="val">2013年7月31日</div></div>
+    <div class="f"><div class="k">資本金</div><div class="val">300万円</div></div>
+    <div class="f"><div class="k">従業員数（Dropbox記録・2026年6月更新版）</div><div class="val">パート9名（女性8名・男性1名）＋役員1名（女性）</div></div>
+    <div class="f"><div class="k">規模要件</div><div class="val">100人以下・300人以下のいずれも余裕でクリア</div></div>
+    <div class="f" style="grid-column:1/-1;"><div class="k">事業内容</div><div class="val">医薬品・医薬部外品・健康食品・衛生用品・化粧品の販売および輸出入、食料品・衣料品・日用品等の販売、ビューティーサロン・エステティックサロンの経営、各種イベントの企画運営 など</div></div>
+  </div>
+
+  <div class="verdict" style="background:var(--surface-2); border-color:var(--border);">
+    <div class="vicon">📋</div>
+    <div>
+      <h3>Dropbox内の申請済み資料を直接確認した結果</h3>
+      <p>㈱ミキスペースの補助金申請フォルダ（事業再構築補助金9次公募・IT導入補助金）を確認し、電子申請基礎情報および労働者名簿一覧の実データを取得しました。</p>
+    </div>
+  </div>
+
+  <div class="tblwrap">
+    <table class="checktable">
+      <thead><tr><th>条件</th><th>判定</th><th>根拠・備考</th></tr></thead>
+      <tbody>
+        <tr><td class="rowlabel">東京都内に本社／主たる事業所</td><td class="status ok">○ 該当</td><td>公式サイト記載の本社所在地は東京都葛飾区西亀有。</td></tr>
+        <tr><td class="rowlabel">常時雇用労働者数100人以下（20万円）／300人以下（180万円）</td><td class="status ok">○ 該当（確認済み）</td><td>電子申請基礎情報（2022年提出）では「従業員数：3人」、最新の労働者名簿一覧（2026年6月更新版）ではパート9名。いずれにしても100人以下・300人以下の両方の規模要件を余裕でクリア。</td></tr>
+        <tr><td class="rowlabel">いずれかの区分で女性比率が4割未満</td><td class="status warn">△ 資料上は未確認・ご指摘内容と齟齬あり</td><td>Dropbox上で確認できた労働者名簿一覧（2026年6月更新版）では、パート従業員9名中8名が女性（約89％）、代表取締役（役員）も緒方みき氏1名で女性100％。「管理職」「係長職」の設置は資料からは確認できず。現時点で入手できた記録からは「いずれかの区分で女性比率4割未満」に該当する区分は見当たらず、いただいたご確認内容とは異なる結果になっています。</td></tr>
+        <tr><td class="rowlabel">都内雇用保険被保険者1名以上</td><td class="status warn">△ 要確認（下記参照）</td><td>2022年の労働者名簿一覧では、従業員3名全員の住所が福岡県内。本社所在地の実態とあわせて要確認。</td></tr>
+        <tr><td class="rowlabel">厚労省DB未公開（20万円のみ）</td><td class="status warn">要調査</td><td>過去に「女性の活躍推進企業データベース」への公開実績があるかは、Dropbox資料からは確認できず。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="verdict">
+    <div class="vicon">⚠️</div>
+    <div>
+      <h3>総合評価：規模要件はクリア。ただし「女性比率」と「都内勤務の実態」という2つの根幹要件が資料上は未確認 —— 申請可否を左右する最優先確認事項</h3>
+      <p>本社所在地と従業員規模の要件は明確にクリアしています。一方で、最大の論点である「女性比率4割未満」の区分については、Dropbox上で確認できる最新の労働者名簿一覧（2026年6月更新版・パート9名）と代表取締役（役員1名）のいずれも女性比率が高く（パート約89%、役員100%）、4割未満に該当する区分を資料からは特定できませんでした。</p>
+      <p>この結果は、先ほどご確認いただいた「労働者・係長職・管理職または役員のいずれかで女性比率が4割を下回っている」という内容と一致しません。考えられる可能性としては、①労働者名簿一覧に記載のないメンバー（正社員・別事業所の従業員等）が別途存在する、②「管理職」「係長職」という区分自体が別途設定されており、その区分でみると男性比率が高い、③労働者名簿一覧が最新の実態を反映していない、のいずれかが考えられます。</p>
+      <p>さらに、2022年版の労働者名簿一覧では、当時の従業員3名（全員女性）の住所が<b>全員福岡県内</b>でした。同時期の本社所在地の記載も福岡県福岡市中央区天神であり、当時は事業の実態そのものが福岡拠点だったことがうかがえます。現在の公式サイトは東京都葛飾区を本社としていますが、2026年6月版の最新名簿には住所欄がなく、実際の勤務地が都内に移っているかどうかは、この資料だけでは判断できません。本制度は「都内勤務の雇用保険被保険者を1名以上雇用」という要件も課しているため、本社所在地の表記だけでなく、実際の勤務実態が都内にあるかどうかの確認が欠かせません。</p>
+    </div>
+  </div>
+
+  <div class="card accent-rose" style="margin-top:20px;">
+    <h3>🔍 実際の申請にあたり、企業側に確認すべき項目</h3>
+    <ul>
+      <li><b>「4割未満」の根拠となる区分の特定</b>：労働者名簿一覧（Dropbox記録）とは異なる母集団（正社員・別部門等）を指しているか、あるいは「管理職」「係長職」という区分を別途設けているかを確認する。</li>
+      <li><b>現在の全従業員の実際の勤務地</b>：2022年版名簿は全員福岡県内住所だった。現在の9名（および他にいれば正社員等）が、実際にどこで働いているか。少なくとも1名が都内で雇用保険に加入して勤務しているか。</li>
+      <li><b>東京都葛飾区の住所の実態</b>：実店舗・オフィスとして機能しているか、登記上・書類上のみの住所（バーチャルオフィス等）か。</li>
+      <li><b>事業の実態拠点</b>：主な業務・売上の発生場所が現在も福岡中心か、東京に移っているか。</li>
+      <li><b>厚労省「女性の活躍推進企業データベース」への過去の公開実績の有無</b>：20万円奨励金の対象可否を左右する。人事・総務担当者への確認が必要。</li>
+      <li><b>180万円奨励金のA区分で「新たに女性を登用する」具体的な計画の有無</b>：既存の女性役員（代表取締役 緒方みき氏）の在任だけでは加点対象にならないため、別区分での新規登用予定を確認する必要がある。</li>
+    </ul>
+  </div>
+
+  <div class="flag">⚠ 参考情報：社内の一部資料（2022年提出の電子申請基礎情報）には本社所在地として「福岡県福岡市中央区天神3-16-19」の記載がありましたが、公式サイトの最新情報は東京都葛飾区西亀有となっています。移転履歴の可能性があるため、本制度への申請にあたっては履歴事項全部証明書等で最新の本店所在地を確認することを推奨します。</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>出典：jyokatsu-project.jp（トップ／事業概要／専門家支援・派遣／オンラインセミナー／集合型セミナー／インタビュー／よくある質問の各ページ）、および miki-space.com（会社概要）。</div>
+    <div>本資料は公式サイトの記載内容の整理・要約であり、正式な申請条件は必ず公式サイトおよび募集要項PDFの最新版でご確認ください。</div>
+  </div>
+</footer>
+
+</main>
+</body>
+</html>

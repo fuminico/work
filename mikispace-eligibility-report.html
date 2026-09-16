@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>㈱ミキスペース 対象可否調査レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceae4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --rose:#a63a5c; --rose-ink:#7c2743; --rose-pale:#fbeaf0; --rose-line:#f0c9d6;
+    --amber:#9a6414; --amber-pale:#fbf0dd; --amber-line:#eed7a8;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+    font-size:15.5px; line-height:1.85;
+  }
+  h1,h2,h3{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
+  .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
+  a{color:var(--blue-ink);}
+  .wrap{max-width:860px; margin-inline:auto; padding-inline:24px;}
+
+  header.cover{padding-block:56px 40px; border-bottom:1px solid var(--border);}
+  header.cover .eyebrow{margin-bottom:12px;}
+  header.cover h1{font-size:clamp(24px,4.6vw,34px); font-weight:800;}
+  header.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .chip{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);}
+
+  section{padding-block:44px; border-bottom:1px solid var(--border-soft);}
+  section:last-of-type{border-bottom:none;}
+  .head{margin-bottom:18px;}
+  .head h2{font-size:22px; font-weight:700;}
+  .head .eyebrow{display:block; margin-bottom:6px;}
+
+  .summary{
+    background:var(--rose-pale); border:1px solid var(--rose-line); border-radius:var(--radius);
+    padding:24px 26px; box-shadow:var(--shadow);
+  }
+  .summary h3{font-size:16.5px; margin-bottom:10px;}
+  .summary p{margin:0 0 10px; font-size:14.5px;}
+  .summary p:last-child{margin-bottom:0;}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-top:6px;}
+  .grid .f{padding:14px 18px; border-bottom:1px solid var(--border-soft); border-right:1px solid var(--border-soft); background:var(--surface);}
+  .grid .f:nth-child(2n){border-right:none;}
+  .grid .k{font-size:12px; color:var(--ink-faint); font-family:'Zen Kaku Gothic New',sans-serif;}
+  .grid .val{font-size:14px; font-weight:600; margin-top:2px;}
+  @media (max-width:600px){.grid{grid-template-columns:1fr;} .grid .f{border-right:none;}}
+
+  table{border-collapse:collapse; width:100%; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
+  th,td{padding:12px 16px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:14px; vertical-align:top;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2);}
+  tbody tr:last-child td{border-bottom:none;}
+  .status{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; white-space:nowrap;}
+  .ok{color:#1f7a4d;} .warn{color:var(--rose-ink);} .caution{color:var(--amber);}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); margin-top:14px;}
+  .card.rose{border-color:var(--rose-line); background:linear-gradient(180deg,var(--rose-pale),var(--surface) 65%);}
+  .card.amber{border-color:var(--amber-line); background:linear-gradient(180deg,var(--amber-pale),var(--surface) 65%);}
+  .card h3{font-size:16px; margin-bottom:8px;}
+  .card p{margin:0 0 8px; font-size:14px; color:var(--ink);}
+  .card p:last-child{margin-bottom:0;}
+
+  .priolist{margin-top:20px; display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
+  .priorow{background:var(--surface); display:grid; grid-template-columns:32px 1fr; gap:14px; padding:16px 18px;}
+  .priorow .mark{width:24px; height:24px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex:none;}
+  .priorow.high .mark{background:var(--rose);}
+  .priorow .t{font-weight:700; font-size:14.5px;}
+  .priorow .d{color:var(--ink-soft); font-size:13.5px; margin-top:4px;}
+  .prioritytag{display:inline-block; font-family:'Zen Kaku Gothic New',sans-serif; font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; margin-left:8px; vertical-align:middle;}
+  .prioritytag.high{background:var(--rose-pale); color:var(--rose-ink);}
+  .prioritytag.mid{background:var(--blue-pale); color:var(--blue-ink);}
+
+  .sourcelist{margin-top:14px; font-size:13.3px; color:var(--ink-soft);}
+  .sourcelist .doc{padding:12px 16px; border:1px solid var(--border); border-radius:10px; background:var(--surface); margin-bottom:8px;}
+  .sourcelist .doc .name{font-weight:700; color:var(--ink); font-size:13.8px;}
+  .sourcelist .doc .path{font-family:monospace; font-size:12px; color:var(--ink-faint); margin-top:4px; word-break:break-all;}
+
+  footer{padding-block:40px 64px; color:var(--ink-faint); font-size:12.5px;}
+
+  @media print{
+    section{break-inside:avoid;}
+    body{font-size:12.5px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">対象可否調査レポート</div>
+    <h1>株式会社ミキスペース ×<br>女性の活躍推進に向けた職場環境改善プロジェクト</h1>
+    <div class="meta">
+      <span class="chip">作成日：2026年9月16日</span>
+      <span class="chip">対象制度：東京都 令和8年度事業</span>
+      <span class="chip">調査元：Dropbox申請資料／公式サイト</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="summary">
+  <div class="head"><div class="eyebrow">01｜結論サマリー</div><h2>現時点の判定</h2></div>
+  <div class="summary">
+    <h3>規模要件はクリア。ただし2つの重要な要件が「資料上は未確認・要件と齟齬あり」</h3>
+    <p><b>①本社所在地（東京都内）：</b>公式サイト上は該当。ただしDropbox内の過去資料（2022年）は福岡県所在地で記載されており、齟齬あり。</p>
+    <p><b>②常時雇用労働者数（100人・300人以下）：</b>該当。実数はいずれの上限も大きく下回る。</p>
+    <p><b>③女性比率が4割を下回る区分の存在：</b>資料からは確認できず。労働者（パート9名中8名女性＝約89%）・役員（代表取締役1名＝女性100%）いずれも女性比率が非常に高い。</p>
+    <p><b>④都内勤務の雇用保険被保険者1名以上：</b>要確認。2022年の労働者名簿では従業員全員の住所が福岡県内であり、実際の勤務実態が都内にあるか疑義がある。</p>
+    <p>③④はいずれも本制度の対象可否を左右する根幹の要件です。次章以降で詳細と確認すべき事項を整理します。</p>
+  </div>
+</section>
+
+<section id="company">
+  <div class="head"><div class="eyebrow">02｜会社概要</div><h2>公式サイト記載情報</h2></div>
+  <div class="grid">
+    <div class="f"><div class="k">本社所在地</div><div class="val">東京都葛飾区西亀有3-5-3</div></div>
+    <div class="f"><div class="k">代表者</div><div class="val">代表取締役 緒方みき</div></div>
+    <div class="f"><div class="k">設立</div><div class="val">2013年7月31日</div></div>
+    <div class="f"><div class="k">資本金</div><div class="val">300万円</div></div>
+    <div class="f" style="grid-column:1/-1;"><div class="k">事業内容</div><div class="val">医薬品・医薬部外品・健康食品・衛生用品・化粧品の販売および輸出入、食料品・衣料品・日用品等の販売、ビューティーサロン・エステティックサロンの経営、各種イベントの企画運営 など</div></div>
+  </div>
+</section>
+
+<section id="employees">
+  <div class="head"><div class="eyebrow">03｜Dropbox資料で確認した従業員構成</div><h2>労働者名簿・電子申請基礎情報の実データ</h2></div>
+
+  <div class="card">
+    <h3>2022年版（電子申請基礎情報・労働者名簿一覧）</h3>
+    <p>従業員数：<b>3人</b>（電子申請基礎情報記載）</p>
+    <p>労働者名簿：諸橋希望様・香川里菜様・吉岡夏子様の3名、<b>全員女性</b>。3名とも住所は<b>福岡県福岡市</b>（東区・城南区・早良区）。</p>
+    <p>本社所在地の記載：<b>福岡県福岡市中央区天神3-16-19</b></p>
+  </div>
+
+  <div class="card">
+    <h3>2026年6月更新版（最新の労働者名簿一覧）</h3>
+    <p>パート従業員：<b>9名</b>（女性8名・男性1名＝女性比率 約89%）</p>
+    <p>住所欄はなく、勤務地・居住地は本資料からは判別不可。</p>
+    <p>役員：代表取締役 緒方みき様1名（女性100%）。管理職・係長職の設置は資料上確認できず。</p>
+  </div>
+
+  <div class="card amber">
+    <h3>⚠ 読み取れる示唆</h3>
+    <p>2022年時点では、登記上・実態上とも福岡が事業の中心だったと考えられます。現在の公式サイトは東京都葛飾区を本社としていますが、2026年の最新名簿には住所の記載がなく、実際の勤務地が都内に移っているのかどうかは、この資料だけでは判断できません。</p>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="head"><div class="eyebrow">04｜対象要件チェックリスト</div><h2>共通要件および各奨励金の追加要件</h2></div>
+  <table>
+    <thead><tr><th>条件</th><th>判定</th><th>根拠・備考</th></tr></thead>
+    <tbody>
+      <tr><td>東京都内に本社／主たる事業所</td><td class="status ok">○ 該当（公式サイト上）</td><td>ただし2022年資料は福岡県所在地。要件④とあわせて実態確認が必要。</td></tr>
+      <tr><td>常時雇用労働者数100人以下（20万円）／300人以下（180万円）</td><td class="status ok">○ 該当</td><td>電子申請基礎情報（3人）・最新名簿（パート9名）いずれも両方の上限を大きく下回る。</td></tr>
+      <tr><td>いずれかの区分で女性比率が4割未満</td><td class="status warn">△ 資料上は未確認</td><td>労働者（89%女性）・役員（100%女性）ともに該当なし。管理職・係長職の有無は不明。</td></tr>
+      <tr><td>都内勤務の雇用保険被保険者1名以上</td><td class="status warn">△ 要確認</td><td>2022年名簿の全従業員住所が福岡県内。現在の勤務実態は資料からは不明。</td></tr>
+      <tr><td>厚労省DB未公開（20万円奨励金のみ）</td><td class="status caution">要調査</td><td>過去の公開実績の有無はDropbox資料・公式サイトいずれからも確認できず。</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="issues">
+  <div class="head"><div class="eyebrow">05｜発見された重要な相違点</div><h2>本人からの確認内容との齟齬</h2></div>
+  <div class="card rose">
+    <h3>相違点①：女性比率4割未満の要件</h3>
+    <p>「労働者・係長職・管理職または役員のいずれかで女性比率が4割を下回っている」とのご確認をいただきましたが、Dropbox上で確認できた最新の労働者名簿一覧・電子申請基礎情報のいずれからも、この状況を裏付ける区分は見当たりませんでした。</p>
+  </div>
+  <div class="card rose">
+    <h3>相違点②：本社所在地と実際の勤務地</h3>
+    <p>公式サイト上の本社は東京都内ですが、Dropbox内の労働者名簿（2022年版）に記載された従業員の住所はすべて福岡県内でした。会社の所在地と、実際に働く場所が一致していない可能性があります。</p>
+  </div>
+</section>
+
+<section id="actions">
+  <div class="head"><div class="eyebrow">06｜会社に確認すべき事項（優先順位付き）</div><h2>次にすべきこと</h2></div>
+
+  <div class="priolist">
+    <div class="priorow high">
+      <div class="mark">1</div>
+      <div><div class="t">「4割未満」に該当する区分の特定<span class="prioritytag high">最優先</span></div>
+        <div class="d">労働者名簿に載っていない正社員・別部門の従業員はいないか。「管理職」「係長職」という区分が別途あり、そこで男性比率が高くないか。</div></div>
+    </div>
+    <div class="priorow high">
+      <div class="mark">2</div>
+      <div><div class="t">現在の全従業員の実際の勤務地<span class="prioritytag high">最優先</span></div>
+        <div class="d">2026年6月版の9名（および他にいれば正社員等）が、実際にどこで働いているか。少なくとも1名が都内で雇用保険に加入して勤務しているか。</div></div>
+    </div>
+    <div class="priorow">
+      <div class="mark">3</div>
+      <div><div class="t">東京都葛飾区の住所の実態<span class="prioritytag mid">重要</span></div>
+        <div class="d">実店舗・オフィスとして機能しているか、登記上・書類上のみの住所（バーチャルオフィス等）か。</div></div>
+    </div>
+    <div class="priorow">
+      <div class="mark">4</div>
+      <div><div class="t">事業の実態拠点<span class="prioritytag mid">重要</span></div>
+        <div class="d">主な業務・売上の発生場所が現在も福岡中心か、東京に移っているか。</div></div>
+    </div>
+    <div class="priorow">
+      <div class="mark">5</div>
+      <div><div class="t">厚労省データベースへの過去の公開実績</div>
+        <div class="d">「女性の活躍推進企業データベース」への公開履歴の有無。20万円奨励金の対象可否を左右する。</div></div>
+    </div>
+    <div class="priorow">
+      <div class="mark">6</div>
+      <div><div class="t">180万円奨励金（A区分）の新規登用計画</div>
+        <div class="d">既存の女性代表取締役とは別に、新たに女性を役員・管理職・係長・新設役職に登用する具体的な予定があるか。</div></div>
+    </div>
+  </div>
+
+  <div class="card amber" style="margin-top:24px;">
+    <h3>結論に向けて</h3>
+    <p>上記1・2の確認結果次第で、本制度への申請可否そのものが決まります。特に「都内勤務の実態」が確認できない場合、本社所在地を東京に変更していても対象外となるリスクがあるため、申請準備を本格化する前に、この2点を最優先でご確認いただくことをおすすめします。</p>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="head"><div class="eyebrow">07｜出典・参照資料</div><h2>参照したDropboxファイル</h2></div>
+  <div class="sourcelist">
+    <div class="doc"><div class="name">電子申請基礎情報（2022年提出）</div><div class="path">/事業再構築補助金(岩生)/9次公募/㈱ミキスペース(出し直し)[採択]/7次_【提出不要】【完成】(株)ミキスペース_電子申請基礎情報★提出不要、電子申請時に参考にしてください★.docx</div></div>
+    <div class="doc"><div class="name">労働者名簿一覧（2022年版・3名）</div><div class="path">/事業再構築補助金(岩生)/9次公募/㈱ミキスペース(出し直し)[採択]/【三木チェック済】_(株)ミキスペース_労働者名簿一覧.docx</div></div>
+    <div class="doc"><div class="name">労働者名簿一覧（2026年6月更新版・9名）</div><div class="path">/事業再構築補助金(岩生)/9次公募/㈱ミキスペース(出し直し)[採択]/内容証明郵便/⑤実績報告後に中小機構から送付されてきた文書（メールであれば、スクリーンショット/その他_実績報告後に提出済みの書類/更新版_㈱ミキスペース_労働者名簿一覧.docx</div></div>
+    <div class="doc"><div class="name">同ファイル（重複保管先①）</div><div class="path">/事業再構築補助金(岩生)/9次公募/㈱ミキスペース(出し直し)[採択]/社名等変更届/更新版_㈱ミキスペース_労働者名簿一覧.docx</div></div>
+    <div class="doc"><div class="name">同ファイル（重複保管先②）</div><div class="path">/事業再構築補助金(岩生)/9次公募/㈱ミキスペース(出し直し)[採択]/実地検査/その他_実績報告後に提出済みの書類/更新版_㈱ミキスペース_労働者名簿一覧.docx</div></div>
+    <div class="doc"><div class="name">同ファイル（PDF完成版）</div><div class="path">/事業再構築補助金(岩生)/9次公募/㈱ミキスペース(出し直し)[採択]/社名等変更届/完成/更新版_㈱ミキスペース_労働者名簿一覧.pdf</div></div>
+    <div class="doc"><div class="name">公式サイト会社概要</div><div class="path">https://www.miki-space.com/</div></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    本レポートはDropbox内の申請済み資料および公式サイトの記載内容にもとづく整理です。正式な申請可否の判断には、会社への直接確認と最新の人員構成データの取得が必要です。
+  </div>
+</footer>
+
+</body>
+</html>
