@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POSレジ 全業種対応製品調査</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceae4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --green:#1f7a4d; --green-pale:#e7f5ee; --green-line:#bfe3cf;
+    --rose:#a63a5c; --rose-ink:#7c2743; --rose-pale:#fbeaf0; --rose-line:#f0c9d6;
+    --amber:#9a6414; --amber-pale:#fbf0dd; --amber-line:#eed7a8;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+    font-size:15.5px; line-height:1.85;
+  }
+  h1,h2,h3{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
+  .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
+  a{color:var(--blue-ink);}
+  .wrap{max-width:1180px; margin-inline:auto; padding-inline:24px;}
+
+  header.cover{padding-block:56px 40px; border-bottom:1px solid var(--border);}
+  header.cover .eyebrow{margin-bottom:12px;}
+  header.cover h1{font-size:clamp(24px,4.6vw,32px); font-weight:800;}
+  header.cover .lede{margin-top:16px; color:var(--ink-soft); font-size:14.5px; max-width:70ch;}
+  header.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .chip{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);}
+
+  section{padding-block:44px; border-bottom:1px solid var(--border-soft);}
+  section:last-of-type{border-bottom:none;}
+  .head{margin-bottom:18px;}
+  .head h2{font-size:22px; font-weight:700;}
+  .head .eyebrow{display:block; margin-bottom:6px;}
+  .head .sub{color:var(--ink-soft); font-size:14px; margin-top:8px; max-width:72ch;}
+
+  .brief{background:var(--blue-pale); border:1px solid var(--blue-line); border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow);}
+  .brief p{margin:0 0 8px; font-size:14.5px;}
+  .brief p:last-child{margin-bottom:0;}
+
+  table{border-collapse:collapse; width:100%; min-width:920px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
+  table.fixed{table-layout:fixed;}
+  th,td{padding:13px 14px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:13.5px; vertical-align:top; overflow-wrap:break-word;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); white-space:nowrap;}
+  tbody tr:last-child td{border-bottom:none;}
+  td.price{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); font-variant-numeric:tabular-nums;}
+  td .cap{display:block; color:var(--ink-faint); font-size:11.5px; font-weight:400; line-height:1.6; margin-top:4px;}
+  .tblwrap{overflow-x:auto;}
+
+  .badge{display:inline-block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:11px; padding:3px 9px; border-radius:6px;}
+  .badge.confirmed{background:var(--green-pale); color:var(--green); border:1px solid var(--green-line);}
+
+  .conclusion{background:var(--green-pale); border:1px solid var(--green-line); border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow);}
+  .conclusion h3{font-size:16.5px; margin-bottom:10px;}
+  .conclusion p{margin:0 0 8px; font-size:14.5px;}
+  .conclusion p:last-child{margin-bottom:0;}
+
+  .note{font-size:12.5px; color:var(--ink-faint); margin-top:14px;}
+
+  footer{padding-block:40px 64px; color:var(--ink-faint); font-size:12.5px;}
+
+  @media print{ section{break-inside:avoid;} body{font-size:12.5px;} }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">調査レポート</div>
+    <h1>POSレジ 全業種対応製品調査</h1>
+    <p class="lede">IT導入補助金の代理店候補として、従来利用していたITツール登録事業者経由の情報源が枯渇してきたことを受け、0から全業種対応のPOSレジ製品を調査したもの。美容サロンに限らず、幅広い業種で利用できる汎用型POSレジのみを対象としています。</p>
+    <div class="meta">
+      <span class="chip">作成日：2026年9月16日</span>
+      <span class="chip">調査対象：全業種対応 10製品</span>
+      <span class="chip">依頼元：音声メモの指示に基づく</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="brief">
+  <div class="head"><div class="eyebrow">01｜調査の前提</div><h2>依頼内容の要約</h2></div>
+  <div class="brief">
+    <p>これまではITツール登録事業者から代理店契約先を選んでいたが、候補が枯渇してきたため、今後は登録の有無を問わず0から全業種対応のPOSレジを開拓していく方針。</p>
+    <p>対象は「業種を問わず利用できる」POSレジのみ。月額費用（不明な場合は1年分の金額から月額換算）、所在地、公式サイトに加えて、電話番号も併せて調査。</p>
+  </div>
+</section>
+
+<section id="products">
+  <div class="head"><div class="eyebrow">02｜全業種対応POSレジ一覧</div><h2>調査結果</h2><p class="sub">各社公式サイトおよびWeb検索結果をもとに、業種を限定しない汎用型POSレジ10製品をまとめたもの。うちVISIT・CASHIER POSは、初回の候補リストにも「全業種対応・小売寄り」として挙がっていた製品で、今回追加調査した8製品と合わせて本レポートに統合済み。</p></div>
+  <div class="tblwrap">
+    <table class="fixed">
+      <colgroup>
+        <col style="width:14%">
+        <col style="width:9%">
+        <col style="width:13%">
+        <col style="width:26%">
+        <col style="width:17%">
+        <col style="width:12%">
+        <col style="width:9%">
+      </colgroup>
+      <thead><tr><th>製品名</th><th>事業者</th><th>月額費用</th><th>イニシャルコスト</th><th>所在地</th><th>電話番号</th><th>HP</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>ユビレジ</b></td>
+          <td>㈱ユビレジ</td>
+          <td class="price">8,400円〜<span class="cap">飲食向け／小売向けは11,400円〜</span></td>
+          <td>プランにより0円<span class="cap">iPad・プリンター等の周辺機器は別途自己負担（レンタルプランで初期費用0円化も可）</span></td>
+          <td>東京都渋谷区千駄ケ谷3-51-10 PORTAL POINT HARAJUKU</td>
+          <td>03-6863-4071</td>
+          <td><a href="https://ubiregi.jp/" target="_blank" rel="noopener">ubiregi.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>スマレジ</b></td>
+          <td>㈱スマレジ</td>
+          <td class="price">0〜15,400円<span class="cap">スタンダード〜フードビジネスプラン</span></td>
+          <td>導入費用自体は0円<span class="cap">iPad＋プリンター＋ドロア＋バーコードリーダーのフルセット購入で約178,700円</span></td>
+          <td>大阪市中央区本町4-2-12 野村不動産御堂筋本町ビル3F</td>
+          <td>06-7777-2211</td>
+          <td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>Airレジ</b></td>
+          <td>㈱リクルート</td>
+          <td class="price">0円</td>
+          <td>アプリ自体は0円<span class="cap">決済連携（Airペイ）の端末スタンド等で9,900円〜が別途発生</span></td>
+          <td>東京都千代田区丸の内1-9-2 グラントウキョウサウスタワー</td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td><a href="https://airregi.jp/" target="_blank" rel="noopener">airregi.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>POS+（ポスタス）</b></td>
+          <td>ポスタス㈱</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">業種別プラン制</span></td>
+          <td style="color:var(--rose-ink); font-weight:700;">小売420,000円〜／飲食360,000円〜<span class="cap" style="font-weight:400;">他社より高額。条件により0円プランの案内もあり要問合せ</span></td>
+          <td>東京都中央区築地5-4-18 汐留イーストサイドビル2・3F</td>
+          <td>0120-599-536</td>
+          <td><a href="https://www.postas.co.jp/" target="_blank" rel="noopener">postas.co.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>USENレジ</b></td>
+          <td>㈱USEN</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">0円プランあり</span></td>
+          <td style="color:var(--rose-ink); font-weight:700;">目安30万円前後／台<span class="cap" style="font-weight:400;">リース契約に組み込み初期費用0円化する導入プランもあり</span></td>
+          <td>東京都品川区上大崎3-1-1 目黒セントラルスクエア</td>
+          <td>0120-117-440</td>
+          <td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com</a></td>
+        </tr>
+        <tr>
+          <td><b>BCPOS</b></td>
+          <td>㈱ビジコム</td>
+          <td class="price">0〜5,000円<span class="cap">Lite Free〜サブスクプラン</span></td>
+          <td>基本0円<span class="cap">クラウド管理オプション付きは16,500円。レンタルプランは初期費用0円だが2年契約</span></td>
+          <td>東京都新宿区西五軒町13-1 住友不動産飯田橋ビル3号館5F</td>
+          <td>03-5229-5190</td>
+          <td><a href="https://www.bcpos.jp/" target="_blank" rel="noopener">bcpos.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>タブレットPOSぷらす</b></td>
+          <td>STORES㈱</td>
+          <td class="price">0〜3,300円<span class="cap">フリー〜スタンダードプラン</span></td>
+          <td>0円<span class="cap">スタンダードプランは決済端末1台無料貸与</span></td>
+          <td>東京都渋谷区東3-16-3 エフ・ニッセイ恵比寿ビル4F</td>
+          <td>03-3407-8192</td>
+          <td><a href="https://stores.jp/" target="_blank" rel="noopener">stores.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>Square（小売業／飲食店POSレジ）</b></td>
+          <td>Square㈱</td>
+          <td class="price">0円〜</td>
+          <td>0円<span class="cap">キャッシュレス決済を使う場合のみSquareリーダー等の決済端末代（4,980円〜）が発生</span></td>
+          <td>東京都港区六本木7-7-7</td>
+          <td>0120-117-042</td>
+          <td><a href="https://squareup.com/jp/ja/point-of-sale" target="_blank" rel="noopener">squareup.com</a></td>
+        </tr>
+        <tr>
+          <td><b>VISIT</b></td>
+          <td>㈱Devotion</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">候補リスト記載額は3,500,000円だが月額／初期の別が不明</span></td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td>神奈川県横浜市栄区金井町300-3 セレーノ金井101</td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td><a href="https://devotion-co.jp/category/pos/" target="_blank" rel="noopener">devotion-co.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>CASHIER POS（プロフェッショナル）</b></td>
+          <td>㈱ユニエイム</td>
+          <td class="price">4,400円〜<span class="cap">ハンディ／テーブルオーダー等追加で9,400円まで上昇</span></td>
+          <td>138,000円〜<span class="cap">レンタルプラン利用なら初期費用0円（月額12,800円）</span></td>
+          <td>東京都渋谷区広尾3-12-36 ワイマッツ広尾5F</td>
+          <td>050-8881-0932<span class="cap">セールスチーム直通</span></td>
+          <td><a href="https://cashier-pos.com/" target="_blank" rel="noopener">cashier-pos.com</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">※月額費用は1年契約時の年額から月額換算した数値ではなく、各社公式サイトに記載の月額料金です。POS+・USENレジは業種・店舗規模により個別見積のため参考値のみ記載しています。イニシャルコストは端末購入型か貸与・レンタル型かで大きく変動するため、あくまで各社公式サイト・比較記事にもとづく目安です。</p>
+</section>
+
+<section id="conclusion">
+  <div class="head"><div class="eyebrow">03｜結論</div><h2>所感</h2></div>
+  <div class="conclusion">
+    <h3>低コストで即開拓しやすいのは スマレジ・BCPOS・タブレットPOSぷらす</h3>
+    <p>いずれも月額・イニシャルコストともに実質0円から始められ、業種を問わない汎用設計のため、IT導入補助金の代理店候補として横展開しやすい価格帯です。</p>
+    <p>一方、<b>POS+</b>（初期費用36万〜42万円）と<b>USENレジ</b>（初期費用目安30万円前後）は、月額だけでなくイニシャルコストも他社より一段高く、代理店契約を検討する際は事前に価格表・0円プランの条件を確認する必要があります。</p>
+    <p><b>Airレジ</b>は運営元がリクルートのため代理店網の構築余地は限定的と考えられますが、導入実績（100万アカウント以上）の大きさから比較対象として残しています。</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    本レポートは各社公式サイトおよびWeb検索結果にもとづく調査であり、価格・対応業種は変更される可能性があります。実際の代理店契約検討時は、各社への直接確認をおすすめします。
+  </div>
+</footer>
+
+</body>
+</html>
