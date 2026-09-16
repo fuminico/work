@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POSレジ サロン向け調査レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceae4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --green:#1f7a4d; --green-pale:#e7f5ee; --green-line:#bfe3cf;
+    --rose:#a63a5c; --rose-ink:#7c2743; --rose-pale:#fbeaf0; --rose-line:#f0c9d6;
+    --amber:#9a6414; --amber-pale:#fbf0dd; --amber-line:#eed7a8;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+    font-size:15.5px; line-height:1.85;
+  }
+  h1,h2,h3{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
+  .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
+  a{color:var(--blue-ink);}
+  .wrap{max-width:920px; margin-inline:auto; padding-inline:24px;}
+
+  header.cover{padding-block:56px 40px; border-bottom:1px solid var(--border);}
+  header.cover .eyebrow{margin-bottom:12px;}
+  header.cover h1{font-size:clamp(24px,4.6vw,32px); font-weight:800;}
+  header.cover .lede{margin-top:16px; color:var(--ink-soft); font-size:14.5px; max-width:70ch;}
+  header.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .chip{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);}
+
+  section{padding-block:44px; border-bottom:1px solid var(--border-soft);}
+  section:last-of-type{border-bottom:none;}
+  .head{margin-bottom:18px;}
+  .head h2{font-size:22px; font-weight:700;}
+  .head .eyebrow{display:block; margin-bottom:6px;}
+  .head .sub{color:var(--ink-soft); font-size:14px; margin-top:8px; max-width:72ch;}
+
+  .brief{background:var(--blue-pale); border:1px solid var(--blue-line); border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow);}
+  .brief p{margin:0 0 8px; font-size:14.5px;}
+  .brief p:last-child{margin-bottom:0;}
+
+  table{border-collapse:collapse; width:100%; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
+  th,td{padding:13px 16px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:14px; vertical-align:top;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2);}
+  tbody tr:last-child td{border-bottom:none;}
+  td.price{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .tblwrap{overflow-x:auto;}
+
+  .badge{display:inline-block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:11px; padding:3px 9px; border-radius:6px;}
+  .badge.confirmed{background:var(--green-pale); color:var(--green); border:1px solid var(--green-line);}
+  .badge.candidate{background:var(--blue-pale); color:var(--blue-ink); border:1px solid var(--blue-line);}
+
+  .taglist{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+  .tag{font-size:12.5px; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:600; padding:5px 11px; border-radius:999px; background:var(--surface); color:var(--ink-soft); border:1px solid var(--border);}
+
+  .excludegrid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px;}
+  @media (max-width:680px){.excludegrid{grid-template-columns:1fr;}}
+  .exclcard{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow);}
+  .exclcard .reason{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:12px; color:var(--rose-ink); margin-bottom:8px;}
+  .exclcard ul{margin:0; padding-left:1.1em; font-size:13.5px; color:var(--ink-soft);}
+  .exclcard li{margin-block:3px;}
+
+  .unknownlist{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .unknownlist .tag{background:var(--amber-pale); border-color:var(--amber-line); color:var(--amber);}
+
+  .conclusion{background:var(--green-pale); border:1px solid var(--green-line); border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow);}
+  .conclusion h3{font-size:16.5px; margin-bottom:10px;}
+  .conclusion p{margin:0 0 8px; font-size:14.5px;}
+  .conclusion p:last-child{margin-bottom:0;}
+
+  footer{padding-block:40px 64px; color:var(--ink-faint); font-size:12.5px;}
+
+  @media print{ section{break-inside:avoid;} body{font-size:12.5px;} }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">調査レポート</div>
+    <h1>IT導入補助金 POSレジ候補リスト<br>サロン向け製品の抽出調査</h1>
+    <p class="lede">IT導入補助金の仮登録候補として集められたPOSレジ製品リスト（41件）を対象に、美容室・エステ・ネイル等のサロン業態に対応しているものを抽出。各社公式サイト・製品紹介ページをもとに対象業種を調査した結果をまとめています。</p>
+    <div class="meta">
+      <span class="chip">作成日：2026年9月16日</span>
+      <span class="chip">調査対象：41製品</span>
+      <span class="chip">依頼元：音声メモの指示に基づく</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="brief">
+  <div class="head"><div class="eyebrow">01｜調査の前提</div><h2>依頼内容の要約</h2></div>
+  <div class="brief">
+    <p>IT導入補助金の仮登録でPOSレジ候補を多数取得したが、飲食専門のものが多く、サロン（美容室・エステ等）向けの利用には不向きなものが目立つ。</p>
+    <p>優先順位は<b>①サロン向け専用 → ②全業種対応・小売向け（施術業でも使える汎用型） → ③飲食専門は除外</b>。一軒ずつサイトを見る手間をかけずに、AIで一括抽出してほしいという依頼。</p>
+  </div>
+</section>
+
+<section id="confirmed">
+  <div class="head"><div class="eyebrow">02｜サロン向け（確定）</div><h2>美容・サロン業態に対応する製品</h2><p class="sub">製品名・提供元の説明で、美容室・エステ・ネイル等のサロン業態への対応が明確に確認できたもの。</p></div>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>製品名</th><th>事業者</th><th>価格</th><th>根拠</th></tr></thead>
+      <tbody>
+        <tr><td>SALONPOS LinQ2シンプルパック</td><td>タカラベルモント㈱</td><td class="price">84,000円</td><td>美容業界大手が展開する美容室専用POS。</td></tr>
+        <tr><td>SalonAnswer</td><td>エクシードシステム㈱</td><td class="price">93,600円</td><td>製品名・ドメイン（salonanswer.com）ともサロン専用を明示。</td></tr>
+        <tr><td><b>A'staff Cloud Basic</b></td><td>㈱アライド・システム</td><td class="price">120,000円</td><td>美容室・エステ・リラク・ネイル・まつげ・トリミングサロンまで、幅広いサロン業態に対応。今回確認した中で最も守備範囲が広い。</td></tr>
+        <tr><td>eSalon+（イーサロンプラス）</td><td>㈱プラス・サム</td><td class="price">300,000円</td><td>名称からサロン専用と明確。</td></tr>
+        <tr><td>FC SalonManager</td><td>㈱九愛コミュニケーションズ</td><td class="price">2,000,000円</td><td>名称からサロン専用と明確。価格はやや高め。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="candidates">
+  <div class="head"><div class="eyebrow">03｜全業種対応・小売寄り（二番手候補）</div><h2>サロンでも利用できる汎用型</h2><p class="sub">サロン専用ではないが、業種を問わず対応可能、または小売業全般を対象とする製品。依頼内容にある「小売向けは全般向けだからいい」という基準に合致。</p></div>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>製品名</th><th>事業者</th><th>価格</th><th>根拠</th></tr></thead>
+      <tbody>
+        <tr><td>VISIT</td><td>㈱Devotion</td><td class="price">3,500,000円</td><td>「ほぼ全業種対応」を明言。日本標準産業分類ベースで農林水産業〜医療まで対応可能と説明。</td></tr>
+        <tr><td>Square 小売業POSレジ【プラス】</td><td>Square㈱</td><td class="price">65,460円</td><td>小売業全般向け。価格も比較的手頃。</td></tr>
+        <tr><td>CASHIER POS プロフェッショナルプラン</td><td>㈱ユニエイム</td><td class="price">60,000円</td><td>飲食・小売の複数業態に対応。サロンの明記はないが汎用性は高い。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="excluded">
+  <div class="head"><div class="eyebrow">04｜除外（他業種専門と判明）</div><h2>サロン向けではないことが確認できた製品</h2></div>
+  <div class="excludegrid">
+    <div class="exclcard">
+      <div class="reason">飲食専門</div>
+      <ul>
+        <li>MAIDO SYSTEM（まいどソリューションズ）</li>
+        <li>かんたん注文（WSST JAPAN）</li>
+        <li>Bees（㈱27）</li>
+        <li>レストランナビゲーションシステム（ウォーターマテリアル）</li>
+        <li>ダイニーモバイルオーダー（レグルスインターナショナル）</li>
+        <li>トレタO/X（㈱トレタ）</li>
+        <li>tenposAir Pro（テンポス情報館）</li>
+        <li>TablePOS（㈱ボイス）</li>
+        <li>WiLReji（WiLLDesign）※外国人経営飲食店専用</li>
+        <li>ZiiPOS（Zii JAPAN）※カフェ・レストラン中心</li>
+      </ul>
+    </div>
+    <div class="exclcard">
+      <div class="reason">その他特定業種専門</div>
+      <ul>
+        <li>薬局向けPOS「C-POS」（ピーホット）→ 薬局専門</li>
+        <li>P-POSシステム（スペースチャンス）→ トレーディングカード専門店専門</li>
+        <li>スゴ腕WebPOS（日本データコム）→ アパレル・ゴルフ用品店専門</li>
+        <li>ninapos（㈱アニー）→ 製菓・パン店専門</li>
+        <li>constWELL（㈱TREE）→ 建設業向け（POSレジではない）</li>
+        <li>SchoolFlow（september合同会社）→ 教育機関向け</li>
+        <li>AdvaNceD IoTラゲッジドック（デバイスエージェンシー）→ ロッカー・南京錠システム（POSレジではない）</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="unknown">
+  <div class="head"><div class="eyebrow">05｜情報不足で判定できず</div><h2>個別確認が必要な製品</h2><p class="sub">公式サイトの情報が薄い、または検索で対象業種の記載が見つからなかったもの。優先度は低いが、参考情報として残しておく。</p></div>
+  <div class="unknownlist">
+    <span class="tag">CP-アシスト（クロスウェブ）</span>
+    <span class="tag">Staysee（宿泊業向けの可能性大）</span>
+    <span class="tag">L.B.B.Cloud（飲食・小売寄り）</span>
+    <span class="tag">E-gai（ギブリー）</span>
+    <span class="tag">abayengine（T・Lコンサルティング）</span>
+    <span class="tag">LETT POS（LillyHoldings）</span>
+    <span class="tag">R-EXPO（ロープス）</span>
+    <span class="tag">NEO+S（YE商事）</span>
+    <span class="tag">ERP-Cube（晴川／アイプラス）</span>
+    <span class="tag">SiGe POS（トゥ ザ ネクスト）</span>
+    <span class="tag">IBO ONE（IBOマネジメント）</span>
+    <span class="tag">UMAiVoice（東田開発）</span>
+    <span class="tag">NECモバイルPOS（日本電機）</span>
+    <span class="tag">OrderFlowシステム（レグルスインターナショナル）</span>
+    <span class="tag">AirPOS（本人確認済み・アクセス権限エラーのため未調査）</span>
+  </div>
+</section>
+
+<section id="conclusion">
+  <div class="head"><div class="eyebrow">06｜結論</div><h2>推奨リスト</h2></div>
+  <div class="conclusion">
+    <h3>サロン向けとして自信を持って提示できるのは上記5製品</h3>
+    <p>特に<b>A'staff Cloud</b>（㈱アライド・システム、120,000円）は、美容室・エステ・ネイル・まつげ・トリミングサロンまで複数のサロン業態に対応しており、最も汎用性が高い候補です。</p>
+    <p>「全業種対応」を重視する場合は、<b>VISIT</b>（㈱Devotion、3,500,000円）が候補になりますが、価格帯がサロン専用製品よりかなり高くなる点に留意が必要です。</p>
+    <p>価格を抑えたい場合は、サロン専用ではないものの小売業全般に対応する<b>Square 小売業POSレジ【プラス】</b>（65,460円）も選択肢になり得ます。</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    本レポートは各社公式サイトおよびWeb検索結果にもとづく調査であり、価格・対応業種は変更される可能性があります。実際の導入検討時は、各社への直接確認をおすすめします。
+  </div>
+</footer>
+
+</body>
+</html>
