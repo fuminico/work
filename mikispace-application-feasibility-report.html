@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ミキスペース 奨励金申請可否レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceae4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --green:#1f7a4d; --green-pale:#e7f5ee; --green-line:#bfe3cf;
+    --rose:#a63a5c; --rose-ink:#7c2743; --rose-pale:#fbeaf0; --rose-line:#f0c9d6;
+    --amber:#9a6414; --amber-pale:#fbf0dd; --amber-line:#eed7a8;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+    font-size:15.5px; line-height:1.85;
+  }
+  h1,h2,h3{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
+  .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
+  a{color:var(--blue-ink);}
+  .wrap{max-width:960px; margin-inline:auto; padding-inline:24px;}
+
+  header.cover{padding-block:56px 40px; border-bottom:1px solid var(--border);}
+  header.cover .eyebrow{margin-bottom:12px;}
+  header.cover h1{font-size:clamp(24px,4.6vw,32px); font-weight:800;}
+  header.cover .lede{margin-top:16px; color:var(--ink-soft); font-size:14.5px; max-width:70ch;}
+  header.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .chip{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);}
+
+  section{padding-block:44px; border-bottom:1px solid var(--border-soft);}
+  section:last-of-type{border-bottom:none;}
+  .head{margin-bottom:18px;}
+  .head h2{font-size:22px; font-weight:700;}
+  .head .eyebrow{display:block; margin-bottom:6px;}
+  .head .sub{color:var(--ink-soft); font-size:14px; margin-top:8px; max-width:72ch;}
+
+  .verdict{background:var(--blue-pale); border:1px solid var(--blue-line); border-radius:var(--radius); padding:24px 26px; box-shadow:var(--shadow);}
+  .verdict .label{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:900; font-size:13px; letter-spacing:.06em; color:var(--blue-ink); margin-bottom:8px;}
+  .verdict h3{font-size:19px; margin-bottom:12px;}
+  .verdict p{margin:0 0 8px; font-size:14.5px;}
+  .verdict p:last-child{margin-bottom:0;}
+
+  .findcard{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); margin-bottom:16px;}
+  .findcard:last-child{margin-bottom:0;}
+  .findcard .q{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:12px; letter-spacing:.04em; color:var(--ink-faint); margin-bottom:8px;}
+  .findcard h4{font-family:'Shippori Mincho B1',serif; font-size:16.5px; margin-bottom:10px;}
+  .findcard p{margin:0 0 6px; font-size:14px; color:var(--ink-soft);}
+  .findcard p:last-child{margin-bottom:0;}
+  .findcard .tag{display:inline-block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:11px; padding:3px 9px; border-radius:6px; margin-bottom:10px;}
+  .tag.ok{background:var(--green-pale); color:var(--green); border:1px solid var(--green-line);}
+  .tag.watch{background:var(--amber-pale); color:var(--amber); border:1px solid var(--amber-line);}
+  .tag.risk{background:var(--rose-pale); color:var(--rose-ink); border:1px solid var(--rose-line);}
+
+  ol.steps{list-style:none; margin:0; padding:0; counter-reset:step;}
+  ol.steps li{counter-increment:step; position:relative; padding:18px 20px 18px 58px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:12px;}
+  ol.steps li:last-child{margin-bottom:0;}
+  ol.steps li::before{content:counter(step); position:absolute; left:18px; top:18px; width:28px; height:28px; border-radius:50%; background:var(--blue-ink); color:#fff; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;}
+  ol.steps li h4{font-size:15.5px; margin-bottom:6px;}
+  ol.steps li p{margin:0; font-size:13.5px; color:var(--ink-soft);}
+
+  .riskbox{background:var(--rose-pale); border:1px solid var(--rose-line); border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow);}
+  .riskbox h3{font-size:16.5px; color:var(--rose-ink); margin-bottom:10px;}
+  .riskbox ul{margin:0; padding-left:1.2em;}
+  .riskbox li{margin-block:6px; font-size:14px; color:var(--ink);}
+
+  .note{background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; font-size:13px; color:var(--ink-soft); margin-top:16px;}
+
+  .conclusion{background:var(--green-pale); border:1px solid var(--green-line); border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow);}
+  .conclusion h3{font-size:16.5px; margin-bottom:10px;}
+  .conclusion p{margin:0 0 8px; font-size:14.5px;}
+  .conclusion p:last-child{margin-bottom:0;}
+
+  footer{padding-block:40px 64px; color:var(--ink-faint); font-size:12.5px;}
+
+  @media print{ section{break-inside:avoid;} body{font-size:12.5px;} }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">調査レポート</div>
+    <h1>ミキスペース 女性の活躍推進プロジェクト<br>奨励金申請可否レポート（電話ヒアリング後）</h1>
+    <p class="lede">代表・緒方様への電話ヒアリング結果をもとに、180万円加算（女性の活躍推進に向けた職場環境改善奨励金）の申請可否と、具体的な進め方を整理したもの。あわせて、実地検査を見据えた留意点をまとめています。</p>
+    <div class="meta">
+      <span class="chip">作成日：2026年9月16日</span>
+      <span class="chip">対象：㈱ミキスペース（代表 緒方みき様）</span>
+      <span class="chip">根拠：電話ヒアリング結果</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="verdict">
+  <div class="head"><div class="eyebrow">01｜総合判定</div><h2>申請可能性の結論</h2></div>
+  <div class="verdict">
+    <div class="label">総合判定：条件を整えれば対象化は可能。ただし実質を伴わせる設計が必須</div>
+    <h3>「形式要件は満たせるが、実地検査を通せる中身にできるかが本当の論点」</h3>
+    <p>現状（従業員100%女性）のままでは、いずれのカテゴリーも女性比率が4割を下回っておらず、奨励金の対象にはなりません。</p>
+    <p>ただし、緒方様のご意向どおり<b>男性を新たに雇用し、都内勤務・雇用保険加入・役職（係長等）への配置</b>を行えば、制度の形式的な要件（①女性比率4割未満カテゴリーの存在　②都内勤務の雇用保険被保険者1名以上　③対象カテゴリーへの女性の新規登用）自体は満たせる設計が可能です。</p>
+    <p>一方で、ヒアリングの中でこちらから「特定のカテゴリー（係長等）での採用は可能か」と質問したところ「それは可能」というご回答をいただいています。緒方様側から自発的に「役職は自由に付与できる」とおっしゃったわけではありませんが、配置の自由度が高いこと自体は事実であり、<b>実態を伴わない名目上の役職付与</b>になってしまうと条件を形式的に満たすだけになるリスクがあります。この点は本レポート04章で詳しく整理します。</p>
+  </div>
+</section>
+
+<section id="facts">
+  <div class="head"><div class="eyebrow">02｜ヒアリング結果の整理</div><h2>論点別の現状</h2></div>
+
+  <div class="findcard">
+    <div class="q">論点① 女性比率</div>
+    <span class="tag risk">現状は対象外</span>
+    <h4>従業員は現在100%女性。ただし新規男性雇用・役職配置は可能</h4>
+    <p>唯一在籍していた男性社員が退職し、現在ミキスペースの従業員は労働者・係長・管理職・役員のすべてのカテゴリーで女性100%の状態。このままでは「いずれかのカテゴリーで女性比率4割未満」という奨励金の入口要件を満たしません。</p>
+    <p>緒方様からは「男性社員の新規採用は可能」、また「係長等のカテゴリーでの採用は可能か」というこちらからの質問に対しても「それは可能」との回答があり、対象カテゴリーを新たに作り出すこと自体は可能な状況です。</p>
+  </div>
+
+  <div class="findcard">
+    <div class="q">論点② 所在地・都内勤務要件</div>
+    <span class="tag watch">工夫すれば満たせる見込みだが実態確認が必要</span>
+    <h4>登記上は東京都だが、実態は福岡・沖縄からのリモートワーク中心</h4>
+    <p>会社の登記住所（東京都葛飾区）はレンタルオフィスであり、緒方様ご本人を含め現従業員はほぼ福岡・沖縄からのリモートワーク。これは以前確認していた「2022年当時の労働者名簿の住所が福岡だった」という懸念を裏付ける内容です。</p>
+    <p>新規雇用予定の男性の方は埼玉在住とのことですが、「都内勤務」という形を取ることは可能とのことで、その方を「都内勤務の雇用保険被保険者」として充てることで、この要件をクリアする想定とのことです。</p>
+    <p>また、以前確認していた保育園運営事業については、緒方様が役員を務める<b>別会社</b>の事業であり、ミキスペースの事業ではないことが判明しました。したがって、今回の奨励金申請の検討対象から保育園事業は除外して問題ありません。</p>
+  </div>
+
+  <div class="findcard">
+    <div class="q">論点③ 対象カテゴリーへの新規登用（180万円加算部分）</div>
+    <span class="tag risk">実態要件がクリアできるかが最大の焦点</span>
+    <h4>役職への配置自体は可能という回答 — 実地検査での正当性が課題</h4>
+    <p>「係長のようなカテゴリーでの採用・配置は可能か」とこちらから質問したところ、「それは可能」との回答をいただきました。加えて、現在業務委託契約をしている男性を正社員化することも可能とのことです。</p>
+    <p>ただし、奨励金の加算部分は「名目上の役職変更」ではなく、実際に部下管理・シフト作成・売上管理など<b>実質的な職務内容を伴う登用</b>であることが前提です。実地検査では、この実質性が最も厳しく見られるポイントになります。</p>
+  </div>
+
+  <div class="findcard">
+    <div class="q">論点④ 申請意向・体制</div>
+    <span class="tag ok">意欲・実行体制は十分</span>
+    <h4>「プラスになるなら貪欲に取得したい」— 人・資金の確保も容易とのこと</h4>
+    <p>緒方様は国の奨励金・助成金全般について、収支がプラスになるものは積極的に取得したいという明確な意向をお持ちです。また、資金提供者や人材（周辺に業務委託中の方等）の確保についても「容易に可能」との回答でした。</p>
+  </div>
+</section>
+
+<section id="entity">
+  <div class="head"><div class="eyebrow">03｜追加論点：どちらの会社で申請するか</div><h2>ミキスペース（13期目）／今期4月設立の新会社</h2><p class="sub">緒方様からのご質問：男性の体制を新会社側で整えて申請するのと、男性ゼロのミキスペースにカテゴリー限定で採用して申請するのでは、どちらが進めやすいか。</p></div>
+  <div class="findcard">
+    <span class="tag ok">こちらの回答（ミキスペースでの申請）は妥当</span>
+    <h4>ミキスペース（13期目・実績のある会社）での申請が望ましいという判断は妥当</h4>
+    <p><b>本社または主たる事業所が東京都内にあること</b>という要件自体には、公式FAQ上、設立時期や事業継続年数に関する明示的な下限は見当たりませんでした（この点は募集要項本文まで未確認のため、事務局への確認が望ましい部分です）。したがって、制度の形式要件だけを見れば、新会社での申請自体は「書類上は」不可能ではないと考えられます。</p>
+    <p>ただし、<b>実地検査における説得力・信頼性の観点では、13期目のミキスペースの方が明確に有利</b>です。理由は以下の通りです。</p>
+    <p>① 今期4月設立の新会社は、実地検査の時点（9〜10月想定）で稼働実績がわずか半年未満となり、事業実態そのものが薄い状態で申請することになります。検査官から見れば「奨励金のためだけに用意された会社ではないか」という疑念を持たれやすく、他の論点（役職の実質性等）と合わせて疑義が重なりやすい構造になります。</p>
+    <p>② ミキスペースは13期の営業実績・雇用実績があり、既存の事業運営の中に新しい役職・雇用を自然に組み込む形で説明ができます。同じ「新規の男性雇用」という事実であっても、土台となる事業の実在性・継続性がある分、実地検査での説明の一貫性・信頼性が高くなります。</p>
+    <p>③ 新会社を使う場合、なぜ既存のミキスペースではなく新会社で申請するのかという合理的な説明（事業目的の違い等）が必要になりますが、現時点ではその説明材料が見当たりません。合理的な事業上の理由なく新会社を選ぶこと自体が、不自然さの一因になり得ます。</p>
+    <p>以上より、<b>「13期目の会社（ミキスペース）の方が実績・信頼性があるため望ましい」というご判断は、行政書士の立場から見ても妥当</b>と考えます。新会社の活用は、少なくとも今回の申請サイクルにおいては推奨しません。</p>
+  </div>
+</section>
+
+<section id="steps">
+  <div class="head"><div class="eyebrow">04｜具体的な進め方</div><h2>申請に向けたステップ</h2><p class="sub">現時点の情報をもとにした想定の進め方です。各ステップの実施前に、行政書士側で制度要綱・様式の最終確認を行います。</p></div>
+  <ol class="steps">
+    <li>
+      <h4>対象カテゴリー・登用者の確定</h4>
+      <p>新規雇用する男性を「係長」などどのカテゴリーに配置するか確定する。業務委託中の方を正社員化するか、新規採用するかも合わせて決定する。</p>
+    </li>
+    <li>
+      <h4>実質的な職務内容の設計</h4>
+      <p>役職に紐づく具体的な業務（部下管理・シフト作成・売上管理・採用関与など）を書面（辞令・職務分掌規程・業務日報の様式）として整備する。実地検査で説明できる実態を先に作ってから登用を発令する順序が望ましい。</p>
+    </li>
+    <li>
+      <h4>都内勤務・雇用保険加入の実務整備</h4>
+      <p>対象者の勤務実態（都内での実勤務、通勤・在宅勤務の実態記録）を整え、雇用保険の資格取得手続きを行う。雇用契約書の勤務地欄も実態と一致させる。</p>
+    </li>
+    <li>
+      <h4>就業規則・組織図の整備</h4>
+      <p>係長等の役職定義（管理職の場合は「2係以上または構成員10名以上」等の実態要件にも留意）を就業規則・組織図に明記し、対外的に一貫した説明ができる状態にする。</p>
+    </li>
+    <li>
+      <h4>支給申請スケジュールの逆算</h4>
+      <p>登用日・雇用保険加入日から、支給申請予定日までのスケジュールを確定する。制度上の必要経過期間（登用後の一定期間の勤務実績等）を必ず制度要綱で確認してから日程を組む。</p>
+    </li>
+    <li>
+      <h4>申請書類の準備・提出</h4>
+      <p>労働者名簿、雇用契約書、就業規則、賃金台帳等、必要書類一式を整えて申請する。</p>
+    </li>
+    <li>
+      <h4>実地検査対応の事前準備</h4>
+      <p>検査官からの質問を想定した想定問答（なぜこの登用を行ったか、実際の業務内容は何か）を用意し、緒方様・登用対象者双方が同じ説明をできるようすり合わせておく。</p>
+    </li>
+  </ol>
+</section>
+
+<section id="risk">
+  <div class="head"><div class="eyebrow">05｜重要な留意点</div><h2>実地検査・不正受給リスクについて</h2></div>
+  <div class="riskbox">
+    <h3>役職を自由に配置できるからこそ、名目だけの登用に流れないよう注意が必要です</h3>
+    <ul>
+      <li><b>名目だけの役職付与は実地検査で見抜かれる可能性が高い。</b>部下がいない、業務実態が伴わない「係長」は、検査官に「支給要件を満たすための形式的な登用」と判断されるおそれがあります。</li>
+      <li><b>最悪の場合、不正受給とみなされるリスクがある。</b>奨励金の趣旨に反する形式的な登用が発覚した場合、支給の取り消し・返還に加え、以後の公的制度利用に影響する可能性があります。</li>
+      <li><b>都内勤務の実態についても同様の注意が必要。</b>登記上は東京、実態は福岡・沖縄が中心という現状で、新規採用者1名のみを都内勤務者として扱う場合、その方の勤務実態（実際の勤務場所、通勤記録等）が問われた際に説明できる状態にしておく必要があります。</li>
+      <li><b>「人集めは容易」という点も、実態のない人員配置に流れないよう注意が必要。</b>資金や人材の確保のしやすさは経営上の強みですが、それを奨励金獲得のためだけに動員すると、上記のリスクをさらに高めます。</li>
+    </ul>
+  </div>
+  <p class="note">本レポートは、緒方様のご意向（プラスになるなら積極的に取得したい）を尊重しつつも、行政書士としての立場から、制度の趣旨に沿った実質を伴う形での申請を強く推奨する立場で作成しています。形式のみを整える方向で進める場合は、別途リスクについて明確なご説明・ご了承をいただいた上で対応する必要があります。</p>
+</section>
+
+<section id="conclusion">
+  <div class="head"><div class="eyebrow">06｜結論</div><h2>次のアクション</h2></div>
+  <div class="conclusion">
+    <h3>「対象化は可能」だが、次に詰めるべきは実質性の設計</h3>
+    <p>形式要件（女性比率・都内勤務・雇用保険加入）は、新規男性採用と役職配置によって満たせる見込みです。次に必要なのは、その登用に実質的な職務内容を持たせる具体的な設計です。</p>
+    <p>まずは、新規採用予定の男性の方に任せる具体的な業務内容と、係長として求める権限・責任の範囲を緒方様と一緒に詰めるミーティングを設定することを提案します。あわせて、制度要綱（登用後の必要経過期間、実地検査の実施内容）を行政書士側で改めて精査します。</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    本レポートは2026年9月16日時点の電話ヒアリング結果にもとづく整理であり、最終的な申請可否は制度要綱の精査および実際の登用実態の確認結果によります。
+  </div>
+</footer>
+
+</body>
+</html>
