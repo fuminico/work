@@ -28,7 +28,7 @@
   h1,h2,h3{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
   .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
   a{color:var(--blue-ink);}
-  .wrap{max-width:920px; margin-inline:auto; padding-inline:24px;}
+  .wrap{max-width:1180px; margin-inline:auto; padding-inline:24px;}
 
   header.cover{padding-block:56px 40px; border-bottom:1px solid var(--border);}
   header.cover .eyebrow{margin-bottom:12px;}
@@ -48,11 +48,13 @@
   .brief p{margin:0 0 8px; font-size:14.5px;}
   .brief p:last-child{margin-bottom:0;}
 
-  table{border-collapse:collapse; width:100%; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
-  th,td{padding:13px 16px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:14px; vertical-align:top;}
-  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2);}
+  table{border-collapse:collapse; width:100%; min-width:960px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
+  table.fixed{table-layout:fixed;}
+  th,td{padding:13px 14px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:13.5px; vertical-align:top; overflow-wrap:break-word;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); white-space:nowrap;}
   tbody tr:last-child td{border-bottom:none;}
-  td.price{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); white-space:nowrap; font-variant-numeric:tabular-nums;}
+  td.price{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); font-variant-numeric:tabular-nums;}
+  td .cap{display:block; color:var(--ink-faint); font-size:11.5px; font-weight:400; line-height:1.6; margin-top:4px;}
   .tblwrap{overflow-x:auto;}
 
   .badge{display:inline-block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; font-size:11px; padding:3px 9px; border-radius:6px;}
@@ -77,6 +79,8 @@
   .conclusion p{margin:0 0 8px; font-size:14.5px;}
   .conclusion p:last-child{margin-bottom:0;}
 
+  .note{font-size:12.5px; color:var(--ink-faint); margin-top:14px;}
+
   footer{padding-block:40px 64px; color:var(--ink-faint); font-size:12.5px;}
 
   @media print{ section{break-inside:avoid;} body{font-size:12.5px;} }
@@ -88,9 +92,9 @@
   <div class="wrap">
     <div class="eyebrow">調査レポート</div>
     <h1>IT導入補助金 POSレジ候補リスト<br>サロン向け製品の抽出調査</h1>
-    <p class="lede">IT導入補助金の仮登録候補として集められたPOSレジ製品リスト（41件）を対象に、美容室・エステ・ネイル等のサロン業態に対応しているものを抽出。各社公式サイト・製品紹介ページをもとに対象業種を調査した結果をまとめています。</p>
+    <p class="lede">IT導入補助金の仮登録候補として集められたPOSレジ製品リスト（41件）を対象に、美容室・エステ・ネイル等のサロン業態に対応しているものを抽出。各社公式サイト・製品紹介ページをもとに対象業種を調査した結果をまとめています。全業種対応レポートと項目をそろえ、月額費用に加えイニシャルコスト・所在地・電話番号・公式サイトを一覧化しています。</p>
     <div class="meta">
-      <span class="chip">作成日：2026年9月16日</span>
+      <span class="chip">作成日：2026年9月17日（再調査・更新版）</span>
       <span class="chip">調査対象：41製品</span>
       <span class="chip">依頼元：音声メモの指示に基づく</span>
     </div>
@@ -104,42 +108,122 @@
   <div class="brief">
     <p>IT導入補助金の仮登録でPOSレジ候補を多数取得したが、飲食専門のものが多く、サロン（美容室・エステ等）向けの利用には不向きなものが目立つ。</p>
     <p>優先順位は<b>①サロン向け専用 → ②全業種対応・小売向け（施術業でも使える汎用型） → ③飲食専門は除外</b>。一軒ずつサイトを見る手間をかけずに、AIで一括抽出してほしいという依頼。</p>
+    <p>今回、41製品全件を改めて再チェックし、当初「情報不足」に分類していた<b>Airレジ</b>について、美容室・美容院専用の公式業種ページ（サロン向け機能の明記）を確認できたため、サロン向け確定リストに追加しました。</p>
   </div>
 </section>
 
 <section id="confirmed">
-  <div class="head"><div class="eyebrow">02｜サロン向け（確定）</div><h2>美容・サロン業態に対応する製品</h2><p class="sub">製品名・提供元の説明で、美容室・エステ・ネイル等のサロン業態への対応が明確に確認できたもの。</p></div>
+  <div class="head"><div class="eyebrow">02｜サロン向け（確定）</div><h2>美容・サロン業態に対応する製品</h2><p class="sub">製品名・提供元の説明、または業種別の専用ページで、美容室・エステ・ネイル等のサロン業態への対応が明確に確認できたもの。</p></div>
   <div class="tblwrap">
-    <table>
-      <thead><tr><th>製品名</th><th>事業者</th><th>価格</th><th>問い合わせ先</th><th>根拠</th></tr></thead>
+    <table class="fixed">
+      <colgroup>
+        <col style="width:16%"><col style="width:11%"><col style="width:15%"><col style="width:18%"><col style="width:17%"><col style="width:12%"><col style="width:11%">
+      </colgroup>
+      <thead><tr><th>製品名</th><th>事業者</th><th>月額費用</th><th>イニシャルコスト</th><th>所在地</th><th>電話番号</th><th>HP</th></tr></thead>
       <tbody>
-        <tr><td>SALONPOS LinQ2シンプルパック</td><td>タカラベルモント㈱</td><td class="price">84,000円</td><td>0120-39-3614<br><span style="color:var(--ink-faint); font-size:12px;">SALONPOSヘルプデスク</span></td><td>美容業界大手が展開する美容室専用POS。</td></tr>
-        <tr><td>SalonAnswer</td><td>エクシードシステム㈱</td><td class="price">93,600円</td><td>03-5752-3890<br><span style="color:var(--ink-faint); font-size:12px;">受付 平日9:30〜18:30</span></td><td>製品名・ドメイン（salonanswer.com）ともサロン専用を明示。</td></tr>
-        <tr><td><b>A'staff Cloud Basic</b></td><td>㈱アライド・システム</td><td class="price">120,000円</td><td>0120-121-250<br><span style="color:var(--ink-faint); font-size:12px;">導入相談専用フリーダイヤル</span></td><td>美容室・エステ・リラク・ネイル・まつげ・トリミングサロンまで、幅広いサロン業態に対応。今回確認した中で最も守備範囲が広い。</td></tr>
-        <tr><td>eSalon+（イーサロンプラス）</td><td>㈱プラス・サム</td><td class="price">300,000円</td><td>048-650-5779</td><td>名称からサロン専用と明確。</td></tr>
-        <tr><td>FC SalonManager</td><td>㈱九愛コミュニケーションズ</td><td class="price">2,000,000円</td><td style="color:var(--ink-faint);">未確認</td><td>名称からサロン専用と明確。価格はやや高め。</td></tr>
+        <tr>
+          <td><b>SALONPOS LinQ2<br>シンプルパック</b><span class="cap">美容業界大手が展開する美容室専用POS</span></td>
+          <td>タカラベルモント㈱</td>
+          <td class="price">6,800円〜<span class="cap">候補リスト記載額は84,000円（プラン・年額換算の可能性あり）</span></td>
+          <td>130,000円〜<span class="cap">専用POS端末なしの場合。端末セットは550,000円〜</span></td>
+          <td>大阪府大阪市中央区<br>東心斎橋2-1-1</td>
+          <td>0120-39-3614<span class="cap">SALONPOSヘルプデスク</span></td>
+          <td><a href="https://www.tb-net.jp/product/pos/" target="_blank" rel="noopener">tb-net.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>SalonAnswer</b><span class="cap">製品名・ドメイン（salonanswer.com）ともサロン専用を明示</span></td>
+          <td>エクシードシステム㈱</td>
+          <td class="price">9,800円〜<span class="cap">候補リスト記載額は93,600円（プラン・年額換算の可能性あり）</span></td>
+          <td>130,000円<span class="cap">税抜</span></td>
+          <td>東京都渋谷区恵比寿1-13-6<br>恵比寿ISビル8F</td>
+          <td>086-242-3600<span class="cap">システム導入に関するお問い合わせ窓口（東京本社は03-6456-3954）</span></td>
+          <td><a href="https://ex.salonanswer.com/" target="_blank" rel="noopener">salonanswer.com</a></td>
+        </tr>
+        <tr>
+          <td><b>A'staff Cloud Basic</b><span class="cap">美容室・エステ・リラク・ネイル・まつげ・トリミングサロンまで幅広く対応。今回確認した中で最も守備範囲が広い</span></td>
+          <td>㈱アライド・システム</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">プランにより変動</span></td>
+          <td>100,000〜120,000円<span class="cap">Lite/Basic/Standardでプラン差あり。時期限定で0円キャンペーンあり</span></td>
+          <td>東京都三鷹市下連雀3-26-12<br>三鷹三菱ビル6F</td>
+          <td>0422-40-2460</td>
+          <td><a href="https://www.allied.co.jp/" target="_blank" rel="noopener">allied.co.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>eSalon+<br>（イーサロンプラス）</b><span class="cap">名称からサロン専用と明確</span></td>
+          <td>㈱プラス・サム</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">候補リスト記載額は300,000円（初期費用の可能性あり）</span></td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td>埼玉県さいたま市大宮区<br>桜木町2-7-4 サンラザール08 4F</td>
+          <td>048-650-5779</td>
+          <td><a href="https://esalon.plus/" target="_blank" rel="noopener">esalon.plus</a></td>
+        </tr>
+        <tr>
+          <td><b>FC SalonManager</b><span class="cap">名称からサロン専用と明確。価格はやや高め</span></td>
+          <td>㈱九愛コミュニケーションズ</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">候補リスト記載額は2,000,000円（初期費用の可能性あり）</span></td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td>福岡県春日市塚原台<br>1-100-1</td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td style="color:var(--ink-faint);">未確認</td>
+        </tr>
+        <tr>
+          <td><b>Airレジ（美容室・美容院向け）</b><span class="cap">公式サイトに美容室・美容院専用の業種別ページあり。再調査で新たに確定に追加</span></td>
+          <td>㈱リクルート</td>
+          <td class="price">0円</td>
+          <td>実質0円<span class="cap">決済連携（Airペイ）の端末スタンド等で9,900円〜が別途発生</span></td>
+          <td>東京都千代田区丸の内1-9-2<br>グラントウキョウサウスタワー</td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td><a href="https://airregi.jp/jp/industry/service/beautysalon/" target="_blank" rel="noopener">airregi.jp</a></td>
+        </tr>
       </tbody>
     </table>
   </div>
-  <p style="margin-top:14px; font-size:12.5px; color:var(--ink-faint);">※㈱プラス・サムは同名の別会社が複数存在するため、eSalon+運営元（esalon.plus公式サイトに「運営会社」として記載）と一致する、埼玉県さいたま市大宮区の会社（公式サイト plus-sum.co.jp）で確認した番号です。</p>
+  <p class="note">※㈱プラス・サムは同名の別会社が複数存在するため、eSalon+運営元（esalon.plus公式サイトに「運営会社」として記載）と一致する、埼玉県さいたま市大宮区の会社（公式サイト plus-sum.co.jp）で確認した番号です。候補リストの価格欄と公式サイトの月額表示にズレがある製品は、リスト側が初期費用または年額を記載している可能性があるため「要問合せ」としています。</p>
 </section>
 
 <section id="candidates">
   <div class="head"><div class="eyebrow">03｜全業種対応・小売寄り（二番手候補）</div><h2>サロンでも利用できる汎用型</h2><p class="sub">サロン専用ではないが、業種を問わず対応可能、または小売業全般を対象とする製品。依頼内容にある「小売向けは全般向けだからいい」という基準に合致。</p></div>
   <div class="tblwrap">
-    <table>
-      <thead><tr><th>製品名</th><th>事業者</th><th>価格</th><th>問い合わせ先</th><th>根拠</th></tr></thead>
+    <table class="fixed">
+      <colgroup>
+        <col style="width:16%"><col style="width:11%"><col style="width:15%"><col style="width:18%"><col style="width:17%"><col style="width:12%"><col style="width:11%">
+      </colgroup>
+      <thead><tr><th>製品名</th><th>事業者</th><th>月額費用</th><th>イニシャルコスト</th><th>所在地</th><th>電話番号</th><th>HP</th></tr></thead>
       <tbody>
-        <tr><td>VISIT</td><td>㈱Devotion</td><td class="price">3,500,000円</td><td style="color:var(--ink-faint);">未確認</td><td>「ほぼ全業種対応」を明言。日本標準産業分類ベースで農林水産業〜医療まで対応可能と説明。</td></tr>
-        <tr><td>Square 小売業POSレジ【プラス】</td><td>Square㈱</td><td class="price">65,460円</td><td>0120-117-042<br><span style="color:var(--ink-faint); font-size:12px;">受付10:00〜18:00</span></td><td>小売業全般向け。価格も比較的手頃。</td></tr>
-        <tr><td>CASHIER POS プロフェッショナルプラン</td><td>㈱ユニエイム</td><td class="price">60,000円</td><td>050-8881-0932<br><span style="color:var(--ink-faint); font-size:12px;">セールスチーム直通</span></td><td>飲食・小売の複数業態に対応。サロンの明記はないが汎用性は高い。</td></tr>
+        <tr>
+          <td><b>VISIT</b><span class="cap">「ほぼ全業種対応」を明言。日本標準産業分類ベースで農林水産業〜医療まで対応可能と説明</span></td>
+          <td>㈱Devotion</td>
+          <td class="price" style="color:var(--ink-faint);">要問合せ<span class="cap">候補リスト記載額は3,500,000円だが月額／初期の別が不明</span></td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td>神奈川県横浜市栄区<br>金井町300-3 セレーノ金井101</td>
+          <td style="color:var(--ink-faint);">未確認</td>
+          <td><a href="https://devotion-co.jp/category/pos/" target="_blank" rel="noopener">devotion-co.jp</a></td>
+        </tr>
+        <tr>
+          <td><b>Square 小売業POSレジ<br>【プラス】</b><span class="cap">小売業全般向け。価格も比較的手頃</span></td>
+          <td>Square㈱</td>
+          <td class="price">65,460円</td>
+          <td>0円<span class="cap">キャッシュレス決済を使う場合のみ決済端末代（4,980円〜）が発生</span></td>
+          <td>東京都港区六本木7-7-7</td>
+          <td>0120-117-042<span class="cap">受付10:00〜18:00</span></td>
+          <td><a href="https://squareup.com/jp/ja/point-of-sale" target="_blank" rel="noopener">squareup.com</a></td>
+        </tr>
+        <tr>
+          <td><b>CASHIER POS<br>プロフェッショナルプラン</b><span class="cap">飲食・小売の複数業態に対応。サロンの明記はないが汎用性は高い</span></td>
+          <td>㈱ユニエイム</td>
+          <td class="price">4,400円〜<span class="cap">ハンディ／テーブルオーダー等追加で9,400円まで上昇</span></td>
+          <td>138,000円〜<span class="cap">レンタルプラン利用なら初期費用0円（月額12,800円）</span></td>
+          <td>東京都渋谷区広尾3-12-36<br>ワイマッツ広尾5F</td>
+          <td>050-8881-0932<span class="cap">セールスチーム直通</span></td>
+          <td><a href="https://cashier-pos.com/" target="_blank" rel="noopener">cashier-pos.com</a></td>
+        </tr>
       </tbody>
     </table>
   </div>
 </section>
 
 <section id="excluded">
-  <div class="head"><div class="eyebrow">04｜除外（他業種専門と判明）</div><h2>サロン向けではないことが確認できた製品</h2></div>
+  <div class="head"><div class="eyebrow">04｜除外（他業種専門と判明）</div><h2>サロン向けではないことが確認できた製品</h2><p class="sub">再調査でもサロン業態への対応は確認できなかった製品。特に「スゴ腕WebPOS」はアパレル・ゴルフ用品店向けであることを改めて確認し、除外を維持しています。</p></div>
   <div class="excludegrid">
     <div class="exclcard">
       <div class="reason">飲食専門</div>
@@ -149,8 +233,8 @@
         <li>Bees（㈱27）— 未確認</li>
         <li>レストランナビゲーションシステム（ウォーターマテリアル）— 未確認</li>
         <li>ダイニーモバイルオーダー（レグルスインターナショナル）— 未確認（開発元の㈱ダイニーはinfo@dinii.jpのみ確認）</li>
-        <li>トレタO/X（㈱トレタ）— 0120-338-264</li>
-        <li>tenposAir Pro（テンポス情報館）— 0120-151-149</li>
+        <li>トレタO/X（㈱トレタ）— 03-6431-9006</li>
+        <li>tenposAir Pro（テンポス情報館）— 0120-945-149</li>
         <li>TablePOS（㈱ボイス）— 未確認（同名別会社が複数あり運営元特定できず）</li>
         <li>WiLReji（WiLLDesign）※外国人経営飲食店専用 — 未確認</li>
         <li>ZiiPOS（Zii JAPAN）※カフェ・レストラン中心 — 未確認</li>
@@ -161,7 +245,7 @@
       <ul>
         <li>薬局向けPOS「C-POS」（ピーホット）→ 薬局専門 — 045-532-4990</li>
         <li>P-POSシステム（スペースチャンス）→ トレーディングカード専門店専門 — 075-748-9999</li>
-        <li>スゴ腕WebPOS（日本データコム）→ アパレル・ゴルフ用品店専門 — 未確認</li>
+        <li>スゴ腕WebPOS（日本データコム）→ アパレル・ゴルフ用品店専門。再調査でもサロン対応の記載なしを確認 — 未確認</li>
         <li>ninapos（㈱アニー）→ 製菓・パン店専門 — 未確認</li>
         <li>constWELL（㈱TREE）→ 建設業向け（POSレジではない）</li>
         <li>SchoolFlow（september合同会社）→ 教育機関向け</li>
@@ -172,14 +256,14 @@
 </section>
 
 <section id="unknown">
-  <div class="head"><div class="eyebrow">05｜情報不足で判定できず</div><h2>個別確認が必要な製品</h2><p class="sub">公式サイトの情報が薄い、または検索で対象業種の記載が見つからなかったもの。優先度は低いが、参考情報として残しておく。</p></div>
+  <div class="head"><div class="eyebrow">05｜情報不足で判定できず</div><h2>個別確認が必要な製品</h2><p class="sub">再調査でも公式サイトの情報が薄く、美容・サロン業態への対応の有無を確認できなかったもの。優先度は低いが、参考情報として残しておく。</p></div>
   <div class="unknownlist">
     <span class="tag">CP-アシスト（クロスウェブ）／問い合わせ先：未確認</span>
     <span class="tag">Staysee（宿泊業向けの可能性大）／050-3000-7769</span>
-    <span class="tag">L.B.B.Cloud（飲食・小売寄り）／06-6777-7115</span>
-    <span class="tag">E-gai（ギブリー）／03-6277-5462</span>
+    <span class="tag">L.B.B.Cloud（飲食・小売寄り）／問い合わせ先：未確認（公式ページに記載なし）</span>
+    <span class="tag">E-gai（ギブリー）／問い合わせ先：未確認（公式ページに記載なし）</span>
     <span class="tag">abayengine（T・Lコンサルティング）／問い合わせ先：未確認</span>
-    <span class="tag">LETT POS（LillyHoldings）／052-232-0255</span>
+    <span class="tag">LETT POS（LillyHoldings）／問い合わせ先：未確認（公式ページ要再確認）</span>
     <span class="tag">R-EXPO（ロープス）／問い合わせ先：未確認</span>
     <span class="tag">NEO+S（YE商事）／問い合わせ先：未確認（会社自体を特定できず）</span>
     <span class="tag">ERP-Cube（晴川／アイプラス）／問い合わせ先：未確認（会社自体を特定できず）</span>
@@ -188,18 +272,17 @@
     <span class="tag">UMAiVoice（東田開発）／問い合わせ先：未確認（会社自体を特定できず）</span>
     <span class="tag">NECモバイルPOS（日本電機）／問い合わせ先：未確認（NEC正規代理店経由の窓口のみ確認）</span>
     <span class="tag">OrderFlowシステム（レグルスインターナショナル）／問い合わせ先：未確認</span>
-    <span class="tag">AirPOS（本人確認済み・アクセス権限エラーのため未調査）</span>
   </div>
-  <p style="margin-top:14px; font-size:12.5px; color:var(--ink-faint);">※本セクションは優先度が低いため、一部の会社（NEO+S・ERP-Cube・UMAiVoice等）は事業者名からの特定自体ができず、電話番号の確認に至っていません。</p>
+  <p class="note">※本セクションは優先度が低いため、一部の会社（NEO+S・ERP-Cube・UMAiVoice等）は事業者名からの特定自体ができず、電話番号の確認に至っていません。AirPOSは再調査により確定リスト（02章）へ移動しました。全電話番号を公式サイト（お問い合わせページ・特定商取引法表記等）で再確認した結果、L.B.B.Cloud・E-gai・LETT POSは公式ページ上で番号が確認できなかったため「未確認」に修正しています。</p>
 </section>
 
 <section id="conclusion">
   <div class="head"><div class="eyebrow">06｜結論</div><h2>推奨リスト</h2></div>
   <div class="conclusion">
-    <h3>サロン向けとして自信を持って提示できるのは上記5製品</h3>
-    <p>特に<b>A'staff Cloud</b>（㈱アライド・システム、120,000円）は、美容室・エステ・ネイル・まつげ・トリミングサロンまで複数のサロン業態に対応しており、最も汎用性が高い候補です。</p>
-    <p>「全業種対応」を重視する場合は、<b>VISIT</b>（㈱Devotion、3,500,000円）が候補になりますが、価格帯がサロン専用製品よりかなり高くなる点に留意が必要です。</p>
-    <p>価格を抑えたい場合は、サロン専用ではないものの小売業全般に対応する<b>Square 小売業POSレジ【プラス】</b>（65,460円）も選択肢になり得ます。</p>
+    <h3>サロン向けとして自信を持って提示できるのは6製品（再調査でAirレジを追加）</h3>
+    <p>特に<b>A'staff Cloud</b>（㈱アライド・システム）は、美容室・エステ・ネイル・まつげ・トリミングサロンまで複数のサロン業態に対応しており、最も汎用性が高い候補です。</p>
+    <p>コストを抑えたい場合は、月額0円から始められる<b>Airレジ（美容室・美容院向け）</b>が候補になります。ただし機能は汎用的なPOSアプリの範囲にとどまるため、電子カルテ等サロン特化機能を求める場合はA'staff Cloud・SalonAnswer等の専用製品が適しています。</p>
+    <p>「全業種対応」を重視する場合は、<b>VISIT</b>（㈱Devotion）が候補になりますが、価格帯がサロン専用製品よりかなり高くなる可能性がある点に留意が必要です。</p>
   </div>
 </section>
 
