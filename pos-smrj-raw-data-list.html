@@ -1,0 +1,2566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POSレジ 登録データ全件（生データ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceae4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --green:#1f7a4d; --green-pale:#e7f5ee; --green-line:#bfe3cf;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif; font-size:15.5px; line-height:1.85;}
+  h1,h2{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
+  .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
+  a{color:var(--blue-ink);}
+  .wrap{max-width:1280px; margin-inline:auto; padding-inline:24px;}
+  header.cover{padding-block:48px 32px; border-bottom:1px solid var(--border);}
+  header.cover .eyebrow{margin-bottom:12px;}
+  header.cover h1{font-size:clamp(22px,4.2vw,30px); font-weight:800;}
+  header.cover .lede{margin-top:14px; color:var(--ink-soft); font-size:14.5px; max-width:80ch;}
+  header.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .chip{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700;
+    padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);}
+  .backlink{display:inline-block; margin-top:16px; font-size:13.5px; font-weight:700;
+    padding:8px 16px; border-radius:999px; background:var(--blue-pale); border:1px solid var(--blue-line); text-decoration:none;}
+  section{padding-block:36px;}
+  .head{margin-bottom:16px;}
+  .head h2{font-size:21px; font-weight:700;}
+  .head .sub{color:var(--ink-soft); font-size:14px; margin-top:8px; max-width:84ch;}
+  table{border-collapse:collapse; width:100%; min-width:1000px; background:var(--surface);
+    border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
+  table.fixed{table-layout:fixed;}
+  th,td{padding:10px 12px; text-align:left; border-bottom:1px solid var(--border-soft);
+    font-size:12.5px; vertical-align:top; overflow-wrap:break-word;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:10.5px; letter-spacing:.04em;
+    color:var(--ink-faint); background:var(--surface-2); white-space:nowrap; position:sticky; top:0;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#fcfcfa;}
+  td.price{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink);
+    font-variant-numeric:tabular-nums; white-space:nowrap;}
+  td .cap{display:block; color:var(--ink-faint); font-size:10.5px; font-weight:400; line-height:1.55; margin-top:3px;}
+  .tg{display:inline-block; font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:10px;
+    padding:2px 7px; border-radius:5px; margin:0 3px 3px 0; background:var(--green-pale);
+    color:var(--green); border:1px solid var(--green-line); white-space:nowrap;}
+  .tblwrap{overflow-x:auto; max-height:none;}
+  .note{font-size:12.5px; color:var(--ink-faint); margin-top:14px;}
+  footer{padding-block:32px 56px; color:var(--ink-faint); font-size:12.5px;}
+  @media print{ body{font-size:11px;} thead th{position:static;} }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">付属資料｜生データ全件</div>
+    <h1>デジタル化・AI導入補助金2026<br>POSレジ登録データ 全274件（価格順）</h1>
+    <p class="lede">中小企業基盤整備機構「ITツール・IT導入支援事業者検索」で「インボイス枠 × スマートレジ関連ツール」を指定して検索した結果の全件を、サイト上の「価格順（昇順）」と同じ並びでそのまま掲載しています。集約・統合を一切行っていない登録事業者単位の生データです。各行の「詳細」から事務局の公式ページを直接確認できます。</p>
+    <div class="meta">
+      <span class="chip">取得日：2026年9月18日</span>
+      <span class="chip">検索条件：インボイス枠 × スマートレジ</span>
+      <span class="chip">全274件（登録事業者単位）</span>
+    </div>
+    <a class="backlink" href="pos-smrj-price-sorted-report.html">&larr; 集約版レポート（111製品・価格順）に戻る</a>
+  </div>
+</header>
+
+<main class="wrap">
+<section>
+  <div class="head"><h2>登録データ全件</h2><p class="sub">検索結果画面の表示内容（製品名・価格・事業者・所在地・付与タグ・コンソーシアム名・ITツール番号）をそのまま保持しています。同じ製品が複数行に現れるのは、複数のIT導入支援事業者がそれぞれ個別に登録しているためです。</p></div>
+  <div class="tblwrap"><table class="fixed">
+    <colgroup>
+      <col style="width:4%"><col style="width:30%"><col style="width:10%"><col style="width:19%"><col style="width:14%"><col style="width:17%"><col style="width:6%">
+    </colgroup>
+    <thead><tr><th>#</th><th>ITツール名</th><th>価格</th><th>IT導入支援事業者</th><th>所在地</th><th>付与タグ</th><th>公式</th></tr></thead>
+    <tbody>
+<tr>
+<td>1</td>
+<td><b>Airレジ</b><span class="cap">コンソーシアム：ＫＩＺＡＳＨＩコンソーシアム</span><span class="cap">ITツール番号：DL07-0042999</span></td>
+<td class="price">0円</td>
+<td>株式会社ＫＩＺＡＳＨＩ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042999" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>Square POSレジ</b><span class="cap">ITツール番号：DL07-0043652</span></td>
+<td class="price">0円</td>
+<td>堀興業株式会社</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043652" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>【スマートレジ0円】 Airレジ</b><span class="cap">コンソーシアム：Ａｉｒレジコンソーシアム</span><span class="cap">ITツール番号：DL07-0038815</span></td>
+<td class="price">0円</td>
+<td>株式会社リクルート</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0038815" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>【スマートレジ０円】Airレジ</b><span class="cap">コンソーシアム：ＡＢＴコンソーシアム</span><span class="cap">ITツール番号：DL07-0026660</span></td>
+<td class="price">0円</td>
+<td>株式会社リクルート</td>
+<td>東京都 千代田区丸の内</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0026660" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><b>【スマートレジ０円】Airレジ</b><span class="cap">コンソーシアム：ＣＡＲＥＡＲＣコンソーシアム</span><span class="cap">ITツール番号：DL07-0039312</span></td>
+<td class="price">0円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039312" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><b>スマレジ_スタンダード</b><span class="cap">コンソーシアム：ＫＩＺＡＳＨＩコンソーシアム</span><span class="cap">ITツール番号：DL07-0042984</span></td>
+<td class="price">0円</td>
+<td>株式会社ＫＩＺＡＳＨＩ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042984" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><b>Shopify POS</b><span class="cap">ITツール番号：DL07-0034696</span></td>
+<td class="price">9,000円</td>
+<td>ＷＡＮＴ　ＭＯＲＥ株式会社</td>
+<td>東京都 港区港南</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034696" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><b>Shopify POS</b><span class="cap">ITツール番号：DL07-0034709</span></td>
+<td class="price">9,000円</td>
+<td>株式会社シナラボ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034709" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><b>Shopify POS</b><span class="cap">ITツール番号：DL07-0036263</span></td>
+<td class="price">9,000円</td>
+<td>株式会社マークファイン</td>
+<td>兵庫県 南あわじ市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036263" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><b>【スマートレジ】Shopify POS</b><span class="cap">ITツール番号：DL07-0031038</span></td>
+<td class="price">9,000円</td>
+<td>株式会社Ｌｉｎｅｕｐ</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0031038" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><b>【スマートレジ】Shopify POS</b><span class="cap">ITツール番号：DL07-0032207</span></td>
+<td class="price">9,000円</td>
+<td>株式会社ミレニ・エイツ</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032207" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><b>POSasy</b><span class="cap">ITツール番号：DL07-0038490</span></td>
+<td class="price">42,000円</td>
+<td>東芝テック株式会社</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0038490" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><b>【スマートレジ】 リアレジ</b><span class="cap">コンソーシアム：ミロク情報サービス（ＭＪＳコンソーシアム）</span><span class="cap">ITツール番号：DL07-0030127</span></td>
+<td class="price">45,600円</td>
+<td>株式会社ミロク情報サービス</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0030127" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><b>リアレジ_ビジコム</b><span class="cap">コンソーシアム：奉行ＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0042614</span></td>
+<td class="price">45,600円</td>
+<td>株式会社オービックビジネスコンサルタント</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042614" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><b>【スマートレジ】ninapos AndroidPOSクライアント</b><span class="cap">ITツール番号：DL07-0009154</span></td>
+<td class="price">48,000円</td>
+<td>株式会社アニー</td>
+<td>東京都 調布市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0009154" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><b>【スマートレジ】ninapos タブレットPOSクライアントS</b><span class="cap">ITツール番号：DL04-0074314</span></td>
+<td class="price">48,000円</td>
+<td>株式会社アニー</td>
+<td>東京都 調布市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0074314" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><b>【スマートレジ】【IT補】USEN セルフレジ 月額利用料</b><span class="cap">ITツール番号：DL07-0032568</span></td>
+<td class="price">48,000円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032568" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td><b>SoloptiPOS</b><span class="cap">ITツール番号：DL07-0042121</span></td>
+<td class="price">50,000円</td>
+<td>株式会社ＳｏｌｏｐｔｉＬｉｎｋ</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042121" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><b>funfo Lite</b><span class="cap">ITツール番号：DL07-0040060</span></td>
+<td class="price">54,000円</td>
+<td>ロープス株式会社</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040060" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><b>funfo_ソフトウェアfunfo Lite</b><span class="cap">ITツール番号：DL04-0101843</span></td>
+<td class="price">54,000円</td>
+<td>株式会社テイクパート</td>
+<td>三重県 津市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0101843" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><b>【スマートレジ】MAIDO SYSTEMセルフカスタムプラン</b><span class="cap">ITツール番号：DL07-0021122</span></td>
+<td class="price">59,760円</td>
+<td>まいどソリューションズ株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021122" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><b>CASHIER POS プロフェッショナルプラン</b><span class="cap">ITツール番号：DL06-0013978</span></td>
+<td class="price">60,000円</td>
+<td>リノシード株式会社</td>
+<td>神奈川県 横浜市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0013978" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><b>CASHIER POS プロフェッショナルプラン</b><span class="cap">ITツール番号：DL06-0025074</span></td>
+<td class="price">60,000円</td>
+<td>株式会社インワークス</td>
+<td>大阪府 箕面市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0025074" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td><b>CASHIER POS プロフェッショナルプラン</b><span class="cap">ITツール番号：DL06-0037224</span></td>
+<td class="price">60,000円</td>
+<td>合同会社ウィンド</td>
+<td>東京都 八王子市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0037224" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td><b>CASHIER POS プロフェッショナルプラン</b><span class="cap">ITツール番号：DL07-0024617</span></td>
+<td class="price">60,000円</td>
+<td>株式会社タカノダイ</td>
+<td>東京都 練馬区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0024617" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td><b>CP-アシスト</b><span class="cap">コンソーシアム：ＯＮＥＦＬＡＴコンソーシアム</span><span class="cap">ITツール番号：DL07-0041012</span></td>
+<td class="price">60,000円</td>
+<td>株式会社Ｏｎｅ　Ｆｌａｔ</td>
+<td>愛媛県 松山市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041012" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL06-0007484</span></td>
+<td class="price">60,000円</td>
+<td>株式会社ＮＡＳＳＥ</td>
+<td>熊本県 熊本市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0007484" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL06-0010648</span></td>
+<td class="price">60,000円</td>
+<td>株式会社Ｎアットラボ</td>
+<td>熊本県 熊本市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0010648" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">コンソーシアム：中小企業支援コンソーシアム</span><span class="cap">ITツール番号：DL06-0011326</span></td>
+<td class="price">60,000円</td>
+<td>ユナイテッド・アドバイザーズ株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0011326" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>30</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">コンソーシアム：大三コンソーシアム</span><span class="cap">ITツール番号：DL07-0039846</span></td>
+<td class="price">60,000円</td>
+<td>株式会社大三</td>
+<td>茨城県 つくば市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039846" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>31</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL07-0039877</span></td>
+<td class="price">60,000円</td>
+<td>Ｓｙｎｃｐｉｅｃｅ株式会社</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039877" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>32</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL07-0039907</span></td>
+<td class="price">60,000円</td>
+<td>株式会社ライオンハート</td>
+<td>愛知県 名古屋市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039907" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>33</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL07-0040021</span></td>
+<td class="price">60,000円</td>
+<td>アドエッジ株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040021" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>34</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL07-0040643</span></td>
+<td class="price">60,000円</td>
+<td>イーモジャパン株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040643" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>35</td>
+<td><b>【スマートレジ】スマレジ プレミアム</b><span class="cap">ITツール番号：DL07-0041066</span></td>
+<td class="price">60,000円</td>
+<td>株式会社ジャガーノート</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041066" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>36</td>
+<td><b>【スマートレジ】スマレジ プレミアムプラン</b><span class="cap">ITツール番号：DL07-0027815</span></td>
+<td class="price">60,000円</td>
+<td>株式会社ＥＢＩＬＡＢ</td>
+<td>三重県 伊勢市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0027815" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>37</td>
+<td><b>スマレジ プレミアム</b><span class="cap">ITツール番号：DL06-0021674</span></td>
+<td class="price">60,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0021674" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>38</td>
+<td><b>スマレジプレミアム</b><span class="cap">ITツール番号：DL07-0040005</span></td>
+<td class="price">60,000円</td>
+<td>Ｘ‐ｓｏｌｕｔｉｏｎ株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040005" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>39</td>
+<td><b>スマレジプレミアム</b><span class="cap">ITツール番号：DL07-0042140</span></td>
+<td class="price">60,000円</td>
+<td>ベストプランナー合同会社</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042140" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>40</td>
+<td><b>Square 小売業POSレジ【プラス】</b><span class="cap">ITツール番号：DL06-0037790</span></td>
+<td class="price">65,460円</td>
+<td>ベストプランナー合同会社</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0037790" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>41</td>
+<td><b>Square 小売業POSレジ【プラス】</b><span class="cap">ITツール番号：DL07-0029818</span></td>
+<td class="price">65,460円</td>
+<td>Ｘ‐ｓｏｌｕｔｉｏｎ株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0029818" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>42</td>
+<td><b>【スマートレジ】MAIDO SYSTEM店舗経営まるごと効率化プランRS</b><span class="cap">ITツール番号：DL05-0027757</span></td>
+<td class="price">71,760円</td>
+<td>まいどソリューションズ株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL05-0027757" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>43</td>
+<td><b>【スマートレジ】【IT補助】ユビレジ プレミアムプラン</b><span class="cap">ITツール番号：DL06-0011252</span></td>
+<td class="price">78,660円</td>
+<td>株式会社ユビレジ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0011252" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>44</td>
+<td><b>【スマートレジ】ユビレジ プレミアム</b><span class="cap">コンソーシアム：中小企業支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0031938</span></td>
+<td class="price">82,800円</td>
+<td>ユナイテッド・アドバイザーズ株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0031938" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>45</td>
+<td><b>ユビレジプレミアムプラン</b><span class="cap">ITツール番号：DL07-0039347</span></td>
+<td class="price">82,800円</td>
+<td>合同会社コトストリング</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039347" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>46</td>
+<td><b>CASHIER POS プロフェッショナルPRIMEプラン</b><span class="cap">ITツール番号：DL07-0043293</span></td>
+<td class="price">84,000円</td>
+<td>株式会社カーリー</td>
+<td>福岡県 福岡市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043293" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>47</td>
+<td><b>CASHIER POS プロフェッショナルPRIMEプラン</b><span class="cap">ITツール番号：DL07-0043308</span></td>
+<td class="price">84,000円</td>
+<td>株式会社リアル</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043308" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>48</td>
+<td><b>funfo Lite AI</b><span class="cap">ITツール番号：DL04-0082517</span></td>
+<td class="price">84,000円</td>
+<td>ファンフォ株式会社</td>
+<td>京都府 京都市下京区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0082517" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>49</td>
+<td><b>【スマートレジ】SALONPOS LinQ2シンプルパック</b><span class="cap">ITツール番号：DL04-0031989</span></td>
+<td class="price">84,000円</td>
+<td>タカラベルモント株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0031989" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>50</td>
+<td><b>SalonAnswer</b><span class="cap">コンソーシアム：エクシードシステムコンソーシアム</span><span class="cap">ITツール番号：DL06-0022584</span></td>
+<td class="price">93,600円</td>
+<td>エクシードシステム株式会社</td>
+<td>岡山県 岡山市北区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0022584" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>51</td>
+<td><b>SalonAnswer</b><span class="cap">ITツール番号：DL07-0007107</span></td>
+<td class="price">93,600円</td>
+<td>エクシードシステム株式会社</td>
+<td>岡山県 岡山市北区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007107" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>52</td>
+<td><b>SiGe POS クラウド版（店舗設置型）</b><span class="cap">ITツール番号：DL07-0035917</span></td>
+<td class="price">96,000円</td>
+<td>株式会社Ｔｏ　Ｔｈｅ　Ｎｅｘｔ</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035917" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>53</td>
+<td><b>【スマートレジ】スマレジ プレミアムプラス</b><span class="cap">コンソーシアム：中小企業支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0012816</span></td>
+<td class="price">96,000円</td>
+<td>ユナイテッド・アドバイザーズ株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012816" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>54</td>
+<td><b>【スマートレジ】スマレジ プレミアムプラスプラン</b><span class="cap">ITツール番号：DL07-0008839</span></td>
+<td class="price">96,000円</td>
+<td>株式会社Ｎアットラボ</td>
+<td>熊本県 熊本市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0008839" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>55</td>
+<td><b>【スマートレジ】スマレジ プレミアムプラスプラン</b><span class="cap">ITツール番号：DL07-0021736</span></td>
+<td class="price">96,000円</td>
+<td>株式会社フォーバル</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021736" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>56</td>
+<td><b>【スマートレジ】スマレジ プレミアムプラスプラン</b><span class="cap">ITツール番号：DL07-0029710</span></td>
+<td class="price">96,000円</td>
+<td>株式会社ＥＢＩＬＡＢ</td>
+<td>三重県 伊勢市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0029710" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>57</td>
+<td><b>【スマートレジ】スマレジ（プレミアムプラスプラン）</b><span class="cap">ITツール番号：DL06-0002046</span></td>
+<td class="price">96,000円</td>
+<td>新日本コンピュータサービス株式会社</td>
+<td>栃木県 宇都宮市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0002046" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>58</td>
+<td><b>スマレジ プレミアムプラス</b><span class="cap">ITツール番号：DL06-0014030</span></td>
+<td class="price">96,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0014030" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>59</td>
+<td><b>スマレジ プレミアムプラスプラン</b><span class="cap">ITツール番号：DL07-0007986</span></td>
+<td class="price">96,000円</td>
+<td>株式会社ＮＡＳＳＥ</td>
+<td>熊本県 熊本市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007986" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>60</td>
+<td><b>スマレジ プレミアムプラスプラン</b><span class="cap">コンソーシアム：スマレジコンソーシアム</span><span class="cap">ITツール番号：DL07-0039071</span></td>
+<td class="price">96,000円</td>
+<td>株式会社スマレジ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039071" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>61</td>
+<td><b>スマレジ_プレミアムプラスプラン</b><span class="cap">コンソーシアム：奉行ＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0040335</span></td>
+<td class="price">96,000円</td>
+<td>株式会社オービックビジネスコンサルタント</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040335" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>62</td>
+<td><b>スマレジプレミアムプラス</b><span class="cap">ITツール番号：DL07-0041495</span></td>
+<td class="price">96,000円</td>
+<td>Ｘ‐ｓｏｌｕｔｉｏｎ株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041495" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>63</td>
+<td><b>スマレジプレミアムプラス</b><span class="cap">ITツール番号：DL07-0042453</span></td>
+<td class="price">96,000円</td>
+<td>ベストプランナー合同会社</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042453" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>64</td>
+<td><b>プレミアムプラス</b><span class="cap">ITツール番号：DL07-0043906</span></td>
+<td class="price">96,000円</td>
+<td>株式会社モアコンセプト</td>
+<td>熊本県 熊本市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043906" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>65</td>
+<td><b>NECモバイルPOS</b><span class="cap">ITツール番号：DL07-0036959</span></td>
+<td class="price">102,000円</td>
+<td>愛知計機株式会社</td>
+<td>愛知県 名古屋市南区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036959" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>66</td>
+<td><b>NEC モバイルPOS 基本サービス利用料</b><span class="cap">ITツール番号：DL07-0037704</span></td>
+<td class="price">108,000円</td>
+<td>株式会社フジシステム</td>
+<td>愛知県 豊橋市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037704" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>67</td>
+<td><b>A'staff Cloud Basic</b><span class="cap">ITツール番号：DL07-0035191</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035191" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>68</td>
+<td><b>A'staff Cloud Basic</b><span class="cap">コンソーシアム：ＣＡＲＥＡＲＣコンソーシアム</span><span class="cap">ITツール番号：DL07-0035570</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035570" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>69</td>
+<td><b>A'staff Cloud Standard</b><span class="cap">コンソーシアム：ＣＡＲＥＡＲＣコンソーシアム</span><span class="cap">ITツール番号：DL07-0035573</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035573" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>70</td>
+<td><b>A'staff Cloud Standard</b><span class="cap">ITツール番号：DL07-0035575</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035575" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>71</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043418</span></td>
+<td class="price">120,000円</td>
+<td>有限会社アイテック</td>
+<td>広島県 広島市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043418" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>72</td>
+<td><b>L.B.B.Cloud BASICプラン</b><span class="cap">ITツール番号：DL07-0029268</span></td>
+<td class="price">120,000円</td>
+<td>アイスクウェアラボ合同会社</td>
+<td>石川県 かほく市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0029268" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>73</td>
+<td><b>ORANGE POS</b><span class="cap">ITツール番号：DL07-0017760</span></td>
+<td class="price">120,000円</td>
+<td>株式会社エスキュービズム</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0017760" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>74</td>
+<td><b>funfo</b><span class="cap">ITツール番号：DL07-0035268</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ＩＳＧｒｏｕｐ</td>
+<td>沖縄県 宜野湾市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035268" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>75</td>
+<td><b>funfo Business</b><span class="cap">コンソーシアム：サービス業ＤＸ推進コンソーシアム</span><span class="cap">ITツール番号：DL07-0033951</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ＭＳ＆Ｃｏｎｓｕｌｔｉｎｇ</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0033951" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>76</td>
+<td><b>【スマートレジ】funfo Business</b><span class="cap">ITツール番号：DL07-0004625</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ギブファースト</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0004625" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>77</td>
+<td><b>【スマートレジ】funfo Business</b><span class="cap">ITツール番号：DL07-0014090</span></td>
+<td class="price">120,000円</td>
+<td>株式会社ｔｅｎ</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0014090" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>78</td>
+<td><b>【スマートレジ】funfo Business</b><span class="cap">ITツール番号：DL07-0015096</span></td>
+<td class="price">120,000円</td>
+<td>ネクスト株式会社</td>
+<td>宮城県 仙台市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0015096" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>79</td>
+<td><b>【スマートレジ】funfo Business</b><span class="cap">ITツール番号：DL07-0035086</span></td>
+<td class="price">120,000円</td>
+<td>株式会社リモートサポート</td>
+<td>埼玉県 三郷市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035086" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>80</td>
+<td><b>【スマートレジ】funfo Business</b><span class="cap">ITツール番号：DL07-0036446</span></td>
+<td class="price">120,000円</td>
+<td>合同会社Ｚｉｏ</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036446" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>81</td>
+<td><b>【スマートレジ】funfo Business</b><span class="cap">ITツール番号：DL07-0036671</span></td>
+<td class="price">120,000円</td>
+<td>株式会社Ｆｉｌｌ　ｕｐ</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036671" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>82</td>
+<td><b>薬局向けPOSレジシステム「C-POS」</b><span class="cap">ITツール番号：DL07-0031525</span></td>
+<td class="price">120,000円</td>
+<td>ピーホット株式会社</td>
+<td>神奈川県 横浜市緑区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0031525" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>83</td>
+<td><b>【スマートレジ】SALONPOS LinQ2ベーシックパック</b><span class="cap">ITツール番号：DL07-0004990</span></td>
+<td class="price">132,000円</td>
+<td>タカラベルモント株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0004990" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>84</td>
+<td><b>Square飲食店POSレジプラス</b><span class="cap">ITツール番号：DL07-0037824</span></td>
+<td class="price">141,818円</td>
+<td>ベストプランナー合同会社</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037824" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>85</td>
+<td><b>Square飲食店POSレジプラス</b><span class="cap">ITツール番号：DL07-0038370</span></td>
+<td class="price">141,818円</td>
+<td>Ｘ‐ｓｏｌｕｔｉｏｎ株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0038370" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>86</td>
+<td><b>funfo Business AI</b><span class="cap">ITツール番号：DL06-0011932</span></td>
+<td class="price">144,000円</td>
+<td>ファンフォ株式会社</td>
+<td>京都府 京都市下京区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0011932" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>87</td>
+<td><b>funfo Business AI</b><span class="cap">ITツール番号：DL07-0043209</span></td>
+<td class="price">144,000円</td>
+<td>株式会社ＲＯＯＴ’ｓ</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043209" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>88</td>
+<td><b>funfo Business AI</b><span class="cap">コンソーシアム：ＲＭコンソーシアム</span><span class="cap">ITツール番号：DL07-0043214</span></td>
+<td class="price">144,000円</td>
+<td>株式会社リモートサポート</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043214" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>89</td>
+<td><b>funfo Business AI</b><span class="cap">コンソーシアム：ＡＬコンソーシアム</span><span class="cap">ITツール番号：DL07-0043215</span></td>
+<td class="price">144,000円</td>
+<td>株式会社ＡＤＬＥ</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043215" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>90</td>
+<td><b>funfo Business AI</b><span class="cap">コンソーシアム：ＭＮコンソーシアム</span><span class="cap">ITツール番号：DL07-0043219</span></td>
+<td class="price">144,000円</td>
+<td>株式会社マーナビ</td>
+<td>埼玉県 三郷市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043219" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>91</td>
+<td><b>A'staff Cloud LINE予約</b><span class="cap">コンソーシアム：ＣＡＲＥＡＲＣコンソーシアム</span><span class="cap">ITツール番号：DL07-0035574</span></td>
+<td class="price">150,000円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035574" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>92</td>
+<td><b>A'staff Cloud LINE予約</b><span class="cap">ITツール番号：DL07-0035579</span></td>
+<td class="price">150,000円</td>
+<td>株式会社ＣＡＲＥＡＲＣ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035579" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>93</td>
+<td><b>EstheAnswer</b><span class="cap">ITツール番号：DL05-0001987</span></td>
+<td class="price">153,600円</td>
+<td>エクシードシステム株式会社</td>
+<td>岡山県 岡山市北区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL05-0001987" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>94</td>
+<td><b>StarPOS</b><span class="cap">ITツール番号：DL07-0043327</span></td>
+<td class="price">153,600円</td>
+<td>株式会社ネクストベリー</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043327" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>95</td>
+<td><b>【スマートレジ】【IT補】 USENレジ TAB FOOD 月額利用料</b><span class="cap">ITツール番号：DL06-0003758</span></td>
+<td class="price">155,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0003758" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>96</td>
+<td><b>【スマートレジ】【IT補】USENレジ BEAUTY 月額利用料</b><span class="cap">ITツール番号：DL04-0041256</span></td>
+<td class="price">155,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0041256" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>97</td>
+<td><b>【スマートレジ】【IT補】USENレジ STORE 月額利用料</b><span class="cap">ITツール番号：DL04-0041249</span></td>
+<td class="price">155,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0041249" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>98</td>
+<td><b>【スマートレジ】【IT補】新USENレジ 月額利用料</b><span class="cap">ITツール番号：DL06-0035541</span></td>
+<td class="price">167,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0035541" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>99</td>
+<td><b>POS+ BEAUTY基本利用料金(年額)</b><span class="cap">ITツール番号：DL07-0023821</span></td>
+<td class="price">168,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0023821" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>100</td>
+<td><b>POS+ FOOD基本利用料金（年額）</b><span class="cap">ITツール番号：DL07-0021272</span></td>
+<td class="price">168,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021272" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>101</td>
+<td><b>【スマートレジ】SALONPOS LinQ2 ベーシックパックプラス</b><span class="cap">ITツール番号：DL04-0031993</span></td>
+<td class="price">168,000円</td>
+<td>タカラベルモント株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0031993" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>102</td>
+<td><b>【スマートレジ】スマレジ フードビジネス</b><span class="cap">ITツール番号：DL06-0012816</span></td>
+<td class="price">168,000円</td>
+<td>株式会社ＮＡＳＳＥ</td>
+<td>熊本県 熊本市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0012816" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>103</td>
+<td><b>【スマートレジ】スマレジ フードビジネス</b><span class="cap">コンソーシアム：中小企業支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0012832</span></td>
+<td class="price">168,000円</td>
+<td>ユナイテッド・アドバイザーズ株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012832" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>104</td>
+<td><b>【スマートレジ】スマレジ フードビジネスプラン</b><span class="cap">コンソーシアム：リコージャパンコンソーシアム</span><span class="cap">ITツール番号：DL06-0031709</span></td>
+<td class="price">168,000円</td>
+<td>リコージャパン株式会社</td>
+<td>東京都 大田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0031709" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>105</td>
+<td><b>【スマートレジ】スマレジ フードビジネスプラン</b><span class="cap">ITツール番号：DL07-0008335</span></td>
+<td class="price">168,000円</td>
+<td>株式会社Ｎアットラボ</td>
+<td>熊本県 熊本市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0008335" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>106</td>
+<td><b>【スマートレジ】スマレジ フードビジネスプラン</b><span class="cap">ITツール番号：DL07-0021525</span></td>
+<td class="price">168,000円</td>
+<td>株式会社フォーバル</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021525" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>107</td>
+<td><b>【スマートレジ】スマレジ フードビジネスプラン</b><span class="cap">ITツール番号：DL07-0029786</span></td>
+<td class="price">168,000円</td>
+<td>株式会社ＥＢＩＬＡＢ</td>
+<td>三重県 伊勢市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0029786" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>108</td>
+<td><b>【スマートレジ】スマレジ リテールビジネス</b><span class="cap">コンソーシアム：中小企業支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0012821</span></td>
+<td class="price">168,000円</td>
+<td>ユナイテッド・アドバイザーズ株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012821" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>109</td>
+<td><b>【スマートレジ】スマレジ リテールビジネスプラン</b><span class="cap">ITツール番号：DL07-0021675</span></td>
+<td class="price">168,000円</td>
+<td>株式会社フォーバル</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021675" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>110</td>
+<td><b>【スマートレジ】スマレジ リテールビジネスプラン</b><span class="cap">ITツール番号：DL07-0033544</span></td>
+<td class="price">168,000円</td>
+<td>株式会社ＥＢＩＬＡＢ</td>
+<td>三重県 伊勢市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0033544" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>111</td>
+<td><b>スマレジ フードビジネス</b><span class="cap">ITツール番号：DL07-0025758</span></td>
+<td class="price">168,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0025758" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>112</td>
+<td><b>スマレジ フードビジネスプラン</b><span class="cap">コンソーシアム：スマレジコンソーシアム</span><span class="cap">ITツール番号：DL07-0039414</span></td>
+<td class="price">168,000円</td>
+<td>株式会社スマレジ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039414" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>113</td>
+<td><b>スマレジ リテールビジネス</b><span class="cap">ITツール番号：DL06-0060994</span></td>
+<td class="price">168,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0060994" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>114</td>
+<td><b>スマレジ リテールビジネスプラン</b><span class="cap">コンソーシアム：スマレジコンソーシアム</span><span class="cap">ITツール番号：DL07-0035289</span></td>
+<td class="price">168,000円</td>
+<td>株式会社スマレジ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035289" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>115</td>
+<td><b>スマレジ_フードビジネスプラン</b><span class="cap">コンソーシアム：奉行ＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0040338</span></td>
+<td class="price">168,000円</td>
+<td>株式会社オービックビジネスコンサルタント</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040338" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>116</td>
+<td><b>スマレジ_フードビジネスプラン</b><span class="cap">ITツール番号：DL07-0042641</span></td>
+<td class="price">168,000円</td>
+<td>キヤノンシステムアンドサポート株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042641" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>117</td>
+<td><b>スマレジ_リテールビジネスプラン</b><span class="cap">コンソーシアム：奉行ＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0039354</span></td>
+<td class="price">168,000円</td>
+<td>株式会社オービックビジネスコンサルタント</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039354" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>118</td>
+<td><b>スマレジフードビジネス</b><span class="cap">ITツール番号：DL07-0040010</span></td>
+<td class="price">168,000円</td>
+<td>Ｘ‐ｓｏｌｕｔｉｏｎ株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040010" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>119</td>
+<td><b>スマレジフードビジネス</b><span class="cap">ITツール番号：DL07-0041479</span></td>
+<td class="price">168,000円</td>
+<td>ベストプランナー合同会社</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041479" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>120</td>
+<td><b>スマレジリテールビジネス</b><span class="cap">ITツール番号：DL07-0040011</span></td>
+<td class="price">168,000円</td>
+<td>Ｘ‐ｓｏｌｕｔｉｏｎ株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040011" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>121</td>
+<td><b>スマレジリテールビジネス</b><span class="cap">ITツール番号：DL07-0042142</span></td>
+<td class="price">168,000円</td>
+<td>ベストプランナー合同会社</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042142" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>122</td>
+<td><b>リテールビジネスプラン</b><span class="cap">ITツール番号：DL07-0043904</span></td>
+<td class="price">168,000円</td>
+<td>株式会社モアコンセプト</td>
+<td>熊本県 熊本市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043904" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>123</td>
+<td><b>funfo Business Plus</b><span class="cap">コンソーシアム：サービス業ＤＸ推進コンソーシアム</span><span class="cap">ITツール番号：DL07-0033950</span></td>
+<td class="price">180,000円</td>
+<td>株式会社ＭＳ＆Ｃｏｎｓｕｌｔｉｎｇ</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0033950" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>124</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0015158</span></td>
+<td class="price">180,000円</td>
+<td>ネクスト株式会社</td>
+<td>宮城県 仙台市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0015158" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>125</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0033702</span></td>
+<td class="price">180,000円</td>
+<td>株式会社ｔｅｎ</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0033702" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>126</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0034857</span></td>
+<td class="price">180,000円</td>
+<td>株式会社Ｄｉｆｅ</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034857" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>127</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0034895</span></td>
+<td class="price">180,000円</td>
+<td>株式会社マーナビ</td>
+<td>埼玉県 三郷市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034895" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>128</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0036455</span></td>
+<td class="price">180,000円</td>
+<td>合同会社Ｚｉｏ</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036455" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>129</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0036645</span></td>
+<td class="price">180,000円</td>
+<td>株式会社ＡＤＬＥ</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036645" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>130</td>
+<td><b>【スマートレジ】funfo Business Plus</b><span class="cap">ITツール番号：DL07-0037071</span></td>
+<td class="price">180,000円</td>
+<td>株式会社ＣＯＲｅ</td>
+<td>埼玉県 八潮市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037071" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>131</td>
+<td><b>AdvaNceD IoTラゲッジドック 南京錠シリーズ</b><span class="cap">ITツール番号：DL07-0032292</span></td>
+<td class="price">200,000円</td>
+<td>株式会社デバイスエージェンシー</td>
+<td>大阪府 大阪市西区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032292" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>132</td>
+<td><b>SalonAnswer*</b><span class="cap">ITツール番号：DL07-0029988</span></td>
+<td class="price">201,600円</td>
+<td>エクシードシステム株式会社</td>
+<td>岡山県 岡山市北区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0029988" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>133</td>
+<td><b>SalonAnswer*</b><span class="cap">コンソーシアム：エクシードシステムコンソーシアム</span><span class="cap">ITツール番号：DL07-0030938</span></td>
+<td class="price">201,600円</td>
+<td>エクシードシステム株式会社</td>
+<td>岡山県 岡山市北区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0030938" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>134</td>
+<td><b>funfo One AI</b><span class="cap">コンソーシアム：ＡＬコンソーシアム</span><span class="cap">ITツール番号：DL07-0042883</span></td>
+<td class="price">216,000円</td>
+<td>株式会社ＡＤＬＥ</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042883" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>135</td>
+<td><b>funfo One AI</b><span class="cap">コンソーシアム：ＭＮコンソーシアム</span><span class="cap">ITツール番号：DL07-0042889</span></td>
+<td class="price">216,000円</td>
+<td>株式会社マーナビ</td>
+<td>埼玉県 三郷市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042889" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>136</td>
+<td><b>funfo One AI</b><span class="cap">ITツール番号：DL07-0042896</span></td>
+<td class="price">216,000円</td>
+<td>株式会社ＲＯＯＴ’ｓ</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042896" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>137</td>
+<td><b>funfo One AI</b><span class="cap">コンソーシアム：ＮＸコンソーシアム</span><span class="cap">ITツール番号：DL07-0042899</span></td>
+<td class="price">216,000円</td>
+<td>ネクスト株式会社</td>
+<td>宮城県 仙台市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042899" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>138</td>
+<td><b>【スマートレジ】MAIDO SYSTEM店舗経営まるごと効率化プランM</b><span class="cap">ITツール番号：DL07-0017723</span></td>
+<td class="price">225,360円</td>
+<td>まいどソリューションズ株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0017723" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>139</td>
+<td><b>【スマートレジ】【IT補】USENレジ＿HANDY・MobileOrder付き</b><span class="cap">ITツール番号：DL06-0058151</span></td>
+<td class="price">239,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0058151" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>140</td>
+<td><b>【スマートレジ】【IT補】USENレジ＿MobileOrder付き</b><span class="cap">ITツール番号：DL06-0057525</span></td>
+<td class="price">239,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0057525" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>141</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0036452</span></td>
+<td class="price">240,000円</td>
+<td>合同会社ＧＲＩＴＯＮＥ</td>
+<td>長野県 上田市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036452" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>142</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0036894</span></td>
+<td class="price">240,000円</td>
+<td>合同会社ＦＭＹ</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0036894" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>143</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037047</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＡＳＰ</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037047" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>144</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037059</span></td>
+<td class="price">240,000円</td>
+<td>ＭＭＹコーポレーション合同会社</td>
+<td>東京都 文京区本郷１ー３３ー３</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037059" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>145</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037062</span></td>
+<td class="price">240,000円</td>
+<td>株式会社フェニックス</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037062" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>146</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037221</span></td>
+<td class="price">240,000円</td>
+<td>Ｇｌｅａｒｎ株式会社</td>
+<td>東京都 港区虎ノ門</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037221" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>147</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037223</span></td>
+<td class="price">240,000円</td>
+<td>株式会社トビライズ</td>
+<td>東京都 新宿区新小川町１−１４</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037223" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>148</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037337</span></td>
+<td class="price">240,000円</td>
+<td>株式会社Ｒｅｇｉｓｔａ</td>
+<td>大阪府 八尾市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037337" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>149</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037338</span></td>
+<td class="price">240,000円</td>
+<td>喜多興産有限会社</td>
+<td>兵庫県 尼崎市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037338" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>150</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037341</span></td>
+<td class="price">240,000円</td>
+<td>Ｋ‐Ｐａｒｔｎｅｒ合同会社</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037341" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>151</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037345</span></td>
+<td class="price">240,000円</td>
+<td>合同会社フォール</td>
+<td>東京都 葛飾区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037345" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>152</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037348</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＳＫＹＶＩＬＬＡＧＥ</td>
+<td>東京都 大田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037348" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>153</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037349</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＵｔｓＵｗａ</td>
+<td>東京都 杉並区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037349" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>154</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037357</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＣｒｏｗｎＳｔｒａｔｅｇｙ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037357" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>155</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037361</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＵＩＣ</td>
+<td>東京都 杉並区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037361" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>156</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037365</span></td>
+<td class="price">240,000円</td>
+<td>株式会社Ｕｎｉｑｕｅ</td>
+<td>東京都 杉並区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037365" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>157</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037368</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＨＵＬＩＮＫ</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037368" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>158</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037369</span></td>
+<td class="price">240,000円</td>
+<td>株式会社Ｕｎｉｔａｓ</td>
+<td>東京都 杉並区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037369" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>159</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037482</span></td>
+<td class="price">240,000円</td>
+<td>株式会社エスプリント</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037482" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>160</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037616</span></td>
+<td class="price">240,000円</td>
+<td>株式会社Ｋａｔｉａｇｅ</td>
+<td>愛知県 名古屋市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037616" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>161</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037631</span></td>
+<td class="price">240,000円</td>
+<td>株式会社エイトフューチャー</td>
+<td>東京都 調布市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037631" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>162</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037755</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＳＥＶＥＮ　ＬＥＡＦ　ＣＬＯＶＥＲ</td>
+<td>愛知県 名古屋市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037755" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>163</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037759</span></td>
+<td class="price">240,000円</td>
+<td>合同会社永羽</td>
+<td>静岡県 御前崎市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037759" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>164</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037803</span></td>
+<td class="price">240,000円</td>
+<td>城東総合産業株式会社</td>
+<td>東京都 足立区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037803" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>165</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037805</span></td>
+<td class="price">240,000円</td>
+<td>Ｋ．Ｙ．Ｓ．合同会社</td>
+<td>北海道 函館市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037805" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>166</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0037806</span></td>
+<td class="price">240,000円</td>
+<td>株式会社カレンリミテッド</td>
+<td>静岡県 掛川市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037806" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>167</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0038615</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＳＡＮＳ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0038615" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>168</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0038782</span></td>
+<td class="price">240,000円</td>
+<td>株式会社テラトモ</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0038782" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>169</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0039438</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＡＬＬＦｒｅｅ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039438" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>170</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0039450</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＥｎｔｅｒＴｅｃｈ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039450" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>171</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043256</span></td>
+<td class="price">240,000円</td>
+<td>Ｍａｃｈｉｅｖｅ株式会社</td>
+<td>福岡県 北九州市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043256" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>172</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043257</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ＬＬＬ‐Ｃｏｍｍｕｎｉｃａｔｉｏｎｓ</td>
+<td>福岡県 福岡市博多区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043257" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>173</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043366</span></td>
+<td class="price">240,000円</td>
+<td>合同会社エスクルール</td>
+<td>東京都 墨田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043366" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>174</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043415</span></td>
+<td class="price">240,000円</td>
+<td>株式会社ラテリー</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043415" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>175</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043740</span></td>
+<td class="price">240,000円</td>
+<td>株式会社タンネの森</td>
+<td>大阪府 東大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043740" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>176</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043789</span></td>
+<td class="price">240,000円</td>
+<td>株式会社あいだ工務店</td>
+<td>東京都 青梅市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043789" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>177</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043801</span></td>
+<td class="price">240,000円</td>
+<td>株式会社Ｋ’ｚ　Ｌｉｎｅ　Ｃｏｎｎｅｃｔ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043801" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>178</td>
+<td><b>AirPOS</b><span class="cap">ITツール番号：DL07-0043842</span></td>
+<td class="price">240,000円</td>
+<td>株式会社厨設</td>
+<td>京都府 京都市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043842" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>179</td>
+<td><b>NECモバイルPOS</b><span class="cap">ITツール番号：DL07-0042813</span></td>
+<td class="price">240,000円</td>
+<td>日本リテイルシステム株式会社</td>
+<td>東京都 台東区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042813" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>180</td>
+<td><b>WEB-POS</b><span class="cap">ITツール番号：DL07-0040764</span></td>
+<td class="price">240,000円</td>
+<td>ポスレジサービス株式会社</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040764" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>181</td>
+<td><b>【スマートレジ】スマレジ フードリテールプラン</b><span class="cap">ITツール番号：DL07-0013568</span></td>
+<td class="price">240,000円</td>
+<td>株式会社フォーバル</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0013568" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>182</td>
+<td><b>スマレジ フードビジネス/リテールビジネスプラン</b><span class="cap">コンソーシアム：スマレジコンソーシアム</span><span class="cap">ITツール番号：DL07-0039081</span></td>
+<td class="price">240,000円</td>
+<td>株式会社スマレジ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039081" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>183</td>
+<td><b>スマレジ リテール＆フード</b><span class="cap">ITツール番号：DL07-0025785</span></td>
+<td class="price">240,000円</td>
+<td>株式会社大塚商会</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0025785" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>184</td>
+<td><b>スマレジ_フードビジネス/リテールビジネスプラン</b><span class="cap">コンソーシアム：奉行ＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0040342</span></td>
+<td class="price">240,000円</td>
+<td>株式会社オービックビジネスコンサルタント</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040342" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>185</td>
+<td><b>モバレジ</b><span class="cap">ITツール番号：DL07-0034581</span></td>
+<td class="price">240,000円</td>
+<td>エスパー株式会社</td>
+<td>岐阜県 多治見市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034581" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>186</td>
+<td><b>モバレジ</b><span class="cap">ITツール番号：DL07-0037248</span></td>
+<td class="price">240,000円</td>
+<td>新日本コンピュータサービス株式会社</td>
+<td>栃木県 宇都宮市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037248" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>187</td>
+<td><b>【スマートレジ】MAIDO SYSTEM店舗経営まるごと効率化プランMX</b><span class="cap">ITツール番号：DL07-0017863</span></td>
+<td class="price">261,360円</td>
+<td>まいどソリューションズ株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0017863" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>188</td>
+<td><b>【スマートレジ】【IT補】USENレジ＿TabletOrder付き</b><span class="cap">ITツール番号：DL06-0057526</span></td>
+<td class="price">263,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0057526" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>189</td>
+<td><b>【スマートレジ】ninapos タブレットPOSクライアントP</b><span class="cap">ITツール番号：DL04-0074307</span></td>
+<td class="price">280,000円</td>
+<td>株式会社アニー</td>
+<td>東京都 調布市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0074307" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>190</td>
+<td><b>E-gaiスタンダードプラン</b><span class="cap">ITツール番号：DL06-0071105</span></td>
+<td class="price">300,000円</td>
+<td>有限会社ロイヤルクリエイティブ</td>
+<td>愛知県 知立市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0071105" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>191</td>
+<td><b>YELLTICKET プレミアムプラン</b><span class="cap">ITツール番号：DL07-0035565</span></td>
+<td class="price">300,000円</td>
+<td>株式会社ＹＥＬＬＡＧＥＮＴ</td>
+<td>沖縄県 浦添市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0035565" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>192</td>
+<td><b>「スゴ腕」WebPOSシステム</b><span class="cap">ITツール番号：DL07-0034876</span></td>
+<td class="price">300,000円</td>
+<td>株式会社日本データコム</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034876" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>193</td>
+<td><b>【スマートレジ】クラウド型POSレジシステム「eSalon+」イーサロンプラス フルサポートプラン</b><span class="cap">ITツール番号：DL07-0021682</span></td>
+<td class="price">300,000円</td>
+<td>株式会社プラス・サム</td>
+<td>埼玉県 さいたま市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021682" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>194</td>
+<td><b>【スマートレジ】SALONPOS LinQ2 DXエントリーパック</b><span class="cap">ITツール番号：DL07-0005184</span></td>
+<td class="price">324,000円</td>
+<td>タカラベルモント株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0005184" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>195</td>
+<td><b>【スマートレジ】ワンレジ_セルフレジシステム</b><span class="cap">ITツール番号：DL04-0050939</span></td>
+<td class="price">350,000円</td>
+<td>株式会社スカイダイニング</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL04-0050939" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>196</td>
+<td><b>【スマートレジ】NECモバイルPOS</b><span class="cap">ITツール番号：DL07-0030541</span></td>
+<td class="price">354,000円</td>
+<td>株式会社ジェットシステム</td>
+<td>島根県 松江市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0030541" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>197</td>
+<td><b>【スマートレジ】【IT補】 USENレジ＿MobileOrder付き（30テーブル以上）</b><span class="cap">ITツール番号：DL07-0024479</span></td>
+<td class="price">359,760円</td>
+<td>株式会社ＵＳＥＮ</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0024479" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>198</td>
+<td><b>【スマートレジ】SALONPOS LinQ2 DXスタンダードパック</b><span class="cap">ITツール番号：DL07-0005253</span></td>
+<td class="price">372,000円</td>
+<td>タカラベルモント株式会社</td>
+<td>大阪府 大阪市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0005253" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>199</td>
+<td><b>【スマートレジ】トレタO/X</b><span class="cap">ITツール番号：DL06-0013210</span></td>
+<td class="price">420,000円</td>
+<td>株式会社トレタ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0013210" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>200</td>
+<td><b>【スマートレジ】ワンレジ_レジシステム</b><span class="cap">ITツール番号：DL06-0068197</span></td>
+<td class="price">480,000円</td>
+<td>株式会社スカイダイニング</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0068197" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>201</td>
+<td><b>AdvaNceD IOTスマートチェックイン forクラウドスマートロック プレミアム</b><span class="cap">ITツール番号：DL07-0013786</span></td>
+<td class="price">498,000円</td>
+<td>株式会社デバイスエージェンシー</td>
+<td>大阪府 大阪市西区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0013786" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>202</td>
+<td><b>POSシステム 『Tレジ』</b><span class="cap">ITツール番号：DL07-0016761</span></td>
+<td class="price">500,000円</td>
+<td>株式会社　テンポス情報館</td>
+<td>東京都 大田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0016761" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>203</td>
+<td><b>POSシステム 『tenposAir Pro』</b><span class="cap">ITツール番号：DL07-0019995</span></td>
+<td class="price">500,000円</td>
+<td>株式会社　テンポス情報館</td>
+<td>東京都 大田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0019995" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>204</td>
+<td><b>ダイニーモバイルオーダー ＡＩスタンダードプラン</b><span class="cap">コンソーシアム：株式会社レグルスインターナショナルコンソーシアム</span><span class="cap">ITツール番号：DL07-0034919</span></td>
+<td class="price">528,000円</td>
+<td>株式会社レグルスインターナショナル</td>
+<td>東京都 港区北青山１丁目</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034919" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>205</td>
+<td><b>ダイニーモバイルオーダー ＡＩスタンダードプランプラス</b><span class="cap">コンソーシアム：レストランテックコンソーシアム</span><span class="cap">ITツール番号：DL07-0031941</span></td>
+<td class="price">588,000円</td>
+<td>株式会社ＨＪＰ　Ｃｏｒｐｏｒａｔｉｏｎ</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0031941" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>206</td>
+<td><b>ダイニーモバイルオーダー ＡＩスタンダードプランプラス</b><span class="cap">コンソーシアム：サービス業ＤＸ推進コンソーシアム</span><span class="cap">ITツール番号：DL07-0032897</span></td>
+<td class="price">588,000円</td>
+<td>株式会社ＭＳ＆Ｃｏｎｓｕｌｔｉｎｇ</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032897" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>207</td>
+<td><b>Ｂｅｅｓ スタンダードプラン</b><span class="cap">ITツール番号：DL07-0042203</span></td>
+<td class="price">600,000円</td>
+<td>株式会社２７</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042203" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>208</td>
+<td><b>POSシステム『UNIPOS』</b><span class="cap">ITツール番号：DL07-0008573</span></td>
+<td class="price">800,000円</td>
+<td>株式会社　テンポス情報館</td>
+<td>東京都 大田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0008573" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>209</td>
+<td><b>レストランナビゲーションシステム</b><span class="cap">ITツール番号：DL07-0026459</span></td>
+<td class="price">880,000円</td>
+<td>株式会社ウォーターマテリアル</td>
+<td>岡山県 岡山市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0026459" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>210</td>
+<td><b>AdvaNceD IoT スマートチェックイン forレンタカー プラン３</b><span class="cap">ITツール番号：DL07-0013802</span></td>
+<td class="price">900,000円</td>
+<td>株式会社デバイスエージェンシー</td>
+<td>大阪府 大阪市西区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0013802" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>211</td>
+<td><b>AdvaNceD IoTスマートチェックイン forカードロック</b><span class="cap">ITツール番号：DL07-0013686</span></td>
+<td class="price">900,000円</td>
+<td>株式会社デバイスエージェンシー</td>
+<td>大阪府 大阪市西区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0013686" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>212</td>
+<td><b>AdvaNceD IoTスマートチェックイン withキーボックス</b><span class="cap">ITツール番号：DL07-0013795</span></td>
+<td class="price">900,000円</td>
+<td>株式会社デバイスエージェンシー</td>
+<td>大阪府 大阪市西区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0013795" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>213</td>
+<td><b>SLレストラン管理システム</b><span class="cap">ITツール番号：DL06-0032897</span></td>
+<td class="price">960,000円</td>
+<td>ｓｅｐｔｅｍｂｅｒ合同会社</td>
+<td>埼玉県 川口市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0032897" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>214</td>
+<td><b>abayengineクラウド</b><span class="cap">ITツール番号：DL06-0009746</span></td>
+<td class="price">960,000円</td>
+<td>ｓｅｐｔｅｍｂｅｒ合同会社</td>
+<td>埼玉県 川口市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0009746" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>215</td>
+<td><b>T&Pオーダーシステム</b><span class="cap">ITツール番号：DL07-0018553</span></td>
+<td class="price">990,000円</td>
+<td>久浦株式会社</td>
+<td>福岡県 福岡市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0018553" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>216</td>
+<td><b>券売機システム『UNIPOS CloudTicket』</b><span class="cap">ITツール番号：DL07-0008682</span></td>
+<td class="price">1,000,000円</td>
+<td>株式会社　テンポス情報館</td>
+<td>東京都 大田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0008682" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>217</td>
+<td><b>よかレジ</b><span class="cap">ITツール番号：DL07-0014604</span></td>
+<td class="price">1,296,000円</td>
+<td>株式会社ＲＡＩＪＩＮ</td>
+<td>福岡県 宗像市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0014604" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>218</td>
+<td><b>Ｂｅｅｓ プレミアムプラン</b><span class="cap">ITツール番号：DL07-0042271</span></td>
+<td class="price">1,440,000円</td>
+<td>株式会社２７</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0042271" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>219</td>
+<td><b>IBO ONE Business Builderプラン</b><span class="cap">ITツール番号：DL07-0038748</span></td>
+<td class="price">1,800,000円</td>
+<td>株式会社エンジ</td>
+<td>神奈川県 横浜市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0038748" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>220</td>
+<td><b>P-POSシステム</b><span class="cap">ITツール番号：DL07-0004151</span></td>
+<td class="price">1,800,000円</td>
+<td>リノシード株式会社</td>
+<td>神奈川県 横浜市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0004151" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>221</td>
+<td><b>SchoolFlow</b><span class="cap">ITツール番号：DL07-0021808</span></td>
+<td class="price">1,920,000円</td>
+<td>ｓｅｐｔｅｍｂｅｒ合同会社</td>
+<td>埼玉県 川口市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021808" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>222</td>
+<td><b>UMAiVoice</b><span class="cap">ITツール番号：DL07-0031306</span></td>
+<td class="price">1,920,000円</td>
+<td>ｓｅｐｔｅｍｂｅｒ合同会社</td>
+<td>埼玉県 川口市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0031306" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>223</td>
+<td><b>abayengineクラウドAIPLUS</b><span class="cap">ITツール番号：DL07-0017779</span></td>
+<td class="price">1,920,000円</td>
+<td>Ｔ・Ｌコンサルティング株式会社</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0017779" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>224</td>
+<td><b>abayengine不動産管理支援システム</b><span class="cap">ITツール番号：DL07-0031325</span></td>
+<td class="price">1,920,000円</td>
+<td>Ｔ・Ｌコンサルティング株式会社</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0031325" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>225</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL06-0035180</span></td>
+<td class="price">1,950,000円</td>
+<td>合同会社トップライト</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0035180" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>226</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL06-0073946</span></td>
+<td class="price">1,950,000円</td>
+<td>合同会社ウィンド</td>
+<td>東京都 八王子市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0073946" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>227</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL06-0077483</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社良選思考</td>
+<td>福岡県 太宰府市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0077483" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>228</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0010460</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社リアル</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0010460" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>229</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0010553</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社鯖一</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0010553" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>230</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0010579</span></td>
+<td class="price">1,950,000円</td>
+<td>有限会社アイエーカンパニー</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0010579" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>231</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0012440</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社ＡＣＲＯ　ＴＲＡＤＥ</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012440" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>232</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0012545</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社ドゥーウェル</td>
+<td>北海道 札幌市西区西町北</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012545" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>233</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0021494</span></td>
+<td class="price">1,950,000円</td>
+<td>リテラシー株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0021494" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>234</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0040307</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社カーリー</td>
+<td>福岡県 福岡市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040307" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>235</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0040310</span></td>
+<td class="price">1,950,000円</td>
+<td>株式会社ＮＯＲＴＨ１８</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040310" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>236</td>
+<td><b>LETT POS</b><span class="cap">ITツール番号：DL07-0040759</span></td>
+<td class="price">1,950,000円</td>
+<td>Ｐｒｉｍｏ－Ｌｏｇｉ株式会社</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040759" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>237</td>
+<td><b>FC SalonManager</b><span class="cap">ITツール番号：DL05-0037236</span></td>
+<td class="price">2,000,000円</td>
+<td>株式会社リアル</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL05-0037236" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>238</td>
+<td><b>FC SalonManager</b><span class="cap">ITツール番号：DL07-0012655</span></td>
+<td class="price">2,000,000円</td>
+<td>リノシード株式会社</td>
+<td>神奈川県 横浜市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012655" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>239</td>
+<td><b>FC SalonManager</b><span class="cap">ITツール番号：DL07-0012674</span></td>
+<td class="price">2,000,000円</td>
+<td>合同会社ウィンド</td>
+<td>東京都 八王子市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012674" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>240</td>
+<td><b>FC SalonManager</b><span class="cap">ITツール番号：DL07-0012688</span></td>
+<td class="price">2,000,000円</td>
+<td>合同会社ウォーター</td>
+<td>東京都 練馬区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012688" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>241</td>
+<td><b>R-EXPO（AI機能あり）</b><span class="cap">ITツール番号：DL07-0032017</span></td>
+<td class="price">2,000,000円</td>
+<td>ロープス株式会社</td>
+<td>東京都 新宿区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032017" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>242</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL06-0037380</span></td>
+<td class="price">2,160,000円</td>
+<td>合同会社トップライト</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0037380" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>243</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL06-0054439</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社カーリー</td>
+<td>福岡県 福岡市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0054439" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>244</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL06-0054560</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社ジーエス</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0054560" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>245</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL06-0057603</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社ＮＯＲＴＨ１８</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0057603" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>246</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL06-0075083</span></td>
+<td class="price">2,160,000円</td>
+<td>リテラシー株式会社</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL06-0075083" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>247</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007106</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社デュアルキーシステム</td>
+<td>長崎県 長崎市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007106" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>248</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007217</span></td>
+<td class="price">2,160,000円</td>
+<td>リノシード株式会社</td>
+<td>神奈川県 横浜市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007217" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>249</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007383</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社インワークス</td>
+<td>大阪府 箕面市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007383" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>250</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007607</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社リアル</td>
+<td>東京都 豊島区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007607" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>251</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007680</span></td>
+<td class="price">2,160,000円</td>
+<td>合同会社ウィンド</td>
+<td>東京都 八王子市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007680" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>252</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007702</span></td>
+<td class="price">2,160,000円</td>
+<td>合同会社ウォーター</td>
+<td>東京都 練馬区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007702" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>253</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0007720</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社トリプルダブル</td>
+<td>東京都 品川区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0007720" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>254</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0024899</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社鯖一</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0024899" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>255</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0024903</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社ドゥーウェル</td>
+<td>北海道 札幌市西区西町北</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0024903" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>256</td>
+<td><b>PoPos</b><span class="cap">ITツール番号：DL07-0034327</span></td>
+<td class="price">2,160,000円</td>
+<td>Ｐｒｉｍｏ－Ｌｏｇｉ株式会社</td>
+<td>北海道 札幌市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034327" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>257</td>
+<td><b>PoPos</b><span class="cap">コンソーシアム：カーリーコンソーシアム</span><span class="cap">ITツール番号：DL07-0040184</span></td>
+<td class="price">2,160,000円</td>
+<td>株式会社カーリー</td>
+<td>福岡県 福岡市中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040184" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>258</td>
+<td><b>WiLReji</b><span class="cap">ITツール番号：DL07-0037829</span></td>
+<td class="price">2,160,000円</td>
+<td>ＷｉＬＬＤｅｓｉｇｎ株式会社</td>
+<td>東京都 目黒区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0037829" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>259</td>
+<td><b>CP-Bクイック決済システム(CP-アシストパッケージプラン)</b><span class="cap">コンソーシアム：ＯＮＥＦＬＡＴコンソーシアム</span><span class="cap">ITツール番号：DL07-0041375</span></td>
+<td class="price">2,200,000円</td>
+<td>株式会社Ｏｎｅ　Ｆｌａｔ</td>
+<td>愛媛県 松山市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041375" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>260</td>
+<td><b>TablePOS</b><span class="cap">ITツール番号：DL07-0032750</span></td>
+<td class="price">2,400,000円</td>
+<td>合同会社ＳＡＮＮＡＮＡ</td>
+<td>兵庫県 神戸市須磨区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032750" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>261</td>
+<td><b>constWELL 決済付きプラン</b><span class="cap">ITツール番号：DL07-0012933</span></td>
+<td class="price">2,400,000円</td>
+<td>株式会社ＴＲＥＥ</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0012933" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>262</td>
+<td><b>【スマートレジ】ZiiPOS</b><span class="cap">コンソーシアム：オバビＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0025129</span></td>
+<td class="price">2,600,000円</td>
+<td>オバビ株式会社</td>
+<td>神奈川県 川崎市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0025129" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>263</td>
+<td><b>【スマートレジ】NEO+S</b><span class="cap">コンソーシアム：ＭＸ浩宇株式会社</span><span class="cap">ITツール番号：DL07-0032644</span></td>
+<td class="price">2,640,000円</td>
+<td>ＭＸ浩宇株式会社</td>
+<td>大阪府 大阪市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0032644" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>264</td>
+<td><b>ERP-Cube Basic</b><span class="cap">コンソーシアム：晴川ＩＴ導入支援コンソーシアム</span><span class="cap">ITツール番号：DL07-0040090</span></td>
+<td class="price">2,950,000円</td>
+<td>晴川株式会社</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0040090" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>265</td>
+<td><b>Mirai販売管理システム＆Mirai OMS 飲食店版Lite</b><span class="cap">ITツール番号：DL07-0039207</span></td>
+<td class="price">2,980,000円</td>
+<td>株式会社多言語システム研究所</td>
+<td>東京都 中央区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039207" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>266</td>
+<td><b>VISIT</b><span class="cap">ITツール番号：DL07-0033515</span></td>
+<td class="price">3,500,000円</td>
+<td>株式会社Ｄｅｖｏｔｉｏｎ</td>
+<td>愛知県 名古屋市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0033515" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>267</td>
+<td><b>OrderFlowシステム(スマレジプラン)</b><span class="cap">ITツール番号：DL07-0034061</span></td>
+<td class="price">4,000,000円</td>
+<td>株式会社レグルスインターナショナル</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0034061" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>268</td>
+<td><b>OrderFlowシステム（バックオフィスプラン）</b><span class="cap">ITツール番号：DL07-0041242</span></td>
+<td class="price">4,000,000円</td>
+<td>株式会社レグルスインターナショナル</td>
+<td>東京都 港区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041242" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>269</td>
+<td><b>BrainbaseAI_ビジネスプラン</b><span class="cap">コンソーシアム：システムクラウドコンソーシアム</span><span class="cap">ITツール番号：DL07-0043483</span></td>
+<td class="price">4,500,000円</td>
+<td>システムクラウド株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043483" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>270</td>
+<td><b>TradeStudio AI</b><span class="cap">ITツール番号：DL07-0041538</span></td>
+<td class="price">4,500,000円</td>
+<td>ｓｅｐｔｅｍｂｅｒ合同会社</td>
+<td>埼玉県 川口市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0041538" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>271</td>
+<td><b>楽コアオフィスAI_ビジネスプラン</b><span class="cap">コンソーシアム：システムクラウドコンソーシアム</span><span class="cap">ITツール番号：DL07-0043274</span></td>
+<td class="price">4,500,000円</td>
+<td>システムクラウド株式会社</td>
+<td>東京都 渋谷区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0043274" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>272</td>
+<td><b>ERP-Cube</b><span class="cap">ITツール番号：DL07-0039518</span></td>
+<td class="price">5,150,000円</td>
+<td>アイプラス株式会社</td>
+<td>愛知県 名古屋市</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0039518" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>273</td>
+<td><b>【スマートレジ】PO+S - ポプラス オールインワンパッケージ</b><span class="cap">コンソーシアム：モソロコンソーシアム</span><span class="cap">ITツール番号：DL07-0008744</span></td>
+<td class="price">5,520,000円</td>
+<td>合同会社モソロ</td>
+<td>東京都 千代田区</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0008744" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+<tr>
+<td>274</td>
+<td><b>【スマートレジ】PO+S - ポプラス オールインワンパッケージ</b><span class="cap">コンソーシアム：桂林コンソーシアム</span><span class="cap">ITツール番号：DL07-0017582</span></td>
+<td class="price">5,520,000円</td>
+<td>株式会社桂林</td>
+<td>東京都 新宿区高田馬場</td>
+<td><span class="tg">インボイス対応</span><span class="tg">クラウド対応</span><span class="tg">スマートレジ</span><span class="tg">生成AI以外のAI</span><span class="tg">生成AI</span></td>
+<td><a href="https://it-shien.smrj.go.jp/search/tooldetail/?it_tool_numbering=DL07-0017582" target="_blank" rel="noopener">詳細</a></td>
+</tr>
+    </tbody>
+  </table></div>
+  <p class="note">※価格欄は事務局データベースに登録された金額をそのまま記載しています（月額・年額・初期費用の区分は事務局データ上では明示されていません）。</p>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    出典：中小企業基盤整備機構「ITツール・IT導入支援事業者検索（コンソーシアム含む）」（デジタル化・AI導入補助金2026）2026年9月18日時点。
+  </div>
+</footer>
+
+</body>
+</html>

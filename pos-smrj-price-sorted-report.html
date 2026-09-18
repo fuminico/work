@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POSレジ 価格順 全製品リスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e2430; --ink-soft:#525c6c; --ink-faint:#8992a3;
+    --paper:#faf7f2; --surface:#ffffff; --surface-2:#f1f4fa;
+    --border:#e2e2dd; --border-soft:#eceae4;
+    --blue:#1f3fa6; --blue-ink:#152b78; --blue-pale:#e7ecfa; --blue-line:#c7d3f2;
+    --green:#1f7a4d; --green-pale:#e7f5ee; --green-line:#bfe3cf;
+    --rose:#a63a5c; --rose-ink:#7c2743; --rose-pale:#fbeaf0; --rose-line:#f0c9d6;
+    --amber:#9a6414; --amber-pale:#fbf0dd; --amber-line:#eed7a8;
+    --shadow: 0 1px 2px rgba(30,36,48,.04), 0 8px 24px -12px rgba(30,36,48,.16);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+    font-size:15.5px; line-height:1.85;
+  }
+  h1,h2,h3{font-family:'Shippori Mincho B1',serif; margin:0; color:var(--ink); text-wrap:balance;}
+  .eyebrow{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--blue-ink);}
+  a{color:var(--blue-ink);}
+  .wrap{max-width:1280px; margin-inline:auto; padding-inline:24px;}
+
+  header.cover{padding-block:56px 40px; border-bottom:1px solid var(--border);}
+  header.cover .eyebrow{margin-bottom:12px;}
+  header.cover h1{font-size:clamp(24px,4.6vw,32px); font-weight:800;}
+  header.cover .lede{margin-top:16px; color:var(--ink-soft); font-size:14.5px; max-width:80ch;}
+  header.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .chip{font-family:'Zen Kaku Gothic New',sans-serif; font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft);}
+  .rawlink{display:inline-block; margin-top:18px; font-family:'Zen Kaku Gothic New',sans-serif; font-size:13.5px; font-weight:700; padding:9px 18px; border-radius:999px; background:var(--blue-pale); border:1px solid var(--blue-line); color:var(--blue-ink); text-decoration:none;}
+  .rawlink:hover{background:var(--surface);}
+
+  section{padding-block:44px; border-bottom:1px solid var(--border-soft);}
+  section:last-of-type{border-bottom:none;}
+  .head{margin-bottom:18px;}
+  .head h2{font-size:22px; font-weight:700;}
+  .head .eyebrow{display:block; margin-bottom:6px;}
+  .head .sub{color:var(--ink-soft); font-size:14px; margin-top:8px; max-width:84ch;}
+
+  .brief{background:var(--blue-pale); border:1px solid var(--blue-line); border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow);}
+  .brief p{margin:0 0 8px; font-size:14.5px;}
+  .brief p:last-child{margin-bottom:0;}
+
+  table{border-collapse:collapse; width:100%; min-width:1080px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-top:6px;}
+  table.fixed{table-layout:fixed;}
+  th,td{padding:11px 13px; text-align:left; border-bottom:1px solid var(--border-soft); font-size:13px; vertical-align:top; overflow-wrap:break-word;}
+  thead th{font-family:'Zen Kaku Gothic New',sans-serif; font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); white-space:nowrap;}
+  tbody tr:last-child td{border-bottom:none;}
+  td.price{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:800; color:var(--blue-ink); font-variant-numeric:tabular-nums; white-space:nowrap;}
+  td .cap{display:block; color:var(--ink-faint); font-size:11px; font-weight:400; line-height:1.6; margin-top:4px;}
+  td.maker{color:var(--green);}
+  .unknown{color:var(--ink-faint); font-style:normal;}
+  .tblwrap{overflow-x:auto;}
+
+  .conclusion{background:var(--green-pale); border:1px solid var(--green-line); border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow);}
+  .conclusion h3{font-size:16.5px; margin-bottom:10px;}
+  .conclusion p{margin:0 0 8px; font-size:14.5px;}
+  .conclusion p:last-child{margin-bottom:0;}
+
+  .note{font-size:12.5px; color:var(--ink-faint); margin-top:14px;}
+
+  footer{padding-block:40px 64px; color:var(--ink-faint); font-size:12.5px;}
+
+  @media print{ section{break-inside:avoid;} body{font-size:12.5px;} }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">調査レポート（公式データベース版・再統合版）</div>
+    <h1>デジタル化・AI導入補助金2026<br>POSレジ登録製品 価格順リスト（全111製品）</h1>
+    <p class="lede">中小企業基盤整備機構「ITツール・IT導入支援事業者検索」を実際にブラウザ操作（インボイス枠＋スマートレジ絞り込み）で検索し、ヒットした274件の登録ITツール情報を取得。同一製品を扱う複数のIT導入支援事業者はまとめ、さらに表記ゆれ（全角/半角スペース・アンダースコア・「プラン」有無・同価格の別名エディション等）がある登録も同一製品として統合し、111件に整理しています。価格が最も安い登録事業者の情報のみを掲載し、価格の安い順に並べています。</p>
+    <div class="meta">
+      <span class="chip">作成日：2026年9月18日（表記ゆれ統合・再集計版）</span>
+      <span class="chip">検索条件：インボイス枠 × スマートレジ関連ツール</span>
+      <span class="chip">取得件数：274件（登録事業者単位）→111製品（統合後）</span>
+    </div>
+    <a class="rawlink" href="pos-smrj-raw-data-list.html">生データ全274件（価格順・未統合）を見る &rarr;</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="brief">
+  <div class="head"><div class="eyebrow">01｜このリストの見方（統合ルール更新）</div><h2>集計・表記のルール</h2></div>
+  <div class="brief">
+    <p><b>表記ゆれの統合：</b>初回集計（131製品）では、同一製品が全角/半角スペース・アンダースコア・「プラン」の有無・かっこの有無などの表記ゆれにより別製品として扱われてしまう問題がありました（例：「スマレジ プレミアムプラス」「スマレジ_プレミアムプラスプラン」「プレミアムプラス」が別々に計上）。今回、同一ブランド・同一価格の登録は同一製品とみなして統合し、111製品に整理し直しています。</p>
+    <p><b>統合した行の見分け方：</b>統合した製品名には「複数の表記ゆれ登録を統合」という注記を付け、統合前の各名称をかっこ内に列挙しています（例：USENレジ（STORE月額利用料／BEAUTY月額利用料／TABFOOD月額利用料）は同価格のため統合）。</p>
+    <p><b>最安の事業者のみ掲載：</b>統合後の製品について、最も安い価格を提示している事業者の情報（価格・所在地）のみを掲載しています。</p>
+    <p><b>メーカー（開発元）と登録事業者の違い：</b>「取扱事業者」欄は政府データベース上の登録事業者（代理店）、「メーカー」欄は実際に製品を開発・運営している会社です。電話番号・HPは原則メーカーのものを掲載しています。</p>
+    <p><b>問い合わせ先の調査状況：</b>全111製品すべてでメーカー（または最安登録事業者）を特定し、うち88件で電話番号、92件で公式HPを確認しました。<b>「電話窓口なし」</b>と記載したものは、メーカーが電話サポートを公開しておらずフォーム・メール・チャットのみの対応であることを確認済みのものです（ユビレジ・ダイニー・ファンフォ・Shopify等）。<b>「要確認」</b>は公式サイト・企業DBのいずれでも番号が見つからなかったものです。</p>
+    <p><b>AirPOS・PoPos・LETT POS・FC SalonManagerについて：</b>これら4製品は多数の小規模代理店（合同会社・小規模株式会社）経由でのみ流通しており、製品自体の公式サイト・開発元を特定できませんでした。「白ラベル型（OEM供給）」の可能性が高く、電話番号は最安登録事業者の番号を掲載しています。導入検討時はその事業者に直接、実際の開発元を確認することを推奨します。</p>
+    <p><b>生データの参照：</b>統合・集約を行う前の、検索結果そのままの全274件（登録事業者単位・価格順）は <a href="pos-smrj-raw-data-list.html">生データ全件リスト</a> で確認できます。各行から事務局の公式製品ページにも直接アクセスできます。</p>
+  </div>
+</section>
+
+<section id="list">
+  <div class="head"><div class="eyebrow">02｜価格順 全111製品（統合後）</div><h2>安い順のリスト</h2><p class="sub">最安値の登録価格が同額の場合は、取扱事業者数の多い順で並べています。</p></div>
+  <div class="tblwrap"><table class="fixed">
+    <colgroup>
+      <col style="width:4%"><col style="width:24%"><col style="width:8%"><col style="width:10%"><col style="width:13%"><col style="width:18%"><col style="width:12%"><col style="width:11%">
+    </colgroup>
+    <thead><tr><th>#</th><th>製品名</th><th>取扱事業者数</th><th>登録価格（最安）</th><th>イニシャルコスト</th><th>メーカー（開発元）</th><th>電話番号</th><th>メーカーHP</th></tr></thead>
+    <tbody>
+<tr>
+<td>1</td>
+<td><b>Airレジ</b><span class="cap">最安の登録事業者：株式会社リクルート（東京都 千代田区丸の内）</span></td>
+<td>4社</td>
+<td class="price">0円</td>
+<td>実質0円</td>
+<td class="maker">㈱リクルート</td>
+<td>0120-040-417<span class="cap">Airレジヘルプデスク 9:30-23:00年中無休</span></td>
+<td><a href="https://airregi.jp/" target="_blank" rel="noopener">airregi.jp</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>スマレジ_スタンダード</b><span class="cap">最安の登録事業者：株式会社ＫＩＺＡＳＨＩ（東京都 渋谷区）</span></td>
+<td>1社</td>
+<td class="price">0円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>Square POSレジ</b><span class="cap">最安の登録事業者：堀興業株式会社（大阪府 大阪市）</span></td>
+<td>1社</td>
+<td class="price">0円</td>
+<td>0円（端末代4,980円〜）</td>
+<td class="maker">Square,Inc.（Block,Inc.）</td>
+<td>0120-117-042<span class="cap">受付10-18時</span></td>
+<td><a href="https://squareup.com/jp/ja/point-of-sale" target="_blank" rel="noopener">squareup.com/jp/ja/point-of-sale</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>Shopify POS</b><span class="cap">最安の登録事業者：株式会社Ｌｉｎｅｕｐ（東京都 中央区）</span></td>
+<td>5社</td>
+<td class="price">9,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">Shopify Inc.</td>
+<td>電話窓口なし<span class="cap">チャット／メールのみ（Plus契約者のみ電話可）</span></td>
+<td><a href="https://www.shopify.com/jp/pos" target="_blank" rel="noopener">www.shopify.com/jp/pos</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><b>POSasy</b><span class="cap">最安の登録事業者：東芝テック株式会社（東京都 品川区）</span></td>
+<td>1社</td>
+<td class="price">42,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">東芝テック㈱</td>
+<td>03-6830-9100<span class="cap">本社代表／契約者はPOSasyコールセンター9-21時</span></td>
+<td><a href="https://www.toshibatec.co.jp/products/pos/posasy/" target="_blank" rel="noopener">www.toshibatec.co.jp/products/pos/posasy</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><b>リアレジ（標準／ビジコム）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ミロク情報サービス（東京都 新宿区）</span></td>
+<td>2社</td>
+<td class="price">45,600円</td>
+<td>0円</td>
+<td class="maker">㈱ビジコム</td>
+<td>03-5229-5190<span class="cap">平日10-18時</span></td>
+<td><a href="https://www.bcpos.jp/" target="_blank" rel="noopener">www.bcpos.jp</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><b>ninapos（タブレットPOSクライアントS／AndroidPOSクライアント）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社アニー（東京都 調布市）</span></td>
+<td>2社</td>
+<td class="price">48,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱アニー</td>
+<td>042-484-2700</td>
+<td><a href="https://www.ninapos.net/" target="_blank" rel="noopener">www.ninapos.net</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><b>USEN セルフレジ　月額利用料</b><span class="cap">最安の登録事業者：株式会社ＵＳＥＮ（東京都 品川区）</span></td>
+<td>1社</td>
+<td class="price">48,000円</td>
+<td>目安30万円前後</td>
+<td class="maker">㈱USEN</td>
+<td>0120-117-440<span class="cap">24時間窓口</span></td>
+<td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com/service/pos</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><b>SoloptiPOS</b><span class="cap">最安の登録事業者：株式会社ＳｏｌｏｐｔｉＬｉｎｋ（東京都 豊島区）</span></td>
+<td>1社</td>
+<td class="price">50,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱SoloptiLink</td>
+<td><span class="unknown">要確認</span><span class="cap">東京都豊島区池袋</span></td>
+<td><a href="https://soloptilink.com/" target="_blank" rel="noopener">soloptilink.com</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><b>funfo（Lite／ソフトウェアLite）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社テイクパート（三重県 津市）</span></td>
+<td>2社</td>
+<td class="price">54,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ファンフォ㈱</td>
+<td>電話窓口なし<span class="cap">support@funfo.jp／LINEチャット対応</span></td>
+<td><a href="https://www.funfo.jp/" target="_blank" rel="noopener">www.funfo.jp</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><b>MAIDO SYSTEMセルフカスタムプラン</b><span class="cap">最安の登録事業者：まいどソリューションズ株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">59,760円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">まいどソリューションズ㈱</td>
+<td>06-6125-5989<span class="cap">導入相談センター</span></td>
+<td><a href="https://www.maido-system.net/" target="_blank" rel="noopener">www.maido-system.net</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><b>スマレジ（プレミアム／プレミアムプラン）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ＮＡＳＳＥ（熊本県 熊本市中央区）</span></td>
+<td>13社</td>
+<td class="price">60,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><b>CASHIER POS プロフェッショナルプラン</b><span class="cap">最安の登録事業者：リノシード株式会社（神奈川県 横浜市）</span></td>
+<td>4社</td>
+<td class="price">60,000円</td>
+<td>138,000円〜</td>
+<td class="maker">㈱ユニエイム</td>
+<td>050-8881-0932<span class="cap">セールスチーム直通</span></td>
+<td><a href="https://cashier-pos.com/" target="_blank" rel="noopener">cashier-pos.com</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><b>CP-アシスト</b><span class="cap">最安の登録事業者：株式会社Ｏｎｅ　Ｆｌａｔ（愛媛県 松山市）</span></td>
+<td>1社</td>
+<td class="price">60,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱クロスウェブ</td>
+<td><span class="unknown">要確認</span><span class="cap">最安登録=㈱One Flat（愛媛）</span></td>
+<td><a href="https://www.crossweb.jp/" target="_blank" rel="noopener">www.crossweb.jp</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><b>Square 小売業POSレジ【プラス】</b><span class="cap">最安の登録事業者：ベストプランナー合同会社（埼玉県 さいたま市）</span></td>
+<td>2社</td>
+<td class="price">65,460円</td>
+<td>0円（端末代4,980円〜）</td>
+<td class="maker">Square,Inc.（Block,Inc.）</td>
+<td>0120-117-042<span class="cap">受付10-18時</span></td>
+<td><a href="https://squareup.com/jp/ja/point-of-sale" target="_blank" rel="noopener">squareup.com/jp/ja/point-of-sale</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><b>MAIDO SYSTEM店舗経営まるごと効率化プランRS</b><span class="cap">最安の登録事業者：まいどソリューションズ株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">71,760円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">まいどソリューションズ㈱</td>
+<td>06-6125-5989<span class="cap">導入相談センター</span></td>
+<td><a href="https://www.maido-system.net/" target="_blank" rel="noopener">www.maido-system.net</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><b>【IT補助】ユビレジ プレミアムプラン</b><span class="cap">最安の登録事業者：株式会社ユビレジ（東京都 渋谷区）</span></td>
+<td>1社</td>
+<td class="price">78,660円</td>
+<td>プランにより0円</td>
+<td class="maker">㈱ユビレジ</td>
+<td>電話窓口なし<span class="cap">フォーム対応（電話は契約プランの契約者のみ）</span></td>
+<td><a href="https://ubiregi.jp/" target="_blank" rel="noopener">ubiregi.jp</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td><b>ユビレジ プレミアム</b><span class="cap">最安の登録事業者：ユナイテッド・アドバイザーズ株式会社（東京都 渋谷区）</span></td>
+<td>1社</td>
+<td class="price">82,800円</td>
+<td>プランにより0円</td>
+<td class="maker">㈱ユビレジ</td>
+<td>電話窓口なし<span class="cap">フォーム対応（電話は契約プランの契約者のみ）</span></td>
+<td><a href="https://ubiregi.jp/" target="_blank" rel="noopener">ubiregi.jp</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><b>ユビレジプレミアムプラン</b><span class="cap">最安の登録事業者：合同会社コトストリング（東京都 千代田区）</span></td>
+<td>1社</td>
+<td class="price">82,800円</td>
+<td>プランにより0円</td>
+<td class="maker">㈱ユビレジ</td>
+<td>電話窓口なし<span class="cap">フォーム対応（電話は契約プランの契約者のみ）</span></td>
+<td><a href="https://ubiregi.jp/" target="_blank" rel="noopener">ubiregi.jp</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><b>SALONPOS LinQ2シンプルパック</b><span class="cap">最安の登録事業者：タカラベルモント株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">84,000円</td>
+<td>130,000円〜</td>
+<td class="maker">タカラベルモント㈱</td>
+<td>0120-39-3614<span class="cap">SALONPOSヘルプデスク</span></td>
+<td><a href="https://www.tb-net.jp/product/pos/" target="_blank" rel="noopener">www.tb-net.jp/product/pos</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><b>funfo Lite AI</b><span class="cap">最安の登録事業者：ファンフォ株式会社（京都府 京都市下京区）</span></td>
+<td>1社</td>
+<td class="price">84,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ファンフォ㈱</td>
+<td>電話窓口なし<span class="cap">support@funfo.jp／LINEチャット対応</span></td>
+<td><a href="https://www.funfo.jp/" target="_blank" rel="noopener">www.funfo.jp</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><b>CASHIER POS プロフェッショナルPRIMEプラン</b><span class="cap">最安の登録事業者：株式会社カーリー（福岡県 福岡市中央区）</span></td>
+<td>2社</td>
+<td class="price">84,000円</td>
+<td>138,000円〜</td>
+<td class="maker">㈱ユニエイム</td>
+<td>050-8881-0932<span class="cap">セールスチーム直通</span></td>
+<td><a href="https://cashier-pos.com/" target="_blank" rel="noopener">cashier-pos.com</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><b>SalonAnswer</b><span class="cap">最安の登録事業者：エクシードシステム株式会社（岡山県 岡山市北区）</span></td>
+<td>2社</td>
+<td class="price">93,600円</td>
+<td>130,000円</td>
+<td class="maker">エクシードシステム㈱</td>
+<td>086-242-3600<span class="cap">システム導入窓口</span></td>
+<td><a href="https://ex.salonanswer.com/" target="_blank" rel="noopener">ex.salonanswer.com</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td><b>スマレジ（プレミアムプラス／プレミアムプラスプラン）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：新日本コンピュータサービス株式会社（栃木県 宇都宮市）</span></td>
+<td>11社</td>
+<td class="price">96,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td><b>SiGe POS クラウド版（店舗設置型）</b><span class="cap">最安の登録事業者：株式会社Ｔｏ　Ｔｈｅ　Ｎｅｘｔ（東京都 豊島区）</span></td>
+<td>1社</td>
+<td class="price">96,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱To The Next</td>
+<td>050-1720-9747<span class="cap">IVR自動音声</span></td>
+<td><a href="https://to-the-next.com/" target="_blank" rel="noopener">to-the-next.com</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td><b>プレミアムプラス</b><span class="cap">最安の登録事業者：株式会社モアコンセプト（熊本県 熊本市）</span></td>
+<td>1社</td>
+<td class="price">96,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td><b>NECモバイルPOS</b><span class="cap">最安の登録事業者：愛知計機株式会社（愛知県 名古屋市南区）</span></td>
+<td>1社</td>
+<td class="price">102,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">日本電気㈱（NEC）</td>
+<td>0120-803-594<span class="cap">正規一次代理店㈱メガの無料相談窓口</span></td>
+<td><a href="https://jpn.nec.com/mobile-pos/" target="_blank" rel="noopener">jpn.nec.com/mobile-pos</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td><b>NEC モバイルPOS　基本サービス利用料</b><span class="cap">最安の登録事業者：株式会社フジシステム（愛知県 豊橋市）</span></td>
+<td>1社</td>
+<td class="price">108,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">日本電気㈱（NEC）</td>
+<td>0120-803-594<span class="cap">正規一次代理店㈱メガの無料相談窓口</span></td>
+<td><a href="https://jpn.nec.com/mobile-pos/" target="_blank" rel="noopener">jpn.nec.com/mobile-pos</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td><b>funfo（標準／Business）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ギブファースト（東京都 豊島区）</span></td>
+<td>8社</td>
+<td class="price">120,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ファンフォ㈱</td>
+<td>電話窓口なし<span class="cap">support@funfo.jp／LINEチャット対応</span></td>
+<td><a href="https://www.funfo.jp/" target="_blank" rel="noopener">www.funfo.jp</a></td>
+</tr>
+<tr>
+<td>30</td>
+<td><b>ORANGE POS</b><span class="cap">最安の登録事業者：株式会社エスキュービズム（東京都 港区）</span></td>
+<td>1社</td>
+<td class="price">120,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱エスキュービズム・テクノロジー</td>
+<td>03-6430-6733</td>
+<td><a href="https://s-cubism.jp/" target="_blank" rel="noopener">s-cubism.jp</a></td>
+</tr>
+<tr>
+<td>31</td>
+<td><b>L.B.B.Cloud BASICプラン</b><span class="cap">最安の登録事業者：アイスクウェアラボ合同会社（石川県 かほく市）</span></td>
+<td>1社</td>
+<td class="price">120,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱LBB</td>
+<td>06-6777-7115<span class="cap">受付10-17時</span></td>
+<td><a href="https://lbb.co.jp/" target="_blank" rel="noopener">lbb.co.jp</a></td>
+</tr>
+<tr>
+<td>32</td>
+<td><b>薬局向けPOSレジシステム「C-POS」</b><span class="cap">最安の登録事業者：ピーホット株式会社（神奈川県 横浜市緑区）</span></td>
+<td>1社</td>
+<td class="price">120,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ピーホット㈱</td>
+<td>045-532-4990<span class="cap">平日9:15-19:00</span></td>
+<td><a href="https://www.phot.co.jp/" target="_blank" rel="noopener">www.phot.co.jp</a></td>
+</tr>
+<tr>
+<td>33</td>
+<td><b>A'staff Cloud（Basic／Standard）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ＣＡＲＥＡＲＣ（東京都 渋谷区）</span></td>
+<td>4社</td>
+<td class="price">120,000円</td>
+<td>100,000〜120,000円</td>
+<td class="maker">㈱アライド・システム</td>
+<td>0422-40-2460<span class="cap">登録はCAREARC（代理店）</span></td>
+<td><a href="https://www.allied.co.jp/" target="_blank" rel="noopener">www.allied.co.jp</a></td>
+</tr>
+<tr>
+<td>34</td>
+<td><b>AirPOS</b><span class="cap">最安の登録事業者：有限会社アイテック（広島県 広島市）</span></td>
+<td>1社</td>
+<td class="price">120,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">開発元未特定（白ラベル型）</td>
+<td><span class="unknown">要確認</span><span class="cap">最安登録=有限会社アイテック（広島）／39社が代理店登録</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>35</td>
+<td><b>SALONPOS LinQ2ベーシックパック</b><span class="cap">最安の登録事業者：タカラベルモント株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">132,000円</td>
+<td>130,000円〜</td>
+<td class="maker">タカラベルモント㈱</td>
+<td>0120-39-3614<span class="cap">SALONPOSヘルプデスク</span></td>
+<td><a href="https://www.tb-net.jp/product/pos/" target="_blank" rel="noopener">www.tb-net.jp/product/pos</a></td>
+</tr>
+<tr>
+<td>36</td>
+<td><b>Square飲食店POSレジプラス</b><span class="cap">最安の登録事業者：ベストプランナー合同会社（埼玉県 さいたま市）</span></td>
+<td>2社</td>
+<td class="price">141,818円</td>
+<td>0円（端末代4,980円〜）</td>
+<td class="maker">Square,Inc.（Block,Inc.）</td>
+<td>0120-117-042<span class="cap">受付10-18時</span></td>
+<td><a href="https://squareup.com/jp/ja/point-of-sale" target="_blank" rel="noopener">squareup.com/jp/ja/point-of-sale</a></td>
+</tr>
+<tr>
+<td>37</td>
+<td><b>funfo Business AI</b><span class="cap">最安の登録事業者：ファンフォ株式会社（京都府 京都市下京区）</span></td>
+<td>5社</td>
+<td class="price">144,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ファンフォ㈱</td>
+<td>電話窓口なし<span class="cap">support@funfo.jp／LINEチャット対応</span></td>
+<td><a href="https://www.funfo.jp/" target="_blank" rel="noopener">www.funfo.jp</a></td>
+</tr>
+<tr>
+<td>38</td>
+<td><b>A'staff Cloud LINE予約</b><span class="cap">最安の登録事業者：株式会社ＣＡＲＥＡＲＣ（東京都 渋谷区）</span></td>
+<td>2社</td>
+<td class="price">150,000円</td>
+<td>100,000〜120,000円</td>
+<td class="maker">㈱アライド・システム</td>
+<td>0422-40-2460<span class="cap">登録はCAREARC（代理店）</span></td>
+<td><a href="https://www.allied.co.jp/" target="_blank" rel="noopener">www.allied.co.jp</a></td>
+</tr>
+<tr>
+<td>39</td>
+<td><b>EstheAnswer</b><span class="cap">最安の登録事業者：エクシードシステム株式会社（岡山県 岡山市北区）</span></td>
+<td>1社</td>
+<td class="price">153,600円</td>
+<td>130,000円</td>
+<td class="maker">エクシードシステム㈱</td>
+<td>086-242-3600<span class="cap">システム導入窓口</span></td>
+<td><a href="https://ex.salonanswer.com/" target="_blank" rel="noopener">ex.salonanswer.com</a></td>
+</tr>
+<tr>
+<td>40</td>
+<td><b>StarPOS</b><span class="cap">最安の登録事業者：株式会社ネクストベリー（福岡県 福岡市）</span></td>
+<td>1社</td>
+<td class="price">153,600円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱ネクストベリー</td>
+<td>092-985-0205<span class="cap">平日10-17時</span></td>
+<td><a href="https://www.starpos.jp/" target="_blank" rel="noopener">www.starpos.jp</a></td>
+</tr>
+<tr>
+<td>41</td>
+<td><b>USENレジ（STORE月額利用料／BEAUTY月額利用料／TABFOOD月額利用料）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ＵＳＥＮ（東京都 品川区）</span></td>
+<td>3社</td>
+<td class="price">155,760円</td>
+<td>目安30万円前後</td>
+<td class="maker">㈱USEN</td>
+<td>0120-117-440<span class="cap">24時間窓口</span></td>
+<td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com/service/pos</a></td>
+</tr>
+<tr>
+<td>42</td>
+<td><b>新USENレジ 月額利用料</b><span class="cap">最安の登録事業者：株式会社ＵＳＥＮ（東京都 品川区）</span></td>
+<td>1社</td>
+<td class="price">167,760円</td>
+<td>目安30万円前後</td>
+<td class="maker">㈱USEN</td>
+<td>0120-117-440<span class="cap">24時間窓口</span></td>
+<td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com/service/pos</a></td>
+</tr>
+<tr>
+<td>43</td>
+<td><b>SALONPOS LinQ2　ベーシックパックプラス</b><span class="cap">最安の登録事業者：タカラベルモント株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">168,000円</td>
+<td>130,000円〜</td>
+<td class="maker">タカラベルモント㈱</td>
+<td>0120-39-3614<span class="cap">SALONPOSヘルプデスク</span></td>
+<td><a href="https://www.tb-net.jp/product/pos/" target="_blank" rel="noopener">www.tb-net.jp/product/pos</a></td>
+</tr>
+<tr>
+<td>44</td>
+<td><b>スマレジ（フードビジネス／リテールビジネス／フードビジネスプラン／リテールビジネスプラン）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ＮＡＳＳＥ（熊本県 熊本市中央区）</span></td>
+<td>20社</td>
+<td class="price">168,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>45</td>
+<td><b>POS+（FOOD基本利用料金年額／BEAUTY基本利用料金年額）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社大塚商会（東京都 千代田区）</span></td>
+<td>2社</td>
+<td class="price">168,000円</td>
+<td>小売42万円〜／飲食36万円〜</td>
+<td class="maker">ポスタス㈱</td>
+<td>0120-599-536<span class="cap">平日10-19時</span></td>
+<td><a href="https://www.postas.co.jp/" target="_blank" rel="noopener">www.postas.co.jp</a></td>
+</tr>
+<tr>
+<td>46</td>
+<td><b>リテールビジネスプラン</b><span class="cap">最安の登録事業者：株式会社モアコンセプト（熊本県 熊本市）</span></td>
+<td>1社</td>
+<td class="price">168,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>47</td>
+<td><b>funfo Business Plus</b><span class="cap">最安の登録事業者：ネクスト株式会社（宮城県 仙台市）</span></td>
+<td>8社</td>
+<td class="price">180,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ファンフォ㈱</td>
+<td>電話窓口なし<span class="cap">support@funfo.jp／LINEチャット対応</span></td>
+<td><a href="https://www.funfo.jp/" target="_blank" rel="noopener">www.funfo.jp</a></td>
+</tr>
+<tr>
+<td>48</td>
+<td><b>AdvaNceD IoTラゲッジドック　南京錠シリーズ</b><span class="cap">最安の登録事業者：株式会社デバイスエージェンシー（大阪府 大阪市西区）</span></td>
+<td>1社</td>
+<td class="price">200,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱デバイスエージェンシー</td>
+<td>06-6585-9865</td>
+<td><a href="https://device-agency.co.jp/" target="_blank" rel="noopener">device-agency.co.jp</a></td>
+</tr>
+<tr>
+<td>49</td>
+<td><b>SalonAnswer*</b><span class="cap">最安の登録事業者：エクシードシステム株式会社（岡山県 岡山市北区）</span></td>
+<td>2社</td>
+<td class="price">201,600円</td>
+<td>130,000円</td>
+<td class="maker">エクシードシステム㈱</td>
+<td>086-242-3600<span class="cap">システム導入窓口</span></td>
+<td><a href="https://ex.salonanswer.com/" target="_blank" rel="noopener">ex.salonanswer.com</a></td>
+</tr>
+<tr>
+<td>50</td>
+<td><b>funfo One AI</b><span class="cap">最安の登録事業者：株式会社ＡＤＬＥ（福岡県 福岡市）</span></td>
+<td>4社</td>
+<td class="price">216,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ファンフォ㈱</td>
+<td>電話窓口なし<span class="cap">support@funfo.jp／LINEチャット対応</span></td>
+<td><a href="https://www.funfo.jp/" target="_blank" rel="noopener">www.funfo.jp</a></td>
+</tr>
+<tr>
+<td>51</td>
+<td><b>MAIDO SYSTEM店舗経営まるごと効率化プランM</b><span class="cap">最安の登録事業者：まいどソリューションズ株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">225,360円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">まいどソリューションズ㈱</td>
+<td>06-6125-5989<span class="cap">導入相談センター</span></td>
+<td><a href="https://www.maido-system.net/" target="_blank" rel="noopener">www.maido-system.net</a></td>
+</tr>
+<tr>
+<td>52</td>
+<td><b>USENレジ（＿MobileOrder付き／＿HANDY・MobileOrder付き）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社ＵＳＥＮ（東京都 品川区）</span></td>
+<td>2社</td>
+<td class="price">239,760円</td>
+<td>目安30万円前後</td>
+<td class="maker">㈱USEN</td>
+<td>0120-117-440<span class="cap">24時間窓口</span></td>
+<td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com/service/pos</a></td>
+</tr>
+<tr>
+<td>53</td>
+<td><b>スマレジ（リテール＆フード／フードリテールプラン／フードビジネス/リテールビジネスプラン）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社フォーバル（東京都 渋谷区）</span></td>
+<td>4社</td>
+<td class="price">240,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>54</td>
+<td><b>モバレジ</b><span class="cap">最安の登録事業者：エスパー株式会社（岐阜県 多治見市）</span></td>
+<td>2社</td>
+<td class="price">240,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">エスパー㈱</td>
+<td>0572-23-9061</td>
+<td><a href="https://www.sper.jp/" target="_blank" rel="noopener">www.sper.jp</a></td>
+</tr>
+<tr>
+<td>55</td>
+<td><b>AirPOS</b><span class="cap">最安の登録事業者：合同会社ＧＲＩＴＯＮＥ（長野県 上田市）</span></td>
+<td>38社</td>
+<td class="price">240,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">開発元未特定（白ラベル型）</td>
+<td><span class="unknown">要確認</span><span class="cap">最安登録=有限会社アイテック（広島）／39社が代理店登録</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>56</td>
+<td><b>WEB-POS</b><span class="cap">最安の登録事業者：ポスレジサービス株式会社（東京都 中央区）</span></td>
+<td>1社</td>
+<td class="price">240,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ポスレジサービス㈱</td>
+<td>03-6675-3989<span class="cap">平日10-17時</span></td>
+<td><a href="https://posregi-service.com/web-pos/" target="_blank" rel="noopener">posregi-service.com/web-pos</a></td>
+</tr>
+<tr>
+<td>57</td>
+<td><b>NECモバイルPOS</b><span class="cap">最安の登録事業者：日本リテイルシステム株式会社（東京都 台東区）</span></td>
+<td>1社</td>
+<td class="price">240,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">日本電気㈱（NEC）</td>
+<td>0120-803-594<span class="cap">正規一次代理店㈱メガの無料相談窓口</span></td>
+<td><a href="https://jpn.nec.com/mobile-pos/" target="_blank" rel="noopener">jpn.nec.com/mobile-pos</a></td>
+</tr>
+<tr>
+<td>58</td>
+<td><b>MAIDO SYSTEM店舗経営まるごと効率化プランMX</b><span class="cap">最安の登録事業者：まいどソリューションズ株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">261,360円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">まいどソリューションズ㈱</td>
+<td>06-6125-5989<span class="cap">導入相談センター</span></td>
+<td><a href="https://www.maido-system.net/" target="_blank" rel="noopener">www.maido-system.net</a></td>
+</tr>
+<tr>
+<td>59</td>
+<td><b>USENレジ＿TabletOrder付き</b><span class="cap">最安の登録事業者：株式会社ＵＳＥＮ（東京都 品川区）</span></td>
+<td>1社</td>
+<td class="price">263,760円</td>
+<td>目安30万円前後</td>
+<td class="maker">㈱USEN</td>
+<td>0120-117-440<span class="cap">24時間窓口</span></td>
+<td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com/service/pos</a></td>
+</tr>
+<tr>
+<td>60</td>
+<td><b>ninapos タブレットPOSクライアントP</b><span class="cap">最安の登録事業者：株式会社アニー（東京都 調布市）</span></td>
+<td>1社</td>
+<td class="price">280,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱アニー</td>
+<td>042-484-2700</td>
+<td><a href="https://www.ninapos.net/" target="_blank" rel="noopener">www.ninapos.net</a></td>
+</tr>
+<tr>
+<td>61</td>
+<td><b>E-gaiスタンダードプラン</b><span class="cap">最安の登録事業者：有限会社ロイヤルクリエイティブ（愛知県 知立市）</span></td>
+<td>1社</td>
+<td class="price">300,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">有限会社ロイヤルクリエイティブ</td>
+<td>0566-83-9247<span class="cap">愛知県知立市</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>62</td>
+<td><b>クラウド型POSレジシステム「eSalon+」イーサロンプラス フルサポートプラン</b><span class="cap">最安の登録事業者：株式会社プラス・サム（埼玉県 さいたま市）</span></td>
+<td>1社</td>
+<td class="price">300,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱プラス・サム</td>
+<td>048-650-5779</td>
+<td><a href="https://esalon.plus/" target="_blank" rel="noopener">esalon.plus</a></td>
+</tr>
+<tr>
+<td>63</td>
+<td><b>「スゴ腕」WebPOSシステム</b><span class="cap">最安の登録事業者：株式会社日本データコム（大阪府 大阪市）</span></td>
+<td>1社</td>
+<td class="price">300,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱日本データコム</td>
+<td>06-6395-4716</td>
+<td><a href="https://ndatacom.co.jp/" target="_blank" rel="noopener">ndatacom.co.jp</a></td>
+</tr>
+<tr>
+<td>64</td>
+<td><b>YELLTICKET　プレミアムプラン</b><span class="cap">最安の登録事業者：株式会社ＹＥＬＬＡＧＥＮＴ（沖縄県 浦添市）</span></td>
+<td>1社</td>
+<td class="price">300,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱YELLAGENT</td>
+<td><span class="unknown">要確認</span><span class="cap">沖縄県浦添市</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>65</td>
+<td><b>SALONPOS LinQ2 DXエントリーパック</b><span class="cap">最安の登録事業者：タカラベルモント株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">324,000円</td>
+<td>130,000円〜</td>
+<td class="maker">タカラベルモント㈱</td>
+<td>0120-39-3614<span class="cap">SALONPOSヘルプデスク</span></td>
+<td><a href="https://www.tb-net.jp/product/pos/" target="_blank" rel="noopener">www.tb-net.jp/product/pos</a></td>
+</tr>
+<tr>
+<td>66</td>
+<td><b>ワンレジ_セルフレジシステム</b><span class="cap">最安の登録事業者：株式会社スカイダイニング（東京都 豊島区）</span></td>
+<td>1社</td>
+<td class="price">350,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱スカイダイニング</td>
+<td>0120-417-025<span class="cap">ワンレジ専用窓口 平日9-18時</span></td>
+<td><a href="https://one-regi.com/" target="_blank" rel="noopener">one-regi.com</a></td>
+</tr>
+<tr>
+<td>67</td>
+<td><b>NECモバイルPOS</b><span class="cap">最安の登録事業者：株式会社ジェットシステム（島根県 松江市）</span></td>
+<td>1社</td>
+<td class="price">354,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">日本電気㈱（NEC）</td>
+<td>0120-803-594<span class="cap">正規一次代理店㈱メガの無料相談窓口</span></td>
+<td><a href="https://jpn.nec.com/mobile-pos/" target="_blank" rel="noopener">jpn.nec.com/mobile-pos</a></td>
+</tr>
+<tr>
+<td>68</td>
+<td><b> USENレジ＿MobileOrder付き（30テーブル以上）</b><span class="cap">最安の登録事業者：株式会社ＵＳＥＮ（東京都 品川区）</span></td>
+<td>1社</td>
+<td class="price">359,760円</td>
+<td>目安30万円前後</td>
+<td class="maker">㈱USEN</td>
+<td>0120-117-440<span class="cap">24時間窓口</span></td>
+<td><a href="https://usen.com/service/pos/" target="_blank" rel="noopener">usen.com/service/pos</a></td>
+</tr>
+<tr>
+<td>69</td>
+<td><b>SALONPOS LinQ2 DXスタンダードパック</b><span class="cap">最安の登録事業者：タカラベルモント株式会社（大阪府 大阪市中央区）</span></td>
+<td>1社</td>
+<td class="price">372,000円</td>
+<td>130,000円〜</td>
+<td class="maker">タカラベルモント㈱</td>
+<td>0120-39-3614<span class="cap">SALONPOSヘルプデスク</span></td>
+<td><a href="https://www.tb-net.jp/product/pos/" target="_blank" rel="noopener">www.tb-net.jp/product/pos</a></td>
+</tr>
+<tr>
+<td>70</td>
+<td><b>トレタO/X</b><span class="cap">最安の登録事業者：株式会社トレタ（東京都 渋谷区）</span></td>
+<td>1社</td>
+<td class="price">420,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱トレタ</td>
+<td>03-6431-9006<span class="cap">本社</span></td>
+<td><a href="https://toreta.in/" target="_blank" rel="noopener">toreta.in</a></td>
+</tr>
+<tr>
+<td>71</td>
+<td><b>ワンレジ_レジシステム</b><span class="cap">最安の登録事業者：株式会社スカイダイニング（東京都 豊島区）</span></td>
+<td>1社</td>
+<td class="price">480,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱スカイダイニング</td>
+<td>0120-417-025<span class="cap">ワンレジ専用窓口 平日9-18時</span></td>
+<td><a href="https://one-regi.com/" target="_blank" rel="noopener">one-regi.com</a></td>
+</tr>
+<tr>
+<td>72</td>
+<td><b>AdvaNceD　IOTスマートチェックイン　forクラウドスマートロック　プレミアム</b><span class="cap">最安の登録事業者：株式会社デバイスエージェンシー（大阪府 大阪市西区）</span></td>
+<td>1社</td>
+<td class="price">498,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱デバイスエージェンシー</td>
+<td>06-6585-9865</td>
+<td><a href="https://device-agency.co.jp/" target="_blank" rel="noopener">device-agency.co.jp</a></td>
+</tr>
+<tr>
+<td>73</td>
+<td><b>POSシステム 『Tレジ』</b><span class="cap">最安の登録事業者：株式会社　テンポス情報館（東京都 大田区）</span></td>
+<td>1社</td>
+<td class="price">500,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱テンポス情報館</td>
+<td>03-5714-1493</td>
+<td><a href="https://www.tenpos.jp/" target="_blank" rel="noopener">www.tenpos.jp</a></td>
+</tr>
+<tr>
+<td>74</td>
+<td><b>POSシステム 『tenposAir Pro』</b><span class="cap">最安の登録事業者：株式会社　テンポス情報館（東京都 大田区）</span></td>
+<td>1社</td>
+<td class="price">500,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱テンポス情報館</td>
+<td>03-5714-1493</td>
+<td><a href="https://www.tenpos.jp/" target="_blank" rel="noopener">www.tenpos.jp</a></td>
+</tr>
+<tr>
+<td>75</td>
+<td><b>ダイニーモバイルオーダー　ＡＩスタンダードプラン</b><span class="cap">最安の登録事業者：株式会社レグルスインターナショナル（東京都 港区北青山１丁目）</span></td>
+<td>1社</td>
+<td class="price">528,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱ダイニー</td>
+<td>電話窓口なし<span class="cap">フォーム対応・本社は東京丸の内</span></td>
+<td><a href="https://about.dinii.jp/" target="_blank" rel="noopener">about.dinii.jp</a></td>
+</tr>
+<tr>
+<td>76</td>
+<td><b>ダイニーモバイルオーダー　ＡＩスタンダードプランプラス</b><span class="cap">最安の登録事業者：株式会社ＨＪＰ　Ｃｏｒｐｏｒａｔｉｏｎ（東京都 渋谷区）</span></td>
+<td>2社</td>
+<td class="price">588,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱ダイニー</td>
+<td>電話窓口なし<span class="cap">フォーム対応・本社は東京丸の内</span></td>
+<td><a href="https://about.dinii.jp/" target="_blank" rel="noopener">about.dinii.jp</a></td>
+</tr>
+<tr>
+<td>77</td>
+<td><b>Ｂｅｅｓ　スタンダードプラン</b><span class="cap">最安の登録事業者：株式会社２７（東京都 港区）</span></td>
+<td>1社</td>
+<td class="price">600,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱27</td>
+<td>03-4400-2883</td>
+<td><a href="https://27-bees.com/" target="_blank" rel="noopener">27-bees.com</a></td>
+</tr>
+<tr>
+<td>78</td>
+<td><b>POSシステム『UNIPOS』</b><span class="cap">最安の登録事業者：株式会社　テンポス情報館（東京都 大田区）</span></td>
+<td>1社</td>
+<td class="price">800,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱テンポス情報館</td>
+<td>03-5714-1493</td>
+<td><a href="https://www.tenpos.jp/" target="_blank" rel="noopener">www.tenpos.jp</a></td>
+</tr>
+<tr>
+<td>79</td>
+<td><b>レストランナビゲーションシステム</b><span class="cap">最安の登録事業者：株式会社ウォーターマテリアル（岡山県 岡山市）</span></td>
+<td>1社</td>
+<td class="price">880,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱ウォーターマテリアル</td>
+<td><span class="unknown">要確認</span><span class="cap">製品サイトrest-navi.comは現在アクセス不可</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>80</td>
+<td><b>AdvaNceD（IoTスマートチェックインforカードロック／IoTスマートチェックインwithキーボックス／IoTスマートチェックインforレンタカープラン3）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：株式会社デバイスエージェンシー（大阪府 大阪市西区）</span></td>
+<td>3社</td>
+<td class="price">900,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱デバイスエージェンシー</td>
+<td>06-6585-9865</td>
+<td><a href="https://device-agency.co.jp/" target="_blank" rel="noopener">device-agency.co.jp</a></td>
+</tr>
+<tr>
+<td>81</td>
+<td><b>abayengineクラウド</b><span class="cap">最安の登録事業者：ｓｅｐｔｅｍｂｅｒ合同会社（埼玉県 川口市）</span></td>
+<td>1社</td>
+<td class="price">960,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">september合同会社</td>
+<td><span class="unknown">要確認</span><span class="cap">登録はT・Lコンサルティング等</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>82</td>
+<td><b>SLレストラン管理システム</b><span class="cap">最安の登録事業者：ｓｅｐｔｅｍｂｅｒ合同会社（埼玉県 川口市）</span></td>
+<td>1社</td>
+<td class="price">960,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">september合同会社</td>
+<td><span class="unknown">要確認</span><span class="cap">登録はT・Lコンサルティング等</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>83</td>
+<td><b>T&Pオーダーシステム</b><span class="cap">最安の登録事業者：久浦株式会社（福岡県 福岡市）</span></td>
+<td>1社</td>
+<td class="price">990,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">久浦㈱</td>
+<td>092-285-9659<span class="cap">平日9-18時</span></td>
+<td><a href="https://www.hisaura.co.jp/" target="_blank" rel="noopener">www.hisaura.co.jp</a></td>
+</tr>
+<tr>
+<td>84</td>
+<td><b>券売機システム『UNIPOS CloudTicket』</b><span class="cap">最安の登録事業者：株式会社　テンポス情報館（東京都 大田区）</span></td>
+<td>1社</td>
+<td class="price">1,000,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱テンポス情報館</td>
+<td>03-5714-1493</td>
+<td><a href="https://www.tenpos.jp/" target="_blank" rel="noopener">www.tenpos.jp</a></td>
+</tr>
+<tr>
+<td>85</td>
+<td><b>よかレジ</b><span class="cap">最安の登録事業者：株式会社ＲＡＩＪＩＮ（福岡県 宗像市）</span></td>
+<td>1社</td>
+<td class="price">1,296,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱RAIJIN</td>
+<td><span class="unknown">要確認</span><span class="cap">福岡県宗像市</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>86</td>
+<td><b>Ｂｅｅｓ　プレミアムプラン</b><span class="cap">最安の登録事業者：株式会社２７（東京都 港区）</span></td>
+<td>1社</td>
+<td class="price">1,440,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱27</td>
+<td>03-4400-2883</td>
+<td><a href="https://27-bees.com/" target="_blank" rel="noopener">27-bees.com</a></td>
+</tr>
+<tr>
+<td>87</td>
+<td><b>P-POSシステム</b><span class="cap">最安の登録事業者：リノシード株式会社（神奈川県 横浜市）</span></td>
+<td>1社</td>
+<td class="price">1,800,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱スペースチャンス</td>
+<td>075-748-9999<span class="cap">平日10-18時</span></td>
+<td><a href="https://www.spacechance.co.jp/" target="_blank" rel="noopener">www.spacechance.co.jp</a></td>
+</tr>
+<tr>
+<td>88</td>
+<td><b>IBO ONE　Business Builderプラン</b><span class="cap">最安の登録事業者：株式会社エンジ（神奈川県 横浜市）</span></td>
+<td>1社</td>
+<td class="price">1,800,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱エンジ</td>
+<td>045-277-1515</td>
+<td><a href="https://enzi.co.jp/" target="_blank" rel="noopener">enzi.co.jp</a></td>
+</tr>
+<tr>
+<td>89</td>
+<td><b>abayengine（クラウドAIPLUS／不動産管理支援システム）</b><span class="cap">複数の表記ゆれ登録を統合</span><span class="cap">最安の登録事業者：Ｔ・Ｌコンサルティング株式会社（東京都 千代田区）</span></td>
+<td>2社</td>
+<td class="price">1,920,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">september合同会社</td>
+<td><span class="unknown">要確認</span><span class="cap">登録はT・Lコンサルティング等</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>90</td>
+<td><b>SchoolFlow</b><span class="cap">最安の登録事業者：ｓｅｐｔｅｍｂｅｒ合同会社（埼玉県 川口市）</span></td>
+<td>1社</td>
+<td class="price">1,920,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">september合同会社</td>
+<td><span class="unknown">要確認</span><span class="cap">登録はT・Lコンサルティング等</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>91</td>
+<td><b>UMAiVoice</b><span class="cap">最安の登録事業者：ｓｅｐｔｅｍｂｅｒ合同会社（埼玉県 川口市）</span></td>
+<td>1社</td>
+<td class="price">1,920,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">september合同会社</td>
+<td><span class="unknown">要確認</span><span class="cap">登録はT・Lコンサルティング等</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>92</td>
+<td><b>LETT POS</b><span class="cap">最安の登録事業者：合同会社トップライト（東京都 豊島区）</span></td>
+<td>12社</td>
+<td class="price">1,950,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">開発元未特定（白ラベル型）</td>
+<td>03-5904-8130<span class="cap">最安登録=合同会社トップライト</span></td>
+<td><a href="https://top-right.net/" target="_blank" rel="noopener">top-right.net</a></td>
+</tr>
+<tr>
+<td>93</td>
+<td><b>FC SalonManager</b><span class="cap">最安の登録事業者：株式会社リアル（東京都 豊島区）</span></td>
+<td>4社</td>
+<td class="price">2,000,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">開発元未特定（白ラベル型）</td>
+<td>03-3984-8301<span class="cap">最安登録=㈱リアル</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>94</td>
+<td><b>R-EXPO（AI機能あり）</b><span class="cap">最安の登録事業者：ロープス株式会社（東京都 新宿区）</span></td>
+<td>1社</td>
+<td class="price">2,000,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">ロープス㈱</td>
+<td>098-963-9470<span class="cap">沖縄本社／東京は03-5325-3087</span></td>
+<td><a href="https://www.ropes.co.jp/" target="_blank" rel="noopener">www.ropes.co.jp</a></td>
+</tr>
+<tr>
+<td>95</td>
+<td><b>PoPos</b><span class="cap">最安の登録事業者：合同会社トップライト（東京都 豊島区）</span></td>
+<td>16社</td>
+<td class="price">2,160,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">開発元未特定（白ラベル型）</td>
+<td>03-5904-8130<span class="cap">最安登録=合同会社トップライト</span></td>
+<td><a href="https://top-right.net/" target="_blank" rel="noopener">top-right.net</a></td>
+</tr>
+<tr>
+<td>96</td>
+<td><b>WiLReji</b><span class="cap">最安の登録事業者：ＷｉＬＬＤｅｓｉｇｎ株式会社（東京都 目黒区）</span></td>
+<td>1社</td>
+<td class="price">2,160,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">WiLLDesign㈱</td>
+<td><span class="unknown">要確認</span><span class="cap">外国人事業者向けPOS・東京都目黒区</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>97</td>
+<td><b>CP-Bクイック決済システム(CP-アシストパッケージプラン)</b><span class="cap">最安の登録事業者：株式会社Ｏｎｅ　Ｆｌａｔ（愛媛県 松山市）</span></td>
+<td>1社</td>
+<td class="price">2,200,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱クロスウェブ</td>
+<td><span class="unknown">要確認</span><span class="cap">最安登録=㈱One Flat（愛媛）</span></td>
+<td><a href="https://www.crossweb.jp/" target="_blank" rel="noopener">www.crossweb.jp</a></td>
+</tr>
+<tr>
+<td>98</td>
+<td><b>constWELL　決済付きプラン</b><span class="cap">最安の登録事業者：株式会社ＴＲＥＥ（大阪府 大阪市）</span></td>
+<td>1社</td>
+<td class="price">2,400,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱TREE</td>
+<td>06-6606-9257</td>
+<td><a href="https://www.constwell.jp/" target="_blank" rel="noopener">www.constwell.jp</a></td>
+</tr>
+<tr>
+<td>99</td>
+<td><b>TablePOS</b><span class="cap">最安の登録事業者：合同会社ＳＡＮＮＡＮＡ（兵庫県 神戸市須磨区）</span></td>
+<td>1社</td>
+<td class="price">2,400,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">合同会社SANNANA</td>
+<td><span class="unknown">要確認</span><span class="cap">神戸市須磨区</span></td>
+<td><a href="https://sannana.info/" target="_blank" rel="noopener">sannana.info</a></td>
+</tr>
+<tr>
+<td>100</td>
+<td><b>ZiiPOS</b><span class="cap">最安の登録事業者：オバビ株式会社（神奈川県 川崎市）</span></td>
+<td>1社</td>
+<td class="price">2,600,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱藍原（ZiiPOS日本窓口）</td>
+<td>090-7830-9957<span class="cap">angel.yu@ziicloud.com</span></td>
+<td><a href="https://www.ziiposai.com/" target="_blank" rel="noopener">www.ziiposai.com</a></td>
+</tr>
+<tr>
+<td>101</td>
+<td><b>NEO+S</b><span class="cap">最安の登録事業者：ＭＸ浩宇株式会社（大阪府 大阪市）</span></td>
+<td>1社</td>
+<td class="price">2,640,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">MX浩宇㈱</td>
+<td><span class="unknown">要確認</span><span class="cap">大阪市中央区南船場</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>102</td>
+<td><b>ERP-Cube Basic</b><span class="cap">最安の登録事業者：晴川株式会社（東京都 千代田区）</span></td>
+<td>1社</td>
+<td class="price">2,950,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">晴川㈱／アイプラス㈱</td>
+<td><span class="unknown">要確認</span><span class="cap">2社が別々に登録</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>103</td>
+<td><b>Mirai販売管理システム＆Mirai OMS 飲食店版Lite</b><span class="cap">最安の登録事業者：株式会社多言語システム研究所（東京都 中央区）</span></td>
+<td>1社</td>
+<td class="price">2,980,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱多言語システム研究所</td>
+<td><span class="unknown">要確認</span></td>
+<td><a href="https://e-msr.co.jp/" target="_blank" rel="noopener">e-msr.co.jp</a></td>
+</tr>
+<tr>
+<td>104</td>
+<td><b>VISIT</b><span class="cap">最安の登録事業者：株式会社Ｄｅｖｏｔｉｏｎ（愛知県 名古屋市）</span></td>
+<td>1社</td>
+<td class="price">3,500,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱Devotion</td>
+<td><span class="unknown">要確認</span><span class="cap">公式サイトはフォームのみ</span></td>
+<td><a href="https://devotion-co.jp/" target="_blank" rel="noopener">devotion-co.jp</a></td>
+</tr>
+<tr>
+<td>105</td>
+<td><b>OrderFlowシステム(スマレジプラン)</b><span class="cap">最安の登録事業者：株式会社レグルスインターナショナル（東京都 港区）</span></td>
+<td>1社</td>
+<td class="price">4,000,000円</td>
+<td>0円（周辺機器フルセットで約178,700円）</td>
+<td class="maker">㈱スマレジ</td>
+<td>06-7777-2211<span class="cap">本社</span></td>
+<td><a href="https://smaregi.jp/" target="_blank" rel="noopener">smaregi.jp</a></td>
+</tr>
+<tr>
+<td>106</td>
+<td><b>OrderFlowシステム（バックオフィスプラン）</b><span class="cap">最安の登録事業者：株式会社レグルスインターナショナル（東京都 港区）</span></td>
+<td>1社</td>
+<td class="price">4,000,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱レグルスインターナショナル</td>
+<td>03-6455-4327<span class="cap">企業DB出典・要再確認</span></td>
+<td><a href="https://www.regulusinternational.net/" target="_blank" rel="noopener">www.regulusinternational.net</a></td>
+</tr>
+<tr>
+<td>107</td>
+<td><b>TradeStudio AI</b><span class="cap">最安の登録事業者：ｓｅｐｔｅｍｂｅｒ合同会社（埼玉県 川口市）</span></td>
+<td>1社</td>
+<td class="price">4,500,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">september合同会社</td>
+<td><span class="unknown">要確認</span><span class="cap">登録はT・Lコンサルティング等</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>108</td>
+<td><b>楽コアオフィスAI_ビジネスプラン</b><span class="cap">最安の登録事業者：システムクラウド株式会社（東京都 渋谷区）</span></td>
+<td>1社</td>
+<td class="price">4,500,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">システムクラウド㈱</td>
+<td><span class="unknown">要確認</span><span class="cap">東京都渋谷区</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>109</td>
+<td><b>BrainbaseAI_ビジネスプラン</b><span class="cap">最安の登録事業者：システムクラウド株式会社（東京都 渋谷区）</span></td>
+<td>1社</td>
+<td class="price">4,500,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">システムクラウド㈱</td>
+<td><span class="unknown">要確認</span><span class="cap">東京都渋谷区</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>110</td>
+<td><b>ERP-Cube</b><span class="cap">最安の登録事業者：アイプラス株式会社（愛知県 名古屋市）</span></td>
+<td>1社</td>
+<td class="price">5,150,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">晴川㈱／アイプラス㈱</td>
+<td><span class="unknown">要確認</span><span class="cap">2社が別々に登録</span></td>
+<td><span class="unknown">未特定</span></td>
+</tr>
+<tr>
+<td>111</td>
+<td><b>PO+S - ポプラス オールインワンパッケージ</b><span class="cap">最安の登録事業者：合同会社モソロ（東京都 千代田区）</span></td>
+<td>2社</td>
+<td class="price">5,520,000円</td>
+<td><span class="unknown">要確認</span></td>
+<td class="maker">㈱アールワン（開発元）</td>
+<td>06-4708-8535<span class="cap">最安登録=合同会社モソロ（代理店）</span></td>
+<td><a href="https://r1-inc.jp/" target="_blank" rel="noopener">r1-inc.jp</a></td>
+</tr>
+</tbody>
+  </table></div>
+  <p class="note">※「電話番号」は原則メーカー（開発元）の代表窓口です。登録事業者（代理店）自体の電話番号ではありません。メーカーが特定できていない製品は「要確認」としています。</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    本レポートは、中小企業基盤整備機構「ITツール・IT導入支援事業者検索」（2026年9月18日時点、デジタル化・AI導入補助金2026）の公開情報と、各製品の公式サイト等の追加調査にもとづいています。価格・登録状況は随時更新されるため、最新情報は公式サイトでご確認ください。
+  </div>
+</footer>
+
+</body>
+</html>
